@@ -13,6 +13,8 @@
 void Game::initVariables()
 {
 	/**
+	 * @return void
+	 *
 	 * Initializes game variables
 	 */
 
@@ -62,26 +64,67 @@ void Game::initWindow()
 	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
 
+void Game::initKeys()
+{
+	/**
+	 * @return void
+	 *
+	 * Initializes all accepted keys and adds them to a map.
+	 * Maps strings to Key enum.
+	 */
+
+	std::ifstream accepted_keys_ini(this->currentPath + "/Config/accepted_keys.ini");
+
+	if (accepted_keys_ini.is_open())
+	{
+		std::string key = "";
+		int key_value = 0;
+
+		while (accepted_keys_ini >> key >> key_value)
+		{
+			this->acceptedKeys[key] = sf::Keyboard::Key(key_value);
+		}
+	}
+
+	accepted_keys_ini.close();
+
+	for (auto i : this->acceptedKeys)
+	{
+		std::cout << i.first << " " << i.second << "\n";
+	}
+}
+
 void Game::initStates()
 {
-	this->states.push(new GameState(this->window));
+	/**
+	 * @return void
+	 *
+	 * Initializates states and push them into states stack.
+	 */
+
+	this->states.push(new MainMenuState(this->window, &this->acceptedKeys));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 Game::Game()
 {
 	/**
+	 * @constructor
+	 *
 	 * Game Class Constructor
 	 */
 
 	this->initVariables();
 	this->initWindow();
+	this->initKeys();
 	this->initStates();
 }
 
 Game::~Game()
 {
 	/**
+	 * @destructor
+	 *
 	 * Game Class Desstructor
 	 */
 
@@ -135,8 +178,8 @@ void Game::update()
 		// Update the top state in the states stack
 		this->states.top()->update(this->dt);
 
-		// If the state wants to quit
-		if (this->states.top()->requestedToQuit())
+		// If the state wants to end
+		if (this->states.top()->hasAskedToQuit())
 		{
 			// End the state
 			this->states.top()->endState();
@@ -161,13 +204,17 @@ void Game::render()
 	 * Renders a frame into the window.
 	 */
 
+	// Clear window
 	this->window->clear();
 
+	// If there are states stack
 	if (!this->states.empty())
 	{
+		// Render them into the window.
 		this->states.top()->render(this->window);
 	}
 
+	// Display window
 	this->window->display();
 }
 
@@ -222,7 +269,7 @@ void Game::endApplication()
 const bool Game::isRunning() const
 {
 	/**
-	 * @return bool
+	 * @return const bool
 	 *
 	 * Returns if the game is currently running
 	 */

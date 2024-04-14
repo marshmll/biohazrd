@@ -1,7 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include "../States/GameState.h"
+#include "../States/MainMenuState.h"
 
 class Game
 {
@@ -18,9 +18,12 @@ private:
 
 	std::stack<State*> states; // A stack with pointers to the game states
 
+	std::map<std::string, sf::Keyboard::Key> acceptedKeys; // Keys the game accepts
+
 	/* INITIALIZERS FUNCTIONS */
 	void initVariables();
 	void initWindow();
+	void initKeys();
 	void initStates();
 
 public:

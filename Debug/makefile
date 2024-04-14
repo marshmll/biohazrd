@@ -10,6 +10,8 @@ RM := rm -rf
 -include sources.mk
 -include States/subdir.mk
 -include Source\ Files/subdir.mk
+-include Resource\ Files/subdir.mk
+-include Entities/subdir.mk
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C++M_DEPS)),)
 -include $(C++M_DEPS)

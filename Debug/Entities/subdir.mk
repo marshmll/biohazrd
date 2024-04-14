@@ -4,23 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../States/GameState.cpp \
-../States/MainMenuState.cpp \
-../States/State.cpp 
+../Entities/Entity.cpp 
 
 CPP_DEPS += \
-./States/GameState.d \
-./States/MainMenuState.d \
-./States/State.d 
+./Entities/Entity.d 
 
 OBJS += \
-./States/GameState.o \
-./States/MainMenuState.o \
-./States/State.o 
+./Entities/Entity.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-States/%.o: ../States/%.cpp States/subdir.mk
+Entities/%.o: ../Entities/%.cpp Entities/subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
 	g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
@@ -28,10 +22,10 @@ States/%.o: ../States/%.cpp States/subdir.mk
 	@echo ' '
 
 
-clean: clean-States
+clean: clean-Entities
 
-clean-States:
-	-$(RM) ./States/GameState.d ./States/GameState.o ./States/MainMenuState.d ./States/MainMenuState.o ./States/State.d ./States/State.o
+clean-Entities:
+	-$(RM) ./Entities/Entity.d ./Entities/Entity.o
 
-.PHONY: clean-States
+.PHONY: clean-Entities
 

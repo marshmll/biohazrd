@@ -6,17 +6,21 @@
 class GameState: public State
 {
 private:
+	Entity player;
+
+	/* INITIALIZERS */
+	void initKeybinds();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	GameState(sf::RenderWindow *window);
+	GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys);
 	virtual ~GameState();
 
 	/* FUNCTIONS */
 	void update(const float &dt);
 	void render(sf::RenderTarget *target = nullptr);
 
-	void updateKeybinds(const float &dt);
+	void updateInput(const float &dt);
 
 	void endState();
 };
