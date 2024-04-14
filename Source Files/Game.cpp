@@ -16,6 +16,8 @@ void Game::initVariables()
 	 * Initializes game variables
 	 */
 
+	this->currentPath = std::filesystem::current_path().string();
+
 	this->window = nullptr;
 }
 
@@ -25,13 +27,44 @@ void Game::initWindow()
 	 * @return void
 	 *
 	 * Initializes the RenderWindow
-	 * -> Sets VideoMode height and width
-	 * -> Creates a RenderWindow
+	 * -> Reads the window.ini file
+	 * -> Sets title
+	 * -> Sets height and width
+	 * -> Sets framerate limit
+	 * -> Sets vertical sync toggle
+	 * -> Creates the window.
 	 */
 
-	this->videoMode.height = 600;
-	this->videoMode.width = 800;
-	this->window = new sf::RenderWindow(this->videoMode, "RPG Game", sf::Style::Titlebar | sf::Style::Close);
+	// Default values
+	std::string title = "Default";
+	sf::VideoMode window_bounds(800, 600);
+	unsigned int framerate_limit = 60;
+	bool vertical_sync_enabled = false;
+
+	std::ifstream window_ini(currentPath + "/Config/window.ini");
+
+	// If window.ini was successfully opened
+	if (window_ini.is_open())
+	{
+		// Read from window.ini to variables
+		std::getline(window_ini, title);
+		window_ini >> window_bounds.width;
+		window_ini >> window_bounds.height;
+		window_ini >> framerate_limit;
+		window_ini >> vertical_sync_enabled;
+	}
+	// Close file
+	window_ini.close();
+
+	// Create the window
+	this->window = new sf::RenderWindow(window_bounds, title);
+	this->window->setFramerateLimit(framerate_limit);
+	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+}
+
+void Game::initStates()
+{
+	this->states.push(new GameState(this->window));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -43,6 +76,7 @@ Game::Game()
 
 	this->initVariables();
 	this->initWindow();
+	this->initStates();
 }
 
 Game::~Game()
@@ -52,6 +86,12 @@ Game::~Game()
 	 */
 
 	delete this->window;
+
+	while (!this->states.empty())
+	{
+		delete this->states.top();
+		this->states.pop();
+	}
 }
 
 /* MAIN FUNCTIONS */
@@ -72,15 +112,45 @@ void Game::run()
 	}
 
 }
+
 void Game::update()
 {
 	/**
 	 * @return void
 	 *
-	 * Update game state
+	 * Polls SFML events and updates the states
+	 * in the game.
+	 * -> Poll SFML events
+	 * -> Update the top state in the stack
+	 * -> Check for ending the top state in the stack
+	 * -> If there are not more states in the stack,
+	 *    exit the applicaiton.
 	 */
 
 	this->pollSFMLEvents();
+
+	// If there are still states available
+	if (!this->states.empty())
+	{
+		// Update the top state in the states stack
+		this->states.top()->update(this->dt);
+
+		// If the state wants to quit
+		if (this->states.top()->requestedToQuit())
+		{
+			// End the state
+			this->states.top()->endState();
+
+			// Delete the state and pop it from the stack.
+			delete this->states.top();
+			this->states.pop();
+		}
+	}
+	else
+	{
+		// Exit the application
+		this->endApplication();
+	}
 }
 
 void Game::render()
@@ -92,6 +162,11 @@ void Game::render()
 	 */
 
 	this->window->clear();
+
+	if (!this->states.empty())
+	{
+		this->states.top()->render(this->window);
+	}
 
 	this->window->display();
 }
@@ -106,9 +181,7 @@ void Game::updateDeltaTime()
 	 * render a frame.
 	 */
 
-
 	this->dt = this->dtClock.restart().asSeconds();
-	// std::cout << this->dt << std::endl;
 }
 
 void Game::pollSFMLEvents()
@@ -124,13 +197,25 @@ void Game::pollSFMLEvents()
 		switch (this->event.type)
 		{
 		case sf::Event::Closed:
-			this->window->close();
+			this->endApplication();
 			break;
 
 		default:
 			break;
 		}
 	}
+}
+
+void Game::endApplication()
+{
+	/**
+	 * @return void
+	 *
+	 * Closes the window and end application.
+	 */
+
+	std::cout << "> [Game.cpp] Ending application..." << "\n";
+	this->window->close();
 }
 
 /* ACESSORS */
