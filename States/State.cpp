@@ -15,9 +15,11 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 * @constructor
 	 *
 	 * Constructs a State instance.
+	 * -> Sets a pointer to the states stack.
 	 * -> Sets this->window to window pointer
-	 * -> Sets this->quit to false
+	 * -> Sets this->quitCurrentState to false
 	 * -> Sets this->acceptedKeys to acceptedKeys pointer.
+	 * -> Sets current path dir.
 	 */
 
 	this->states = states;
@@ -35,6 +37,15 @@ State::~State()
 /* DEFINED VIRTUAL FUNCTIONS */
 void State::updateMousePositions()
 {
+	/**
+	 * @return void
+	 *
+	 * Update mouse postiions relative to:
+	 * -> Screen
+	 * -> Window
+	 * -> View
+	 */
+
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
@@ -48,15 +59,23 @@ void State::checkForQuitState()
 	 * @return void
 	 *
 	 * Check for quitting the running state.
-	 * -> If yes, sets this->quitTheState to true.
+	 * -> If yes, quit.
 	 */
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
-		this->quit();
+		this->quitState();
 }
 
-void State::quit()
+void State::quitState()
 {
+	/**
+	 * @return void
+	 *
+	 * Sets quit current state to true.
+	 * The quit states triggers the state to exit
+	 * in Game.cpp [Game::update()]
+	 */
+
 	this->quitCurrentState = true;
 }
 

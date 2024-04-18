@@ -11,6 +11,18 @@ Button::Button(float x, float y, float width, float height,
 		sf::Font *font, std::string text,
 		sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor)
 {
+	/**
+	 * @constructor
+	 *
+	 * Creates a button instance.
+	 * -> Sets initial state to idle
+	 * -> Sets position and size
+	 * -> Sets text font, string, size and fill color
+	 * -> Sets text position (middle)
+	 * -> Sets state colors
+	 * -> Sets initial fill color
+	 */
+
 	this->btn_state = BTN_IDLE;
 
 	this->shape.setPosition(sf::Vector2f(x, y));
@@ -39,12 +51,21 @@ Button::Button(float x, float y, float width, float height,
 
 Button::~Button()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
 /* FUNCTIONS */
 void Button::update(sf::Vector2f mousePos)
 {
+	/**
+	 * @return void
+	 *
+	 * Updates buttons states and colors.
+	 * -> Sets state to idle
+	 * -> Check for new state
+	 * -> Set new fill color
+	 */
+
 	this->btn_state = BTN_IDLE;
 
 	// Hover
@@ -81,6 +102,14 @@ void Button::update(sf::Vector2f mousePos)
 
 void Button::render(sf::RenderTarget *target)
 {
+	/**
+	 * @return void
+	 *
+	 * Renders the button into a target.
+	 * -> Draws the shape into the target
+	 * -> Draws the text into the center of the shape
+	 */
+
 	target->draw(this->shape);
 	target->draw(this->text);
 }
@@ -88,6 +117,13 @@ void Button::render(sf::RenderTarget *target)
 /* ACCESSORS */
 const bool Button::isPressed() const
 {
+	/**
+	 * @return const bool
+	 *
+	 * Returns if the button is pressed.
+	 * An active status implies in a pressed button.
+	 */
+
 	return this->btn_state == BTN_ACTIVE;
 }
 

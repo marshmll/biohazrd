@@ -51,6 +51,12 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
+	/**
+	 * @return void
+	 *
+	 * Initializes all the buttons of the MainMenuState.
+	 */
+
 	this->buttons["GAME_STATE"] = new Button(100, 100, 150, 50,
 			&this->font, "New Game",
 			sf::Color(150, 150, 150, 200), sf::Color(200, 200, 200, 200), sf::Color(20, 20, 20, 200));
@@ -68,9 +74,8 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf:
 	/**
 	 * @constructor
 	 *
-	 * Calls the parent constructor State(window, acceptedKeys) and
-	 * initialize the keybinds for the state.
-	 * -> Initializes fonts for MainMenuState.
+	 * Calls the parent constructor for State.
+	 * Initializes fonts, keybinds and buttons.
 	 */
 
 	this->initFonts();
@@ -86,6 +91,12 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf:
 
 MainMenuState::~MainMenuState()
 {
+	/**
+	 * @destructor
+	 *
+	 * Frees all the memory allocated for the buttons.
+	 */
+
 	auto it = this->buttons.begin();
 	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
@@ -101,6 +112,7 @@ void MainMenuState::update(const float &dt)
 	 *
 	 * Updates the MainMenuState.
 	 * -> Checks for updates in the user input.
+	 * -> Update buttons states.
 	 */
 
 	this->updateInput(dt);
@@ -112,7 +124,9 @@ void MainMenuState::render(sf::RenderTarget *target)
 	/**
 	 * @return void
 	 *
-	 * Renders MainMenuState into a target.
+	 * Renders the main menu.
+	 * -> Draw background
+	 * -> Render buttons.
 	 */
 
 	target->draw(this->background);
@@ -125,10 +139,8 @@ void MainMenuState::updateInput(const float &dt)
 	 * @return void
 	 *
 	 * Updates the user input.
-	 * -> Checks if the running state wants to quit.
+	 * -> Checks for quit the state.
 	 * -> Updates mouse positions.
-	 * -> Checks for keybinds and executes its respective
-	 *    action.
 	 */
 
 	this->checkForQuitState();
@@ -138,6 +150,14 @@ void MainMenuState::updateInput(const float &dt)
 
 void MainMenuState::updateButtons()
 {
+	/**
+	 * @return void
+	 *
+	 * Iterates over all buttons and update their states based on
+	 * mouse click and position.
+	 * Checks for exiting and pushing a new gamestate.
+	 */
+
 	for (auto &it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
@@ -145,7 +165,7 @@ void MainMenuState::updateButtons()
 
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
-		this->quit();
+		this->quitState();
 	}
 	else if (this->buttons["GAME_STATE"]->isPressed())
 	{
@@ -155,6 +175,12 @@ void MainMenuState::updateButtons()
 
 void MainMenuState::renderButtons(sf::RenderTarget *target)
 {
+	/**
+	 * @return void
+	 *
+	 * Iterates over all buttons and renders them into a target.
+	 */
+
 	for (auto &it : this->buttons)
 	{
 		it.second->render(target);

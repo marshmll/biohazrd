@@ -125,7 +125,8 @@ Game::~Game()
 	/**
 	 * @destructor
 	 *
-	 * Game Class Desstructor
+	 * Frees the window allocated memory and free all
+	 * states allocated memory.
 	 */
 
 	delete this->window;

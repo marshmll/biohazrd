@@ -35,7 +35,8 @@ void GameState::initKeybinds()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-GameState::GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys, std::stack<State*> *states) :
+GameState::GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+		std::stack<State*> *states) :
 		State(window, acceptedKeys, states)
 {
 	/**
@@ -88,7 +89,7 @@ void GameState::updateInput(const float &dt)
 	 * @return void
 	 *
 	 * Updates the user input.
-	 * -> Checks if the running state wants to quit.
+	 * -> Checks for quitting the gamestate.
 	 * -> Updates mouse positions.
 	 * -> Checks for keybinds and executes its respective
 	 *    action.
@@ -124,5 +125,6 @@ void GameState::endState()
 	 *
 	 * Function executed when the state is being ended.
 	 */
+
 	std::cout << "> [GameState.cpp] Ending GameState..." << "\n";
 }

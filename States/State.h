@@ -46,7 +46,7 @@ public:
 	/* DEFINED VIRTUAL FUNCTIONS */
 	virtual void updateMousePositions();
 	virtual void checkForQuitState();
-	virtual void quit();
+	virtual void quitState();
 
 	/* ACESSORS */
 	const bool& hasAskedToQuit() const;

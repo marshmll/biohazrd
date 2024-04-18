@@ -13,7 +13,8 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys, std::stack<State*> *states);
+	GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+			std::stack<State*> *states);
 	virtual ~GameState();
 
 	/* FUNCTIONS */
