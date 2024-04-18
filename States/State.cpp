@@ -8,7 +8,8 @@
 #include "State.h"
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys)
+State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+		std::stack<State*> *states)
 {
 	/**
 	 * @constructor
@@ -19,6 +20,7 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 * -> Sets this->acceptedKeys to acceptedKeys pointer.
 	 */
 
+	this->states = states;
 	this->window = window;
 	this->quitCurrentState = false;
 	this->acceptedKeys = acceptedKeys;
@@ -50,9 +52,12 @@ void State::checkForQuitState()
 	 */
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
-		this->quitCurrentState = true;
-	else
-		this->quitCurrentState = false;
+		this->quit();
+}
+
+void State::quit()
+{
+	this->quitCurrentState = true;
 }
 
 /* ACESSORS */

@@ -73,20 +73,20 @@ void Game::initKeys()
 	 * Maps strings to Key enum.
 	 */
 
-	std::ifstream accepted_keys_ini(this->currentPath + "/Config/accepted_keys.ini");
+	std::ifstream ifs(this->currentPath + "/Config/accepted_keys.ini");
 
-	if (accepted_keys_ini.is_open())
+	if (ifs.is_open())
 	{
 		std::string key = "";
 		int key_value = 0;
 
-		while (accepted_keys_ini >> key >> key_value)
+		while (ifs >> key >> key_value)
 		{
 			this->acceptedKeys[key] = sf::Keyboard::Key(key_value);
 		}
 	}
 
-	accepted_keys_ini.close();
+	ifs.close();
 
 	for (auto i : this->acceptedKeys)
 	{
@@ -102,7 +102,7 @@ void Game::initStates()
 	 * Initializates states and push them into states stack.
 	 */
 
-	this->states.push(new MainMenuState(this->window, &this->acceptedKeys));
+	this->states.push(new MainMenuState(this->window, &this->acceptedKeys, &this->states));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */

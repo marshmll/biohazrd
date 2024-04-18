@@ -33,25 +33,37 @@ void MainMenuState::initKeybinds()
 	 * its own binding to a key.
 	 */
 
-//	std::ifstream gamestate_keybinds_ini(this->currentPath + "/Config/gamestate_keybinds.ini");
-//
-//	if (gamestate_keybinds_ini.is_open())
-//	{
-//		std::string action = "";
-//		std::string key = "";
-//
-//		while (gamestate_keybinds_ini >> action >> key)
-//		{
-//			this->keybinds[action] = this->acceptedKeys->at(key);
-//		}
-//	}
-//
-//	gamestate_keybinds_ini.close();
+	std::ifstream ifs(this->currentPath + "/Config/mainmenustate_keybinds.ini");
+
+	if (ifs.is_open())
+	{
+		std::string action = "";
+		std::string key = "";
+
+		while (ifs >> action >> key)
+		{
+			this->keybinds[action] = this->acceptedKeys->at(key);
+		}
+	}
+
+	ifs.close();
+}
+
+void MainMenuState::initButtons()
+{
+	this->buttons["GAME_STATE"] = new Button(100, 100, 150, 50,
+			&this->font, "New Game",
+			sf::Color(150, 150, 150, 200), sf::Color(200, 200, 200, 200), sf::Color(20, 20, 20, 200));
+
+	this->buttons["EXIT_STATE"] = new Button(100, 300, 150, 50,
+			&this->font, "Quit",
+			sf::Color(100, 100, 100, 200), sf::Color(200, 200, 200, 200), sf::Color(20, 20, 20, 200));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys) :
-		State(window, acceptedKeys)
+MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+		std::stack<State*> *states) :
+		State(window, acceptedKeys, states)
 {
 	/**
 	 * @constructor
@@ -65,6 +77,8 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf:
 
 	this->initKeybinds();
 
+	this->initButtons();
+
 	this->background.setSize(static_cast<sf::Vector2f>(window->getSize()));
 
 	this->background.setFillColor(sf::Color::Blue);
@@ -72,7 +86,11 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf:
 
 MainMenuState::~MainMenuState()
 {
-
+	auto it = this->buttons.begin();
+	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
+	{
+		delete it->second;
+	}
 }
 
 /* FUNCTIONS */
@@ -86,7 +104,7 @@ void MainMenuState::update(const float &dt)
 	 */
 
 	this->updateInput(dt);
-
+	this->updateButtons();
 }
 
 void MainMenuState::render(sf::RenderTarget *target)
@@ -98,6 +116,7 @@ void MainMenuState::render(sf::RenderTarget *target)
 	 */
 
 	target->draw(this->background);
+	this->renderButtons(target);
 }
 
 void MainMenuState::updateInput(const float &dt)
@@ -117,6 +136,31 @@ void MainMenuState::updateInput(const float &dt)
 	this->updateMousePositions();
 }
 
+void MainMenuState::updateButtons()
+{
+	for (auto &it : this->buttons)
+	{
+		it.second->update(this->mousePosView);
+	}
+
+	if (this->buttons["EXIT_STATE"]->isPressed())
+	{
+		this->quit();
+	}
+	else if (this->buttons["GAME_STATE"]->isPressed())
+	{
+		this->states->push(new GameState(this->window, this->acceptedKeys, this->states));
+	}
+}
+
+void MainMenuState::renderButtons(sf::RenderTarget *target)
+{
+	for (auto &it : this->buttons)
+	{
+		it.second->render(target);
+	}
+}
+
 void MainMenuState::endState()
 {
 	/**
@@ -125,5 +169,5 @@ void MainMenuState::endState()
 	 * Function executed when the state is being ended.
 	 */
 
-	std::cout << "> [GameState.cpp] Ending MainMenuState..." << "\n";
+	std::cout << "> [MainMenuState.cpp] Ending MainMenuState..." << "\n";
 }

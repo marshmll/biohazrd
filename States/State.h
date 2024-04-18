@@ -9,6 +9,8 @@ private:
 
 protected:
 	/* VARIABLES */
+	std::stack<State*> *states;
+
 	sf::RenderWindow *window;
 
 	std::map<std::string, sf::Keyboard::Key> *acceptedKeys; // A pointer to the accepted keys in Game.cpp
@@ -31,7 +33,7 @@ protected:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys);
+	State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys, std::stack<State*> *states);
 	virtual ~State();
 
 	/* PURE VIRTUAL FUNCTIONS */
@@ -44,6 +46,7 @@ public:
 	/* DEFINED VIRTUAL FUNCTIONS */
 	virtual void updateMousePositions();
 	virtual void checkForQuitState();
+	virtual void quit();
 
 	/* ACESSORS */
 	const bool& hasAskedToQuit() const;

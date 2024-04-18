@@ -18,25 +18,25 @@ void GameState::initKeybinds()
 	 * its own binding to a key.
 	 */
 
-	std::ifstream gamestate_keybinds_ini(this->currentPath + "/Config/gamestate_keybinds.ini");
+	std::ifstream ifs(this->currentPath + "/Config/gamestate_keybinds.ini");
 
-	if (gamestate_keybinds_ini.is_open())
+	if (ifs.is_open())
 	{
 		std::string action = "";
 		std::string key = "";
 
-		while (gamestate_keybinds_ini >> action >> key)
+		while (ifs >> action >> key)
 		{
 			this->keybinds[action] = this->acceptedKeys->at(key);
 		}
 	}
 
-	gamestate_keybinds_ini.close();
+	ifs.close();
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-GameState::GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys) :
-		State(window, acceptedKeys)
+GameState::GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys, std::stack<State*> *states) :
+		State(window, acceptedKeys, states)
 {
 	/**
 	 * @constructor
