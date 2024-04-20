@@ -44,8 +44,8 @@ void GameState::initTextures()
 
 	if (!this->textures["PLAYER_IDLE"].loadFromFile(this->currentPath + "/Assets/Images/Sprites/Player/test.png"))
 	{
-		throw("ERROR::GAMESTATE::INITTEXTURES::ERROR LOADING " + this->currentPath
-				+ "/Assets/Images/Sprites/Player/test.png");
+		throw "ERROR::GAMESTATE::INITTEXTURES::ERROR LOADING " + this->currentPath
+				+ "/Assets/Images/Sprites/Player/test.png";
 	}
 }
 
@@ -57,7 +57,7 @@ void GameState::initPlayers()
 	 * Initializes player(s).
 	 */
 
-	this->player = new Player(0, 0, &this->textures["PLAYER_IDLE"]);
+	this->player = new Player(0.f, 0.f, this->textures["PLAYER_IDLE"]);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -103,8 +103,7 @@ void GameState::update(const float &dt)
 
 	this->updateInput(dt);
 
-	this->player->update(dt); // TEMP
-
+	this->player->update(dt);
 }
 
 void GameState::render(sf::RenderTarget *target)
@@ -112,7 +111,8 @@ void GameState::render(sf::RenderTarget *target)
 	/**
 	 * @return void
 	 *
-	 * Renders everything into a target (window).
+	 * Renders GameState into a target (window).
+	 * -> Renders player.
 	 */
 
 	this->player->render(target); // TEMP
@@ -134,19 +134,19 @@ void GameState::updateInput(const float &dt)
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
-		this->player->move(dt, 0.f, -1.f);
+		this->player->move(0.f, -1.f, dt);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
 	{
-		this->player->move(dt, 0.f, 1.f);
+		this->player->move(0.f, 1.f, dt);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
 	{
-		this->player->move(dt, -1.f, 0.f);
+		this->player->move(-1.f, 0.f, dt);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
 	{
-		this->player->move(dt, 1.f, 0.f);
+		this->player->move(1.f, 0.f, dt);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
 	{

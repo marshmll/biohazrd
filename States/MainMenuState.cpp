@@ -23,7 +23,7 @@ void MainMenuState::initBackground()
 	 * @return void
 	 *
 	 * Sets background size to screen size, loads
-	 * background texture and set background texture
+	 * background texture and sets background texture
 	 * to the background area.
 	 */
 
@@ -43,7 +43,7 @@ void MainMenuState::initFonts()
 	/**
 	 * @return void
 	 *
-	 * Load font files..
+	 * Loads font from file.
 	 */
 
 	if (!this->font.loadFromFile(this->currentPath + "/Fonts/Dosis-Light.ttf"))
@@ -59,7 +59,7 @@ void MainMenuState::initKeybinds()
 	 *
 	 * Binds the accepted keys to its respective functionality.
 	 * It might differ from state to state, each state can have
-	 * its own binding to a key.
+	 * its own function binding to a key.
 	 */
 
 	std::ifstream ifs(this->currentPath + "/Config/mainmenustate_keybinds.ini");
@@ -108,7 +108,11 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf:
 	 * @constructor
 	 *
 	 * Calls the parent constructor for State.
-	 * Initializes fonts, keybinds and buttons.
+	 * -> Initializes variables
+	 * -> Initializes background
+	 * -> Initializes fonts
+	 * -> Initializes keybinds
+	 * -> Initializes buttons
 	 */
 
 	this->initVariables();
@@ -145,7 +149,7 @@ void MainMenuState::update(const float &dt)
 	 *
 	 * Updates the MainMenuState.
 	 * -> Checks for updates in the user input.
-	 * -> Update buttons states.
+	 * -> Update buttons.
 	 */
 
 	this->updateInput(dt);
@@ -165,7 +169,7 @@ void MainMenuState::render(sf::RenderTarget *target)
 	target->draw(this->background);
 	this->renderButtons(target);
 
-//////////////////////////// REMOVE LATER: DEBUGGING STUFF ///////////////////////////////
+//////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
 //	sf::Text mouseText;
 //	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 20));
 //	mouseText.setFont(this->font);
@@ -185,7 +189,6 @@ void MainMenuState::updateInput(const float &dt)
 	 * @return void
 	 *
 	 * Updates the user input.
-	 * -> Checks for quit the state.
 	 * -> Updates mouse positions.
 	 */
 
@@ -199,7 +202,7 @@ void MainMenuState::updateButtons()
 	 *
 	 * Iterates over all buttons and update their states based on
 	 * mouse click and position.
-	 * Checks for exiting and pushing a new gamestate.
+	 * Checks for quiting/pushing a new game state.
 	 */
 
 	// Updates all buttons based on mouse position view.

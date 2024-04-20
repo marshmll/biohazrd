@@ -13,9 +13,9 @@ protected:
 
 	sf::RenderWindow *window;
 
-	std::map<std::string, sf::Keyboard::Key> *acceptedKeys; // A pointer to the accepted keys in Game.cpp
+	std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
 
-	std::map<std::string, sf::Keyboard::Key> keybinds; // The keybinds of a state instance
+	std::map<std::string, sf::Keyboard::Key> keybinds;
 
 	std::string currentPath;
 

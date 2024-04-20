@@ -11,9 +11,7 @@
 /* INITIALIZERS */
 void Entity::initVariables()
 {
-	this->sprite = nullptr;
-	this->texture = nullptr;
-	this->movementSpeed = 100.f;
+	this->movementComponent = nullptr;
 }
 
 Entity::Entity()
@@ -35,24 +33,32 @@ Entity::~Entity()
 	 * Destructs entity instance.
 	 */
 
-	delete this->sprite;
-
 }
 /* COMPONENT FUNCTIONS */
-void Entity::createSprite(sf::Texture *texture)
+void Entity::setTexture(sf::Texture &texture)
 {
 	/**
 	 * @return void
 	 *
-	 * Creates the entity sprite.
+	 * Sets texture for the entity sprite.
 	 * -> Sets texture pointer
 	 * -> Sets sprite pointer
 	 */
 
-	this->texture = texture;
-	this->sprite = new sf::Sprite(*this->texture);
+	this->sprite.setTexture(texture);
 
-	this->sprite->setScale(4.f, 4.f); //Temp
+	this->sprite.setScale(3.f, 3.f); //Temp
+}
+
+void Entity::createMovementComponent(const float maxVelocity)
+{
+	/**
+	 * @return void
+	 *
+	 * Creates a movement functionality component for the
+	 * entity. Requires a sprite reference.
+	 */
+	this->movementComponent = new MovementComponent(this->sprite, maxVelocity);
 }
 
 /* FUNCTIONS */
@@ -66,13 +72,10 @@ void Entity::render(sf::RenderTarget *target)
 	/**
 	 * @return void
 	 *
-	 * Renders the entity into a target.
+	 * Renders the entity's sprite into a target.
 	 */
 
-	if (this->sprite)
-	{
-		target->draw(*this->sprite);
-	}
+	target->draw(this->sprite);
 }
 
 void Entity::setPosition(const float x, const float y)
@@ -80,26 +83,23 @@ void Entity::setPosition(const float x, const float y)
 	/**
 	 * @return void
 	 *
-	 * Sets a position to the entity class if available.
+	 * Sets a position to the entity's sprite.
 	 */
 
-	if (this->sprite)
-	{
-		this->sprite->setPosition(x, y);
-	}
+	this->sprite.setPosition(x, y);
 }
 
-void Entity::move(const float &dt, const float dir_x, const float dir_y)
+void Entity::move(const float dir_x, const float dir_y, const float &dt)
 {
 	/**
 	 * @return void
 	 *
-	 * Moves the entity according to x and y directions, if avaivable..
+	 * Moves the movement component into x and y directions
 	 */
 
-	if (this->sprite)
+	if (this->movementComponent)
 	{
-		this->sprite->move(dir_x * this->movementSpeed * dt, dir_y * this->movementSpeed * dt);
+		this->movementComponent->move(dir_x, dir_y, dt); // Sets velocity
 	}
 }
 

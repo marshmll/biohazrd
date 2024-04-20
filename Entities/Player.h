@@ -11,8 +11,9 @@ private:
 	/* INITIALIZERS */
 	void initVariables();
 	void initComponents();
-	public:
-	Player(float x, float y, sf::Texture *texture);
+
+public:
+	Player(float x, float y, sf::Texture &texture);
 	virtual ~Player();
 
 	/* FUNCTIONS */

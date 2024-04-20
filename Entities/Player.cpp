@@ -15,10 +15,10 @@ void Player::initVariables()
 
 void Player::initComponents()
 {
-
+	this->createMovementComponent(100.f);
 }
 
-Player::Player(float x, float y, sf::Texture *texture)
+Player::Player(float x, float y, sf::Texture &texture)
 {
 	/**
 	 * @constructor
@@ -26,14 +26,14 @@ Player::Player(float x, float y, sf::Texture *texture)
 	 * Player entity class constructor.
 	 * -> Initializes variables
 	 * -> Initializes components
-	 * -> Creates the player sprite width the texture pointer argument
+	 * -> Sets player sprite texture.
 	 * -> Sets the player position with x and y arguments.
 	 */
 
 	this->initVariables();
 	this->initComponents();
 
-	this->createSprite(texture);
+	this->setTexture(texture);
 	this->setPosition(x, y);
 }
 

@@ -19,7 +19,7 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 * -> Sets this->window to window pointer
 	 * -> Sets this->quitState to false
 	 * -> Sets this->acceptedKeys to acceptedKeys pointer.
-	 * -> Sets current path dir.
+	 * -> Sets current directory path.
 	 */
 
 	this->states = states;
