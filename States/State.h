@@ -1,7 +1,7 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "../Entities/Entity.h"
+#include "../Entities/Player.h"
 
 class State
 {
@@ -19,14 +19,14 @@ protected:
 
 	std::string currentPath;
 
-	bool quitCurrentState;
+	bool quitState;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 
-	/* RESOURCES */
-	std::vector<sf::Texture> textures;
+	/* ASSETS */
+	std::map<std::string, sf::Texture> textures;
 
 	/* FUNCTIONS */
 	virtual void initKeybinds() = 0;
@@ -41,12 +41,10 @@ public:
 	virtual void render(sf::RenderTarget *target = nullptr) = 0;
 
 	virtual void updateInput(const float &dt) = 0;
-	virtual void endState() = 0;
 
 	/* DEFINED VIRTUAL FUNCTIONS */
 	virtual void updateMousePositions();
-	virtual void checkForQuitState();
-	virtual void quitState();
+	virtual void quit();
 
 	/* ACESSORS */
 	const bool& hasAskedToQuit() const;

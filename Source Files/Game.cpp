@@ -21,6 +21,8 @@ void Game::initVariables()
 	this->currentPath = std::filesystem::current_path().string();
 
 	this->window = nullptr;
+	this->fullscreen = false;
+	this->dt = 0.f;
 }
 
 void Game::initWindow()
@@ -32,18 +34,23 @@ void Game::initWindow()
 	 * -> Reads the window.ini file
 	 * -> Sets title
 	 * -> Sets height and width
+	 * -> Sets fullscreen mode
 	 * -> Sets framerate limit
 	 * -> Sets vertical sync toggle
+	 * -> Sets antialising level
 	 * -> Creates the window.
 	 */
 
 	// Default values
 	std::string title = "Default";
-	sf::VideoMode window_bounds(800, 600);
+	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
+	bool fullscreen = false;
 	unsigned int framerate_limit = 60;
 	bool vertical_sync_enabled = false;
+	unsigned antialiasing_level = 0;
 
 	std::ifstream window_ini(currentPath + "/Config/window.ini");
+	this->videoModes = sf::VideoMode::getFullscreenModes();
 
 	// If window.ini was successfully opened
 	if (window_ini.is_open())
@@ -52,14 +59,30 @@ void Game::initWindow()
 		std::getline(window_ini, title);
 		window_ini >> window_bounds.width;
 		window_ini >> window_bounds.height;
+		window_ini >> fullscreen;
 		window_ini >> framerate_limit;
 		window_ini >> vertical_sync_enabled;
+		window_ini >> antialiasing_level;
 	}
 	// Close file
 	window_ini.close();
 
+	// Context
+	this->windowSettings.antialiasingLevel = antialiasing_level;
+	this->fullscreen = fullscreen;
+
 	// Create the window
-	this->window = new sf::RenderWindow(window_bounds, title);
+
+	if (this->fullscreen)
+	{
+		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, this->windowSettings);
+	}
+	else
+	{
+		this->window = new sf::RenderWindow(window_bounds, title,
+				sf::Style::Titlebar | sf::Style::Close, this->windowSettings);
+	}
+
 	this->window->setFramerateLimit(framerate_limit);
 	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
@@ -88,10 +111,10 @@ void Game::initKeys()
 
 	ifs.close();
 
-	for (auto i : this->acceptedKeys)
-	{
-		std::cout << i.first << " " << i.second << "\n";
-	}
+//	for (auto i : this->acceptedKeys)
+//	{
+//		std::cout << i.first << " " << i.second << "\n";
+//	}
 }
 
 void Game::initStates()
@@ -112,6 +135,10 @@ Game::Game()
 	 * @constructor
 	 *
 	 * Game Class Constructor
+	 * -> Initializes variables
+	 * -> Initializes window
+	 * -> Initializes keys
+	 * -> Initializes states.
 	 */
 
 	this->initVariables();
@@ -182,17 +209,15 @@ void Game::update()
 		// If the state wants to end
 		if (this->states.top()->hasAskedToQuit())
 		{
-			// End the state
-			this->states.top()->endState();
-
 			// Delete the state and pop it from the stack.
 			delete this->states.top();
 			this->states.pop();
 		}
 	}
+	// If there are no states
 	else
 	{
-		// Exit the application
+		// Quit application.
 		this->endApplication();
 	}
 }

@@ -20,19 +20,27 @@
 class Entity
 {
 private:
+	/* INITIALIZERS */
+	void initVariables();
 
 protected:
-	sf::RectangleShape shape;
+	sf::Texture *texture;
+	sf::Sprite *sprite;
+
 	float movementSpeed;
 
 public:
 	Entity();
 	virtual ~Entity();
 
+	/* COMPONENT FUNCTIONS */
+	void createSprite(sf::Texture *texture);
+
 	/* FUNCTIONS */
 	virtual void update(const float &dt);
 	virtual void render(sf::RenderTarget *target = nullptr);
 
+	virtual void setPosition(const float x, const float y);
 	virtual void move(const float &dt, const float x, const float y);
 };
 

@@ -1,5 +1,5 @@
 /*
- * State class that manages generic states of the game.
+ * State class that serves as base class for generic states of the game.
  *
  *  Created on: 14 de abr. de 2024
  *      Author: Renan Andrade
@@ -17,14 +17,14 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 * Constructs a State instance.
 	 * -> Sets a pointer to the states stack.
 	 * -> Sets this->window to window pointer
-	 * -> Sets this->quitCurrentState to false
+	 * -> Sets this->quitState to false
 	 * -> Sets this->acceptedKeys to acceptedKeys pointer.
 	 * -> Sets current path dir.
 	 */
 
 	this->states = states;
 	this->window = window;
-	this->quitCurrentState = false;
+	this->quitState = false;
 	this->acceptedKeys = acceptedKeys;
 	this->currentPath = std::filesystem::current_path().string();
 }
@@ -49,24 +49,9 @@ void State::updateMousePositions()
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
-
-	// std::cout << this->mousePosView.x << " " << this->mousePosView.y << "\n";
 }
 
-void State::checkForQuitState()
-{
-	/**
-	 * @return void
-	 *
-	 * Check for quitting the running state.
-	 * -> If yes, quit.
-	 */
-
-	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
-		this->quitState();
-}
-
-void State::quitState()
+void State::quit()
 {
 	/**
 	 * @return void
@@ -76,7 +61,7 @@ void State::quitState()
 	 * in Game.cpp [Game::update()]
 	 */
 
-	this->quitCurrentState = true;
+	this->quitState = true;
 }
 
 /* ACESSORS */
@@ -90,5 +75,5 @@ const bool& State::hasAskedToQuit() const
 	 * needs to quit or not.
 	 */
 
-	return this->quitCurrentState;
+	return this->quitState;
 }

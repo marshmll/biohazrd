@@ -6,10 +6,12 @@
 class GameState: public State
 {
 private:
-	Entity player;
+	Player *player;
 
 	/* INITIALIZERS */
 	void initKeybinds();
+	void initTextures();
+	void initPlayers();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
@@ -22,8 +24,6 @@ public:
 	void render(sf::RenderTarget *target = nullptr);
 
 	void updateInput(const float &dt);
-
-	void endState();
 };
 
 #endif /* STATES_GAMESTATE_H_ */
