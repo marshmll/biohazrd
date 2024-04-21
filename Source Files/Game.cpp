@@ -42,7 +42,7 @@ void Game::initWindow()
 	 */
 
 	// Default values
-	std::string title = "Default";
+	std::string title = "ERROR_LOADING_WINDOW_INI";
 	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
 	bool fullscreen = false;
 	unsigned int framerate_limit = 60;
@@ -73,11 +73,11 @@ void Game::initWindow()
 
 	// Create the window
 
-	if (this->fullscreen)
+	if (this->fullscreen) // If in fullscreen mode
 	{
 		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, this->windowSettings);
 	}
-	else
+	else // If in window mode
 	{
 		this->window = new sf::RenderWindow(window_bounds, title,
 				sf::Style::Titlebar | sf::Style::Close, this->windowSettings);

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <ctime>
-#include <cstdlib>
+#include <cmath>
 #include <fstream>
 #include <sstream>
 #include <filesystem>
@@ -22,16 +22,16 @@ class MovementComponent
 private:
 	sf::Sprite &sprite;
 
-	sf::Vector2f velocity;
-	sf::Vector2f acceleration;
-	sf::Vector2f deceleration;
-
 	float maxVelocity;
+	float acceleration;
+	float deceleration;
+
+	sf::Vector2f velocity;
 
 	/* INITIALIZERS */
 
 public:
-	MovementComponent(sf::Sprite &sprite, float maxVelocity);
+	MovementComponent(sf::Sprite &sprite, float maxVelocity, float acceleration, float deceleration);
 	virtual ~MovementComponent();
 
 	/* FUNCTIONS */

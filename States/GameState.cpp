@@ -42,10 +42,10 @@ void GameState::initTextures()
 	 * Initializes textures used in the game.
 	 */
 
-	if (!this->textures["PLAYER_IDLE"].loadFromFile(this->currentPath + "/Assets/Images/Sprites/Player/test.png"))
+	if (!this->textures["SCARLET_SPRITESHEET"].loadFromFile(
+			this->currentPath + "/Assets/Images/Sprites/Player/scarlet_spritesheet.png"))
 	{
-		throw "ERROR::GAMESTATE::INITTEXTURES::ERROR LOADING " + this->currentPath
-				+ "/Assets/Images/Sprites/Player/test.png";
+		throw "ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE";
 	}
 }
 
@@ -57,7 +57,7 @@ void GameState::initPlayers()
 	 * Initializes player(s).
 	 */
 
-	this->player = new Player(0.f, 0.f, this->textures["PLAYER_IDLE"]);
+	this->player = new Player(0.f, 0.f, this->textures["SCARLET_SPRITESHEET"]);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -115,7 +115,7 @@ void GameState::render(sf::RenderTarget *target)
 	 * -> Renders player.
 	 */
 
-	this->player->render(target); // TEMP
+	this->player->render(target);
 
 }
 

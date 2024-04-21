@@ -31,8 +31,7 @@ void MainMenuState::initBackground()
 
 	if (!this->backgroundTexture.loadFromFile(this->currentPath + "/Assets/Images/Backgrounds/main_menu_bg.png"))
 	{
-		throw("ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR LOADING" + this->currentPath
-				+ "/Assets/Images/Backgrounds/main_menu_bg.png");
+		throw "ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG";
 	}
 
 	this->background.setTexture(&this->backgroundTexture);
@@ -48,7 +47,7 @@ void MainMenuState::initFonts()
 
 	if (!this->font.loadFromFile(this->currentPath + "/Fonts/Dosis-Light.ttf"))
 	{
-		throw("ERROR::MAINMENUSTATE::INITFONTS::ERROR LOADING" + this->currentPath + "/Fonts/Dosis-Light.ttf\n");
+		throw "ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT";
 	}
 }
 
@@ -87,16 +86,24 @@ void MainMenuState::initButtons()
 	 */
 
 	this->buttons["GAME_STATE"] = new Button(75, 340, 250, 50,
-			&this->font, "New Game",
-			sf::Color(150, 150, 150, 200), sf::Color(200, 200, 200, 200), sf::Color(20, 20, 20, 200));
+			&this->font, "New Game", 40,
+			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["SETTINGS"] = new Button(75, 440, 250, 50,
-			&this->font, "Settings",
-			sf::Color(150, 150, 150, 200), sf::Color(200, 200, 200, 200), sf::Color(20, 20, 20, 200));
+	this->buttons["EDITOR_STATE"] = new Button(75, 420, 250, 50,
+			&this->font, "Editor", 40,
+			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EXIT_STATE"] = new Button(75, 640, 250, 50,
-			&this->font, "Quit",
-			sf::Color(100, 100, 100, 200), sf::Color(200, 200, 200, 200), sf::Color(20, 20, 20, 200));
+	this->buttons["SETTINGS"] = new Button(75, 500, 250, 50,
+			&this->font, "Settings", 40,
+			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["EXIT_STATE"] = new Button(75, 660, 250, 50,
+			&this->font, "Exit", 40,
+			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */

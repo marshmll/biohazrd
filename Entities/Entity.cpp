@@ -14,12 +14,14 @@ void Entity::initVariables()
 	this->movementComponent = nullptr;
 }
 
+/* CONSTRUCTOR AND DESTRUCTOR */
 Entity::Entity()
 {
 	/**
 	 * @constructor
 	 *
 	 * Creates a entity instance.
+	 * -> Initializes variables
 	 */
 
 	this->initVariables();
@@ -31,7 +33,11 @@ Entity::~Entity()
 	 * @destructor
 	 *
 	 * Destructs entity instance.
+	 * -> Deletes all components
 	 */
+
+	delete this->movementComponent;
+	delete this->animationComponent;
 
 }
 /* COMPONENT FUNCTIONS */
@@ -41,24 +47,36 @@ void Entity::setTexture(sf::Texture &texture)
 	 * @return void
 	 *
 	 * Sets texture for the entity sprite.
-	 * -> Sets texture pointer
-	 * -> Sets sprite pointer
+	 * Scale sprites up.
 	 */
 
 	this->sprite.setTexture(texture);
 
-	this->sprite.setScale(3.f, 3.f); //Temp
+	this->sprite.setScale(3.5f, 3.5f); //Temp
 }
 
-void Entity::createMovementComponent(const float maxVelocity)
+void Entity::createMovementComponent(const float maxVelocity, const float accerelation, const float deceleration)
 {
 	/**
 	 * @return void
 	 *
 	 * Creates a movement functionality component for the
-	 * entity. Requires a sprite reference.
+	 * entity.
 	 */
-	this->movementComponent = new MovementComponent(this->sprite, maxVelocity);
+
+	this->movementComponent = new MovementComponent(this->sprite, maxVelocity, accerelation, deceleration);
+}
+
+void Entity::createAnimationComponent(sf::Texture &texture_sheet)
+{
+	/**
+	 * @return void
+	 *
+	 * Creates a animation functionality component for the
+	 * entity.
+	 */
+
+	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
 }
 
 /* FUNCTIONS */
@@ -94,7 +112,9 @@ void Entity::move(const float dir_x, const float dir_y, const float &dt)
 	/**
 	 * @return void
 	 *
-	 * Moves the movement component into x and y directions
+	 * Moves the movement component (whick moves the sprite) into some
+	 * x and y directions.
+	 * -> Checks if the entity can move fisrt.
 	 */
 
 	if (this->movementComponent)

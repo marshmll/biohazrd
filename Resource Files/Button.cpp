@@ -8,32 +8,36 @@
 #include "Button.h"
 
 Button::Button(float x, float y, float width, float height,
-		sf::Font *font, std::string text,
-		sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor)
+		sf::Font *font, std::string text, unsigned char_size,
+		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+		sf::Color idle_color, sf::Color hover_color, sf::Color active_color)
 {
 	/**
 	 * @constructor
 	 *
 	 * Creates a button instance.
-	 * -> Sets initial state to idle
-	 * -> Sets position and size
-	 * -> Sets text font, string, size and fill color
-	 * -> Sets text position (middle)
-	 * -> Sets state colors
-	 * -> Sets initial fill color
 	 */
 
 	this->btn_state = BTN_IDLE;
 
+	this->idleColor = idle_color;
+	this->hoverColor = hover_color;
+	this->activeColor = active_color;
+
 	this->shape.setPosition(sf::Vector2f(x, y));
 	this->shape.setSize(sf::Vector2f(width, height));
+	this->shape.setFillColor(idle_color);
 
 	this->font = font;
 
-	this->text.setFont(*this->font);
+	this->textIdleColor = text_idle_color;
+	this->textHoverColor = text_hover_color;
+	this->textActiveColor = text_active_color;
+
+	this->text.setFont(*font);
 	this->text.setString(text);
-	this->text.setCharacterSize(16);
-	this->text.setFillColor(sf::Color::White);
+	this->text.setCharacterSize(char_size);
+	this->text.setFillColor(text_idle_color);
 
 	this->text.setPosition(
 			this->shape.getPosition().x
@@ -42,12 +46,6 @@ Button::Button(float x, float y, float width, float height,
 			this->shape.getPosition().y
 					+ (this->shape.getGlobalBounds().height / 2.f)
 					- this->text.getGlobalBounds().height / 2.f);
-
-	this->idleColor = idleColor;
-	this->hoverColor = hoverColor;
-	this->activeColor = activeColor;
-
-	this->shape.setFillColor(this->idleColor);
 }
 
 Button::~Button()
@@ -64,7 +62,7 @@ void Button::update(sf::Vector2f mousePos)
 	 * Updates buttons states and colors.
 	 * -> Sets state to idle
 	 * -> Check for new state
-	 * -> Set new fill color
+	 * -> Set new text and shape fill colors
 	 */
 
 	this->btn_state = BTN_IDLE;
@@ -87,10 +85,14 @@ void Button::update(sf::Vector2f mousePos)
 		{
 		case BTN_HOVER:
 			this->shape.setFillColor(this->hoverColor);
+			this->text.setFillColor(this->textHoverColor);
 			break;
+
 		case BTN_ACTIVE:
 			this->shape.setFillColor(this->activeColor);
+			this->text.setFillColor(this->textActiveColor);
 			break;
+
 		default:
 			break;
 		}
@@ -98,6 +100,7 @@ void Button::update(sf::Vector2f mousePos)
 	else
 	{
 		this->shape.setFillColor(this->idleColor);
+		this->text.setFillColor(this->textIdleColor);
 	}
 }
 
