@@ -44,6 +44,11 @@ void AnimationComponent::play(const std::string key, const float &dt)
 	this->animations[key]->play(dt);
 }
 
+void AnimationComponent::reset(const std::string key)
+{
+	this->animations[key]->reset();
+}
+
 void AnimationComponent::addAnimation(
 		const std::string key,
 		float animation_update_timer,
@@ -57,7 +62,17 @@ void AnimationComponent::addAnimation(
 	 *
 	 * Adds a new animation to the animations map.
 	 * Sets a key for the animation and instantiates
-	 * an Animation class object.
+	 * an Animation object for the animation.
+	 *
+	 * Parameters:
+	 * -> A animation key
+	 * -> An animation update timer
+	 * -> The x-axis index of the texture sheet start frame.
+	 * -> The y-axis index of the texture sheet start frame.
+	 * -> The x-axis index of the texture sheet end frame.
+	 * -> The y-axis index of the texture sheet end frame.
+	 * -> Frame width
+	 * -> Frame height
 	 */
 
 	this->animations[key] = new Animation(

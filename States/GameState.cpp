@@ -30,6 +30,10 @@ void GameState::initKeybinds()
 			this->keybinds[action] = this->acceptedKeys->at(key);
 		}
 	}
+	else
+	{
+		throw "GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS";
+	}
 
 	ifs.close();
 }

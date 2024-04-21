@@ -73,6 +73,10 @@ void MainMenuState::initKeybinds()
 			this->keybinds[action] = this->acceptedKeys->at(key);
 		}
 	}
+	else
+	{
+		throw "MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS";
+	}
 
 	ifs.close();
 }

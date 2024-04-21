@@ -26,7 +26,7 @@ public:
 	void createAnimationComponent(sf::Texture &texture_sheet);
 
 	/* FUNCTIONS */
-	virtual void update(const float &dt);
+	virtual void update(const float &dt) = 0;
 	virtual void render(sf::RenderTarget *target = nullptr);
 
 	virtual void setPosition(const float x, const float y);

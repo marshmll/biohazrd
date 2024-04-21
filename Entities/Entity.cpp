@@ -80,11 +80,6 @@ void Entity::createAnimationComponent(sf::Texture &texture_sheet)
 }
 
 /* FUNCTIONS */
-void Entity::update(const float &dt)
-{
-
-}
-
 void Entity::render(sf::RenderTarget *target)
 {
 	/**

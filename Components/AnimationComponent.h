@@ -17,7 +17,7 @@ private:
 		sf::Sprite &sprite;
 		sf::Texture &textureSheet;
 
-		float animationUpdateTimer;
+		float stdAnimationTimer;
 		float timer;
 
 		int width;
@@ -28,12 +28,12 @@ private:
 		sf::IntRect endCropRect;
 
 		Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
-				float animation_update_timer,
+				float std_animation_timer,
 				int start_frame_x_index, int start_frame_y_index,
 				int end_frame_x_index, int end_frame_y_index,
 				int width, int height) :
 
-				sprite(sprite), textureSheet(texture_sheet), animationUpdateTimer(animation_update_timer),
+				sprite(sprite), textureSheet(texture_sheet), stdAnimationTimer(std_animation_timer),
 						width(width), height(height)
 		{
 			/**
@@ -44,10 +44,10 @@ private:
 			 * -> A sprite reference
 			 * -> A texture sheet reference
 			 * -> An animation update timer
-			 * -> The starting x-axis texture sheet frame index
-			 * -> The starting y-axis texture sheet frame index
-			 * -> The last x-axis texture sheet frame index
-			 * -> The last y-axis texture sheet frame index
+			 * -> The x-axis index of the texture sheet start frame.
+			 * -> The y-axis index of the texture sheet start frame.
+			 * -> The x-axis index of the texture sheet end frame.
+			 * -> The y-axis index of the texture sheet end frame.
 			 * -> Frame width
 			 * -> Frame height
 			 */
@@ -71,7 +71,7 @@ private:
 			/**
 			 * @return void
 			 *
-			 * Plays the animation.
+			 * Plays the animation with the stardard animation timer.
 			 */
 
 			// Increase timer
@@ -81,7 +81,7 @@ private:
 			this->sprite.setTextureRect(this->currentCropRect);
 
 			// If timer hits the desired animation update timer
-			if (this->timer >= this->animationUpdateTimer)
+			if (this->timer >= this->stdAnimationTimer)
 			{
 				// Reset the timer
 				this->timer = 0.f;
@@ -131,16 +131,19 @@ private:
 		}
 	};
 
+	/* VARIABLES */
 	sf::Sprite &sprite;
 	sf::Texture &textureSheet;
 	std::map<std::string, Animation*> animations;
 
 public:
+	/* CONSTRUCTOR AND DESTRUCTOR */
 	AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet);
 	virtual ~AnimationComponent();
 
 	/* FUNCTIONS */
 	void play(const std::string key, const float &dt);
+	void reset(const std::string key);
 
 	void addAnimation(
 			const std::string key,
