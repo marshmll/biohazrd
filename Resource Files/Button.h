@@ -47,7 +47,7 @@ public:
 
 	/* FUNCTIONS */
 	void update(sf::Vector2f mousePos);
-	void render(sf::RenderTarget *target = nullptr);
+	void render(sf::RenderTarget &target);
 
 	/* ACCESSORS */
 	const bool isPressed() const;

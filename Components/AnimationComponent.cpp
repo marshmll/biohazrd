@@ -9,7 +9,7 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet) :
-		sprite(sprite), textureSheet(texture_sheet)
+		sprite(sprite), textureSheet(texture_sheet), previousAnimation(nullptr)
 {
 	/**
 	 * @constructor
@@ -39,14 +39,24 @@ void AnimationComponent::play(const std::string key, const float &dt)
 	 *
 	 * Plays an animation from the animations map.
 	 * Plays the animation with the same key passed in.
+	 * -> If switched animations, reset previous animation and
+	 * 	  update previous animation pointer.
 	 */
 
-	this->animations[key]->play(dt);
-}
+	if (this->previousAnimation != this->animations[key])
+	{
+		if (this->previousAnimation == nullptr)
+		{
+			this->previousAnimation = this->animations[key];
+		}
+		else
+		{
+			this->previousAnimation->reset();
+			this->previousAnimation = this->animations[key];
+		}
+	}
 
-void AnimationComponent::reset(const std::string key)
-{
-	this->animations[key]->reset();
+	this->animations[key]->play(dt);
 }
 
 void AnimationComponent::addAnimation(

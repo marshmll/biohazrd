@@ -31,7 +31,7 @@ void MainMenuState::initBackground()
 
 	if (!this->backgroundTexture.loadFromFile(this->currentPath + "/Assets/Images/Backgrounds/main_menu_bg.png"))
 	{
-		throw "ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG";
+		throw std::runtime_error("ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG");
 	}
 
 	this->background.setTexture(&this->backgroundTexture);
@@ -47,7 +47,7 @@ void MainMenuState::initFonts()
 
 	if (!this->font.loadFromFile(this->currentPath + "/Fonts/Dosis-Light.ttf"))
 	{
-		throw "ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT";
+		throw std::runtime_error("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT");
 	}
 }
 
@@ -75,7 +75,7 @@ void MainMenuState::initKeybinds()
 	}
 	else
 	{
-		throw "MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS";
+		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS");
 	}
 
 	ifs.close();
@@ -167,7 +167,7 @@ void MainMenuState::update(const float &dt)
 	this->updateButtons();
 }
 
-void MainMenuState::render(sf::RenderTarget *target)
+void MainMenuState::render(sf::RenderTarget &target)
 {
 	/**
 	 * @return void
@@ -177,7 +177,7 @@ void MainMenuState::render(sf::RenderTarget *target)
 	 * -> Render buttons.
 	 */
 
-	target->draw(this->background);
+	target.draw(this->background);
 	this->renderButtons(target);
 
 //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
@@ -220,17 +220,24 @@ void MainMenuState::updateButtons()
 	for (auto &it : this->buttons)
 		it.second->update(this->mousePosView);
 
-	// Checks if quit button was pressed
-	if (this->buttons["EXIT_STATE"]->isPressed())
-		this->quit();
-
-	// Checks if new game button was pressed
-	else if (this->buttons["GAME_STATE"]->isPressed())
+	// New game
+	if (this->buttons["GAME_STATE"]->isPressed())
 		this->states->push(new GameState(this->window, this->acceptedKeys, this->states));
 
+	// Editor state
+	else if (this->buttons["EDITOR_STATE"]->isPressed())
+		this->states->push(new EditorState(this->window, this->acceptedKeys, this->states));
+
+	// Settings
+	else if (this->buttons["SETTINGS"]->isPressed())
+		std::cout << "Settings pressed" << "\n"; // TEMP
+
+	// Exit
+	else if (this->buttons["EXIT_STATE"]->isPressed())
+		this->quit();
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget *target)
+void MainMenuState::renderButtons(sf::RenderTarget &target)
 {
 	/**
 	 * @return void

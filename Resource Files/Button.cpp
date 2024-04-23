@@ -104,7 +104,7 @@ void Button::update(sf::Vector2f mousePos)
 	}
 }
 
-void Button::render(sf::RenderTarget *target)
+void Button::render(sf::RenderTarget &target)
 {
 	/**
 	 * @return void
@@ -114,8 +114,8 @@ void Button::render(sf::RenderTarget *target)
 	 * -> Draws the text into the center of the shape
 	 */
 
-	target->draw(this->shape);
-	target->draw(this->text);
+	target.draw(this->shape);
+	target.draw(this->text);
 }
 
 /* ACCESSORS */

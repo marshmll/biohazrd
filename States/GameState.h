@@ -21,7 +21,7 @@ public:
 
 	/* FUNCTIONS */
 	void update(const float &dt);
-	void render(sf::RenderTarget *target = nullptr);
+	void render(sf::RenderTarget &target);
 
 	void updateInput(const float &dt);
 };

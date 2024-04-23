@@ -42,7 +42,7 @@ void Game::initWindow()
 	 */
 
 	// Default values
-	std::string title = "ERROR_LOADING_WINDOW_INI";
+	std::string title = "";
 	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
 	bool fullscreen = false;
 	unsigned int framerate_limit = 60;
@@ -64,6 +64,11 @@ void Game::initWindow()
 		window_ini >> vertical_sync_enabled;
 		window_ini >> antialiasing_level;
 	}
+	else
+	{
+		throw std::runtime_error("GAME::INITWINDOW::ERROR_COULD_NOT_LOAD_WINDOW_INI");
+	}
+
 	// Close file
 	window_ini.close();
 
@@ -107,6 +112,10 @@ void Game::initKeys()
 		{
 			this->acceptedKeys[key] = sf::Keyboard::Key(key_value);
 		}
+	}
+	else
+	{
+		throw std::runtime_error("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI");
 	}
 
 	ifs.close();
@@ -237,7 +246,7 @@ void Game::render()
 	if (!this->states.empty())
 	{
 		// Render them into the window.
-		this->states.top()->render(this->window);
+		this->states.top()->render(*this->window);
 	}
 
 	// Display window
@@ -287,7 +296,6 @@ void Game::endApplication()
 	 * Closes the window and end application.
 	 */
 
-	std::cout << "> [Game.cpp] Ending application..." << "\n";
 	this->window->close();
 }
 

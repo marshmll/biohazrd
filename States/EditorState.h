@@ -1,16 +1,13 @@
-#ifndef STATES_MAINMENUSTATE_H_
-#define STATES_MAINMENUSTATE_H_
+#ifndef STATES_EDITORSTATE_H_
+#define STATES_EDITORSTATE_H_
 
-#include "../States/GameState.h"
-#include "../States/EditorState.h"
+#include "State.h"
 #include "../Resource Files/Button.h"
 
-class MainMenuState: public State
+class EditorState: public State
 {
 private:
 	/* VARIABLES */
-	sf::Texture backgroundTexture;
-	sf::RectangleShape background;
 	sf::Font font;
 
 	std::map<std::string, Button*> buttons;
@@ -24,9 +21,9 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	MainMenuState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+	EditorState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
 			std::stack<State*> *states);
-	virtual ~MainMenuState();
+	virtual ~EditorState();
 
 	/* FUNCTIONS */
 	void update(const float &dt);
@@ -40,4 +37,4 @@ public:
 	void endState();
 };
 
-#endif /* STATES_MAINMENUSTATE_H_ */
+#endif /* STATES_EDITORSTATE_H_ */

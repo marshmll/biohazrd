@@ -32,7 +32,7 @@ void GameState::initKeybinds()
 	}
 	else
 	{
-		throw "GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS";
+		throw std::runtime_error("GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS");
 	}
 
 	ifs.close();
@@ -49,7 +49,7 @@ void GameState::initTextures()
 	if (!this->textures["SCARLET_SPRITESHEET"].loadFromFile(
 			this->currentPath + "/Assets/Images/Sprites/Player/scarlet_spritesheet.png"))
 	{
-		throw "ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE";
+		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE");
 	}
 }
 
@@ -110,7 +110,7 @@ void GameState::update(const float &dt)
 	this->player->update(dt);
 }
 
-void GameState::render(sf::RenderTarget *target)
+void GameState::render(sf::RenderTarget &target)
 {
 	/**
 	 * @return void

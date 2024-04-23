@@ -26,10 +26,7 @@ void Player::initAnimations()
 	 * Initializes player animations.
 	 */
 
-	this->animationComponent->addAnimation("IDLE_RIGHT", 100.f, 0, 0, 0, 0, 16.f, 18.f);
 	this->animationComponent->addAnimation("IDLE_DOWN", 100.f, 0, 1, 0, 1, 16.f, 18.f);
-	this->animationComponent->addAnimation("IDLE_LEFT", 100.f, 0, 2, 0, 2, 16.f, 18.f);
-	this->animationComponent->addAnimation("IDLE_UP", 100.f, 0, 3, 0, 3, 16.f, 18.f);
 
 	this->animationComponent->addAnimation("WALK_RIGHT", 15.f, 1, 0, 4, 0, 16.f, 18.f);
 	this->animationComponent->addAnimation("WALK_DOWN", 15.f, 1, 1, 4, 1, 16.f, 18.f);
@@ -53,6 +50,7 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 	this->initVariables();
 	this->setPosition(x, y);
 
+	this->createHitboxComponent(14.f, 15.75f, 28.f, 31.5f);
 	this->createMovementComponent(200.f, 12.f, 8.f);
 	this->createAnimationComponent(texture_sheet);
 
@@ -93,5 +91,7 @@ void Player::update(const float &dt)
 
 	else if (this->movementComponent->isStateActive(MV_UP))
 		this->animationComponent->play("WALK_UP", dt);
+
+	this->hitboxComponent->update();
 }
 

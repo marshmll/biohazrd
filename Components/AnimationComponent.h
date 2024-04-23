@@ -136,6 +136,8 @@ private:
 	sf::Texture &textureSheet;
 	std::map<std::string, Animation*> animations;
 
+	Animation *previousAnimation;
+
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
 	AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet);
@@ -143,7 +145,6 @@ public:
 
 	/* FUNCTIONS */
 	void play(const std::string key, const float &dt);
-	void reset(const std::string key);
 
 	void addAnimation(
 			const std::string key,
