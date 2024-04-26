@@ -46,8 +46,8 @@ void GameState::initTextures()
 	 * Initializes textures used in the game.
 	 */
 
-	if (!this->textures["SCARLET_SPRITESHEET"].loadFromFile(
-			this->currentPath + "/Assets/Images/Sprites/Player/scarlet_spritesheet.png"))
+	if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile(
+			this->currentPath + "/Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
 	{
 		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE");
 	}
@@ -61,7 +61,7 @@ void GameState::initPlayers()
 	 * Initializes player(s).
 	 */
 
-	this->player = new Player(0.f, 0.f, this->textures["SCARLET_SPRITESHEET"]);
+	this->player = new Player(0.f, 0.f, this->textures["PLAYER_SPRITESHEET"]);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */

@@ -16,6 +16,7 @@ void Player::initVariables()
 	 * Initializes player variables.
 	 */
 
+	this->test = false;
 }
 
 void Player::initAnimations()
@@ -26,12 +27,22 @@ void Player::initAnimations()
 	 * Initializes player animations.
 	 */
 
-	this->animationComponent->addAnimation("IDLE_DOWN", 100.f, 0, 1, 0, 1, 16.f, 18.f);
+	this->animationComponent->addAnimation("IDLE_DOWN", 100.f, 0, 0, 0, 0, 64.f, 64.f);
+	this->animationComponent->addAnimation("IDLE_UP", 100.f, 0, 1, 0, 1, 64.f, 64.f);
+	this->animationComponent->addAnimation("IDLE_RIGHT", 100.f, 0, 2, 0, 2, 64.f, 64.f);
+	this->animationComponent->addAnimation("IDLE_LEFT", 100.f, 0, 3, 0, 3, 64.f, 64.f);
 
-	this->animationComponent->addAnimation("WALK_RIGHT", 15.f, 1, 0, 4, 0, 16.f, 18.f);
-	this->animationComponent->addAnimation("WALK_DOWN", 15.f, 1, 1, 4, 1, 16.f, 18.f);
-	this->animationComponent->addAnimation("WALK_LEFT", 15.f, 1, 2, 4, 2, 16.f, 18.f);
-	this->animationComponent->addAnimation("WALK_UP", 15.f, 1, 3, 4, 3, 16.f, 18.f);
+	this->animationComponent->addAnimation("WALK_DOWN", 11.f, 0, 4, 5, 4, 64.f, 64.f);
+	this->animationComponent->addAnimation("WALK_UP", 11.f, 0, 5, 5, 5, 64.f, 64.f);
+	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 0, 6, 5, 6, 64.f, 64.f);
+	this->animationComponent->addAnimation("WALK_LEFT", 11.f, 0, 7, 5, 7, 64.f, 64.f);
+
+	this->animationComponent->addAnimation("SPRINT_DOWN", 10.f, 6, 4, 9, 4, 64.f, 64.f);
+	this->animationComponent->addAnimation("SPRINT_UP", 10.f, 6, 5, 9, 5, 64.f, 64.f);
+	this->animationComponent->addAnimation("SPRINT_RIGHT", 10.f, 6, 6, 9, 6, 64.f, 64.f);
+	this->animationComponent->addAnimation("SPRINT_LEFT", 10.f, 6, 7, 9, 7, 64.f, 64.f);
+
+	this->animationComponent->addAnimation("JUMP_DOWN", 12.f, 5, 0, 8, 0, 64.f, 64.f);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -50,8 +61,8 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 	this->initVariables();
 	this->setPosition(x, y);
 
-	this->createHitboxComponent(14.f, 15.75f, 28.f, 31.5f);
-	this->createMovementComponent(200.f, 12.f, 8.f);
+	this->createHitboxComponent(70.f, 45.f, 50.f, 85.f);
+	this->createMovementComponent(160.f, 10.f, 7.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->initAnimations();
@@ -77,20 +88,48 @@ void Player::update(const float &dt)
 
 	this->movementComponent->update(dt);
 
-	if (this->movementComponent->isStateActive(IDLE))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		this->test = true;
+
+	if (this->test)
+	{
+		if (this->animationComponent->play("JUMP_DOWN", dt, true))
+		{
+			test = false;
+		}
+	}
+
+	switch (this->movementComponent->getCurrentState())
+	{
+	case IDLE_DOWN:
 		this->animationComponent->play("IDLE_DOWN", dt);
-
-	else if (this->movementComponent->isStateActive(MV_RIGHT))
-		this->animationComponent->play("WALK_RIGHT", dt);
-
-	else if (this->movementComponent->isStateActive(MV_DOWN))
-		this->animationComponent->play("WALK_DOWN", dt);
-
-	else if (this->movementComponent->isStateActive(MV_LEFT))
-		this->animationComponent->play("WALK_LEFT", dt);
-
-	else if (this->movementComponent->isStateActive(MV_UP))
-		this->animationComponent->play("WALK_UP", dt);
+		break;
+	case IDLE_UP:
+		this->animationComponent->play("IDLE_UP", dt);
+		break;
+	case IDLE_RIGHT:
+		this->animationComponent->play("IDLE_RIGHT", dt);
+		break;
+	case IDLE_LEFT:
+		this->animationComponent->play("IDLE_LEFT", dt);
+		break;
+	case MV_DOWN:
+		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y,
+				this->movementComponent->getMaxVelocity());
+		break;
+	case MV_UP:
+		this->animationComponent->play("WALK_UP", dt, this->movementComponent->getVelocity().y,
+				this->movementComponent->getMaxVelocity());
+		break;
+	case MV_RIGHT:
+		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x,
+				this->movementComponent->getMaxVelocity());
+		break;
+	case MV_LEFT:
+		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().x,
+				this->movementComponent->getMaxVelocity());
+		break;
+	}
 
 	this->hitboxComponent->update();
 }

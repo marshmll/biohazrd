@@ -7,6 +7,7 @@ class Player: public Entity
 {
 private:
 	/* VARIABLES */
+	bool test;
 
 	/* INITIALIZERS */
 	void initVariables();

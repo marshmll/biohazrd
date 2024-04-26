@@ -55,7 +55,7 @@ void Entity::setTexture(sf::Texture &texture)
 
 	this->sprite.setTexture(texture);
 
-	this->sprite.setScale(3.5f, 3.5f); //Temp
+	this->sprite.setScale(3.f, 3.f); //Temp
 }
 
 void Entity::createHitboxComponent(

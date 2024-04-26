@@ -1,6 +1,7 @@
 #ifndef COMPONENTS_ANIMATIONCOMPONENT_H_
 #define COMPONENTS_ANIMATIONCOMPONENT_H_
 
+#include <iostream>
 #include <string>
 #include <map>
 
@@ -17,7 +18,7 @@ private:
 		sf::Sprite &sprite;
 		sf::Texture &textureSheet;
 
-		float stdAnimationTimer;
+		float animationTimer;
 		float timer;
 
 		int width;
@@ -28,12 +29,12 @@ private:
 		sf::IntRect endCropRect;
 
 		Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
-				float std_animation_timer,
+				float animation_timer,
 				int start_frame_x_index, int start_frame_y_index,
 				int end_frame_x_index, int end_frame_y_index,
 				int width, int height) :
 
-				sprite(sprite), textureSheet(texture_sheet), stdAnimationTimer(std_animation_timer),
+				sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
 						width(width), height(height)
 		{
 			/**
@@ -62,17 +63,20 @@ private:
 
 			this->sprite.setTextureRect(this->startCropRect);
 
-			this->sprite.setScale(3.5f, 3.5f);
+			this->sprite.setScale(3.f, 3.f);
 		}
 
 		/* FUNCTIONS */
-		void play(const float &dt)
+		bool play(const float &dt)
 		{
 			/**
-			 * @return void
+			 * @return bool
+			 * Overloaded Method WITHOUT modifier.
 			 *
 			 * Plays the animation with the stardard animation timer.
 			 */
+
+			bool done = false;
 
 			// Increase timer
 			this->timer += 100.f * dt;
@@ -81,7 +85,7 @@ private:
 			this->sprite.setTextureRect(this->currentCropRect);
 
 			// If timer hits the desired animation update timer
-			if (this->timer >= this->stdAnimationTimer)
+			if (this->timer >= this->animationTimer)
 			{
 				// Reset the timer
 				this->timer = 0.f;
@@ -112,10 +116,76 @@ private:
 						// Move current frame row to start frame row and
 						// restart animation
 						this->currentCropRect.top = this->startCropRect.top;
+						done = true;
 					}
 				}
-
 			}
+
+			return done;
+		}
+
+		bool play(const float &dt, float mod_percent)
+		{
+			/**
+			 * @return bool
+			 * Overloaded Method WITH modifier.
+			 *
+			 * Plays the animation with the stardard animation timer.
+			 */
+
+			// If modifier percent is too small
+			if (mod_percent < 0.7f)
+			{
+				// Assure its at least 50%
+				mod_percent = 0.7f;
+			}
+
+			bool done = false;
+
+			// Increase timer with modifier percent
+			this->timer += mod_percent * 100.f * dt;
+
+			// Set next animation frame
+			this->sprite.setTextureRect(this->currentCropRect);
+
+			// If timer hits the desired animation update timer
+			if (this->timer >= this->animationTimer)
+			{
+				// Reset the timer
+				this->timer = 0.f;
+
+				// If the current frame row is less than or equal to final
+				// frame row
+				if (this->currentCropRect.top <= this->endCropRect.top)
+				{
+					// If current frame column is less than final frame column
+					if (this->currentCropRect.left < this->endCropRect.left)
+					{
+						// Move to the next frame in the right
+						this->currentCropRect.left += this->width;
+					}
+					// If current frame column is past the final frame column
+					else
+					{
+						// Move current frame to the start frame column
+						this->currentCropRect.left = this->startCropRect.left;
+
+						// Move current frame to the next row
+						this->currentCropRect.top += this->height;
+					}
+
+					// If the current row is past the final frame row
+					if (this->currentCropRect.top > this->endCropRect.top)
+					{
+						// Move current frame row to start frame row and
+						// restart animation
+						this->currentCropRect.top = this->startCropRect.top;
+						done = true;
+					}
+				}
+			}
+
+			return done;
 		}
 
 		void reset()
@@ -126,7 +196,7 @@ private:
 			 * Resets animation to start.
 			 */
 
-			this->timer = 0.f;
+			this->timer = this->animationTimer;
 			this->currentCropRect = this->startCropRect;
 		}
 	};
@@ -137,6 +207,7 @@ private:
 	std::map<std::string, Animation*> animations;
 
 	Animation *previousAnimation;
+	Animation *priorityAnimation;
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
@@ -144,14 +215,19 @@ public:
 	virtual ~AnimationComponent();
 
 	/* FUNCTIONS */
-	void play(const std::string key, const float &dt);
-
 	void addAnimation(
 			const std::string key,
 			float animation_update_timer,
 			int start_frame_x_index, int start_frame_y_index,
 			int frames_x_amount, int frames_y_amount,
 			int width, int height);
+
+	bool play(const std::string key, const float &dt, const bool priority = false);
+
+	bool play(const std::string key, const float &dt, const float &modifier, const float &modifier_max,
+			const bool priority = false);
+
+	void checkForSettingNewPreviousAnimation(std::string key);
 };
 
 #endif /* COMPONENTS_ANIMATIONCOMPONENT_H_ */

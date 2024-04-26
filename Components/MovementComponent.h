@@ -19,11 +19,14 @@
 
 enum movement_states
 {
-	IDLE = 0,
-	MV_RIGHT,
+	IDLE_DOWN = 0,
+	IDLE_UP,
+	IDLE_RIGHT,
+	IDLE_LEFT,
 	MV_DOWN,
+	MV_UP,
+	MV_RIGHT,
 	MV_LEFT,
-	MV_UP
 };
 
 class MovementComponent
@@ -38,7 +41,7 @@ private:
 
 	sf::Vector2f velocity;
 
-	short unsigned movementState;
+	short unsigned currentState;
 
 	/* INITIALIZERS */
 
@@ -53,7 +56,8 @@ public:
 
 	/* ACESSORS */
 	const sf::Vector2f& getVelocity() const;
-	const bool isStateActive(const short unsigned state) const;
+	const float& getMaxVelocity() const;
+	const short unsigned getCurrentState() const;
 
 };
 

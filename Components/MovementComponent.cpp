@@ -6,7 +6,7 @@
 MovementComponent::MovementComponent(sf::Sprite &sprite,
 		float maxVelocity, float acceleration, float deceleration) :
 		sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration),
-				movementState(IDLE)
+				currentState(IDLE_DOWN)
 {
 
 }
@@ -78,8 +78,27 @@ void MovementComponent::update(const float &dt)
 		}
 	}
 
+	// Get correct idle state if velocity is zero.
 	if (this->velocity == sf::Vector2f(0, 0))
-		this->movementState = IDLE;
+	{
+		switch (this->currentState)
+		{
+		case MV_DOWN:
+			this->currentState = IDLE_DOWN;
+			break;
+		case MV_UP:
+			this->currentState = IDLE_UP;
+			break;
+		case MV_RIGHT:
+			this->currentState = IDLE_RIGHT;
+			break;
+		case MV_LEFT:
+			this->currentState = IDLE_LEFT;
+			break;
+		default:
+			break;
+		}
+	}
 
 	// Final move
 	this->sprite.move(this->velocity * dt);
@@ -122,17 +141,23 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 		this->velocity.y = this->maxVelocity * yDirection;
 	}
 
+	// Update state
 	if (xDirection == 1 && this->velocity.y == 0)
-		this->movementState = MV_RIGHT;
+
+		this->currentState = MV_RIGHT;
 
 	else if (xDirection == -1 && this->velocity.y == 0)
-		this->movementState = MV_LEFT;
+
+		this->currentState = MV_LEFT;
 
 	if (yDirection == 1 && this->velocity.x == 0)
-		this->movementState = MV_DOWN;
+
+		this->currentState = MV_DOWN;
 
 	else if (yDirection == -1 && this->velocity.x == 0)
-		this->movementState = MV_UP;
+
+		this->currentState = MV_UP;
+
 }
 
 /* ACESSORS */
@@ -147,13 +172,18 @@ const sf::Vector2f& MovementComponent::getVelocity() const
 	return this->velocity;
 }
 
-const bool MovementComponent::isStateActive(const short unsigned state) const
+const float& MovementComponent::getMaxVelocity() const
+{
+	return this->maxVelocity;
+}
+
+const short unsigned MovementComponent::getCurrentState() const
 {
 	/**
 	 * @return bool
 	 *
-	 * Verifies if a movement state is active.
+	 * Returns current state.
 	 */
 
-	return this->movementState == state;
+	return this->currentState;
 }

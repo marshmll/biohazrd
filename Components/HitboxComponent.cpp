@@ -13,14 +13,23 @@ HitboxComponent::HitboxComponent(sf::Sprite &sprite,
 		float width, float height) :
 		sprite(sprite), offsetX(offset_x), offsetY(offset_y)
 {
+	/**
+	 * @constructor
+	 *
+	 * Creates a hitbox component for a entity.
+	 * -> Sets position
+	 * -> Sets size
+	 * -> Sets fill color to transparent
+	 */
+
 	this->hitbox.setPosition(this->sprite.getPosition().x + offset_x, this->sprite.getPosition().y + offset_y);
 
 	this->hitbox.setSize(sf::Vector2f(width, height));
 
 	this->hitbox.setFillColor(sf::Color::Transparent);
 
-	this->hitbox.setOutlineThickness(1.f);
-	this->hitbox.setOutlineColor(sf::Color::Green);
+	this->hitbox.setOutlineThickness(1.f);			// Temp
+	this->hitbox.setOutlineColor(sf::Color::Green); // Temp
 }
 
 HitboxComponent::~HitboxComponent()
@@ -31,6 +40,12 @@ HitboxComponent::~HitboxComponent()
 /* FUNCTIONS */
 void HitboxComponent::update()
 {
+	/**
+	 * @return void
+	 *
+	 * Updates the hitbox positions based on the sprite position.
+	 */
+
 	this->hitbox.setPosition(
 			this->sprite.getPosition().x + this->offsetX,
 			this->sprite.getPosition().y + this->offsetY);
@@ -38,11 +53,24 @@ void HitboxComponent::update()
 
 void HitboxComponent::render(sf::RenderTarget &target)
 {
+	/**
+	 * @return void
+	 *
+	 * Renders the hitbox into a target.
+	 */
+
 	target.draw(this->hitbox);
 }
 
 /* ACCESSORS */
 const bool HitboxComponent::hasIntersected(sf::FloatRect &frect) const
 {
+	/**
+	 * @return const bool
+	 *
+	 * Checks if the hitbox has intersected some other object
+	 * (sf::FloatRect).
+	 */
+
 	return this->hitbox.getGlobalBounds().intersects(frect);
 }
