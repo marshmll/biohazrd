@@ -36,8 +36,6 @@ public:
 	void updateButtons();
 
 	void renderButtons(sf::RenderTarget &target);
-
-	void endState();
 };
 
 #endif /* STATES_MAINMENUSTATE_H_ */

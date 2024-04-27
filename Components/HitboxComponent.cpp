@@ -28,8 +28,8 @@ HitboxComponent::HitboxComponent(sf::Sprite &sprite,
 
 	this->hitbox.setFillColor(sf::Color::Transparent);
 
-	this->hitbox.setOutlineThickness(1.f);			// Temp
-	this->hitbox.setOutlineColor(sf::Color::Green); // Temp
+	this->hitbox.setOutlineThickness(1.f);			// TEMP
+	this->hitbox.setOutlineColor(sf::Color::Green); // TEMP
 }
 
 HitboxComponent::~HitboxComponent()

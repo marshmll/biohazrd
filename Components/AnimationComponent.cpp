@@ -12,9 +12,6 @@ AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_
 		sprite(sprite), textureSheet(texture_sheet),
 				previousAnimation(nullptr), priorityAnimation(nullptr)
 {
-	/**
-	 * @constructor
-	 */
 
 }
 
@@ -71,7 +68,11 @@ void AnimationComponent::addAnimation(
 const bool AnimationComponent::play(const std::string key, const float &dt, const bool priority)
 {
 	/**
-	 * @return bool
+	 * @return const bool&
+	 *
+	 * OVERLOADED METHOD
+	 *
+	 * Uses normal playing speed.
 	 *
 	 * Plays an animation from the animations map.
 	 * Plays the animation with the same key passed in, OR
@@ -85,41 +86,46 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
 	if (priority && this->priorityAnimation == nullptr)
 		this->priorityAnimation = this->animations[key];
 
+	// If there is a prioritary animation
 	if (this->priorityAnimation != nullptr)
 	{
+		// If the previous animation is not the prioritary animation
+		// already, set it.
 		if (this->previousAnimation != this->priorityAnimation)
-		{
 			this->setNewPreviousAnimation(this->priorityAnimation);
-		}
 
+		// If the animation is done
 		if (this->priorityAnimation->play(dt))
 		{
+			// Reset the pointer and set done to true.
 			this->priorityAnimation = nullptr;
 			done = true;
 		}
 	}
-
+	// If there is no prioritary animation
 	else
 	{
+		// If the previous animation is not the animation to be
+		// player already, set it.
 		if (this->previousAnimation != this->animations[key])
-		{
 			this->setNewPreviousAnimation(key);
-		}
 
-		this->animations[key]->play(dt);
-
-		done = this->animations[key]->isDone();
+		// Sets done equals to if the animation is done.
+		done = this->animations[key]->play(dt);
 	}
 
 	return done;
 }
 
 const bool AnimationComponent::play(const std::string key, const float &dt, const float &modifier,
-		const float &modifier_max,
-		const bool priority)
+		const float &modifier_max, const bool priority)
 {
 	/**
-	 * @return bool
+	 * @return const bool&
+	 *
+	 * OVERLOADED METHOD
+	 *
+	 * Uses a modifier and a modifier max for the playing speed.
 	 *
 	 * Plays an animation from the animations map.
 	 * Plays the animation with the same key passed in, OR
@@ -133,30 +139,32 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
 	if (priority && this->priorityAnimation == nullptr)
 		this->priorityAnimation = this->animations[key];
 
+	// If there is a prioritary animation
 	if (this->priorityAnimation != nullptr)
 	{
+		// If the previous animation is not the prioritary animation
+		// already, set it.
 		if (this->previousAnimation != this->priorityAnimation)
-		{
 			this->setNewPreviousAnimation(this->priorityAnimation);
-		}
 
+		// If the animation is done
 		if (this->priorityAnimation->play(dt, std::abs(modifier / modifier_max)))
 		{
+			// Reset the pointer and set done to true.
 			this->priorityAnimation = nullptr;
 			done = true;
 		}
 	}
-
+	// If there is no prioritary animation
 	else
 	{
+		// If the previous animation is not the animation to be
+		// player already, set it.
 		if (this->previousAnimation != this->animations[key])
-		{
 			this->setNewPreviousAnimation(key);
-		}
 
-		this->animations[key]->play(dt, std::abs(modifier / modifier_max));
-
-		done = this->animations[key]->isDone();
+		// Sets done equals to if the animation is done.
+		done = this->animations[key]->play(dt, std::abs(modifier / modifier_max));
 	}
 
 	return done;
@@ -164,12 +172,23 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
 
 void AnimationComponent::setNewPreviousAnimation(std::string key)
 {
-	// If there is no previous animation, set it to the animation to be played.
+	/**
+	 * @return void
+	 *
+	 * OVERLOADED METHOD
+	 *
+	 * Uses a std::string as parameter.
+	 *
+	 * Sets previous animation pointer to be equal a
+	 * refered animation.
+	 */
+
+	// If there is no previous animation, set it to the refered animation.
 	if (this->previousAnimation == nullptr)
 		this->previousAnimation = this->animations[key];
 
-	// If there is a previous animation, reset the previous animation and
-	// set it to the animation to be played.
+	// If there is a previous animation, reset it and
+	// set the pointer to the animation to be played.
 	else
 	{
 		this->previousAnimation->reset();
@@ -179,12 +198,23 @@ void AnimationComponent::setNewPreviousAnimation(std::string key)
 
 void AnimationComponent::setNewPreviousAnimation(Animation *animation)
 {
-	// If there is no previous animation, set it to the animation to be played.
+	/**
+	 * @return void
+	 *
+	 * OVERLOADED METHOD
+	 *
+	 * Uses a Animation* as parameter.
+	 *
+	 * Sets previous animation pointer to be equal a
+	 * refered animation.
+	 */
+
+	// If there is no previous animation, set it to the refered animation.
 	if (this->previousAnimation == nullptr)
 		this->previousAnimation = animation;
 
-	// If there is a previous animation, reset the previous animation and
-	// set it to the animation to be played.
+	// If there is a previous animation, reset it and
+	// set the pointer to the animation to be played.
 	else
 	{
 		this->previousAnimation->reset();
@@ -194,5 +224,11 @@ void AnimationComponent::setNewPreviousAnimation(Animation *animation)
 
 const bool& AnimationComponent::isAnimationDone(std::string key)
 {
+	/**
+	 * @return const bool&
+	 *
+	 * Returns is a animation is done playing.
+	 */
+
 	return this->animations[key]->isDone();
 }

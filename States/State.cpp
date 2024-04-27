@@ -23,10 +23,15 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 */
 
 	this->states = states;
+
 	this->window = window;
-	this->quitState = false;
+
 	this->acceptedKeys = acceptedKeys;
+
 	this->currentPath = std::filesystem::current_path().string();
+
+	this->quitState = false;
+	this->isPaused = false;
 }
 
 State::~State()
@@ -62,6 +67,30 @@ void State::quit()
 	 */
 
 	this->quitState = true;
+}
+
+void State::pause()
+{
+	/**
+	 * @return void
+	 *
+	 * Pauses the state.
+	 * -> Sets isPaused to true.
+	 */
+
+	this->isPaused = true;
+}
+
+void State::resume()
+{
+	/**
+	 * @return void
+	 *
+	 * Resumes the state.
+	 * -> Sets isPaused to false.
+	 */
+
+	this->isPaused = false;
 }
 
 /* ACESSORS */

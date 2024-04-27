@@ -20,6 +20,7 @@ protected:
 	std::string currentPath;
 
 	bool quitState;
+	bool isPaused;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
@@ -45,6 +46,8 @@ public:
 	/* DEFINED VIRTUAL FUNCTIONS */
 	virtual void updateMousePositions();
 	virtual void quit();
+	virtual void pause();
+	virtual void resume();
 
 	/* ACESSORS */
 	const bool& hasAskedToQuit() const;

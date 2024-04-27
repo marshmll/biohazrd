@@ -7,6 +7,7 @@
 
 #include "Button.h"
 
+/* CONSTRUCTOR AND DESTRUCTOR */
 Button::Button(float x, float y, float width, float height,
 		sf::Font *font, std::string text, unsigned char_size,
 		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
@@ -79,31 +80,25 @@ void Button::update(sf::Vector2f mousePos)
 		}
 	}
 
-	if (this->btn_state != BTN_IDLE)
+	// Set text and fill color based on the state
+	switch (this->btn_state)
 	{
-		switch (this->btn_state)
-		{
-		case BTN_HOVER:
-			this->shape.setFillColor(this->hoverColor);
-			this->text.setFillColor(this->textHoverColor);
-			break;
-
-		case BTN_ACTIVE:
-			this->shape.setFillColor(this->activeColor);
-			this->text.setFillColor(this->textActiveColor);
-			break;
-
-		default:
-			break;
-		}
-	}
-	else
-	{
+	case BTN_IDLE:
 		this->shape.setFillColor(this->idleColor);
 		this->text.setFillColor(this->textIdleColor);
+		break;
+
+	case BTN_HOVER:
+		this->shape.setFillColor(this->hoverColor);
+		this->text.setFillColor(this->textHoverColor);
+		break;
+
+	case BTN_ACTIVE:
+		this->shape.setFillColor(this->activeColor);
+		this->text.setFillColor(this->textActiveColor);
+		break;
 	}
 }
-
 void Button::render(sf::RenderTarget &target)
 {
 	/**

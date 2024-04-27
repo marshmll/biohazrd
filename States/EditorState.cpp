@@ -71,7 +71,7 @@ void EditorState::initButtons()
 	/**
 	 * @return void
 	 *
-	 * Initializes all the buttons of the MainMenuState.
+	 * Initializes all the buttons of the EditorState.
 	 */
 
 }
@@ -86,7 +86,6 @@ EditorState::EditorState(sf::RenderWindow *window, std::map<std::string, sf::Key
 	 *
 	 * Calls the parent constructor for State.
 	 * -> Initializes variables
-	 * -> Initializes background
 	 * -> Initializes fonts
 	 * -> Initializes keybinds
 	 * -> Initializes buttons
@@ -142,6 +141,7 @@ void EditorState::render(sf::RenderTarget &target)
 	 */
 
 	this->renderButtons(target);
+
 //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 20));
@@ -163,6 +163,7 @@ void EditorState::updateInput(const float &dt)
 	 *
 	 * Updates the user input.
 	 * -> Updates mouse positions.
+	 * -> Checks for quitting state
 	 */
 
 	this->updateMousePositions();
@@ -182,7 +183,6 @@ void EditorState::updateButtons()
 	 * mouse click and position.
 	 */
 
-	// Updates all buttons based on mouse position view.
 	for (auto &it : this->buttons)
 		it.second->update(this->mousePosView);
 

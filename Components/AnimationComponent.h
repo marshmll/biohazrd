@@ -101,7 +101,7 @@ private:
 						// Move to the next frame in the right
 						this->currentCropRect.left += this->width;
 					}
-					// If current frame column is past the final frame column
+					// Else if current frame column is past the final frame column
 					else
 					{
 						// Move current frame to the start frame column
@@ -111,7 +111,7 @@ private:
 						this->currentCropRect.top += this->height;
 					}
 
-					// If the current row is past the final frame row
+					// If the current frame has reached the end
 					if (this->currentCropRect.top > this->endCropRect.top)
 					{
 						// Move current frame row to start frame row and
@@ -177,7 +177,7 @@ private:
 						this->currentCropRect.top += this->height;
 					}
 
-					// If the current row is past the final frame row
+					// If the current frame has reached the end
 					if (this->currentCropRect.top > this->endCropRect.top)
 					{
 						// Move current frame row to start frame row and
@@ -197,6 +197,9 @@ private:
 			 * @return void
 			 *
 			 * Resets animation to initial state.
+			 * -> Sets done to false
+			 * -> Sets timer to the animation timer
+			 * -> Sets current crop rect to the start crop rect.
 			 */
 
 			this->done = false;
@@ -207,6 +210,12 @@ private:
 		/* ACCESSORS */
 		const bool& isDone()
 		{
+			/**
+			 * @return const bool&
+			 *
+			 * Returns if the animation is done.
+			 */
+
 			return this->done;
 		}
 	};

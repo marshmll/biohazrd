@@ -33,8 +33,6 @@ public:
 	void updateButtons();
 
 	void renderButtons(sf::RenderTarget &target);
-
-	void endState();
 };
 
 #endif /* STATES_EDITORSTATE_H_ */

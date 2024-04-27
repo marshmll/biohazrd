@@ -38,6 +38,20 @@ void GameState::initKeybinds()
 	ifs.close();
 }
 
+void GameState::initFonts()
+{
+	/**
+	 * @return void
+	 *
+	 * Loads font from file.
+	 */
+
+	if (!this->font.loadFromFile(this->currentPath + "/Fonts/VCR_OSD_MONO_1.001.ttf"))
+	{
+		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT");
+	}
+}
+
 void GameState::initTextures()
 {
 	/**
@@ -51,6 +65,17 @@ void GameState::initTextures()
 	{
 		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE");
 	}
+}
+
+void GameState::initPauseMenu()
+{
+	/**
+	 * @return void
+	 *
+	 * Initializes pause menu.
+	 */
+
+	this->pauseMenu = new PauseMenu(*this->window, this->font);
 }
 
 void GameState::initPlayers()
@@ -74,12 +99,16 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboar
 	 *
 	 * Calls the parent constructor State(window, acceptedKeys)
 	 * -> Initializes the keybinds for the state.
+	 * -> Initializes fonts
 	 * -> Initializes textures
+	 * -> Initializes pause menu
 	 * -> Initializes player(s)
 	 */
 
 	this->initKeybinds();
+	this->initFonts();
 	this->initTextures();
+	this->initPauseMenu();
 	this->initPlayers();
 }
 
@@ -91,6 +120,7 @@ GameState::~GameState()
 	 * Frees player allocated memory
 	 */
 
+	delete this->pauseMenu;
 	delete this->player;
 }
 
@@ -101,13 +131,30 @@ void GameState::update(const float &dt)
 	 * @return void
 	 *
 	 * Updates the GameState.
-	 * -> Checks for updates in the user input.
-	 * -> Updates player.
+	 * -> Checks for updates in the state input.
+	 * -> Checks for updates in the player input, if NOT paused.
+	 * -> Checks for updates in the player input, if NOT paused.
+	 * -> Updates player, if NOT paused.
+	 * -> Updates pause menu if PAUSED.
+	 * -> Uptades pause menu buttons if PAUSED.
 	 */
 
+	this->updateMousePositions();
 	this->updateInput(dt);
 
-	this->player->update(dt);
+	// Not-paused update
+	if (!this->isPaused)
+	{
+		this->updatePlayerInput(dt);
+		this->player->update(dt);
+	}
+
+	// Paused state
+	else
+	{
+		this->pauseMenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
 }
 
 void GameState::render(sf::RenderTarget &target)
@@ -121,6 +168,10 @@ void GameState::render(sf::RenderTarget &target)
 
 	this->player->render(target);
 
+	if (this->isPaused) // Pause menu render
+	{
+		this->pauseMenu->render(target);
+	}
 }
 
 void GameState::updateInput(const float &dt)
@@ -128,13 +179,28 @@ void GameState::updateInput(const float &dt)
 	/**
 	 * @return void
 	 *
-	 * Updates the user input.
-	 * -> Updates mouse positions.
-	 * -> Checks for keybinds and executes its respective
-	 *    action.
+	 * Updates inputs related to the state.
 	 */
 
-	this->updateMousePositions();
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
+	{
+		if (!this->isPaused)
+			this->pause();
+		else
+			this->resume();
+	}
+}
+
+void GameState::updatePlayerInput(const float &dt)
+{
+	/**
+	 * @return void
+	 *
+	 * Updates the player input.
+	 *
+	 * Checks for keybinds and executes its respective
+	 * action.
+	 */
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
@@ -152,8 +218,17 @@ void GameState::updateInput(const float &dt)
 	{
 		this->player->move(1.f, 0.f, dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
-	{
+}
+
+void GameState::updatePauseMenuButtons()
+{
+	/**
+	 * @return void
+	 *
+	 * Updates button interactions from the pause menu.
+	 * Executes its functionality.
+	 */
+
+	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->quit();
-	}
 }

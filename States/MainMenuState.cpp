@@ -45,7 +45,7 @@ void MainMenuState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile(this->currentPath + "/Fonts/Dosis-Light.ttf"))
+	if (!this->font.loadFromFile(this->currentPath + "/Fonts/VCR_OSD_MONO_1.001.ttf"))
 	{
 		throw std::runtime_error("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT");
 	}
@@ -89,23 +89,23 @@ void MainMenuState::initButtons()
 	 * Initializes all the buttons of the MainMenuState.
 	 */
 
-	this->buttons["GAME_STATE"] = new Button(75, 340, 250, 50,
-			&this->font, "New Game", 40,
+	this->buttons["GAME_STATE"] = new Button(110.f, 340.f, 250.f, 50.f,
+			&this->font, "New Game", 30,
 			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EDITOR_STATE"] = new Button(75, 420, 250, 50,
-			&this->font, "Editor", 40,
+	this->buttons["EDITOR_STATE"] = new Button(110.f, 420.f, 250.f, 50.f,
+			&this->font, "Editor", 30,
 			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["SETTINGS"] = new Button(75, 500, 250, 50,
-			&this->font, "Settings", 40,
+	this->buttons["SETTINGS"] = new Button(110.f, 500.f, 250.f, 50.f,
+			&this->font, "Settings", 30,
 			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EXIT_STATE"] = new Button(75, 660, 250, 50,
-			&this->font, "Exit", 40,
+	this->buttons["EXIT_STATE"] = new Button(110.f, 660.f, 250.f, 50.f,
+			&this->font, "Exit", 30,
 			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
@@ -187,10 +187,10 @@ void MainMenuState::render(sf::RenderTarget &target)
 //	mouseText.setCharacterSize(12);
 //
 //	std::stringstream ss;
-//	ss << this->mousePosView.x << "   " << this->mousePosView.y;
+//	ss << this->mousePosView.x << " " << this->mousePosView.y;
 //	mouseText.setString(ss.str());
 //
-//	target->draw(mouseText);
+//	target.draw(mouseText);
 ///////////////////////////////////////////////////////////////////////////////////////////
 }
 
@@ -199,7 +199,7 @@ void MainMenuState::updateInput(const float &dt)
 	/**
 	 * @return void
 	 *
-	 * Updates the user input.
+	 * Updates the mouse input.
 	 * -> Updates mouse positions.
 	 */
 
@@ -213,7 +213,7 @@ void MainMenuState::updateButtons()
 	 *
 	 * Iterates over all buttons and update their states based on
 	 * mouse click and position.
-	 * Checks for quiting/pushing a new game state.
+	 * Executes a functionality for each button.
 	 */
 
 	// Updates all buttons based on mouse position view.
