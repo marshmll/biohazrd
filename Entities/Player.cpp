@@ -6,6 +6,7 @@
  */
 
 #include "Player.h"
+#define PRIORITARY true
 
 /* INITIALIZERS */
 void Player::initVariables()
@@ -16,7 +17,8 @@ void Player::initVariables()
 	 * Initializes player variables.
 	 */
 
-	this->test = false;
+	this->isJumping = false;
+	this->currentJumpAnimationName = "NONE";
 }
 
 void Player::initAnimations()
@@ -42,7 +44,10 @@ void Player::initAnimations()
 	this->animationComponent->addAnimation("SPRINT_RIGHT", 10.f, 6, 6, 9, 6, 64.f, 64.f);
 	this->animationComponent->addAnimation("SPRINT_LEFT", 10.f, 6, 7, 9, 7, 64.f, 64.f);
 
-	this->animationComponent->addAnimation("JUMP_DOWN", 12.f, 5, 0, 8, 0, 64.f, 64.f);
+	this->animationComponent->addAnimation("JUMP_DOWN", 13.f, 5, 0, 8, 0, 64.f, 64.f);
+	this->animationComponent->addAnimation("JUMP_UP", 13.f, 5, 1, 8, 1, 64.f, 64.f);
+	this->animationComponent->addAnimation("JUMP_RIGHT", 13.f, 5, 2, 8, 2, 64.f, 64.f);
+	this->animationComponent->addAnimation("JUMP_LEFT", 13.f, 5, 3, 8, 3, 64.f, 64.f);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -62,7 +67,7 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 	this->setPosition(x, y);
 
 	this->createHitboxComponent(70.f, 45.f, 50.f, 85.f);
-	this->createMovementComponent(160.f, 10.f, 7.f);
+	this->createMovementComponent(160.f, 12.f, 7.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->initAnimations();
@@ -87,50 +92,40 @@ void Player::update(const float &dt)
 	 */
 
 	this->movementComponent->update(dt);
+	this->hitboxComponent->update();
+	this->updateJump(dt);
+	this->updateAnimation(dt);
+}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		this->test = true;
-
-	if (this->test)
-	{
-		if (this->animationComponent->play("JUMP_DOWN", dt, true))
-		{
-			test = false;
-		}
-	}
-
+void Player::updateAnimation(const float &dt)
+{
 	switch (this->movementComponent->getCurrentState())
 	{
-	case IDLE_DOWN:
-		this->animationComponent->play("IDLE_DOWN", dt);
+	case IDLE:
+		this->animationComponent->play("IDLE_" + this->movementComponent->getDirection(), dt);
 		break;
-	case IDLE_UP:
-		this->animationComponent->play("IDLE_UP", dt);
-		break;
-	case IDLE_RIGHT:
-		this->animationComponent->play("IDLE_RIGHT", dt);
-		break;
-	case IDLE_LEFT:
-		this->animationComponent->play("IDLE_LEFT", dt);
-		break;
-	case MV_DOWN:
-		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y,
-				this->movementComponent->getMaxVelocity());
-		break;
-	case MV_UP:
-		this->animationComponent->play("WALK_UP", dt, this->movementComponent->getVelocity().y,
-				this->movementComponent->getMaxVelocity());
-		break;
-	case MV_RIGHT:
-		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x,
-				this->movementComponent->getMaxVelocity());
-		break;
-	case MV_LEFT:
-		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().x,
+	case MOVING:
+		this->animationComponent->play("WALK_" + this->movementComponent->getDirection(), dt,
+				std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y),
 				this->movementComponent->getMaxVelocity());
 		break;
 	}
+}
 
-	this->hitboxComponent->update();
+void Player::updateJump(const float &dt)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping)
+	{
+		this->isJumping = true;
+		this->animationComponent->play("JUMP_" + this->movementComponent->getDirection(), dt, PRIORITARY);
+		this->currentJumpAnimationName = "JUMP_" + this->movementComponent->getDirection();
+	}
+
+	if (this->currentJumpAnimationName != "NONE")
+	{
+		if (this->animationComponent->isAnimationDone(this->currentJumpAnimationName))
+			this->isJumping = false;
+	}
+
 }
 

@@ -23,6 +23,7 @@ private:
 
 		int width;
 		int height;
+		bool done;
 
 		sf::IntRect startCropRect;
 		sf::IntRect currentCropRect;
@@ -35,7 +36,7 @@ private:
 				int width, int height) :
 
 				sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
-						width(width), height(height)
+						timer(0.f), width(width), height(height), done(false)
 		{
 			/**
 			 * @constructor
@@ -53,8 +54,6 @@ private:
 			 * -> Frame height
 			 */
 
-			this->timer = 0.f;
-
 			this->startCropRect = sf::IntRect(start_frame_x_index * width, start_frame_y_index * height, width, height);
 			this->currentCropRect = this->startCropRect;
 			this->endCropRect = sf::IntRect(end_frame_x_index * width, end_frame_y_index * height, width, height);
@@ -67,16 +66,18 @@ private:
 		}
 
 		/* FUNCTIONS */
-		bool play(const float &dt)
+		const bool& play(const float &dt)
 		{
 			/**
 			 * @return bool
 			 * Overloaded Method WITHOUT modifier.
 			 *
 			 * Plays the animation with the stardard animation timer.
+			 *
+			 * Returns if the animaton is done.
 			 */
 
-			bool done = false;
+			this->done = false;
 
 			// Increase timer
 			this->timer += 100.f * dt;
@@ -116,21 +117,23 @@ private:
 						// Move current frame row to start frame row and
 						// restart animation
 						this->currentCropRect.top = this->startCropRect.top;
-						done = true;
+						this->done = true;
 					}
 				}
 			}
 
-			return done;
+			return this->done;
 		}
 
-		bool play(const float &dt, float mod_percent)
+		const bool& play(const float &dt, float mod_percent)
 		{
 			/**
 			 * @return bool
 			 * Overloaded Method WITH modifier.
 			 *
 			 * Plays the animation with the stardard animation timer.
+			 *
+			 * Returns if the animation is done.
 			 */
 
 			// If modifier percent is too small
@@ -140,7 +143,7 @@ private:
 				mod_percent = 0.7f;
 			}
 
-			bool done = false;
+			this->done = false;
 
 			// Increase timer with modifier percent
 			this->timer += mod_percent * 100.f * dt;
@@ -180,12 +183,12 @@ private:
 						// Move current frame row to start frame row and
 						// restart animation
 						this->currentCropRect.top = this->startCropRect.top;
-						done = true;
+						this->done = true;
 					}
 				}
 			}
 
-			return done;
+			return this->done;
 		}
 
 		void reset()
@@ -193,11 +196,18 @@ private:
 			/*
 			 * @return void
 			 *
-			 * Resets animation to start.
+			 * Resets animation to initial state.
 			 */
 
+			this->done = false;
 			this->timer = this->animationTimer;
 			this->currentCropRect = this->startCropRect;
+		}
+
+		/* ACCESSORS */
+		const bool& isDone()
+		{
+			return this->done;
 		}
 	};
 
@@ -222,12 +232,17 @@ public:
 			int frames_x_amount, int frames_y_amount,
 			int width, int height);
 
-	bool play(const std::string key, const float &dt, const bool priority = false);
+	const bool play(const std::string key, const float &dt, const bool priority = false);
 
-	bool play(const std::string key, const float &dt, const float &modifier, const float &modifier_max,
+	const bool play(const std::string key, const float &dt, const float &modifier, const float &modifier_max,
 			const bool priority = false);
 
-	void checkForSettingNewPreviousAnimation(std::string key);
+	void setNewPreviousAnimation(std::string key);
+	void setNewPreviousAnimation(Animation *animation);
+
+	/* ACCESSORS */
+	const bool& isAnimationDone(std::string key);
+
 };
 
 #endif /* COMPONENTS_ANIMATIONCOMPONENT_H_ */

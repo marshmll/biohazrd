@@ -7,7 +7,8 @@ class Player: public Entity
 {
 private:
 	/* VARIABLES */
-	bool test;
+	bool isJumping;
+	std::string currentJumpAnimationName;
 
 	/* INITIALIZERS */
 	void initVariables();
@@ -19,6 +20,8 @@ public:
 
 	/* FUNCTIONS */
 	virtual void update(const float &dt);
+	void updateAnimation(const float &dt);
+	void updateJump(const float &dt);
 };
 
 #endif /* ENTITIES_PLAYER_H_ */

@@ -17,16 +17,18 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-enum movement_states
+enum states
 {
-	IDLE_DOWN = 0,
-	IDLE_UP,
-	IDLE_RIGHT,
-	IDLE_LEFT,
-	MV_DOWN,
-	MV_UP,
-	MV_RIGHT,
-	MV_LEFT,
+	IDLE = 0,
+	MOVING
+};
+
+enum directions
+{
+	DOWN = 0,
+	UP,
+	RIGHT,
+	LEFT
 };
 
 class MovementComponent
@@ -41,7 +43,8 @@ private:
 
 	sf::Vector2f velocity;
 
-	short unsigned currentState;
+	short unsigned state;
+	short unsigned direction;
 
 	/* INITIALIZERS */
 
@@ -57,7 +60,8 @@ public:
 	/* ACESSORS */
 	const sf::Vector2f& getVelocity() const;
 	const float& getMaxVelocity() const;
-	const short unsigned getCurrentState() const;
+	const short unsigned& getCurrentState() const;
+	const std::string getDirection() const;
 
 };
 

@@ -6,7 +6,7 @@
 MovementComponent::MovementComponent(sf::Sprite &sprite,
 		float maxVelocity, float acceleration, float deceleration) :
 		sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration),
-				currentState(IDLE_DOWN)
+				state(IDLE), direction(DOWN)
 {
 
 }
@@ -78,26 +78,10 @@ void MovementComponent::update(const float &dt)
 		}
 	}
 
-	// Get correct idle state if velocity is zero.
+	// Set state to idle
 	if (this->velocity == sf::Vector2f(0, 0))
 	{
-		switch (this->currentState)
-		{
-		case MV_DOWN:
-			this->currentState = IDLE_DOWN;
-			break;
-		case MV_UP:
-			this->currentState = IDLE_UP;
-			break;
-		case MV_RIGHT:
-			this->currentState = IDLE_RIGHT;
-			break;
-		case MV_LEFT:
-			this->currentState = IDLE_LEFT;
-			break;
-		default:
-			break;
-		}
+		this->state = IDLE;
 	}
 
 	// Final move
@@ -141,22 +125,24 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 		this->velocity.y = this->maxVelocity * yDirection;
 	}
 
+	this->state = MOVING;
+
 	// Update state
 	if (xDirection == 1 && this->velocity.y == 0)
 
-		this->currentState = MV_RIGHT;
+		this->direction = RIGHT;
 
 	else if (xDirection == -1 && this->velocity.y == 0)
 
-		this->currentState = MV_LEFT;
+		this->direction = LEFT;
 
 	if (yDirection == 1 && this->velocity.x == 0)
 
-		this->currentState = MV_DOWN;
+		this->direction = DOWN;
 
 	else if (yDirection == -1 && this->velocity.x == 0)
 
-		this->currentState = MV_UP;
+		this->direction = UP;
 
 }
 
@@ -177,13 +163,42 @@ const float& MovementComponent::getMaxVelocity() const
 	return this->maxVelocity;
 }
 
-const short unsigned MovementComponent::getCurrentState() const
+const short unsigned& MovementComponent::getCurrentState() const
 {
 	/**
-	 * @return bool
+	 * @return short unsigned reference
 	 *
 	 * Returns current state.
 	 */
 
-	return this->currentState;
+	return this->state;
+}
+
+const std::string MovementComponent::getDirection() const
+{
+	/**
+	 * @return std::string
+	 *
+	 * Returns the current facing direction
+	 */
+
+	std::string direction;
+
+	switch (this->direction)
+	{
+	case DOWN:
+		direction = "DOWN";
+		break;
+	case UP:
+		direction = "UP";
+		break;
+	case RIGHT:
+		direction = "RIGHT";
+		break;
+	case LEFT:
+		direction = "LEFT";
+		break;
+	}
+
+	return direction;
 }
