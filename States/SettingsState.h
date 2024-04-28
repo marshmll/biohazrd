@@ -1,15 +1,19 @@
-#ifndef STATES_EDITORSTATE_H_
-#define STATES_EDITORSTATE_H_
+#ifndef STATES_SETTINGSSTATE_H_
+#define STATES_SETTINGSSTATE_H_
 
 #include "State.h"
 
-class EditorState: public State
+class SettingsState: public State
 {
 private:
 	/* VARIABLES */
+	sf::Texture backgroundTexture;
+	sf::RectangleShape background;
 	sf::Font font;
 
 	std::map<std::string, gui::Button*> buttons;
+
+	gui::DropDownList* ddl;
 
 	/* INITIALIZERS */
 	void initVariables();
@@ -20,9 +24,9 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	EditorState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+	SettingsState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
 			std::stack<State*> *states);
-	virtual ~EditorState();
+	virtual ~SettingsState();
 
 	/* FUNCTIONS */
 	void update(const float &dt);
@@ -32,6 +36,8 @@ public:
 	void updateButtons();
 
 	void renderButtons(sf::RenderTarget &target);
+
+	/* ACCESSORS */
 };
 
-#endif /* STATES_EDITORSTATE_H_ */
+#endif /* STATES_SETTINGSSTATE_H_ */

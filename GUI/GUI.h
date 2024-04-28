@@ -1,0 +1,135 @@
+#ifndef GUI_GUI_H_
+#define GUI_GUI_H_
+
+#include <iostream>
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
+#include <stack>
+#include <vector>
+
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
+
+enum button_states
+{
+	BTN_IDLE = 0,
+	BTN_HOVER,
+	BTN_ACTIVE
+};
+
+namespace gui
+{
+////////////////////////////////////////////////////////////
+// BUTTON CLASS
+////////////////////////////////////////////////////////////
+class Button
+{
+private:
+	short unsigned btn_state;
+
+	sf::RectangleShape shape;
+
+	sf::Text text;
+	sf::Font *font;
+
+	sf::Color textIdleColor;
+	sf::Color textHoverColor;
+	sf::Color textActiveColor;
+
+	sf::Color idleColor;
+	sf::Color hoverColor;
+	sf::Color activeColor;
+
+public:
+	/* CONSTRUCTOR AND DESTRUCTOR */
+	Button(float x, float y, float width, float height,
+			sf::Font *font, std::string text, unsigned character_size,
+			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+			sf::Color idle_color, sf::Color hover_color, sf::Color active_color);
+	virtual ~Button();
+
+	/* FUNCTIONS */
+	void update(sf::Vector2f mousePos);
+	void render(sf::RenderTarget &target);
+
+	// Setters
+	void setText(std::string text);
+
+	/* ACCESSORS */
+	const bool isPressed() const;
+	const std::string getText() const;
+};
+
+////////////////////////////////////////////////////////////
+// DROPDOWN BOX CLASS
+////////////////////////////////////////////////////////////
+class DropDownList
+{
+private:
+	/* VARIABLES */
+	sf::Font &font;
+	gui::Button *selectedElement;
+	std::vector<gui::Button*> list;
+
+	bool showList;
+
+	float keytime;
+	float keytimeMax;
+
+public:
+	/* CONSTRUCTOR AND DESTRUCTOR */
+	DropDownList(float x, float y, float width, float height,
+			sf::Font &font, std::string elements_name[], unsigned numOfElements, short unsigned default_index = 0);
+	~DropDownList();
+
+	/* FUNCTIONS */
+	void update(const sf::Vector2f &mousePos, const float &dt);
+	void render(sf::RenderTarget &target);
+
+	void updateKeytime(const float &dt);
+
+	/* ACESSORS */
+	const bool hasCompletedKeytimeCicle();
+};
+
+////////////////////////////////////////////////////////////
+// PAUSE MENU CLASS
+////////////////////////////////////////////////////////////
+class PauseMenu
+{
+private:
+	/* VARIABLES */
+	sf::Font &font;
+	sf::Text pmenuText;
+
+	sf::RectangleShape background;
+	sf::RectangleShape container;
+	std::map<std::string, gui::Button*> buttons;
+
+	/* INITIALIZERS */
+	void initButtons();
+
+public:
+	/* CONSTRUCTOR AND DESTRUCTOR */
+	PauseMenu(sf::RenderWindow &window, sf::Font &font);
+	virtual ~PauseMenu();
+
+	/* FUNCTIONS */
+	void update(const sf::Vector2f &mousePos);
+	void render(sf::RenderTarget &target);
+
+	void addButton(std::string key, float y, const std::string text);
+
+	const bool isButtonPressed(const std::string key);
+
+	/* ACCESSORS */
+	std::map<std::string, gui::Button*>& getButtons();
+
+};
+}
+
+#endif /* GUI_GUI_H_ */

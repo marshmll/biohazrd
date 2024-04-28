@@ -75,7 +75,7 @@ void GameState::initPauseMenu()
 	 * Initializes pause menu.
 	 */
 
-	this->pauseMenu = new PauseMenu(*this->window, this->font);
+	this->pauseMenu = new gui::PauseMenu(*this->window, this->font);
 }
 
 void GameState::initPlayers()
@@ -140,6 +140,7 @@ void GameState::update(const float &dt)
 	 */
 
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
 
 	// Not-paused update
@@ -182,7 +183,7 @@ void GameState::updateInput(const float &dt)
 	 * Updates inputs related to the state.
 	 */
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]) && this->hasCompletedKeytimeCicle())
 	{
 		if (!this->isPaused)
 			this->pause();

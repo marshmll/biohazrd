@@ -2,13 +2,12 @@
 #define STATES_GAMESTATE_H_
 
 #include "State.h"
-#include "../GUI/PauseMenu.h"
 
 class GameState: public State
 {
 private:
 	/* VARIABLES */
-	PauseMenu *pauseMenu;
+	gui::PauseMenu *pauseMenu;
 
 	Player *player;
 

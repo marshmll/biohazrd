@@ -32,6 +32,9 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 
 	this->quitState = false;
 	this->isPaused = false;
+
+	this->keytime = 0.f;
+	this->keytimeMax = 15.f;
 }
 
 State::~State()
@@ -54,6 +57,20 @@ void State::updateMousePositions()
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
+}
+
+void State::updateKeytime(const float &dt)
+{
+	/**
+	 * @return void
+	 *
+	 * Updates the keytime.
+	 * The keytime is used for key presses filtering and
+	 * debugging.
+	 */
+
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 100.f * dt;
 }
 
 void State::quit()
@@ -106,3 +123,24 @@ const bool& State::hasAskedToQuit() const
 
 	return this->quitState;
 }
+
+const bool State::hasCompletedKeytimeCicle()
+{
+	/**
+	 * @return const bool
+	 *
+	 * Returns if a keytime cicle has completed.
+	 * A keytime cicle means that a defined amount of
+	 * time has passed after a key was pressed.
+	 * -> Restarts keytime after verification.
+	 */
+
+	if (this->keytime >= this->keytimeMax)
+	{
+		this->keytime = 0.f;
+		return true;
+	}
+
+	return false;
+}
+

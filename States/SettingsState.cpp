@@ -1,23 +1,23 @@
 /*
- * MainMenuState class that extends State class.
+ * SettingsState.cpp
  *
- *  Created on: 14 de abr. de 2024
- *      Author: Renan Andrade
+ *  Created on: 28 de abr. de 2024
+ *      Author: renan
  */
 
-#include "MainMenuState.h"
+#include "SettingsState.h"
 
 /* INITIALIZERS */
-void MainMenuState::initVariables()
+void SettingsState::initVariables()
 {
 	/**
 	 * @return void
 	 *
-	 * Initializes MainMenuState variables
+	 * Initializes SettingsState variables
 	 */
 }
 
-void MainMenuState::initBackground()
+void SettingsState::initBackground()
 {
 	/**
 	 * @return void
@@ -31,13 +31,13 @@ void MainMenuState::initBackground()
 
 	if (!this->backgroundTexture.loadFromFile(this->currentPath + "/Assets/Images/Backgrounds/main_menu_bg.png"))
 	{
-		throw std::runtime_error("ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG");
+		throw std::runtime_error("ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG");
 	}
 
 	this->background.setTexture(&this->backgroundTexture);
 }
 
-void MainMenuState::initFonts()
+void SettingsState::initFonts()
 {
 	/**
 	 * @return void
@@ -47,11 +47,11 @@ void MainMenuState::initFonts()
 
 	if (!this->font.loadFromFile(this->currentPath + "/Fonts/VCR_OSD_MONO_1.001.ttf"))
 	{
-		throw std::runtime_error("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT");
+		throw std::runtime_error("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT");
 	}
 }
 
-void MainMenuState::initKeybinds()
+void SettingsState::initKeybinds()
 {
 	/**
 	 * @return void
@@ -75,43 +75,33 @@ void MainMenuState::initKeybinds()
 	}
 	else
 	{
-		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS");
+		throw std::runtime_error("ERROR::SETTINGSSTATE::INITKEYBINDS_COULD_NOT_LOAD_KEYBINDS");
 	}
 
 	ifs.close();
 }
 
-void MainMenuState::initButtons()
+void SettingsState::initButtons()
 {
 	/**
 	 * @return void
 	 *
-	 * Initializes all the buttons of the MainMenuState.
+	 * Initializes all the buttons of the SettingsState.
 	 */
-
-	this->buttons["GAME_STATE"] = new gui::Button(110.f, 340.f, 250.f, 50.f,
-			&this->font, "New Game", 30,
-			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
-
-	this->buttons["EDITOR_STATE"] = new gui::Button(110.f, 420.f, 250.f, 50.f,
-			&this->font, "Editor", 30,
-			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
-
-	this->buttons["SETTINGS_STATE"] = new gui::Button(110.f, 500.f, 250.f, 50.f,
-			&this->font, "Settings", 30,
-			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["EXIT_STATE"] = new gui::Button(110.f, 660.f, 250.f, 50.f,
 			&this->font, "Exit", 30,
 			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	std::string test[] =
+			{ "1980x720", "1280x800", "1280x720", "800x600" };
+
+	this->ddl = new gui::DropDownList(200, 200, 150, 50, this->font, test, 4);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
+SettingsState::SettingsState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
 		std::stack<State*> *states) :
 		State(window, acceptedKeys, states)
 {
@@ -137,7 +127,7 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf:
 	this->initButtons();
 }
 
-MainMenuState::~MainMenuState()
+SettingsState::~SettingsState()
 {
 	/**
 	 * @destructor
@@ -150,24 +140,28 @@ MainMenuState::~MainMenuState()
 	{
 		delete it->second;
 	}
+
+	delete this->ddl;
 }
 
 /* FUNCTIONS */
-void MainMenuState::update(const float &dt)
+void SettingsState::update(const float &dt)
 {
 	/**
 	 * @return void
 	 *
-	 * Updates the MainMenuState.
+	 * Updates the Settings State.
 	 * -> Checks for updates in the user input.
 	 * -> Update buttons.
 	 */
 
 	this->updateInput(dt);
 	this->updateButtons();
+
+	this->ddl->update(this->mousePosView, dt);
 }
 
-void MainMenuState::render(sf::RenderTarget &target)
+void SettingsState::render(sf::RenderTarget &target)
 {
 	/**
 	 * @return void
@@ -179,6 +173,8 @@ void MainMenuState::render(sf::RenderTarget &target)
 
 	target.draw(this->background);
 	this->renderButtons(target);
+
+	this->ddl->render(target);
 
 //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
 //	sf::Text mouseText;
@@ -194,7 +190,7 @@ void MainMenuState::render(sf::RenderTarget &target)
 ///////////////////////////////////////////////////////////////////////////////////////////
 }
 
-void MainMenuState::updateInput(const float &dt)
+void SettingsState::updateInput(const float &dt)
 {
 	/**
 	 * @return void
@@ -206,7 +202,7 @@ void MainMenuState::updateInput(const float &dt)
 	this->updateMousePositions();
 }
 
-void MainMenuState::updateButtons()
+void SettingsState::updateButtons()
 {
 	/**
 	 * @return void
@@ -220,24 +216,12 @@ void MainMenuState::updateButtons()
 	for (auto &it : this->buttons)
 		it.second->update(this->mousePosView);
 
-	// New game
-	if (this->buttons["GAME_STATE"]->isPressed())
-		this->states->push(new GameState(this->window, this->acceptedKeys, this->states));
-
-	// Editor state
-	else if (this->buttons["EDITOR_STATE"]->isPressed())
-		this->states->push(new EditorState(this->window, this->acceptedKeys, this->states));
-
-	// Settings
-	else if (this->buttons["SETTINGS_STATE"]->isPressed())
-		this->states->push(new SettingsState(this->window, this->acceptedKeys, this->states));
-
 	// Exit
-	else if (this->buttons["EXIT_STATE"]->isPressed())
+	if (this->buttons["EXIT_STATE"]->isPressed())
 		this->quit();
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget &target)
+void SettingsState::renderButtons(sf::RenderTarget &target)
 {
 	/**
 	 * @return void
@@ -250,3 +234,4 @@ void MainMenuState::renderButtons(sf::RenderTarget &target)
 		it.second->render(target);
 	}
 }
+

@@ -2,6 +2,7 @@
 #define STATE_H_
 
 #include "../Entities/Player.h"
+#include "../GUI/GUI.h"
 
 class State
 {
@@ -21,6 +22,9 @@ protected:
 
 	bool quitState;
 	bool isPaused;
+
+	float keytime;
+	float keytimeMax;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
@@ -45,12 +49,14 @@ public:
 
 	/* DEFINED VIRTUAL FUNCTIONS */
 	virtual void updateMousePositions();
+	virtual void updateKeytime(const float &dt);
 	virtual void quit();
 	virtual void pause();
 	virtual void resume();
 
 	/* ACESSORS */
 	const bool& hasAskedToQuit() const;
+	const bool hasCompletedKeytimeCicle();
 };
 
 #endif /* STATE_H_ */
