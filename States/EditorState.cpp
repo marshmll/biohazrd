@@ -30,9 +30,9 @@ void EditorState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile(this->currentPath + "/Fonts/Dosis-Light.ttf"))
+	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
 	{
-		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT");
+		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 	}
 }
 
@@ -46,7 +46,7 @@ void EditorState::initKeybinds()
 	 * its own function binding to a key.
 	 */
 
-	std::ifstream ifs(this->currentPath + "/Config/editorstate_keybinds.ini");
+	std::ifstream ifs("Config/editorstate_keybinds.ini");
 
 	if (ifs.is_open())
 	{
@@ -60,7 +60,7 @@ void EditorState::initKeybinds()
 	}
 	else
 	{
-		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS");
+		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
 	}
 
 	ifs.close();

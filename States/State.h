@@ -26,6 +26,9 @@ protected:
 	float keytime;
 	float keytimeMax;
 
+	float mousetime;
+	float mousetimeMax;
+
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
@@ -50,6 +53,7 @@ public:
 	/* DEFINED VIRTUAL FUNCTIONS */
 	virtual void updateMousePositions();
 	virtual void updateKeytime(const float &dt);
+	virtual void updateMousetime(const float &dt);
 	virtual void quit();
 	virtual void pause();
 	virtual void resume();
@@ -57,6 +61,7 @@ public:
 	/* ACESSORS */
 	const bool& hasAskedToQuit() const;
 	const bool hasCompletedKeytimeCicle();
+	const bool hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn);
 };
 
 #endif /* STATE_H_ */

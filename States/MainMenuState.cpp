@@ -29,9 +29,10 @@ void MainMenuState::initBackground()
 
 	this->background.setSize(sf::Vector2f(this->window->getSize()));
 
-	if (!this->backgroundTexture.loadFromFile(this->currentPath + "/Assets/Images/Backgrounds/main_menu_bg.png"))
+	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
 	{
-		throw std::runtime_error("ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG");
+		throw std::runtime_error(
+				"ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
 	}
 
 	this->background.setTexture(&this->backgroundTexture);
@@ -45,9 +46,9 @@ void MainMenuState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile(this->currentPath + "/Fonts/VCR_OSD_MONO_1.001.ttf"))
+	if (!this->font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
 	{
-		throw std::runtime_error("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT");
+		throw std::runtime_error("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 	}
 }
 
@@ -61,7 +62,7 @@ void MainMenuState::initKeybinds()
 	 * its own function binding to a key.
 	 */
 
-	std::ifstream ifs(this->currentPath + "/Config/mainmenustate_keybinds.ini");
+	std::ifstream ifs("Config/mainmenustate_keybinds.ini");
 
 	if (ifs.is_open())
 	{
@@ -75,7 +76,7 @@ void MainMenuState::initKeybinds()
 	}
 	else
 	{
-		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS");
+		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
 	}
 
 	ifs.close();
@@ -163,6 +164,7 @@ void MainMenuState::update(const float &dt)
 	 * -> Update buttons.
 	 */
 
+	this->updateMousetime(dt);
 	this->updateInput(dt);
 	this->updateButtons();
 }
@@ -220,21 +222,24 @@ void MainMenuState::updateButtons()
 	for (auto &it : this->buttons)
 		it.second->update(this->mousePosView);
 
-	// New game
-	if (this->buttons["GAME_STATE"]->isPressed())
-		this->states->push(new GameState(this->window, this->acceptedKeys, this->states));
+	if (this->hasCompletedMousetimeCicle(sf::Mouse::Left))
+	{
+		// New game
+		if (this->buttons["GAME_STATE"]->isPressed())
+			this->states->push(new GameState(this->window, this->acceptedKeys, this->states));
 
-	// Editor state
-	else if (this->buttons["EDITOR_STATE"]->isPressed())
-		this->states->push(new EditorState(this->window, this->acceptedKeys, this->states));
+		// Editor state
+		else if (this->buttons["EDITOR_STATE"]->isPressed())
+			this->states->push(new EditorState(this->window, this->acceptedKeys, this->states));
 
-	// Settings
-	else if (this->buttons["SETTINGS_STATE"]->isPressed())
-		this->states->push(new SettingsState(this->window, this->acceptedKeys, this->states));
+		// Settings
+		else if (this->buttons["SETTINGS_STATE"]->isPressed())
+			this->states->push(new SettingsState(this->window, this->acceptedKeys, this->states));
 
-	// Exit
-	else if (this->buttons["EXIT_STATE"]->isPressed())
-		this->quit();
+		// Exit
+		else if (this->buttons["EXIT_STATE"]->isPressed())
+			this->quit();
+	}
 }
 
 void MainMenuState::renderButtons(sf::RenderTarget &target)

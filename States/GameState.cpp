@@ -18,7 +18,7 @@ void GameState::initKeybinds()
 	 * its own binding to a key.
 	 */
 
-	std::ifstream ifs(this->currentPath + "/Config/gamestate_keybinds.ini");
+	std::ifstream ifs("Config/gamestate_keybinds.ini");
 
 	if (ifs.is_open())
 	{
@@ -32,7 +32,7 @@ void GameState::initKeybinds()
 	}
 	else
 	{
-		throw std::runtime_error("GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS");
+		throw std::runtime_error("GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
 	}
 
 	ifs.close();
@@ -46,9 +46,9 @@ void GameState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile(this->currentPath + "/Fonts/VCR_OSD_MONO_1.001.ttf"))
+	if (!this->font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
 	{
-		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT");
+		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 	}
 }
 
@@ -60,10 +60,9 @@ void GameState::initTextures()
 	 * Initializes textures used in the game.
 	 */
 
-	if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile(
-			this->currentPath + "/Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
+	if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
 	{
-		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE");
+		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE\n" + this->currentPath);
 	}
 }
 

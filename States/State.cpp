@@ -17,9 +17,12 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 * Constructs a State instance.
 	 * -> Sets a pointer to the states stack.
 	 * -> Sets this->window to window pointer
-	 * -> Sets this->quitState to false
-	 * -> Sets this->acceptedKeys to acceptedKeys pointer.
+	 * -> Sets the accepted keys
 	 * -> Sets current directory path.
+	 * -> Sets this->quitState to false
+	 * -> Sets is paused to false
+	 * -> Sets keytime and keytimeMax
+	 * -> Sets mousetime and mousetimeMax
 	 */
 
 	this->states = states;
@@ -35,6 +38,9 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 
 	this->keytime = 0.f;
 	this->keytimeMax = 15.f;
+
+	this->mousetime = 0.f;
+	this->mousetimeMax = 10.f;
 }
 
 State::~State()
@@ -65,12 +71,26 @@ void State::updateKeytime(const float &dt)
 	 * @return void
 	 *
 	 * Updates the keytime.
-	 * The keytime is used for key presses filtering and
-	 * debugging.
+	 * The keytime is used for avoiding multiple key presses
+	 * at a single press.
 	 */
 
 	if (this->keytime < this->keytimeMax)
 		this->keytime += 100.f * dt;
+}
+
+void State::updateMousetime(const float &dt)
+{
+	/**
+	 * @return void
+	 *
+	 * Updates the mousetime.
+	 * The mousetime is used for avoiding multiple mouse
+	 * clicks at a single click.
+	 */
+
+	if (this->mousetime < this->mousetimeMax)
+		this->mousetime += 100.f * dt;
 }
 
 void State::quit()
@@ -144,3 +164,24 @@ const bool State::hasCompletedKeytimeCicle()
 	return false;
 }
 
+const bool State::hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn)
+{
+	/**
+	 * @return const bool
+	 *
+	 * Returns if a mousetime cicle has completed.
+	 * A mousetime cicle means that a defined amount of
+	 * time has passed after a mouse button was pressed.
+	 * -> Restarts keytime after verification.
+	 */
+
+	if (this->mousetime >= this->mousetimeMax)
+	{
+		if (sf::Mouse::isButtonPressed(mouseBtn))
+			this->mousetime = 0.f;
+
+		return true;
+	}
+
+	return false;
+}

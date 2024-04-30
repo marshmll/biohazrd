@@ -10,15 +10,19 @@
 
 #include "GUI.h"
 
-////////////////////////////////////////////////////////////
-// BUTTON CLASS
-////////////////////////////////////////////////////////////
+/**********************************************************************************************************
+ *
+ * BUTTON
+ *
+ *********************************************************************************************************/
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 gui::Button::Button(float x, float y, float width, float height,
 		sf::Font *font, std::string text, unsigned char_size,
 		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-		sf::Color idle_color, sf::Color hover_color, sf::Color active_color)
+		sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+		sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
+		short unsigned id)
 {
 	/**
 	 * @constructor
@@ -32,6 +36,7 @@ gui::Button::Button(float x, float y, float width, float height,
 	 * -> Sets text position centered in button.
 	 */
 
+	this->id = id;
 	this->btn_state = BTN_IDLE;
 
 	this->idleColor = idle_color;
@@ -41,6 +46,8 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->shape.setPosition(sf::Vector2f(x, y));
 	this->shape.setSize(sf::Vector2f(width, height));
 	this->shape.setFillColor(idle_color);
+	this->shape.setOutlineThickness(1.f);
+	this->shape.setOutlineColor(outline_idle_color);
 
 	this->font = font;
 
@@ -60,6 +67,10 @@ gui::Button::Button(float x, float y, float width, float height,
 			this->shape.getPosition().y
 					+ (this->shape.getGlobalBounds().height / 2.f)
 					- this->text.getGlobalBounds().height / 2.f);
+
+	this->outlineIdleColor = outline_idle_color;
+	this->outlineHoverColor = outline_hover_color;
+	this->outlineActiveColor = outline_active_color;
 }
 
 gui::Button::~Button()
@@ -98,16 +109,19 @@ void gui::Button::update(sf::Vector2f mousePos)
 	{
 	case BTN_IDLE:
 		this->shape.setFillColor(this->idleColor);
+		this->shape.setOutlineColor(this->outlineIdleColor);
 		this->text.setFillColor(this->textIdleColor);
 		break;
 
 	case BTN_HOVER:
 		this->shape.setFillColor(this->hoverColor);
+		this->shape.setOutlineColor(this->outlineHoverColor);
 		this->text.setFillColor(this->textHoverColor);
 		break;
 
 	case BTN_ACTIVE:
 		this->shape.setFillColor(this->activeColor);
+		this->shape.setOutlineColor(this->outlineActiveColor);
 		this->text.setFillColor(this->textActiveColor);
 		break;
 	}
@@ -128,15 +142,34 @@ void gui::Button::render(sf::RenderTarget &target)
 }
 
 /* SETTERS */
+void gui::Button::setId(const short unsigned id)
+{
+	/**
+	 * @return void
+	 *
+	 * Sets a new id for a button.
+	 */
+
+	this->id = id;
+}
+
 void gui::Button::setText(std::string text)
 {
 	/**
 	 * @return void
 	 *
-	 * Sets a new text string for a button.
+	 * Sets a new text string for a button and recenter it.
 	 */
 
 	this->text.setString(text);
+
+	this->text.setPosition(
+			this->shape.getPosition().x
+					+ (this->shape.getGlobalBounds().width / 2.f)
+					- this->text.getGlobalBounds().width / 2.f,
+			this->shape.getPosition().y
+					+ (this->shape.getGlobalBounds().height / 2.f)
+					- this->text.getGlobalBounds().height / 2.f);
 }
 
 /* ACCESSORS */
@@ -152,6 +185,17 @@ const bool gui::Button::isPressed() const
 	return this->btn_state == BTN_ACTIVE;
 }
 
+const short unsigned gui::Button::getId() const
+{
+	/**
+	 * @return short unsigned
+	 *
+	 * Return a button's ID.
+	 */
+
+	return this->id;
+}
+
 const std::string gui::Button::getText() const
 {
 	/**
@@ -163,14 +207,16 @@ const std::string gui::Button::getText() const
 	return this->text.getString();
 }
 
-////////////////////////////////////////////////////////////
-// DROPDOWN LIST CLASS
-////////////////////////////////////////////////////////////
+/**********************************************************************************************************
+ *
+ * DROPDOWNLIST
+ *
+ *********************************************************************************************************/
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 gui::DropDownList::DropDownList(float x, float y, float width, float height,
 		sf::Font &font, std::string elements_name[], unsigned numOfElements, short unsigned default_index) :
-		font(font), showList(false), keytime(0.f), keytimeMax(50.f)
+		font(font), showList(false), keytime(0.f), keytimeMax(20.f)
 {
 	/**
 	 * @constructor
@@ -178,16 +224,22 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 	 * Initializes the drop down list.
 	 */
 
+	this->selectedElement = new gui::Button(x, y, width, height,
+			&this->font, elements_name[default_index], 16,
+			sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
+			sf::Color(120, 120, 120, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+			sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50));
+
 	for (size_t i = 0; i < numOfElements; i++)
 	{
 		this->list.push_back(
-				new gui::Button(x, y + (i * height), width, height,
+				new gui::Button(x, y + ((i + 1) * height), width, height,
 						&this->font, elements_name[i], 16,
 						sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-						sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200)));
+						sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+						sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
+						i));
 	}
-
-	this->selectedElement = new gui::Button(*this->list[default_index]);
 }
 
 gui::DropDownList::~DropDownList()
@@ -225,9 +277,18 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float &dt)
 
 	if (this->showList)
 	{
-		for (auto &it : this->list)
+		for (auto &button : this->list)
 		{
-			it->update(mousePos);
+			button->update(mousePos);
+
+			if (button->isPressed() && this->hasCompletedKeytimeCicle())
+			{
+				this->selectedElement->setText(button->getText());
+				this->selectedElement->setId(button->getId());
+				std::cout << button->getId() << std::endl;
+
+				this->showList = false;
+			}
 		}
 	}
 }
@@ -241,8 +302,6 @@ void gui::DropDownList::render(sf::RenderTarget &target)
 	 * renders the whole list IF show list is true.
 	 */
 
-	this->selectedElement->render(target);
-
 	if (this->showList)
 	{
 		for (auto &it : this->list)
@@ -250,6 +309,8 @@ void gui::DropDownList::render(sf::RenderTarget &target)
 			it->render(target);
 		}
 	}
+
+	this->selectedElement->render(target);
 }
 
 void gui::DropDownList::updateKeytime(const float &dt)
@@ -289,9 +350,11 @@ const bool gui::DropDownList::hasCompletedKeytimeCicle()
 	return false;
 }
 
-////////////////////////////////////////////////////////////
-// PAUSE MENU CLASS
-////////////////////////////////////////////////////////////
+/**********************************************************************************************************
+ *
+ * PAUSEMENU
+ *
+ *********************************************************************************************************/
 
 /* INITIALIZERS */
 void gui::PauseMenu::initButtons()

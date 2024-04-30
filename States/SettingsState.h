@@ -13,14 +13,14 @@ private:
 
 	std::map<std::string, gui::Button*> buttons;
 
-	gui::DropDownList* ddl;
+	std::map<std::string, gui::DropDownList*> dropDownLists;
 
 	/* INITIALIZERS */
 	void initVariables();
 	void initBackground();
 	void initFonts();
 	void initKeybinds();
-	void initButtons();
+	void initGUI();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
@@ -33,9 +33,9 @@ public:
 	void render(sf::RenderTarget &target);
 
 	void updateInput(const float &dt);
-	void updateButtons();
+	void updateGUI(const float &dt);
 
-	void renderButtons(sf::RenderTarget &target);
+	void renderGUI(sf::RenderTarget &target);
 
 	/* ACCESSORS */
 };

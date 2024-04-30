@@ -49,7 +49,7 @@ void Game::initWindow()
 	bool vertical_sync_enabled = false;
 	unsigned antialiasing_level = 0;
 
-	std::ifstream window_ini(currentPath + "/Config/window.ini");
+	std::ifstream window_ini("Config/window.ini");
 	this->videoModes = sf::VideoMode::getFullscreenModes();
 
 	// If window.ini was successfully opened
@@ -66,7 +66,7 @@ void Game::initWindow()
 	}
 	else
 	{
-		throw std::runtime_error("GAME::INITWINDOW::ERROR_COULD_NOT_LOAD_WINDOW_INI");
+		throw std::runtime_error("GAME::INITWINDOW::ERROR_COULD_NOT_LOAD_WINDOW_INI\n" + this->currentPath);
 	}
 
 	// Close file
@@ -101,7 +101,7 @@ void Game::initKeys()
 	 * Maps strings to Key enum.
 	 */
 
-	std::ifstream ifs(this->currentPath + "/Config/accepted_keys.ini");
+	std::ifstream ifs("Config/accepted_keys.ini");
 
 	if (ifs.is_open())
 	{
@@ -115,7 +115,7 @@ void Game::initKeys()
 	}
 	else
 	{
-		throw std::runtime_error("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI");
+		throw std::runtime_error("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI\n" + this->currentPath);
 	}
 
 	ifs.close();
