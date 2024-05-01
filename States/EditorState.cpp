@@ -4,7 +4,7 @@
  *  Created on: 14 de abr. de 2024
  *      Author: Renan Andrade
  */
-
+#include "../PCH/stdafx.h"
 #include "EditorState.h"
 
 /* INITIALIZERS */

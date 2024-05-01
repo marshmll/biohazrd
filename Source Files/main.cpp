@@ -5,6 +5,7 @@
  *      Author: Renan Andrade
  */
 
+#include "../PCH/stdafx.h"
 #include "Game.h"
 
 int main(void)

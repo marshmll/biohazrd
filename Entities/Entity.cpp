@@ -6,6 +6,7 @@
  *      Author: Renan Andrade
  */
 
+#include "../PCH/stdafx.h"
 #include "Entity.h"
 
 /* INITIALIZERS */

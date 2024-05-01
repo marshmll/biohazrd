@@ -15,12 +15,17 @@ private:
 
 	std::map<std::string, gui::DropDownList*> dropDownLists;
 
+	sf::Text optionsText;
+
+	std::vector<sf::VideoMode> videoModes;
+
 	/* INITIALIZERS */
 	void initVariables();
 	void initBackground();
 	void initFonts();
 	void initKeybinds();
 	void initGUI();
+	void initText();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */

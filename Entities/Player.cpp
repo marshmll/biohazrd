@@ -5,7 +5,9 @@
  *      Author: Renan Andrade
  */
 
+#include "../PCH/stdafx.h"
 #include "Player.h"
+
 #define PRIORITARY true
 
 /* INITIALIZERS */

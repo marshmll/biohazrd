@@ -5,6 +5,7 @@
  *      Author: Renan Andrade
  */
 
+#include "../PCH/stdafx.h"
 #include "Game.h"
 
 /* STATIC FUNCTIONS */
@@ -21,8 +22,19 @@ void Game::initVariables()
 	this->currentPath = std::filesystem::current_path().string();
 
 	this->window = nullptr;
-	this->fullscreen = false;
+
 	this->dt = 0.f;
+}
+
+void Game::initGraphicsSettings()
+{
+	/**
+	 * @return void
+	 *
+	 * Initializes graphics settings from a file.
+	 */
+
+	this->gfxSettings.loadFromFile("Config/graphics.ini");
 }
 
 void Game::initWindow()
@@ -31,65 +43,23 @@ void Game::initWindow()
 	 * @return void
 	 *
 	 * Initializes the RenderWindow
-	 * -> Reads the window.ini file
-	 * -> Sets title
-	 * -> Sets height and width
-	 * -> Sets fullscreen mode
-	 * -> Sets framerate limit
-	 * -> Sets vertical sync toggle
-	 * -> Sets antialising level
 	 * -> Creates the window.
 	 */
 
-	// Default values
-	std::string title = "";
-	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
-	bool fullscreen = false;
-	unsigned int framerate_limit = 60;
-	bool vertical_sync_enabled = false;
-	unsigned antialiasing_level = 0;
-
-	std::ifstream window_ini("Config/window.ini");
-	this->videoModes = sf::VideoMode::getFullscreenModes();
-
-	// If window.ini was successfully opened
-	if (window_ini.is_open())
-	{
-		// Read from window.ini to variables
-		std::getline(window_ini, title);
-		window_ini >> window_bounds.width;
-		window_ini >> window_bounds.height;
-		window_ini >> fullscreen;
-		window_ini >> framerate_limit;
-		window_ini >> vertical_sync_enabled;
-		window_ini >> antialiasing_level;
-	}
-	else
-	{
-		throw std::runtime_error("GAME::INITWINDOW::ERROR_COULD_NOT_LOAD_WINDOW_INI\n" + this->currentPath);
-	}
-
-	// Close file
-	window_ini.close();
-
-	// Context
-	this->windowSettings.antialiasingLevel = antialiasing_level;
-	this->fullscreen = fullscreen;
-
 	// Create the window
-
-	if (this->fullscreen) // If in fullscreen mode
+	if (this->gfxSettings.fullscreen) // If in fullscreen mode
 	{
-		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, this->windowSettings);
+		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
+				sf::Style::Fullscreen, this->gfxSettings.contextSettings);
 	}
 	else // If in window mode
 	{
-		this->window = new sf::RenderWindow(window_bounds, title,
-				sf::Style::Titlebar | sf::Style::Close, this->windowSettings);
+		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
+				sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
 	}
 
-	this->window->setFramerateLimit(framerate_limit);
-	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+	this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);
+	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 }
 
 void Game::initKeys()
@@ -151,6 +121,7 @@ Game::Game()
 	 */
 
 	this->initVariables();
+	this->initGraphicsSettings();
 	this->initWindow();
 	this->initKeys();
 	this->initStates();

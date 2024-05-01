@@ -5,6 +5,7 @@
  *      Author: Renan Andrade
  */
 
+#include "../PCH/stdafx.h"
 #include "MainMenuState.h"
 
 /* INITIALIZERS */

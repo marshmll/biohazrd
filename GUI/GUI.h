@@ -1,19 +1,6 @@
 #ifndef GUI_GUI_H_
 #define GUI_GUI_H_
 
-#include <iostream>
-#include <cstdlib>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <vector>
-
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
-
 enum button_states
 {
 	BTN_IDLE = 0,
@@ -109,6 +96,7 @@ public:
 	void updateKeytime(const float &dt);
 
 	/* ACESSORS */
+	const short unsigned getSelectedElementId() const;
 	const bool hasCompletedKeytimeCicle();
 };
 

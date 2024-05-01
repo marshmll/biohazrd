@@ -5,6 +5,7 @@
  *      Author: renan
  */
 
+#include "../PCH/stdafx.h"
 #include "SettingsState.h"
 
 /* INITIALIZERS */
@@ -15,6 +16,8 @@ void SettingsState::initVariables()
 	 *
 	 * Initializes SettingsState variables
 	 */
+
+	this->videoModes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initBackground()
@@ -100,10 +103,24 @@ void SettingsState::initGUI()
 			sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	std::string li[] =
-			{ "1980x1080", "1280X800", "1280X720", "800x600", "640x480" };
+	std::vector<std::string> modes_str;
 
-	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(100, 400, 200, 50, this->font, li, 5);
+	for (auto &mode : this->videoModes)
+	{
+		modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
+	}
+
+	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(100, 400, 200, 50, this->font, modes_str.data(),
+			modes_str.size());
+}
+
+void SettingsState::initText()
+{
+	this->optionsText.setFont(this->font);
+	this->optionsText.setPosition(sf::Vector2f(80.f, 320.f));
+	this->optionsText.setCharacterSize(30);
+	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
+	this->optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -131,6 +148,8 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::map<std::string, sf:
 	this->initKeybinds();
 
 	this->initGUI();
+
+	this->initText();
 }
 
 SettingsState::~SettingsState()
@@ -177,6 +196,7 @@ void SettingsState::render(sf::RenderTarget &target)
 
 	target.draw(this->background);
 	this->renderGUI(target);
+	target.draw(this->optionsText);
 
 //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
 	sf::Text mouseText;
@@ -226,7 +246,8 @@ void SettingsState::updateGUI(const float &dt)
 
 	// Apply settings
 	else if (this->buttons["APPLY"]->isPressed())
-		this->quit();
+		this->window->create(this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()], "Test",
+				sf::Style::Default);
 }
 
 void SettingsState::renderGUI(sf::RenderTarget &target)

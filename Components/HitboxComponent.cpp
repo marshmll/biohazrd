@@ -4,7 +4,7 @@
  *  Created on: 22 de abr. de 2024
  *      Author: renan
  */
-
+#include "../PCH/stdafx.h"
 #include "HitboxComponent.h"
 
 /* CONSTRUCTOR AND DESTRUCTOR */

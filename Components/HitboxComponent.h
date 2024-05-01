@@ -1,11 +1,6 @@
 #ifndef COMPONENTS_HITBOXCOMPONENT_H_
 #define COMPONENTS_HITBOXCOMPONENT_H_
 
-#include <string>
-#include <map>
-
-#include <SFML/Graphics.hpp>
-
 class HitboxComponent
 {
 private:

@@ -1,3 +1,4 @@
+#include "../PCH/stdafx.h"
 #include "MovementComponent.h"
 
 /* INITIALIZERS */

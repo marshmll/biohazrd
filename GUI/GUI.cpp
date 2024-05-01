@@ -8,6 +8,7 @@
  *      Author: renan
  */
 
+#include "../PCH/stdafx.h"
 #include "GUI.h"
 
 /**********************************************************************************************************
@@ -285,7 +286,6 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float &dt)
 			{
 				this->selectedElement->setText(button->getText());
 				this->selectedElement->setId(button->getId());
-				std::cout << button->getId() << std::endl;
 
 				this->showList = false;
 			}
@@ -327,6 +327,18 @@ void gui::DropDownList::updateKeytime(const float &dt)
 	{
 		this->keytime += 100.f * dt;
 	}
+}
+
+const short unsigned gui::DropDownList::getSelectedElementId() const
+{
+	/**
+	 * @return const short unsigned
+	 *
+	 *
+	 * Returns the selected element's id.
+	 */
+
+	return this->selectedElement->getId();
 }
 
 /* ACESSORS */

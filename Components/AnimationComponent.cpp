@@ -5,6 +5,7 @@
  *      Author: renan
  */
 
+#include "../PCH/stdafx.h"
 #include "AnimationComponent.h"
 
 /* CONSTRUCTOR AND DESTRUCTOR */

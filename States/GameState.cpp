@@ -5,6 +5,7 @@
  *      Author: Renan Andrade
  */
 
+#include "../PCH/stdafx.h"
 #include "GameState.h"
 
 /* INITIALIZERS */
@@ -165,6 +166,8 @@ void GameState::render(sf::RenderTarget &target)
 	 * Renders GameState into a target (window).
 	 * -> Renders player.
 	 */
+
+//	this->map.render(target);
 
 	this->player->render(target);
 

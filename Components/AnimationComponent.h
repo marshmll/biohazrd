@@ -1,12 +1,6 @@
 #ifndef COMPONENTS_ANIMATIONCOMPONENT_H_
 #define COMPONENTS_ANIMATIONCOMPONENT_H_
 
-#include <iostream>
-#include <string>
-#include <map>
-
-#include <SFML/Graphics.hpp>
-
 class AnimationComponent
 {
 private:
