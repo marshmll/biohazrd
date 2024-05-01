@@ -113,9 +113,8 @@ void MainMenuState::initButtons()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-		std::stack<State*> *states) :
-		State(window, acceptedKeys, states)
+MainMenuState::MainMenuState(StateData *data) :
+		State(data)
 {
 	/**
 	 * @constructor
@@ -147,11 +146,8 @@ MainMenuState::~MainMenuState()
 	 * Frees all the memory allocated for the buttons.
 	 */
 
-	auto it = this->buttons.begin();
-	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
-	{
-		delete it->second;
-	}
+	for (auto &it : this->buttons)
+		delete it.second;
 }
 
 /* FUNCTIONS */
@@ -202,7 +198,7 @@ void MainMenuState::updateInput(const float &dt)
 	/**
 	 * @return void
 	 *
-	 * Updates the mouse input.
+	 * Updates the input.
 	 * -> Updates mouse positions.
 	 */
 
@@ -227,15 +223,15 @@ void MainMenuState::updateButtons()
 	{
 		// New game
 		if (this->buttons["GAME_STATE"]->isPressed())
-			this->states->push(new GameState(this->window, this->acceptedKeys, this->states));
+			this->states->push(new GameState(this->data));
 
 		// Editor state
 		else if (this->buttons["EDITOR_STATE"]->isPressed())
-			this->states->push(new EditorState(this->window, this->acceptedKeys, this->states));
+			this->states->push(new EditorState(this->data));
 
 		// Settings
 		else if (this->buttons["SETTINGS_STATE"]->isPressed())
-			this->states->push(new SettingsState(this->window, this->acceptedKeys, this->states));
+			this->states->push(new SettingsState(this->data));
 
 		// Exit
 		else if (this->buttons["EXIT_STATE"]->isPressed())
@@ -252,7 +248,5 @@ void MainMenuState::renderButtons(sf::RenderTarget &target)
 	 */
 
 	for (auto &it : this->buttons)
-	{
 		it.second->render(target);
-	}
 }

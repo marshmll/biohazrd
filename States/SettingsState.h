@@ -29,8 +29,7 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	SettingsState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-			std::stack<State*> *states);
+	SettingsState(StateData *data);
 	virtual ~SettingsState();
 
 	/* FUNCTIONS */

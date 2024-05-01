@@ -50,9 +50,7 @@ void SettingsState::initFonts()
 	 */
 
 	if (!this->font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
-	{
 		throw std::runtime_error("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
-	}
 }
 
 void SettingsState::initKeybinds()
@@ -73,14 +71,10 @@ void SettingsState::initKeybinds()
 		std::string key = "";
 
 		while (ifs >> action >> key)
-		{
 			this->keybinds[action] = this->acceptedKeys->at(key);
-		}
 	}
 	else
-	{
 		throw std::runtime_error("ERROR::SETTINGSSTATE::INITKEYBINDS_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
-	}
 
 	ifs.close();
 }
@@ -106,9 +100,7 @@ void SettingsState::initGUI()
 	std::vector<std::string> modes_str;
 
 	for (auto &mode : this->videoModes)
-	{
 		modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
-	}
 
 	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(100, 400, 200, 50, this->font, modes_str.data(),
 			modes_str.size());
@@ -124,9 +116,8 @@ void SettingsState::initText()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-SettingsState::SettingsState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-		std::stack<State*> *states) :
-		State(window, acceptedKeys, states)
+SettingsState::SettingsState(StateData *data) :
+		State(data)
 {
 	/**
 	 * @constructor
@@ -136,7 +127,8 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::map<std::string, sf:
 	 * -> Initializes background
 	 * -> Initializes fonts
 	 * -> Initializes keybinds
-	 * -> Initializes buttons
+	 * -> Initializes GUI
+	 * -> Initializes text
 	 */
 
 	this->initVariables();
@@ -246,8 +238,11 @@ void SettingsState::updateGUI(const float &dt)
 
 	// Apply settings
 	else if (this->buttons["APPLY"]->isPressed())
-		this->window->create(this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()], "Test",
-				sf::Style::Default);
+	{
+		this->gfxSettings->resolution = this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
+
+		this->window->create(this->gfxSettings->resolution, "Test", sf::Style::Titlebar | sf::Style::Close);
+	}
 }
 
 void SettingsState::renderGUI(sf::RenderTarget &target)

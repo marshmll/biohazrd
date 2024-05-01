@@ -5,6 +5,10 @@
 #include "../States/EditorState.h"
 #include "../States/SettingsState.h"
 
+class GameState;
+class EditorState;
+class SettingsState;
+
 class MainMenuState: public State
 {
 private:
@@ -24,8 +28,7 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	MainMenuState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-			std::stack<State*> *states);
+	MainMenuState(StateData *data);
 	virtual ~MainMenuState();
 
 	/* FUNCTIONS */

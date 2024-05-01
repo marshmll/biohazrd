@@ -8,8 +8,6 @@
 #include "../PCH/stdafx.h"
 #include "Game.h"
 
-/* STATIC FUNCTIONS */
-
 /* INITIALIZERS FUNCTIONS */
 void Game::initVariables()
 {
@@ -24,6 +22,8 @@ void Game::initVariables()
 	this->window = nullptr;
 
 	this->dt = 0.f;
+
+	this->gridSize = 50.f;
 }
 
 void Game::initGraphicsSettings()
@@ -96,6 +96,21 @@ void Game::initKeys()
 //	}
 }
 
+void Game::initStateData()
+{
+	/**
+	 * @return void
+	 *
+	 * Initializes the data struct members.
+	 */
+
+	this->data.states = &this->states;
+	this->data.gfxSettings = &this->gfxSettings;
+	this->data.window = this->window;
+	this->data.acceptedKeys = &this->acceptedKeys;
+	this->data.gridSize = this->gridSize;
+}
+
 void Game::initStates()
 {
 	/**
@@ -104,7 +119,7 @@ void Game::initStates()
 	 * Initializates states and push them into states stack.
 	 */
 
-	this->states.push(new MainMenuState(this->window, &this->acceptedKeys, &this->states));
+	this->states.push(new MainMenuState(&this->data));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -124,6 +139,7 @@ Game::Game()
 	this->initGraphicsSettings();
 	this->initWindow();
 	this->initKeys();
+	this->initStateData();
 	this->initStates();
 }
 

@@ -25,9 +25,7 @@ AnimationComponent::~AnimationComponent()
 	 */
 
 	for (auto &it : this->animations)
-	{
 		delete it.second;
-	}
 }
 
 /* FUNCTIONS */
@@ -84,10 +82,10 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
 
 	bool done = false;
 
+	// If its a prioritary animation and there is no current prioritary anim.
 	if (priority && this->priorityAnimation == nullptr)
 		this->priorityAnimation = this->animations[key];
 
-	// If there is a prioritary animation
 	if (this->priorityAnimation != nullptr)
 	{
 		// If the previous animation is not the prioritary animation
@@ -137,6 +135,7 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
 
 	bool done = false;
 
+	// If its a prioritary animation and there is no current prioritary anim.
 	if (priority && this->priorityAnimation == nullptr)
 		this->priorityAnimation = this->animations[key];
 

@@ -3,6 +3,22 @@
 
 #include "../Entities/Player.h"
 #include "../GUI/GUI.h"
+#include "../Settings/GraphicsSettings.h"
+
+class State;
+class Player;
+class GraphicsSettings;
+
+/* This struct packs all important data from a state. */
+typedef struct
+{
+	std::stack<State*> *states;
+	GraphicsSettings *gfxSettings;
+	sf::RenderWindow *window;
+	std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
+	float gridSize;
+}
+StateData;
 
 class State
 {
@@ -10,13 +26,19 @@ private:
 
 protected:
 	/* VARIABLES */
+	StateData *data;
+
 	std::stack<State*> *states;
+
+	GraphicsSettings *gfxSettings;
 
 	sf::RenderWindow *window;
 
 	std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
 
 	std::map<std::string, sf::Keyboard::Key> keybinds;
+
+	float gridSize;
 
 	std::string currentPath;
 
@@ -41,7 +63,7 @@ protected:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys, std::stack<State*> *states);
+	State(StateData *data);
 	virtual ~State();
 
 	/* PURE VIRTUAL FUNCTIONS */

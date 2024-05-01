@@ -27,14 +27,10 @@ void GameState::initKeybinds()
 		std::string key = "";
 
 		while (ifs >> action >> key)
-		{
 			this->keybinds[action] = this->acceptedKeys->at(key);
-		}
 	}
 	else
-	{
 		throw std::runtime_error("GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
-	}
 
 	ifs.close();
 }
@@ -48,9 +44,7 @@ void GameState::initFonts()
 	 */
 
 	if (!this->font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
-	{
 		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
-	}
 }
 
 void GameState::initTextures()
@@ -62,9 +56,7 @@ void GameState::initTextures()
 	 */
 
 	if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
-	{
 		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE\n" + this->currentPath);
-	}
 }
 
 void GameState::initPauseMenu()
@@ -90,9 +82,8 @@ void GameState::initPlayers()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-GameState::GameState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-		std::stack<State*> *states) :
-		State(window, acceptedKeys, states)
+GameState::GameState(StateData *data) :
+		State(data)
 {
 	/**
 	 * @constructor
@@ -150,7 +141,7 @@ void GameState::update(const float &dt)
 		this->player->update(dt);
 	}
 
-	// Paused state
+	// Paused update
 	else
 	{
 		this->pauseMenu->update(this->mousePosView);
@@ -168,13 +159,10 @@ void GameState::render(sf::RenderTarget &target)
 	 */
 
 //	this->map.render(target);
-
 	this->player->render(target);
 
 	if (this->isPaused) // Pause menu render
-	{
 		this->pauseMenu->render(target);
-	}
 }
 
 void GameState::updateInput(const float &dt)
@@ -206,21 +194,16 @@ void GameState::updatePlayerInput(const float &dt)
 	 */
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
-	{
 		this->player->move(0.f, -1.f, dt);
-	}
+
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
-	{
 		this->player->move(0.f, 1.f, dt);
-	}
+
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
-	{
 		this->player->move(-1.f, 0.f, dt);
-	}
+
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
-	{
 		this->player->move(1.f, 0.f, dt);
-	}
 }
 
 void GameState::updatePauseMenuButtons()

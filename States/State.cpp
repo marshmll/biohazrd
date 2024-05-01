@@ -8,8 +8,7 @@
 #include "State.h"
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-		std::stack<State*> *states)
+State::State(StateData *data)
 {
 	/**
 	 * @constructor
@@ -25,11 +24,15 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 	 * -> Sets mousetime and mousetimeMax
 	 */
 
-	this->states = states;
+	this->data = data;
 
-	this->window = window;
+	this->states = data->states;
 
-	this->acceptedKeys = acceptedKeys;
+	this->gfxSettings = data->gfxSettings;
+
+	this->window = data->window;
+
+	this->acceptedKeys = data->acceptedKeys;
 
 	this->currentPath = std::filesystem::current_path().string();
 
@@ -41,6 +44,8 @@ State::State(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> 
 
 	this->mousetime = 0.f;
 	this->mousetimeMax = 10.f;
+
+	this->gridSize = data->gridSize;
 }
 
 State::~State()

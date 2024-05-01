@@ -2,6 +2,10 @@
 #define STATES_EDITORSTATE_H_
 
 #include "State.h"
+#include "../Map/TileMap.h"
+
+class State;
+class TileMap;
 
 class EditorState: public State
 {
@@ -9,19 +13,23 @@ private:
 	/* VARIABLES */
 	sf::Font font;
 
+	gui::PauseMenu *pauseMenu;
+
 	std::map<std::string, gui::Button*> buttons;
+
+	TileMap map;
 
 	/* INITIALIZERS */
 	void initVariables();
-	void initBackground();
-	void initFonts();
 	void initKeybinds();
+	void initFonts();
+	void initBackground();
+	void initPauseMenu();
 	void initButtons();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	EditorState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-			std::stack<State*> *states);
+	EditorState(StateData *data);
 	virtual ~EditorState();
 
 	/* FUNCTIONS */
@@ -30,6 +38,7 @@ public:
 
 	void updateInput(const float &dt);
 	void updateButtons();
+	void updatePauseMenuButtons();
 
 	void renderButtons(sf::RenderTarget &target);
 };

@@ -17,25 +17,6 @@ void EditorState::initVariables()
 	 */
 }
 
-void EditorState::initBackground()
-{
-
-}
-
-void EditorState::initFonts()
-{
-	/**
-	 * @return void
-	 *
-	 * Loads font from file.
-	 */
-
-	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
-	{
-		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
-	}
-}
-
 void EditorState::initKeybinds()
 {
 	/**
@@ -54,16 +35,40 @@ void EditorState::initKeybinds()
 		std::string key = "";
 
 		while (ifs >> action >> key)
-		{
 			this->keybinds[action] = this->acceptedKeys->at(key);
-		}
 	}
 	else
-	{
 		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
-	}
 
 	ifs.close();
+}
+
+void EditorState::initFonts()
+{
+	/**
+	 * @return void
+	 *
+	 * Loads font from file.
+	 */
+
+	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
+		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
+}
+
+void EditorState::initBackground()
+{
+
+}
+
+void EditorState::initPauseMenu()
+{
+	/**
+	 * @return void
+	 *
+	 * Initializes pause menu.
+	 */
+
+	this->pauseMenu = new gui::PauseMenu(*this->window, this->font);
 }
 
 void EditorState::initButtons()
@@ -77,9 +82,8 @@ void EditorState::initButtons()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-EditorState::EditorState(sf::RenderWindow *window, std::map<std::string, sf::Keyboard::Key> *acceptedKeys,
-		std::stack<State*> *states) :
-		State(window, acceptedKeys, states)
+EditorState::EditorState(StateData *data) :
+		State(data)
 {
 	/**
 	 * @constructor
@@ -97,6 +101,8 @@ EditorState::EditorState(sf::RenderWindow *window, std::map<std::string, sf::Key
 
 	this->initKeybinds();
 
+	this->initPauseMenu();
+
 	this->initButtons();
 }
 
@@ -108,11 +114,10 @@ EditorState::~EditorState()
 	 * Frees all the memory allocated for the buttons.
 	 */
 
-	auto it = this->buttons.begin();
-	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
-	{
-		delete it->second;
-	}
+	for (auto &it : this->buttons)
+		delete it.second;
+
+	delete this->pauseMenu;
 }
 
 /* FUNCTIONS */
@@ -126,8 +131,20 @@ void EditorState::update(const float &dt)
 	 * -> Update buttons.
 	 */
 
+	this->updateMousePositions();
 	this->updateInput(dt);
-	this->updateButtons();
+	this->updateKeytime(dt);
+	this->updateMousetime(dt);
+
+	if (!this->isPaused)
+	{
+		this->updateButtons();
+	}
+	else
+	{
+		this->pauseMenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
 }
 
 void EditorState::render(sf::RenderTarget &target)
@@ -140,7 +157,12 @@ void EditorState::render(sf::RenderTarget &target)
 	 * -> Render buttons.
 	 */
 
+	this->map.render(target);
+
 	this->renderButtons(target);
+
+	if (this->isPaused)
+		this->pauseMenu->render(target);
 
 //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
 	sf::Text mouseText;
@@ -162,16 +184,16 @@ void EditorState::updateInput(const float &dt)
 	 * @return void
 	 *
 	 * Updates the user input.
-	 * -> Updates mouse positions.
-	 * -> Checks for quitting state
 	 */
 
-	this->updateMousePositions();
-
-	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]) && this->hasCompletedKeytimeCicle())
 	{
-		this->quit();
+		if (!this->isPaused)
+			this->pause();
+		else
+			this->resume();
 	}
+
 }
 
 void EditorState::updateButtons()
@@ -188,6 +210,12 @@ void EditorState::updateButtons()
 
 }
 
+void EditorState::updatePauseMenuButtons()
+{
+	if (this->pauseMenu->isButtonPressed("QUIT"))
+		this->quit();
+}
+
 void EditorState::renderButtons(sf::RenderTarget &target)
 {
 	/**
@@ -197,7 +225,6 @@ void EditorState::renderButtons(sf::RenderTarget &target)
 	 */
 
 	for (auto &it : this->buttons)
-	{
 		it.second->render(target);
-	}
+
 }
