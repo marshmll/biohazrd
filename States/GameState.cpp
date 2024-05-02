@@ -43,7 +43,7 @@ void GameState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
+	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
 		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 }
 
@@ -81,6 +81,11 @@ void GameState::initPlayers()
 	this->player = new Player(0.f, 0.f, this->textures["PLAYER_SPRITESHEET"]);
 }
 
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap(this->data->gridSize, 10, 10);
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR */
 GameState::GameState(StateData *data) :
 		State(data)
@@ -101,6 +106,7 @@ GameState::GameState(StateData *data) :
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initTileMap();
 }
 
 GameState::~GameState()
@@ -113,6 +119,7 @@ GameState::~GameState()
 
 	delete this->pauseMenu;
 	delete this->player;
+	delete this->tileMap;
 }
 
 /* FUNCTIONS */

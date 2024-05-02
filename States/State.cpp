@@ -66,8 +66,14 @@ void State::updateMousePositions()
 	 */
 
 	this->mousePosScreen = sf::Mouse::getPosition();
+
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
+
+	this->mousePosGrid = sf::Vector2u(
+			static_cast<unsigned>(this->mousePosView.x) / static_cast<unsigned>(this->data->gridSize),
+			static_cast<unsigned>(this->mousePosView.y) / static_cast<unsigned>(this->data->gridSize));
 }
 
 void State::updateKeytime(const float &dt)

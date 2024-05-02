@@ -2,7 +2,7 @@
 #define STATES_EDITORSTATE_H_
 
 #include "State.h"
-#include "../Map/TileMap.h"
+#include "../TileMap/TileMap.h"
 
 class State;
 class TileMap;
@@ -17,7 +17,9 @@ private:
 
 	std::map<std::string, gui::Button*> buttons;
 
-	TileMap map;
+	TileMap *tileMap;
+
+	sf::RectangleShape selectorRect;
 
 	/* INITIALIZERS */
 	void initVariables();
@@ -26,6 +28,8 @@ private:
 	void initBackground();
 	void initPauseMenu();
 	void initButtons();
+	void initGUI();
+	void initTileMap();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
@@ -37,10 +41,13 @@ public:
 	void render(sf::RenderTarget &target);
 
 	void updateInput(const float &dt);
+	void updateEditorInput(const float &dt);
 	void updateButtons();
 	void updatePauseMenuButtons();
+	void updateGUI();
 
 	void renderButtons(sf::RenderTarget &target);
+	void renderGUI(sf::RenderTarget &target);
 };
 
 #endif /* STATES_EDITORSTATE_H_ */

@@ -2,7 +2,7 @@
 #define STATES_GAMESTATE_H_
 
 #include "State.h"
-#include "../Map/TileMap.h"
+#include "../TileMap/TileMap.h"
 
 class GameState: public State
 {
@@ -14,7 +14,7 @@ private:
 
 	sf::Font font;
 
-	TileMap map;
+	TileMap *tileMap;
 
 	/* INITIALIZERS */
 	void initKeybinds();
@@ -22,6 +22,7 @@ private:
 	void initTextures();
 	void initPauseMenu();
 	void initPlayers();
+	void initTileMap();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */

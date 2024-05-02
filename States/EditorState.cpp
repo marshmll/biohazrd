@@ -51,7 +51,7 @@ void EditorState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
+	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
 		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 }
 
@@ -81,6 +81,21 @@ void EditorState::initButtons()
 
 }
 
+void EditorState::initGUI()
+{
+	this->selectorRect.setSize(sf::Vector2f(this->data->gridSize, this->data->gridSize));
+
+	this->selectorRect.setFillColor(sf::Color::Transparent);
+
+	this->selectorRect.setOutlineColor(sf::Color::Red);
+	this->selectorRect.setOutlineThickness(1.f);
+}
+
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(this->data->gridSize, 10, 10);
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR */
 EditorState::EditorState(StateData *data) :
 		State(data)
@@ -104,6 +119,10 @@ EditorState::EditorState(StateData *data) :
 	this->initPauseMenu();
 
 	this->initButtons();
+
+	this->initGUI();
+
+	this->initTileMap();
 }
 
 EditorState::~EditorState()
@@ -118,6 +137,8 @@ EditorState::~EditorState()
 		delete it.second;
 
 	delete this->pauseMenu;
+
+	delete this->tileMap;
 }
 
 /* FUNCTIONS */
@@ -139,6 +160,8 @@ void EditorState::update(const float &dt)
 	if (!this->isPaused)
 	{
 		this->updateButtons();
+		this->updateGUI();
+		this->updateEditorInput(dt);
 	}
 	else
 	{
@@ -157,9 +180,11 @@ void EditorState::render(sf::RenderTarget &target)
 	 * -> Render buttons.
 	 */
 
-	this->map.render(target);
+	this->tileMap->render(target);
 
 	this->renderButtons(target);
+
+	this->renderGUI(target);
 
 	if (this->isPaused)
 		this->pauseMenu->render(target);
@@ -195,6 +220,18 @@ void EditorState::updateInput(const float &dt)
 	}
 
 }
+void EditorState::updateEditorInput(const float &dt)
+{
+	// Add a Tile to tilemap
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->hasCompletedKeytimeCicle())
+	{
+		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+	}
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
+	{
+		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+	}
+}
 
 void EditorState::updateButtons()
 {
@@ -216,6 +253,13 @@ void EditorState::updatePauseMenuButtons()
 		this->quit();
 }
 
+void EditorState::updateGUI()
+{
+	this->selectorRect.setPosition(
+			this->mousePosGrid.x * this->data->gridSize,
+			this->mousePosGrid.y * this->data->gridSize);
+}
+
 void EditorState::renderButtons(sf::RenderTarget &target)
 {
 	/**
@@ -228,3 +272,9 @@ void EditorState::renderButtons(sf::RenderTarget &target)
 		it.second->render(target);
 
 }
+
+void EditorState::renderGUI(sf::RenderTarget &target)
+{
+	target.draw(this->selectorRect);
+}
+

@@ -49,7 +49,7 @@ void SettingsState::initFonts()
 	 * Loads font from file.
 	 */
 
-	if (!this->font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
+	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
 		throw std::runtime_error("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 }
 
