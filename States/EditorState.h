@@ -13,6 +13,8 @@ private:
 	/* VARIABLES */
 	sf::Font font;
 
+	sf::Text cursorText;
+
 	gui::PauseMenu *pauseMenu;
 
 	std::map<std::string, gui::Button*> buttons;
@@ -21,10 +23,13 @@ private:
 
 	sf::RectangleShape selectorRect;
 
+	sf::IntRect textureRect;
+
 	/* INITIALIZERS */
 	void initVariables();
 	void initKeybinds();
 	void initFonts();
+	void initText();
 	void initBackground();
 	void initPauseMenu();
 	void initButtons();

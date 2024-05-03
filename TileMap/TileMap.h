@@ -17,6 +17,7 @@ private:
 	sf::Texture tileTextureSheet;
 
 public:
+	/* CONSTRUCTOR AND DESTRUCTOR */
 	TileMap(float gridSize, unsigned width, unsigned );
 	virtual ~TileMap();
 
@@ -24,8 +25,11 @@ public:
 	void update();
 	void render(sf::RenderTarget &target);
 
-	void addTile(const unsigned x, const unsigned y, const unsigned z);
+	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect);
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
+
+	/* ACCESSORS */
+	const sf::Texture* getTileTextureSheet() const;
 };
 
 #endif /* TILEMAP_TILEMAP_H_ */

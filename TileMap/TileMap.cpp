@@ -8,6 +8,7 @@
 #include "../PCH/stdafx.h"
 #include "TileMap.h"
 
+/* CONSTRUCTOR AND DESTRUCTOR */
 TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 {
 	/**
@@ -46,7 +47,7 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 		}
 	}
 
-	if (!this->tileTextureSheet.loadFromFile("Assets/Images/Tiles/grass.png"))
+	if (!this->tileTextureSheet.loadFromFile("Assets/Images/Tiles/tilesheet.png"))
 		throw std::runtime_error("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES");
 }
 
@@ -97,7 +98,7 @@ void TileMap::render(sf::RenderTarget &target)
 	}
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z)
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect)
 {
 	/**
 	 * @return void
@@ -112,7 +113,8 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z)
 		// If the place to add is empty
 		if (this->tileMap[x][y][z] == nullptr)
 		{
-			this->tileMap[x][y][z] = new Tile(x * this->gridSizeF, y * this->gridSizeF, this->gridSizeF, this->tileTextureSheet);
+			this->tileMap[x][y][z] = new Tile(x * this->gridSizeF, y * this->gridSizeF, this->gridSizeF,
+					this->tileTextureSheet, textureRect);
 		}
 	}
 }
@@ -138,3 +140,14 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 	}
 }
 
+/* ACCESSORS */
+const sf::Texture* TileMap::getTileTextureSheet() const
+{
+	/**
+	 * @return sf::Texture*
+	 *
+	 * Returns the tile texture sheet of the tilemap.
+	 */
+
+	return &this->tileTextureSheet;
+}

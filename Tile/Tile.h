@@ -9,7 +9,8 @@ protected:
 	sf::RectangleShape tile;
 
 public:
-	Tile(float x, float y, float gridSizeF, sf::Texture &texture);
+	/* CONSTRUCTOR AND DESTRUCTOR */
+	Tile(float x, float y, float gridSizeF, const sf::Texture &texture, const sf::IntRect textureRect);
 	virtual ~Tile();
 
 	/* FUNCTIONS */
