@@ -29,7 +29,6 @@ void Tile::update()
 	/**
 	 * @return void
 	 */
-
 }
 
 void Tile::render(sf::RenderTarget &target)

@@ -516,3 +516,134 @@ std::map<std::string, gui::Button*>& gui::PauseMenu::getButtons()
 
 	return this->buttons;
 }
+
+/**********************************************************************************************************
+ *
+ * TEXTURE SELECTOR
+ *
+ *********************************************************************************************************/
+
+/* CONSTRUCTOR AND DESTRUCTOR */
+gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize,
+		const sf::Texture *texture_sheet)
+{
+	/**
+	 * @constructor
+	 *
+	 * Creates a texture selector.
+	 */
+
+	this->gridSize = gridSize;
+	this->active = false;
+
+	// Outer box
+	this->bounds.setSize(sf::Vector2f(width, height));
+	this->bounds.setPosition(x, y);
+	this->bounds.setFillColor(sf::Color(50, 50, 50, 100));
+
+	this->bounds.setOutlineThickness(2.f);
+	this->bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
+
+	// Texture sheet
+	this->sheet.setTexture(*texture_sheet);
+	this->sheet.setPosition(x, y);
+
+	// If the sheet is larger than the outer box
+	if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
+	{
+		this->sheet.setTextureRect(
+				sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
+	}
+
+	// If the sheet is taller than the outer box
+	if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
+	{
+		this->sheet.setTextureRect(
+				sf::IntRect(0, 0, this->sheet.getGlobalBounds().width, this->bounds.getGlobalBounds().height));
+	}
+
+	// Selector
+	this->selector.setPosition(x, y);
+	this->selector.setSize(sf::Vector2f(gridSize, gridSize));
+	this->selector.setFillColor(sf::Color::Transparent);
+
+	this->selector.setOutlineThickness(1.f);
+	this->selector.setOutlineColor(sf::Color::Green);
+
+	// Texture rect
+	this->textureRect.width = (int) gridSize;
+	this->textureRect.height = (int) gridSize;
+}
+
+gui::TextureSelector::~TextureSelector()
+{
+
+}
+
+/* FUNCTIONS */
+void gui::TextureSelector::update(const sf::Vector2i mousePosWindow)
+{
+	/**
+	 * @return void
+	 *
+	 * Updates the texture selector.
+	 * -> Updates the active state
+	 * -> Changes the selector position
+	 * -> Sets the texture rect.
+	 */
+
+	this->active = this->bounds.getGlobalBounds().contains(sf::Vector2f(mousePosWindow));
+
+	if (this->active)
+	{
+		this->mousePosGrid.x = (mousePosWindow.x - this->bounds.getPosition().x) / (unsigned) this->gridSize;
+		this->mousePosGrid.y = (mousePosWindow.y - this->bounds.getPosition().y) / (unsigned) this->gridSize;
+
+		this->selector.setPosition(
+				this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSize,
+				this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSize);
+
+		this->textureRect.left = this->mousePosGrid.x * gridSize;
+		this->textureRect.top = this->mousePosGrid.y * gridSize;
+	}
+}
+
+void gui::TextureSelector::render(sf::RenderTarget &target)
+{
+	/**
+	 * @return void
+	 *
+	 * Renders the texture selector into a target.
+	 */
+
+	target.draw(this->bounds);
+	target.draw(this->sheet);
+
+	if (this->active)
+		target.draw(this->selector);
+}
+
+/* ACCESSORS */
+const bool& gui::TextureSelector::isActive() const
+{
+	/**
+	 * @return const bool&
+	 *
+	 * Returns if the texture selector is active.
+	 */
+
+	return this->active;
+}
+
+const sf::IntRect& gui::TextureSelector::getTextureRect() const
+{
+	/**
+	 * @return const sf::IntRect&
+	 *
+	 * Returns the texture selector's texture rect.
+	 * The texture rect is the texture that is under
+	 * the mouse posiitons.
+	 */
+
+	return this->textureRect;
+}

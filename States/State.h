@@ -27,15 +27,12 @@ private:
 protected:
 	/* VARIABLES */
 	StateData *data;
-
 	std::stack<State*> *states;
 
 	GraphicsSettings *gfxSettings;
-
 	sf::RenderWindow *window;
 
 	std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
-
 	std::map<std::string, sf::Keyboard::Key> keybinds;
 
 	float gridSize;

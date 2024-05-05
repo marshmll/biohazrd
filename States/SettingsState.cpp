@@ -102,7 +102,7 @@ void SettingsState::initGUI()
 	for (auto &mode : this->videoModes)
 		modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
 
-	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(100, 400, 200, 50, this->font, modes_str.data(),
+	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(320, 320, 200, 50, this->font, modes_str.data(),
 			modes_str.size());
 }
 
@@ -241,7 +241,7 @@ void SettingsState::updateGUI(const float &dt)
 	{
 		this->gfxSettings->resolution = this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
-		this->window->create(this->gfxSettings->resolution, "Test", sf::Style::Titlebar | sf::Style::Close);
+		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
 	}
 }
 

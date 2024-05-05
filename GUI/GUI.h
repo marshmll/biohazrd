@@ -136,6 +136,40 @@ public:
 	std::map<std::string, gui::Button*>& getButtons();
 
 };
+
+/**********************************************************************************************************
+ *
+ * TEXTURE SELECTOR
+ *
+ *********************************************************************************************************/
+class TextureSelector
+{
+private:
+	/* VARIABLES */
+	float gridSize;
+	bool active;
+
+	sf::RectangleShape bounds;
+	sf::Sprite sheet;
+
+	sf::RectangleShape selector;
+	sf::Vector2u mousePosGrid;
+
+	sf::IntRect textureRect;
+
+public:
+	/* CONSTRUCTOR AND DESTRUCTOR */
+	TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture *texture_sheet);
+	~TextureSelector();
+
+	/* FUNCTIONS */
+	void update(const sf::Vector2i mousePosWindow);
+	void render(sf::RenderTarget &target);
+
+	/* ACCESSORS */
+	const bool& isActive() const;
+	const sf::IntRect& getTextureRect() const;
+};
 }
 
 #endif /* GUI_GUI_H_ */

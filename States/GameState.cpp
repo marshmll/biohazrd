@@ -83,6 +83,12 @@ void GameState::initPlayers()
 
 void GameState::initTileMap()
 {
+	/**
+	 * @return void
+	 *
+	 * Initializes a tilemap for the gamestate.
+	 */
+
 	this->tileMap = new TileMap(this->data->gridSize, 10, 10);
 }
 

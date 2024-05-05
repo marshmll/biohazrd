@@ -23,7 +23,7 @@ void Game::initVariables()
 
 	this->dt = 0.f;
 
-	this->gridSize = 80.f; // Tile size
+	this->gridSize = 80.f; // Tile size.
 }
 
 void Game::initGraphicsSettings()
@@ -79,21 +79,12 @@ void Game::initKeys()
 		int key_value = 0;
 
 		while (ifs >> key >> key_value)
-		{
 			this->acceptedKeys[key] = sf::Keyboard::Key(key_value);
-		}
 	}
 	else
-	{
 		throw std::runtime_error("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI\n" + this->currentPath);
-	}
 
 	ifs.close();
-
-//	for (auto i : this->acceptedKeys)
-//	{
-//		std::cout << i.first << " " << i.second << "\n";
-//	}
 }
 
 void Game::initStateData()

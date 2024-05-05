@@ -25,6 +25,8 @@ private:
 
 	sf::IntRect textureRect;
 
+	gui::TextureSelector *textureSelector;
+
 	/* INITIALIZERS */
 	void initVariables();
 	void initKeybinds();
@@ -33,8 +35,8 @@ private:
 	void initBackground();
 	void initPauseMenu();
 	void initButtons();
-	void initGUI();
 	void initTileMap();
+	void initGUI();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
