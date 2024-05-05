@@ -82,7 +82,7 @@ void State::updateKeytime(const float &dt)
 	 * @return void
 	 *
 	 * Updates the keytime.
-	 * The keytime is used for avoiding multiple key presses
+	 * The keytime is used for debounce key presses
 	 * at a single press.
 	 */
 
@@ -96,8 +96,8 @@ void State::updateMousetime(const float &dt)
 	 * @return void
 	 *
 	 * Updates the mousetime.
-	 * The mousetime is used for avoiding multiple mouse
-	 * clicks at a single click.
+	 * The mousetime is used for debounce mouse clicks
+	 * at a single click.
 	 */
 
 	if (this->mousetime < this->mousetimeMax)
@@ -115,6 +115,18 @@ void State::quit()
 	 */
 
 	this->quitState = true;
+}
+
+void State::pauseToggle()
+{
+	/**
+	 * @return void
+	 *
+	 * Pauses/unpauses the state.
+	 * Pauses if unpaused, unpauses if paused.
+	 */
+
+	this->isPaused = !this->isPaused;
 }
 
 void State::pause()

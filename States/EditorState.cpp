@@ -4,6 +4,7 @@
  *  Created on: 14 de abr. de 2024
  *      Author: Renan Andrade
  */
+
 #include "../PCH/stdafx.h"
 #include "EditorState.h"
 
@@ -69,11 +70,6 @@ void EditorState::initText()
 	this->cursorText.setCharacterSize(12);
 }
 
-void EditorState::initBackground()
-{
-
-}
-
 void EditorState::initPauseMenu()
 {
 	/**
@@ -115,6 +111,7 @@ void EditorState::initGUI()
 	 * -> initializes selector rect.
 	 */
 
+	// World selector
 	this->selectorRect.setSize(sf::Vector2f(this->data->gridSize, this->data->gridSize));
 
 	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 200));
@@ -125,7 +122,10 @@ void EditorState::initGUI()
 	this->selectorRect.setTexture(this->tileMap->getTileTextureSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
-	this->textureSelector = new gui::TextureSelector(20.f, 20.f, 480.f, 480.f, this->data->gridSize,
+	// Texture selector
+	this->textureSelector = new gui::TextureSelector(
+			20.f, 20.f, 480.f, 480.f,
+			this->data->gridSize,
 			this->tileMap->getTileTextureSheet());
 }
 
@@ -235,13 +235,8 @@ void EditorState::updateInput(const float &dt)
 	 * Updates the user input.
 	 */
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]) && this->hasCompletedKeytimeCicle())
-	{
-		if (!this->isPaused)
-			this->pause();
-		else
-			this->resume();
-	}
+	if (sf::Keyboard::isKeyPressed(this->keybinds["PAUSE"]) && this->hasCompletedKeytimeCicle())
+		this->pauseToggle();
 
 }
 void EditorState::updateEditorInput(const float &dt)

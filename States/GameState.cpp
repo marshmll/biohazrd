@@ -186,13 +186,8 @@ void GameState::updateInput(const float &dt)
 	 * Updates inputs related to the state.
 	 */
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]) && this->hasCompletedKeytimeCicle())
-	{
-		if (!this->isPaused)
-			this->pause();
-		else
-			this->resume();
-	}
+	if (sf::Keyboard::isKeyPressed(this->keybinds["PAUSE"]) && this->hasCompletedKeytimeCicle())
+		this->pauseToggle();
 }
 
 void GameState::updatePlayerInput(const float &dt)

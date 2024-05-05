@@ -32,7 +32,6 @@ private:
 	void initKeybinds();
 	void initFonts();
 	void initText();
-	void initBackground();
 	void initPauseMenu();
 	void initButtons();
 	void initTileMap();

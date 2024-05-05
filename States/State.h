@@ -75,6 +75,7 @@ public:
 	virtual void updateKeytime(const float &dt);
 	virtual void updateMousetime(const float &dt);
 	virtual void quit();
+	virtual void pauseToggle();
 	virtual void pause();
 	virtual void resume();
 
