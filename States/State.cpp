@@ -195,7 +195,7 @@ const bool State::hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn)
 	 * Returns if a mousetime cicle has completed.
 	 * A mousetime cicle means that a defined amount of
 	 * time has passed after a mouse button was pressed.
-	 * -> Restarts keytime after verification.
+	 * -> Restarts mousetime after verification.
 	 */
 
 	if (this->mousetime >= this->mousetimeMax)

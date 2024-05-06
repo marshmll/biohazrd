@@ -148,6 +148,12 @@ private:
 	/* VARIABLES */
 	float gridSize;
 	bool active;
+	bool hidden;
+
+	float mousetime;
+	const float mousetimeMax;
+
+	gui::Button *hideBtn;
 
 	sf::RectangleShape bounds;
 	sf::Sprite sheet;
@@ -159,15 +165,19 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture *texture_sheet);
+	TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture *texture_sheet,
+			sf::Font *font, std::string text);
 	~TextureSelector();
 
 	/* FUNCTIONS */
-	void update(const sf::Vector2i mousePosWindow);
+	void update(const float &dt, const sf::Vector2i mousePosWindow);
 	void render(sf::RenderTarget &target);
+
+	void updateMousetime(const float &dt);
 
 	/* ACCESSORS */
 	const bool& isActive() const;
+	const bool hasCompletedMousetimeCicle();
 	const sf::IntRect& getTextureRect() const;
 };
 }
