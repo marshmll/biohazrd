@@ -24,8 +24,12 @@ private:
 
 	sf::RectangleShape shape;
 
+	// Text Button
 	sf::Text text;
 	sf::Font *font;
+
+	// Image button
+	sf::RectangleShape image;
 
 	sf::Color textIdleColor;
 	sf::Color textHoverColor;
@@ -41,6 +45,8 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
+
+	// Text button
 	Button(float x, float y, float width, float height,
 			sf::Font *font, std::string text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
@@ -49,6 +55,16 @@ public:
 			sf::Color outline_hover_color = sf::Color::Transparent,
 			sf::Color outline_active_color = sf::Color::Transparent,
 			short unsigned id = 0);
+
+	// Image button
+	Button(float x, float y, float width, float height,
+			sf::Texture *texture,
+			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+			sf::Color outline_idle_color = sf::Color::Transparent,
+			sf::Color outline_hover_color = sf::Color::Transparent,
+			sf::Color outline_active_color = sf::Color::Transparent,
+			short unsigned id = 0);
+
 	virtual ~Button();
 
 	/* FUNCTIONS */
@@ -153,6 +169,7 @@ private:
 	float mousetime;
 	const float mousetimeMax;
 
+	sf::Texture hideBtnIcon;
 	gui::Button *hideBtn;
 
 	sf::RectangleShape bounds;

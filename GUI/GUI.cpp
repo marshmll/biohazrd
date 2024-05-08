@@ -18,6 +18,8 @@
  *********************************************************************************************************/
 
 /* CONSTRUCTOR AND DESTRUCTOR */
+
+// TEXT BUTTON
 gui::Button::Button(float x, float y, float width, float height,
 		sf::Font *font, std::string text, unsigned char_size,
 		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
@@ -68,6 +70,55 @@ gui::Button::Button(float x, float y, float width, float height,
 			this->shape.getPosition().y
 					+ (this->shape.getGlobalBounds().height / 2.f)
 					- this->text.getGlobalBounds().height / 2.f);
+
+	this->outlineIdleColor = outline_idle_color;
+	this->outlineHoverColor = outline_hover_color;
+	this->outlineActiveColor = outline_active_color;
+}
+
+// IMAGE BUTTON
+gui::Button::Button(float x, float y, float width, float height,
+		sf::Texture *texture,
+		sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+		sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
+		short unsigned id)
+{
+	/**
+	 * @constructor
+	 *
+	 * Creates a button instance.
+	 * -> Sets initial state to idle
+	 * -> Sets button shape colors
+	 * -> Sets position, size and fil color
+	 * -> Sets font and text color
+	 * -> Sets text string, character size and text color
+	 * -> Sets text position centered in button.
+	 */
+
+	this->id = id;
+	this->btn_state = BTN_IDLE;
+
+	this->idleColor = idle_color;
+	this->hoverColor = hover_color;
+	this->activeColor = active_color;
+
+	this->shape.setPosition(sf::Vector2f(x, y));
+	this->shape.setSize(sf::Vector2f(width, height));
+	this->shape.setFillColor(idle_color);
+	this->shape.setOutlineThickness(1.f);
+	this->shape.setOutlineColor(outline_idle_color);
+
+	this->font = nullptr;
+
+	this->image.setSize(sf::Vector2f(50.f, 50.f));
+	this->image.setTexture(texture);
+	this->image.setPosition(
+			this->shape.getPosition().x
+					+ (this->shape.getGlobalBounds().width / 2.f)
+					- this->image.getGlobalBounds().width / 2.f,
+			this->shape.getPosition().y
+					+ (this->shape.getGlobalBounds().height / 2.f)
+					- this->image.getGlobalBounds().height / 2.f);
 
 	this->outlineIdleColor = outline_idle_color;
 	this->outlineHoverColor = outline_hover_color;
@@ -139,7 +190,11 @@ void gui::Button::render(sf::RenderTarget &target)
 	 */
 
 	target.draw(this->shape);
-	target.draw(this->text);
+
+	if (font)
+		target.draw(this->text);
+	else
+		target.draw(this->image);
 }
 
 /* SETTERS */
@@ -574,11 +629,11 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	this->textureRect.width = (int) gridSize;
 	this->textureRect.height = (int) gridSize;
 
-	this->hideBtn = new gui::Button(
-			x, y, 50.f, 50.f,
-			font, text, 16,
-			sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(255, 255, 255, 50),
-			sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));
+	this->hideBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png");
+
+	this->hideBtn = new gui::Button(x, y, 50.f, 50.f,
+			&this->hideBtnIcon,
+			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));
 }
 
 gui::TextureSelector::~TextureSelector()

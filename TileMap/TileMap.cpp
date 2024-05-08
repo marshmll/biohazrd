@@ -230,8 +230,8 @@ void TileMap::saveToFile(const std::string file_name)
 			for (size_t z = 0; z < this->layers; z++)
 			{
 				if (this->tileMap[x][y][z] != nullptr)
-					out_file << x << " " << y << " " << z << " "
-							<< this->tileMap[x][y][z]->getPropertiesAsString() << " ";
+					out_file << x << " " << y << " " << z << " " << this->tileMap[x][y][z]->getPropertiesAsString()
+							<< "\n";
 			}
 		}
 	}
@@ -265,7 +265,8 @@ void TileMap::render(sf::RenderTarget &target)
 	}
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect)
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect,
+		const bool &collision, const short &type)
 {
 	/**
 	 * @return void
@@ -277,7 +278,7 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, cons
 	// If position is in the map bounds
 	if (x < this->tileMapDimensions.x && y < this->tileMapDimensions.y && z < this->layers)
 	{
-		this->tileMap[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileTextureSheet, textureRect);
+		this->tileMap[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileTextureSheet, textureRect, collision, type);
 	}
 }
 

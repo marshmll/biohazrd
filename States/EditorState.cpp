@@ -18,6 +18,9 @@ void EditorState::initVariables()
 	 */
 
 	this->textureRect = sf::IntRect(0, 0, (int) this->data->gridSize, (int) this->data->gridSize);
+
+	this->collision = false;
+	this->type = TileTypes::DEFAULT;
 }
 
 void EditorState::initKeybinds()
@@ -114,7 +117,7 @@ void EditorState::initGUI()
 	 */
 
 	// Sidebar
-	this->sidebar.setSize(sf::Vector2f(70.f, this->data->gfxSettings->resolution.height));
+	this->sidebar.setSize(sf::Vector2f(this->data->gridSize, this->data->gfxSettings->resolution.height));
 	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
 	this->sidebar.setOutlineThickness(1.f);
 	this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
@@ -261,7 +264,10 @@ void EditorState::updateEditorInput(const float &dt)
 		if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 		{
 			if (!this->textureSelector->isActive())
-				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+			{
+				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,
+						this->collision, this->type);
+			}
 			else
 			{
 				this->textureRect = this->textureSelector->getTextureRect();
@@ -278,6 +284,22 @@ void EditorState::updateEditorInput(const float &dt)
 		}
 	}
 
+	// Toggle collision
+	if (sf::Keyboard::isKeyPressed(this->keybinds["TOGGLE_COLLISION"]) && this->hasCompletedKeytimeCicle())
+	{
+		this->collision = !this->collision;
+	}
+	// Type increase
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["INCREASE_TYPE"]) && this->hasCompletedKeytimeCicle())
+	{
+		++this->type;
+	}
+	// Type decrease
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["DECREASE_TYPE"]) && this->hasCompletedKeytimeCicle())
+	{
+		if (this->type > 0)
+			--this->type;
+	}
 }
 
 void EditorState::updateButtons()
@@ -331,12 +353,14 @@ void EditorState::updateGUI(const float &dt)
 		this->selectorRect.setTextureRect(this->textureRect);
 	}
 
-	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x + 100.f, this->mousePosView.y));
+	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x + 50.f, this->mousePosView.y));
 
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n"
 			<< this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
-			<< this->textureRect.left << " " << this->textureRect.top;
+			<< this->textureRect.left << " " << this->textureRect.top << "\n"
+			<< "collision: " << (this->collision ? "true" : "false") << "\n"
+			<< "type: " << this->type;
 	this->cursorText.setString(ss.str());
 
 }

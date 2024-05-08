@@ -29,6 +29,9 @@ private:
 
 	gui::TextureSelector *textureSelector;
 
+	bool collision;
+	short type;
+
 	/* INITIALIZERS */
 	void initVariables();
 	void initKeybinds();
