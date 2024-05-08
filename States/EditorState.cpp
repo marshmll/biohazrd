@@ -79,6 +79,8 @@ void EditorState::initPauseMenu()
 	 */
 
 	this->pauseMenu = new gui::PauseMenu(*this->window, this->font);
+	this->pauseMenu->addButton("SAVE", 500.f, "Save");
+	this->pauseMenu->addButton("LOAD", 400.f, "Load");
 }
 
 void EditorState::initButtons()
@@ -99,7 +101,7 @@ void EditorState::initTileMap()
 	 * Initializes the tilemap for the editor.
 	 */
 
-	this->tileMap = new TileMap(this->data->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
 }
 
 void EditorState::initGUI()
@@ -302,6 +304,12 @@ void EditorState::updatePauseMenuButtons()
 
 	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->quit();
+
+	else if (this->pauseMenu->isButtonPressed("SAVE"))
+		this->tileMap->saveToFile("test.biomap");
+
+	else if (this->pauseMenu->isButtonPressed("LOAD"))
+		this->tileMap->loadFromFile("test.biomap");
 }
 
 void EditorState::updateGUI(const float &dt)

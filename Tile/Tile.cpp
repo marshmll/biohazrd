@@ -9,13 +9,22 @@
 #include "Tile.h"
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-Tile::Tile(float x, float y, float gridSizeF, const sf::Texture &texture, const sf::IntRect textureRect)
+Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, const sf::Texture &texture, const sf::IntRect textureRect,
+		bool collision,
+		short type)
 {
 	this->tile.setSize(sf::Vector2f(gridSizeF, gridSizeF));
+
 	this->tile.setFillColor(sf::Color::White);
+
 	this->tile.setTexture(&texture);
-	this->tile.setPosition(x, y);
+
+	this->tile.setPosition(grid_x * gridSizeF, grid_y * gridSizeF);
+
 	this->tile.setTextureRect(textureRect);
+
+	this->collision = collision;
+	this->type = type;
 }
 
 Tile::~Tile()
@@ -40,4 +49,15 @@ void Tile::render(sf::RenderTarget &target)
 	 */
 
 	target.draw(this->tile);
+}
+
+/* ACCESSORS */
+const std::string Tile::getPropertiesAsString() const
+{
+	std::stringstream ss;
+
+	ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
+			<< this->collision << " " << this->type;
+
+	return ss.str();
 }

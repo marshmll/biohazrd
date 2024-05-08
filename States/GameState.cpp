@@ -89,7 +89,8 @@ void GameState::initTileMap()
 	 * Initializes a tilemap for the gamestate.
 	 */
 
-	this->tileMap = new TileMap(this->data->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
+//	this->tileMap->loadFromFile("test.biomap");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -171,7 +172,7 @@ void GameState::render(sf::RenderTarget &target)
 	 * -> Renders player.
 	 */
 
-//	this->map.render(target);
+//	this->tileMap->render(target);
 	this->player->render(target);
 
 	if (this->isPaused) // Pause menu render
