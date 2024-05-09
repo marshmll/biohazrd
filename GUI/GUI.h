@@ -58,7 +58,7 @@ public:
 
 	// Image button
 	Button(float x, float y, float width, float height,
-			sf::Texture *texture,
+			sf::Texture *texture, float img_w, float img_h,
 			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
 			sf::Color outline_idle_color = sf::Color::Transparent,
 			sf::Color outline_hover_color = sf::Color::Transparent,

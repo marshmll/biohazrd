@@ -30,7 +30,7 @@ gui::Button::Button(float x, float y, float width, float height,
 	/**
 	 * @constructor
 	 *
-	 * Creates a button instance.
+	 * Creates a button instance WITH TEXT.
 	 * -> Sets initial state to idle
 	 * -> Sets button shape colors
 	 * -> Sets position, size and fil color
@@ -78,7 +78,7 @@ gui::Button::Button(float x, float y, float width, float height,
 
 // IMAGE BUTTON
 gui::Button::Button(float x, float y, float width, float height,
-		sf::Texture *texture,
+		sf::Texture *texture, float img_w, float img_h,
 		sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
 		sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
 		short unsigned id)
@@ -86,13 +86,13 @@ gui::Button::Button(float x, float y, float width, float height,
 	/**
 	 * @constructor
 	 *
-	 * Creates a button instance.
+	 * Creates a button instance WITH IMAGE.
 	 * -> Sets initial state to idle
 	 * -> Sets button shape colors
 	 * -> Sets position, size and fil color
-	 * -> Sets font and text color
-	 * -> Sets text string, character size and text color
-	 * -> Sets text position centered in button.
+	 * -> Sets font to nullptr
+	 * -> Sets image size, texture and position
+	 * -> Sets image position centered in button.
 	 */
 
 	this->id = id;
@@ -110,15 +110,15 @@ gui::Button::Button(float x, float y, float width, float height,
 
 	this->font = nullptr;
 
-	this->image.setSize(sf::Vector2f(50.f, 50.f));
+	this->image.setSize(sf::Vector2f(img_w, img_h));
 	this->image.setTexture(texture);
 	this->image.setPosition(
 			this->shape.getPosition().x
 					+ (this->shape.getGlobalBounds().width / 2.f)
-					- this->image.getGlobalBounds().width / 2.f,
+					- this->image.getSize().x / 2.f,
 			this->shape.getPosition().y
 					+ (this->shape.getGlobalBounds().height / 2.f)
-					- this->image.getGlobalBounds().height / 2.f);
+					- this->image.getSize().y / 2.f);
 
 	this->outlineIdleColor = outline_idle_color;
 	this->outlineHoverColor = outline_hover_color;
@@ -632,7 +632,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	this->hideBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png");
 
 	this->hideBtn = new gui::Button(x, y, 50.f, 50.f,
-			&this->hideBtnIcon,
+			&this->hideBtnIcon, 50.f, 50.f,
 			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));
 }
 
