@@ -43,7 +43,7 @@ State::State(StateData *data)
 	this->keytimeMax = 15.f;
 
 	this->mousetime = 0.f;
-	this->mousetimeMax = 10.f;
+	this->mousetimeMax = 5.f;
 
 	this->gridSize = data->gridSize;
 }

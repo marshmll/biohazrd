@@ -114,10 +114,10 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->image.setTexture(texture);
 	this->image.setPosition(
 			this->shape.getPosition().x
-					+ (this->shape.getGlobalBounds().width / 2.f)
+					+ (this->shape.getSize().x / 2.f)
 					- this->image.getSize().x / 2.f,
 			this->shape.getPosition().y
-					+ (this->shape.getGlobalBounds().height / 2.f)
+					+ (this->shape.getSize().y / 2.f)
 					- this->image.getSize().y / 2.f);
 
 	this->outlineIdleColor = outline_idle_color;
@@ -633,7 +633,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 
 	this->hideBtn = new gui::Button(x, y, 50.f, 50.f,
 			&this->hideBtnIcon, 50.f, 50.f,
-			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));
+			sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 }
 
 gui::TextureSelector::~TextureSelector()

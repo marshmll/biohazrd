@@ -117,7 +117,7 @@ void EditorState::initGUI()
 	 */
 
 	// Sidebar
-	this->sidebar.setSize(sf::Vector2f(this->data->gridSize, this->data->gfxSettings->resolution.height));
+	this->sidebar.setSize(sf::Vector2f(60.f, this->data->gfxSettings->resolution.height));
 	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
 	this->sidebar.setOutlineThickness(1.f);
 	this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
@@ -386,7 +386,7 @@ void EditorState::renderGUI(sf::RenderTarget &target)
 	 * Renders the GUI elements into a target.
 	 */
 
-	if (!this->textureSelector->isActive())
+	if (!this->textureSelector->isActive() && !this->sidebar.getGlobalBounds().contains(this->mousePosView))
 		target.draw(this->selectorRect);
 
 	this->textureSelector->render(target);
