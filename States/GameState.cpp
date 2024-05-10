@@ -9,6 +9,14 @@
 #include "GameState.h"
 
 /* INITIALIZERS */
+void GameState::initView()
+{
+	this->playerCamera.setSize(
+			sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+	this->playerCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
+			this->data->gfxSettings->resolution.height / 2.f);
+}
+
 void GameState::initKeybinds()
 {
 	/**
@@ -108,6 +116,7 @@ GameState::GameState(StateData *data) :
 	 * -> Initializes player(s)
 	 */
 
+	this->initView();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
@@ -144,13 +153,14 @@ void GameState::update(const float &dt)
 	 * -> Uptades pause menu buttons if PAUSED.
 	 */
 
-	this->updateMousePositions();
+	this->updateMousePositions(&this->playerCamera);
 	this->updateKeytime(dt);
 	this->updateInput(dt);
 
 	// Not-paused update
 	if (!this->isPaused)
 	{
+		this->updateView(dt);
 		this->updatePlayerInput(dt);
 		this->player->update(dt);
 	}
@@ -158,7 +168,7 @@ void GameState::update(const float &dt)
 	// Paused update
 	else
 	{
-		this->pauseMenu->update(this->mousePosView);
+		this->pauseMenu->update(this->mousePosWindow);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -172,11 +182,15 @@ void GameState::render(sf::RenderTarget &target)
 	 * -> Renders player.
 	 */
 
+	target.setView(this->playerCamera);
 	this->tileMap->render(target);
 	this->player->render(target);
 
-	if (this->isPaused) // Pause menu render
+	if (this->isPaused)
+	{
+		target.setView(this->window->getDefaultView());
 		this->pauseMenu->render(target);
+	}
 }
 
 void GameState::updateInput(const float &dt)
@@ -226,4 +240,9 @@ void GameState::updatePauseMenuButtons()
 
 	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->quit();
+}
+
+void GameState::updateView(const float &dt)
+{
+	this->playerCamera.setCenter(this->player->getCenteredPosition());
 }

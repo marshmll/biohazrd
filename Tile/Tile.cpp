@@ -54,6 +54,12 @@ void Tile::render(sf::RenderTarget &target)
 /* ACCESSORS */
 const std::string Tile::getPropertiesAsString() const
 {
+	/**
+	 * @return void
+	 *
+	 * Returns the tile properties as a std::string.
+	 */
+
 	std::stringstream ss;
 
 	ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "

@@ -71,7 +71,7 @@ public:
 	virtual void updateInput(const float &dt) = 0;
 
 	/* DEFINED VIRTUAL FUNCTIONS */
-	virtual void updateMousePositions();
+	virtual void updateMousePositions(sf::View *view = nullptr);
 	virtual void updateKeytime(const float &dt);
 	virtual void updateMousetime(const float &dt);
 	virtual void quit();

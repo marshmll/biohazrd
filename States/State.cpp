@@ -54,7 +54,7 @@ State::~State()
 }
 
 /* DEFINED VIRTUAL FUNCTIONS */
-void State::updateMousePositions()
+void State::updateMousePositions(sf::View *view)
 {
 	/**
 	 * @return void
@@ -69,11 +69,16 @@ void State::updateMousePositions()
 
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 
+	if (view)
+		this->window->setView(*view);
+
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
 
 	this->mousePosGrid = sf::Vector2u(
 			static_cast<unsigned>(this->mousePosView.x) / static_cast<unsigned>(this->data->gridSize),
 			static_cast<unsigned>(this->mousePosView.y) / static_cast<unsigned>(this->data->gridSize));
+
+	this->window->setView(this->window->getDefaultView());
 }
 
 void State::updateKeytime(const float &dt)

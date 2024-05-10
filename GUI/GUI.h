@@ -106,7 +106,7 @@ public:
 	~DropDownList();
 
 	/* FUNCTIONS */
-	void update(const sf::Vector2f &mousePos, const float &dt);
+	void update(const sf::Vector2i &mousePosWindow, const float &dt);
 	void render(sf::RenderTarget &target);
 
 	void updateKeytime(const float &dt);
@@ -141,7 +141,7 @@ public:
 	virtual ~PauseMenu();
 
 	/* FUNCTIONS */
-	void update(const sf::Vector2f &mousePos);
+	void update(const sf::Vector2i &mousePosWindow);
 	void render(sf::RenderTarget &target);
 
 	void addButton(std::string key, float y, const std::string text);
@@ -182,8 +182,7 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture *texture_sheet,
-			sf::Font *font, std::string text);
+	TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture *texture_sheet);
 	~TextureSelector();
 
 	/* FUNCTIONS */

@@ -315,7 +315,7 @@ gui::DropDownList::~DropDownList()
 }
 
 /* FUNCTIONS */
-void gui::DropDownList::update(const sf::Vector2f &mousePos, const float &dt)
+void gui::DropDownList::update(const sf::Vector2i &mousePosWindow, const float &dt)
 {
 	/**
 	 * @return void
@@ -326,7 +326,7 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float &dt)
 
 	this->updateKeytime(dt);
 
-	this->selectedElement->update(mousePos);
+	this->selectedElement->update(sf::Vector2f(mousePosWindow));
 
 	if (this->selectedElement->isPressed() && this->hasCompletedKeytimeCicle())
 		this->showList = !this->showList;
@@ -335,7 +335,7 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float &dt)
 	{
 		for (auto &button : this->list)
 		{
-			button->update(mousePos);
+			button->update(sf::Vector2f(mousePosWindow));
 
 			if (button->isPressed() && this->hasCompletedKeytimeCicle())
 			{
@@ -492,7 +492,7 @@ gui::PauseMenu::~PauseMenu()
 }
 
 /* FUNCIONS */
-void gui::PauseMenu::update(const sf::Vector2f &mousePos)
+void gui::PauseMenu::update(const sf::Vector2i &mousePosWindow)
 {
 	/**
 	 * @return void
@@ -502,7 +502,7 @@ void gui::PauseMenu::update(const sf::Vector2f &mousePos)
 	 */
 
 	for (auto &it : this->buttons)
-		it.second->update(mousePos);
+		it.second->update(sf::Vector2f(mousePosWindow));
 }
 
 void gui::PauseMenu::render(sf::RenderTarget &target)
@@ -577,7 +577,7 @@ std::map<std::string, gui::Button*>& gui::PauseMenu::getButtons()
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize,
-		const sf::Texture *texture_sheet, sf::Font *font, std::string text) :
+		const sf::Texture *texture_sheet) :
 		mousetime(0.f), mousetimeMax(10.f)
 {
 	/**

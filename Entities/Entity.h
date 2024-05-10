@@ -38,9 +38,15 @@ public:
 	/* FUNCTIONS */
 	virtual void update(const float &dt) = 0;
 	virtual void render(sf::RenderTarget &target);
-
-	virtual void setPosition(const float x, const float y);
 	virtual void move(const float x, const float y, const float &dt);
+
+	/* ACCESSORS */
+	virtual const sf::Vector2f& getPosition();
+	virtual const sf::Vector2f getCenteredPosition();
+
+	/* MODIFIERS */
+	virtual void setPosition(const float x, const float y);
+
 };
 
 #endif /* ENTITIES_ENTITY_H_ */

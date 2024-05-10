@@ -21,6 +21,18 @@ void EditorState::initVariables()
 
 	this->collision = false;
 	this->type = TileTypes::DEFAULT;
+
+	this->cameraSpeed = 500.f;
+}
+
+void EditorState::initView()
+{
+	this->editorCamera.setSize(
+			sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+
+	this->editorCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
+			this->data->gfxSettings->resolution.height / 2.f);
+
 }
 
 void EditorState::initKeybinds()
@@ -137,8 +149,7 @@ void EditorState::initGUI()
 	this->textureSelector = new gui::TextureSelector(
 			this->sidebar.getSize().x / 2 - 25.f, 20.f, 480.f, 480.f,
 			this->data->gridSize,
-			this->tileMap->getTileTextureSheet(),
-			&this->font, "TS");
+			this->tileMap->getTileTextureSheet());
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -156,6 +167,8 @@ EditorState::EditorState(StateData *data) :
 	 */
 
 	this->initVariables();
+
+	this->initView();
 
 	this->initFonts();
 
@@ -201,7 +214,7 @@ void EditorState::update(const float &dt)
 	 * -> Update buttons.
 	 */
 
-	this->updateMousePositions();
+	this->updateMousePositions(&this->editorCamera);
 	this->updateInput(dt);
 	this->updateKeytime(dt);
 	this->updateMousetime(dt);
@@ -214,7 +227,7 @@ void EditorState::update(const float &dt)
 	}
 	else
 	{
-		this->pauseMenu->update(this->mousePosView);
+		this->pauseMenu->update(this->mousePosWindow);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -229,14 +242,24 @@ void EditorState::render(sf::RenderTarget &target)
 	 * -> Render buttons.
 	 */
 
+	// Render tilemap in the editor camera
+	target.setView(this->editorCamera);
 	this->tileMap->render(target);
 
+	// Render buttons in the window view
+	target.setView(this->window->getDefaultView());
 	this->renderButtons(target);
 
 	if (!this->isPaused)
+	{
 		this->renderGUI(target);
+	}
 	else
+	{
+		// Render pause menu in the window view
+		target.setView(this->window->getDefaultView());
 		this->pauseMenu->render(target);
+	}
 }
 
 void EditorState::updateInput(const float &dt)
@@ -258,6 +281,24 @@ void EditorState::updateEditorInput(const float &dt)
 	 *
 	 * Updates the input specific for the editor
 	 */
+
+	// Move view
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_UP"]))
+	{
+		this->editorCamera.move(0.f, -this->cameraSpeed * dt);
+	}
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_DOWN"]))
+	{
+		this->editorCamera.move(0.f, this->cameraSpeed * dt);
+	}
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_LEFT"]))
+	{
+		this->editorCamera.move(-this->cameraSpeed * dt, 0.f);
+	}
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_RIGHT"]))
+	{
+		this->editorCamera.move(this->cameraSpeed * dt, 0.f);
+	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->hasCompletedKeytimeCicle())
 	{
@@ -312,7 +353,7 @@ void EditorState::updateButtons()
 	 */
 
 	for (auto &it : this->buttons)
-		it.second->update(this->mousePosView);
+		it.second->update(sf::Vector2f(this->mousePosWindow));
 
 }
 
@@ -356,7 +397,7 @@ void EditorState::updateGUI(const float &dt)
 	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x + 50.f, this->mousePosView.y));
 
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n"
+	ss << this->mousePosWindow.x << " " << this->mousePosWindow.y << "\n"
 			<< this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
 			<< this->textureRect.left << " " << this->textureRect.top << "\n"
 			<< "collision: " << (this->collision ? "true" : "false") << "\n"
@@ -383,16 +424,25 @@ void EditorState::renderGUI(sf::RenderTarget &target)
 	/**
 	 * @return void
 	 *
-	 * Renders the GUI elements into a target.
+	 * Renders the GUI elements into a target
 	 */
 
-	if (!this->textureSelector->isActive() && !this->sidebar.getGlobalBounds().contains(this->mousePosView))
+	if (!this->textureSelector->isActive()
+			&& !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
+	{
+		// Render selector rect in the editor camera
+		target.setView(this->editorCamera);
 		target.draw(this->selectorRect);
+	}
 
+	// Render texture selector and sidebar in the window view
+	target.setView(this->window->getDefaultView());
 	this->textureSelector->render(target);
+	target.draw(this->sidebar);
 
+	// Render cursor text in the editor camera
+	target.setView(this->editorCamera);
 	target.draw(this->cursorText);
 
-	target.draw(this->sidebar);
 }
 

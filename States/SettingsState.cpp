@@ -226,11 +226,11 @@ void SettingsState::updateGUI(const float &dt)
 
 	// Updates all buttons based on mouse position view.
 	for (auto &it : this->buttons)
-		it.second->update(this->mousePosView);
+		it.second->update(sf::Vector2f(this->mousePosWindow));
 
 	// Updates all ddls based on mouse position view and dt.
 	for (auto &it : this->dropDownLists)
-		it.second->update(this->mousePosView, dt);
+		it.second->update(this->mousePosWindow, dt);
 
 	// Checks for returning
 	if (this->buttons["BACK"]->isPressed())

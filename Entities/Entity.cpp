@@ -105,17 +105,6 @@ void Entity::render(sf::RenderTarget &target)
 		this->hitboxComponent->render(target);
 }
 
-void Entity::setPosition(const float x, const float y)
-{
-	/**
-	 * @return void
-	 *
-	 * Sets a position to the entity's sprite.
-	 */
-
-	this->sprite.setPosition(x, y);
-}
-
 void Entity::move(const float dir_x, const float dir_y, const float &dt)
 {
 	/**
@@ -130,5 +119,42 @@ void Entity::move(const float dir_x, const float dir_y, const float &dt)
 	{
 		this->movementComponent->move(dir_x, dir_y, dt); // Sets velocity
 	}
+}
+
+/* ACCESSORS */
+const sf::Vector2f& Entity::getPosition()
+{
+	/**
+	 * @return const sf::Vector2f&
+	 *
+	 * Returns the position of the sprite.
+	 */
+
+	return this->sprite.getPosition();
+}
+
+const sf::Vector2f Entity::getCenteredPosition()
+{
+	/**
+	 * @return const sf::Vector2f
+	 *
+	 * Returns the position of the center of the sprite.
+	 */
+
+	return sf::Vector2f(
+			this->sprite.getPosition().x + this->sprite.getGlobalBounds().width / 2,
+			this->sprite.getPosition().y + this->sprite.getGlobalBounds().height / 2);
+}
+
+/* MODIFIERS */
+void Entity::setPosition(const float x, const float y)
+{
+	/**
+	 * @return void
+	 *
+	 * Sets a position to the entity's sprite.
+	 */
+
+	this->sprite.setPosition(x, y);
 }
 
