@@ -52,6 +52,28 @@ void Tile::render(sf::RenderTarget &target)
 }
 
 /* ACCESSORS */
+const sf::Vector2f& Tile::getPosition() const
+{
+	/**
+	 * @return const sf::Vector2f&
+	 *
+	 * Returns the tile's current position.
+	 */
+
+	return this->tile.getPosition();
+}
+
+const bool& Tile::isCollideable()
+{
+	/**
+	 * @return const bool&
+	 *
+	 * Returns if the tile is collideable.
+	 */
+
+	return this->collision;
+}
+
 const std::string Tile::getPropertiesAsString() const
 {
 	/**

@@ -93,16 +93,7 @@ void Entity::createAnimationComponent(sf::Texture &texture_sheet)
 /* FUNCTIONS */
 void Entity::render(sf::RenderTarget &target)
 {
-	/**
-	 * @return void
-	 *
-	 * Renders the entity's sprite into a target.
-	 */
 
-	target.draw(this->sprite);
-
-	if (this->hitboxComponent)
-		this->hitboxComponent->render(target);
 }
 
 void Entity::move(const float dir_x, const float dir_y, const float &dt)
@@ -127,8 +118,12 @@ const sf::Vector2f& Entity::getPosition()
 	/**
 	 * @return const sf::Vector2f&
 	 *
-	 * Returns the position of the sprite.
+	 * Returns the position of the hitbox or the position
+	 * of the sprite, if there is no hitbox.
 	 */
+
+	if (this->hitboxComponent)
+		return this->hitboxComponent->getPosition();
 
 	return this->sprite.getPosition();
 }
@@ -146,15 +141,58 @@ const sf::Vector2f Entity::getCenteredPosition()
 			this->sprite.getPosition().y + this->sprite.getGlobalBounds().height / 2);
 }
 
+const sf::Vector2f Entity::getSize()
+{
+	/**
+	 * @return const sf::Vector2f
+	 *
+	 * Returns the hitbox size, or the sprite size
+	 * if there is not hitbox.
+	 */
+
+	if (this->hitboxComponent)
+	{
+		return sf::Vector2f(
+				this->hitboxComponent->getSize().x,
+				this->hitboxComponent->getSize().y);
+	}
+	else
+	{
+		return sf::Vector2f(
+				this->sprite.getGlobalBounds().width,
+				this->sprite.getGlobalBounds().height);
+	}
+
+}
+
+const bool Entity::hasCollided(sf::FloatRect &frect)
+{
+	/**
+	 * @return const bool
+	 *
+	 * Returns if the entity's hitbox has intersected a FloatRect.
+	 * -> Returns false if the entity does not have a hitbox component.
+	 */
+
+	if (this->hitboxComponent)
+		return this->hitboxComponent->intersects(frect);
+	else
+		return false;
+}
+
 /* MODIFIERS */
-void Entity::setPosition(const float x, const float y)
+void Entity::setPosition(const sf::Vector2f &position)
 {
 	/**
 	 * @return void
 	 *
-	 * Sets a position to the entity's sprite.
+	 * Sets a position to the entity's hitbox, or to
+	 * the entity's sprite, if there's no hitbox.
 	 */
 
-	this->sprite.setPosition(x, y);
+	if (this->hitboxComponent)
+		this->hitboxComponent->setPosition(position);
+	else
+		this->sprite.setPosition(position);
 }
 

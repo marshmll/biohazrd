@@ -28,6 +28,8 @@ public:
 	void render(sf::RenderTarget &target);
 
 	/* ACCESSORS */
+	const sf::Vector2f& getPosition() const;
+	const bool& isCollideable();
 	const std::string getPropertiesAsString() const;
 };
 

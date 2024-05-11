@@ -187,8 +187,8 @@ void Game::update()
 
 	this->pollSFMLEvents();
 
-	// If there are still states available
-	if (!this->states.empty())
+	// If there are still states available and windows has focus
+	if (!this->states.empty() && this->window->hasFocus())
 	{
 		// Update the top state in the states stack
 		this->states.top()->update(this->dt);

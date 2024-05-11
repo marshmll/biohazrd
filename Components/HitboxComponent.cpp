@@ -65,7 +65,29 @@ void HitboxComponent::render(sf::RenderTarget &target)
 }
 
 /* ACCESSORS */
-const bool HitboxComponent::hasIntersected(sf::FloatRect &frect) const
+const sf::Vector2f& HitboxComponent::getPosition() const
+{
+	/**
+	 * @return const sf::Vector2f&
+	 *
+	 * Returns the hitbox position
+	 */
+
+	return this->hitbox.getPosition();
+}
+
+const sf::Vector2f& HitboxComponent::getSize() const
+{
+	/**
+	 * @return const sf::Vector2f&
+	 *
+	 * Returns the hitbox size
+	 */
+
+	return this->hitbox.getSize();
+}
+
+const bool HitboxComponent::intersects(sf::FloatRect &frect) const
 {
 	/**
 	 * @return const bool
@@ -75,4 +97,18 @@ const bool HitboxComponent::hasIntersected(sf::FloatRect &frect) const
 	 */
 
 	return this->hitbox.getGlobalBounds().intersects(frect);
+}
+
+/* MODIFIERS */
+void HitboxComponent::setPosition(const sf::Vector2f &position)
+{
+	/**
+	 * @return void
+	 *
+	 * Sets the hitbox position, and sets the sprite position
+	 * with the offsets.
+	 */
+
+	this->hitbox.setPosition(position);
+	this->sprite.setPosition(position.x - this->offsetX, position.y - this->offsetY);
 }

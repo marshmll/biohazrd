@@ -284,21 +284,16 @@ void EditorState::updateEditorInput(const float &dt)
 
 	// Move view
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_UP"]))
-	{
-		this->editorCamera.move(0.f, -this->cameraSpeed * dt);
-	}
+		this->editorCamera.move(0.f, std::floor(-this->cameraSpeed * dt));
+
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_DOWN"]))
-	{
-		this->editorCamera.move(0.f, this->cameraSpeed * dt);
-	}
+		this->editorCamera.move(0.f, std::floor(this->cameraSpeed * dt));
+
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_LEFT"]))
-	{
-		this->editorCamera.move(-this->cameraSpeed * dt, 0.f);
-	}
+		this->editorCamera.move(std::floor(-this->cameraSpeed * dt), 0.f);
+
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_RIGHT"]))
-	{
-		this->editorCamera.move(this->cameraSpeed * dt, 0.f);
-	}
+		this->editorCamera.move(std::floor(this->cameraSpeed * dt), 0.f);
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->hasCompletedKeytimeCicle())
 	{

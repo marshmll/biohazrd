@@ -37,15 +37,18 @@ public:
 
 	/* FUNCTIONS */
 	virtual void update(const float &dt) = 0;
-	virtual void render(sf::RenderTarget &target);
+	virtual void render(sf::RenderTarget &target) = 0;
 	virtual void move(const float x, const float y, const float &dt);
 
 	/* ACCESSORS */
 	virtual const sf::Vector2f& getPosition();
 	virtual const sf::Vector2f getCenteredPosition();
+	virtual const sf::Vector2f getSize();
+
+	virtual const bool hasCollided(sf::FloatRect &frect);
 
 	/* MODIFIERS */
-	virtual void setPosition(const float x, const float y);
+	virtual void setPosition(const sf::Vector2f& position);
 
 };
 

@@ -13,7 +13,7 @@ class GameState: public State
 private:
 	/* VARIABLES */
 	sf::View playerCamera;
-	sf::RenderTexture renderTexture;
+	sf::RenderTexture renderBuffer;
 	sf::Sprite renderSprite;
 
 	gui::PauseMenu *pauseMenu;
@@ -25,6 +25,7 @@ private:
 	TileMap *tileMap;
 
 	/* INITIALIZERS */
+	void initBufferedRender();
 	void initView();
 	void initKeybinds();
 	void initFonts();
@@ -42,12 +43,16 @@ public:
 	void update(const float &dt);
 	void render(sf::RenderTarget &target);
 
+	void renderToBuffer();
+
 	void updateInput(const float &dt);
 	void updatePlayerInput(const float &dt);
 
+	void updateTileMap(const float &dt);
+
 	void updatePauseMenuButtons();
 
-	void updateView(const float &dt);
+	void updatePlayerCamera(const float &dt);
 };
 
 #endif /* STATES_GAMESTATE_H_ */

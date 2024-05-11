@@ -66,10 +66,10 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 	 */
 
 	this->initVariables();
-	this->setPosition(x, y);
+	this->setPosition(sf::Vector2f(x, y));
 
 	this->createHitboxComponent(70.f, 45.f, 50.f, 85.f);
-	this->createMovementComponent(160.f, 12.f, 8.f);
+	this->createMovementComponent(200.f, 12.f, 8.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->initAnimations();
@@ -99,8 +99,27 @@ void Player::update(const float &dt)
 	this->updateAnimation(dt);
 }
 
+void Player::render(sf::RenderTarget &target)
+{
+	/**
+	 * @return void
+	 *
+	 * Renders the player into a target.
+	 */
+
+	target.draw(this->sprite);
+
+	this->hitboxComponent->render(target);
+}
+
 void Player::updateAnimation(const float &dt)
 {
+	/**
+	 * @return void
+	 *
+	 * Updates the player animations.
+	 */
+
 	switch (this->movementComponent->getCurrentState())
 	{
 	case IDLE:
@@ -116,6 +135,12 @@ void Player::updateAnimation(const float &dt)
 
 void Player::updateJump(const float &dt)
 {
+	/**
+	 * @return void
+	 *
+	 * Updates the jump states and animations.
+	 */
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping)
 	{
 		this->isJumping = true;

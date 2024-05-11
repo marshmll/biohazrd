@@ -19,7 +19,9 @@ public:
 	virtual ~Player();
 
 	/* FUNCTIONS */
-	virtual void update(const float &dt);
+	void update(const float &dt);
+	void render(sf::RenderTarget &target);
+
 	void updateAnimation(const float &dt);
 	void updateJump(const float &dt);
 };

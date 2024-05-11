@@ -23,7 +23,12 @@ public:
 	void render(sf::RenderTarget &target);
 
 	/* ACCESSORS */
-	const bool hasIntersected(sf::FloatRect &frect) const;
+	const sf::Vector2f& getPosition() const;
+	const sf::Vector2f& getSize() const;
+	const bool intersects(sf::FloatRect &frect) const;
+
+	/* MODIFIERS */
+	void setPosition(const sf::Vector2f &position);
 };
 
 #endif /* COMPONENTS_HITBOXCOMPONENT_H_ */

@@ -2,6 +2,10 @@
 #define TILEMAP_TILEMAP_H_
 
 #include "../Tile/Tile.h"
+#include "../Entities/Entity.h"
+
+class Tile;
+class Entity;
 
 class TileMap
 {
@@ -11,12 +15,16 @@ private:
 	unsigned gridSizeU;
 	unsigned layers;
 
-	sf::Vector2u tileMapDimensions;
+	sf::Vector2u tileMapGridDimensions;
+	sf::Vector2f tileMapWorldDimensions;
+
 	std::vector<std::vector<std::vector<Tile*> > > tileMap;
 
 	std::string texture_file_path;
 
 	sf::Texture tileTextureSheet;
+
+	sf::RectangleShape collisionBox;
 
 	/* PRIVATE FUNCTIONS */
 	void clear();
@@ -24,19 +32,20 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
-	TileMap(float gridSize, unsigned width, unsigned, std::string texture_file_path);
+	TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std::string texture_file_path);
 	virtual ~TileMap();
 
 	/* FUNCTIONS */
 	void loadFromFile(const std::string file_name);
 	void saveToFile(const std::string file_name);
-
-	void update();
-	void render(sf::RenderTarget &target);
-
 	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect,
 			const bool &collision, const short &type);
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
+
+	void update();
+	void render(sf::RenderTarget &target, Entity *entity = nullptr);
+
+	void updateCollision(Entity *entity = nullptr);
 
 	/* ACCESSORS */
 	const sf::Texture* getTileTextureSheet() const;

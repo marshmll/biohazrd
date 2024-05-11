@@ -9,6 +9,17 @@
 #include "GameState.h"
 
 /* INITIALIZERS */
+void GameState::initBufferedRender()
+{
+	this->renderBuffer.create(
+			this->data->gfxSettings->resolution.width,
+			this->data->gfxSettings->resolution.height);
+
+	this->renderSprite.setTexture(this->renderBuffer.getTexture());
+
+	this->renderSprite.setTextureRect(
+			sf::IntRect(0, 0, this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+}
 void GameState::initView()
 {
 	this->playerCamera.setSize(
@@ -116,6 +127,7 @@ GameState::GameState(StateData *data) :
 	 * -> Initializes player(s)
 	 */
 
+	this->initBufferedRender();
 	this->initView();
 	this->initKeybinds();
 	this->initFonts();
@@ -160,9 +172,10 @@ void GameState::update(const float &dt)
 	// Not-paused update
 	if (!this->isPaused)
 	{
-		this->updateView(dt);
+		this->updatePlayerCamera(dt);
 		this->updatePlayerInput(dt);
 		this->player->update(dt);
+		this->updateTileMap(dt);
 	}
 
 	// Paused update
@@ -178,19 +191,44 @@ void GameState::render(sf::RenderTarget &target)
 	/**
 	 * @return void
 	 *
-	 * Renders GameState into a target (window).
-	 * -> Renders player.
+	 * Renders GameState into a render texture buffer.
+	 * -> Display the buffered texture into the target.
+	 */
+	this->renderToBuffer();
+
+	target.draw(this->renderSprite);
+
+}
+
+void GameState::renderToBuffer()
+{
+	/**
+	 * @return void
+	 *
+	 * Renders everything into a RenderTexture buffer.
+	 * -> Clear the buffer.
+	 * -> Render into the buffer
+	 * -> Display the buffer
+	 * -> Set renderSprite texture to buffer.
 	 */
 
-	target.setView(this->playerCamera);
-	this->tileMap->render(target);
-	this->player->render(target);
+	// Clear render buffer
+	this->renderBuffer.clear();
+
+	this->renderBuffer.setView(this->playerCamera);
+	this->tileMap->render(this->renderBuffer);
+	this->player->render(this->renderBuffer);
 
 	if (this->isPaused)
 	{
-		target.setView(this->window->getDefaultView());
-		this->pauseMenu->render(target);
+		this->renderBuffer.setView(this->renderBuffer.getDefaultView());
+		this->pauseMenu->render(this->renderBuffer);
 	}
+
+	// Display render buffer
+	this->renderBuffer.display();
+
+	this->renderSprite.setTexture(this->renderBuffer.getTexture());
 }
 
 void GameState::updateInput(const float &dt)
@@ -229,6 +267,18 @@ void GameState::updatePlayerInput(const float &dt)
 		this->player->move(1.f, 0.f, dt);
 }
 
+void GameState::updateTileMap(const float &dt)
+{
+	/**
+	 * @return void
+	 *
+	 * Updates tilemap and collisions.
+	 */
+
+	this->tileMap->update();
+	this->tileMap->updateCollision(this->player);
+}
+
 void GameState::updatePauseMenuButtons()
 {
 	/**
@@ -242,7 +292,16 @@ void GameState::updatePauseMenuButtons()
 		this->quit();
 }
 
-void GameState::updateView(const float &dt)
+void GameState::updatePlayerCamera(const float &dt)
 {
-	this->playerCamera.setCenter(this->player->getCenteredPosition());
+	/**
+	 * @return void
+	 *
+	 * Updates the player camera, keeps player on
+	 * the center of the screen.
+	 */
+
+	this->playerCamera.setCenter(
+			std::floor(this->player->getCenteredPosition().x),
+			std::floor(this->player->getCenteredPosition().y));
 }
