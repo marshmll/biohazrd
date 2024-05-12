@@ -1,0 +1,19 @@
+target_sources(BIOHAZRD PRIVATE
+  main.cpp
+  AnimationComponent.cpp
+  EditorState.cpp
+  Entity.cpp
+  Game.cpp
+  GameState.cpp
+  GraphicsSettings.cpp
+  GUI.cpp
+  HitboxComponent.cpp
+  MainMenuState.cpp
+  MovementComponent.cpp
+  Player.cpp
+  SettingsState.cpp
+  State.cpp
+  stdafx.cpp
+  Tile.cpp
+  TileMap.cpp
+)
