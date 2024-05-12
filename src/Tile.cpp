@@ -9,9 +9,11 @@
 #include "Tile.h"
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, const sf::Texture &texture, const sf::IntRect textureRect,
-		bool collision,
-		short type)
+
+Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
+					 const sf::Texture &texture, const sf::IntRect textureRect,
+					 bool collision,
+					 short type)
 {
 	this->tile.setSize(sf::Vector2f(gridSizeF, gridSizeF));
 
@@ -29,63 +31,42 @@ Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, const sf::Texture 
 
 Tile::~Tile()
 {
-
 }
 
 /* FUNCTIONS */
+
 void Tile::update()
 {
-	/**
-	 * @return void
-	 */
 }
 
 void Tile::render(sf::RenderTarget &target)
 {
-	/**
-	 * @return void
-	 *
-	 * Renders the tile into a target.
-	 */
-
 	target.draw(this->tile);
 }
 
-/* ACCESSORS */
-const sf::Vector2f& Tile::getPosition() const
+const bool Tile::intersects(const sf::FloatRect &bounds) const
 {
-	/**
-	 * @return const sf::Vector2f&
-	 *
-	 * Returns the tile's current position.
-	 */
+	return this->tile.getGlobalBounds().intersects(bounds);
+}
 
+/* ACCESSORS */
+
+const sf::Vector2f &Tile::getPosition() const
+{
 	return this->tile.getPosition();
 }
 
-const bool& Tile::isCollideable()
+const bool &Tile::isCollideable()
 {
-	/**
-	 * @return const bool&
-	 *
-	 * Returns if the tile is collideable.
-	 */
-
 	return this->collision;
 }
 
 const std::string Tile::getPropertiesAsString() const
 {
-	/**
-	 * @return void
-	 *
-	 * Returns the tile properties as a std::string.
-	 */
-
 	std::stringstream ss;
 
 	ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-			<< this->collision << " " << this->type;
+		 << this->collision << " " << this->type;
 
 	return ss.str();
 }

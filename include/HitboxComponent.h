@@ -7,6 +7,7 @@ private:
 	/* VARIABLES */
 	sf::Sprite &sprite;
 	sf::RectangleShape hitbox;
+	sf::FloatRect nextPosition;
 
 	float offsetX;
 	float offsetY;
@@ -14,8 +15,8 @@ private:
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
 	HitboxComponent(sf::Sprite &sprite,
-			float offset_x, float offset_y,
-			float width, float height);
+									float offset_x, float offset_y,
+									float width, float height);
 	virtual ~HitboxComponent();
 
 	/* FUNCTIONS */
@@ -23,8 +24,10 @@ public:
 	void render(sf::RenderTarget &target);
 
 	/* ACCESSORS */
-	const sf::Vector2f& getPosition() const;
-	const sf::Vector2f& getSize() const;
+	const sf::Vector2f &getPosition() const;
+	const sf::Vector2f &getSize() const;
+	const sf::FloatRect getGlobalBounds() const;
+	const sf::FloatRect &getNextPosiion(const sf::Vector2f &velocity);
 	const bool intersects(sf::FloatRect &frect) const;
 
 	/* MODIFIERS */

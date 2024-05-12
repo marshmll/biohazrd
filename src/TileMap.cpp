@@ -9,14 +9,9 @@
 #include "TileMap.h"
 
 /* PRIVATE FUNCTIONS */
+
 void TileMap::clear()
 {
-	/**
-	 * @return void
-	 *
-	 * Frees all alocated memory for the tiles and texture.
-	 */
-
 	for (auto &x : this->tileMap)
 	{
 		for (auto &y : x)
@@ -36,18 +31,12 @@ void TileMap::clear()
 
 void TileMap::resize()
 {
-	/**
-	 * @return void
-	 *
-	 * Resizers the entire map, given the tilemap dimensions.
-	 */
-
-	this->tileMap.resize(this->tileMapGridDimensions.x, std::vector<std::vector<Tile*>>());
+	this->tileMap.resize(this->tileMapGridDimensions.x, std::vector<std::vector<Tile *>>());
 	for (size_t x = 0; x < this->tileMapGridDimensions.x; x++)
 	{
 		for (size_t y = 0; y < this->tileMapGridDimensions.y; y++)
 		{
-			this->tileMap[x].resize(this->tileMapGridDimensions.y, std::vector<Tile*>());
+			this->tileMap[x].resize(this->tileMapGridDimensions.y, std::vector<Tile *>());
 
 			for (size_t z = 0; z < this->layers; z++)
 			{
@@ -58,24 +47,11 @@ void TileMap::resize()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
+
 TileMap::TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std::string texture_file_path)
 {
-	/**
-	 * @constructor
-	 *
-	 * This constructor initializes a tilemap.
-	 * The tilemap has some importart properties as:
-	 * -> Gridsize: the size of each tile, in pixels
-	 * -> Layers: how many layers each tile position will have
-	 * -> Dimensions: the size of the tileMap, in tiles
-	 *
-	 * The constructor also initializes a 3D vector for the x,
-	 * y and z coordinates. Also uses a resize vector method to
-	 * ensure the vectors are big enough.
-	 */
-
 	this->gridSizeF = gridSize;
-	this->gridSizeU = (unsigned) this->gridSizeF;
+	this->gridSizeU = (unsigned)this->gridSizeF;
 	this->layers = 1;
 
 	this->tileMapGridDimensions.x = grid_width;
@@ -95,41 +71,23 @@ TileMap::TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std:
 	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
 	this->collisionBox.setOutlineColor(sf::Color(255, 0, 0, 100));
 	this->collisionBox.setOutlineThickness(1.f);
+
+	this->startX = 0;
+	this->endX = 0;
+	this->startY = 0;
+	this->endY = 0;
+	this->layer = 0;
 }
 
 TileMap::~TileMap()
 {
-	/**
-	 * @destructor
-	 *
-	 * Frees all alocated memory for the tiles and texture.
-	 */
-
 	this->clear();
 }
 
 /* FUNCTIONS */
+
 void TileMap::loadFromFile(const std::string file_name)
 {
-	/**
-	 * @return void
-	 *
-	 * Loads a tilemap from a file in the Maps folder.
-	 *
-	 * Format
-	 * CONFIG
-	 * -> Size X and Y.
-	 * -> Grid size.
-	 * -> Layers
-	 * -> Texture file
-	 *
-	 * TILES
-	 * -> Grid position x, y, and layer
-	 * -> Texture rect x and y
-	 * -> Collision
-	 * -> Type.
-	 */
-
 	std::ifstream in_file;
 
 	// Try to open a file.
@@ -163,7 +121,7 @@ void TileMap::loadFromFile(const std::string file_name)
 	this->tileMapGridDimensions.x = size.x;
 	this->tileMapGridDimensions.y = size.y;
 
-	this->gridSizeF = (float) gridSize;
+	this->gridSizeF = (float)gridSize;
 	this->gridSizeU = gridSize;
 	this->layers = layers;
 
@@ -192,30 +150,10 @@ void TileMap::loadFromFile(const std::string file_name)
 	}
 
 	in_file.close();
-
 }
 
 void TileMap::saveToFile(const std::string file_name)
 {
-	/**
-	 * @return void
-	 *
-	 * Saves the tilemap to a file in the Maps folder.
-	 *
-	 * Format
-	 * CONFIG
-	 * -> Size X and Y.
-	 * -> Grid size.
-	 * -> Layers
-	 * -> Texture file
-	 *
-	 * TILES
-	 * -> Grid position x, y, and layer
-	 * -> Texture rect x and y
-	 * -> Collision
-	 * -> Type.
-	 */
-
 	std::ofstream out_file;
 
 	// Try to open a file.
@@ -226,9 +164,9 @@ void TileMap::saveToFile(const std::string file_name)
 		throw std::runtime_error("TILEMAP::SAVETOFILE::ERR_COULD_NOT_SAVE_TILEMAP_TO_FILE: " + file_name);
 
 	out_file << this->tileMapGridDimensions.x << " " << this->tileMapGridDimensions.y << "\n"
-			<< this->gridSizeU << "\n"
-			<< this->layers << "\n"
-			<< this->texture_file_path << "\n";
+					 << this->gridSizeU << "\n"
+					 << this->layers << "\n"
+					 << this->texture_file_path << "\n";
 
 	// Write all tiles information
 	for (size_t x = 0; x < this->tileMapGridDimensions.x; x++)
@@ -239,7 +177,7 @@ void TileMap::saveToFile(const std::string file_name)
 			{
 				if (this->tileMap[x][y][z] != nullptr)
 					out_file << x << " " << y << " " << z << " " << this->tileMap[x][y][z]->getPropertiesAsString()
-							<< "\n";
+									 << "\n";
 			}
 		}
 	}
@@ -247,16 +185,10 @@ void TileMap::saveToFile(const std::string file_name)
 	out_file.close();
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect,
-		const bool &collision, const short &type)
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z,
+											const sf::IntRect &textureRect,
+											const bool &collision, const short &type)
 {
-	/**
-	 * @return void
-	 *
-	 * Adds a tile to the tilemap.
-	 * X and Y are indexes of the tilemap grid.
-	 */
-
 	// If position is in the map bounds
 	if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
 	{
@@ -266,13 +198,6 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, cons
 
 void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 {
-	/**
-	 * @return void
-	 *
-	 * Removes a tile from the tilemap.
-	 * X and Y are indexes of the tilemap grid.
-	 */
-
 	// If position is in the map bounds
 	if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
 	{
@@ -287,32 +212,43 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 
 void TileMap::update()
 {
-
 }
 
-void TileMap::render(sf::RenderTarget &target, Entity *Entity)
+void TileMap::render(sf::RenderTarget &target, Entity *entity)
 {
-	/**
-	 * @return void
-	 *
-	 * Renders each layer of each tile position (x, y).
-	 */
-
-	for (auto &x : this->tileMap)
+	if (entity)
 	{
-		for (auto &y : x)
+		for (size_t x = this->startX; x < this->endX; x++)
 		{
-			for (auto *z : y)
+			for (size_t y = this->startY; y < this->endY; y++)
 			{
-				if (z != nullptr)
+				this->tileMap[x][y][this->layer]->render(target);
+				if (this->tileMap[x][y][this->layer]->isCollideable())
 				{
-					z->render(target);
-
-					// COLLISION DEBUG
-					if (z->isCollideable())
+					this->collisionBox.setPosition(this->tileMap[x][y][this->layer]->getPosition());
+					target.draw(this->collisionBox);
+				}
+			}
+		}
+	}
+	else
+	{
+		for (auto &x : this->tileMap)
+		{
+			for (auto &y : x)
+			{
+				for (auto *z : y)
+				{
+					if (z != nullptr)
 					{
-						this->collisionBox.setPosition(z->getPosition());
-						target.draw(this->collisionBox);
+						z->render(target);
+
+						// COLLISION DEBUG
+						if (z->isCollideable())
+						{
+							this->collisionBox.setPosition(z->getPosition());
+							target.draw(this->collisionBox);
+						}
 					}
 				}
 			}
@@ -322,21 +258,17 @@ void TileMap::render(sf::RenderTarget &target, Entity *Entity)
 
 void TileMap::updateCollision(Entity *entity)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the collisions for a entity.
-	 */
-
 	/* WORLD BOUNDS */
 
 	// X axis
 	if (entity->getPosition().x < 0.f)
 	{
 		entity->setPosition(sf::Vector2f(0.f, entity->getPosition().y));
+		entity->stopVelocityX();
 	}
 	else if (entity->getPosition().x + entity->getSize().x > this->tileMapWorldDimensions.x)
 	{
+		entity->stopVelocityX();
 		entity->setPosition(
 				sf::Vector2f(this->tileMapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
 	}
@@ -344,23 +276,61 @@ void TileMap::updateCollision(Entity *entity)
 	// Y axis
 	if (entity->getPosition().y < 0.f)
 	{
+		entity->stopVelocityY();
 		entity->setPosition(sf::Vector2f(entity->getPosition().x, 0.f));
 	}
 	else if (entity->getPosition().y + entity->getSize().y > this->tileMapWorldDimensions.y)
 	{
+		entity->stopVelocityY();
 		entity->setPosition(
 				sf::Vector2f(entity->getPosition().x, this->tileMapWorldDimensions.y - entity->getSize().y));
+	}
+
+	/* TILES */
+
+	this->layer = 0;
+
+	this->startX = entity->getGridPosition(this->gridSizeU).x - 1;
+	if (this->startX < 0)
+		this->startX = 0;
+	else if (this->startX >= this->tileMapGridDimensions.x)
+		this->startX = this->tileMapGridDimensions.x;
+
+	this->endX = entity->getGridPosition(this->gridSizeU).x + 3;
+	if (this->endX < 0)
+		this->endX = 0;
+	else if (this->endX >= this->tileMapGridDimensions.x)
+		this->endX = this->tileMapGridDimensions.x;
+
+	this->startY = entity->getGridPosition(this->gridSizeU).y - 1;
+	if (this->startY < 0)
+		this->startY = 0;
+	else if (this->startY >= this->tileMapGridDimensions.x)
+		this->startY = this->tileMapGridDimensions.y;
+
+	this->endY = entity->getGridPosition(this->gridSizeU).y + 3;
+	if (this->endY < 0)
+		this->endY = 0;
+	else if (this->endY >= this->tileMapGridDimensions.y)
+		this->endY = this->tileMapGridDimensions.y;
+
+	for (size_t x = this->startX; x < this->endX; x++)
+	{
+		for (size_t y = this->startY; y < this->endY; y++)
+		{
+			if (this->tileMap[x][y][this->layer]->isCollideable())
+			{
+				if (this->tileMap[x][y][this->layer]->intersects(entity->getGlobalBounds()))
+				{
+				}
+			}
+		}
 	}
 }
 
 /* ACCESSORS */
-const sf::Texture* TileMap::getTileTextureSheet() const
-{
-	/**
-	 * @return sf::Texture*
-	 *
-	 * Returns the tile texture sheet of the tilemap.
-	 */
 
+const sf::Texture *TileMap::getTileTextureSheet() const
+{
 	return &this->tileTextureSheet;
 }

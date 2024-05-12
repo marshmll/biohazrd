@@ -50,12 +50,12 @@ void Game::initWindow()
 	if (this->gfxSettings.fullscreen) // If in fullscreen mode
 	{
 		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
-				sf::Style::Fullscreen, this->gfxSettings.contextSettings);
+																				sf::Style::Fullscreen, this->gfxSettings.contextSettings);
 	}
 	else // If in window mode
 	{
 		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
-				sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
+																				sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
 	}
 
 	this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);
@@ -168,7 +168,6 @@ void Game::run()
 		this->update();
 		this->render();
 	}
-
 }
 
 void Game::update()
@@ -187,18 +186,22 @@ void Game::update()
 
 	this->pollSFMLEvents();
 
-	// If there are still states available and windows has focus
-	if (!this->states.empty() && this->window->hasFocus())
+	// If there are still states available
+	if (!this->states.empty())
 	{
-		// Update the top state in the states stack
-		this->states.top()->update(this->dt);
-
-		// If the state wants to end
-		if (this->states.top()->hasAskedToQuit())
+		// If windows has focus
+		if (this->window->hasFocus())
 		{
-			// Delete the state and pop it from the stack.
-			delete this->states.top();
-			this->states.pop();
+			// Update the top state in the states stack
+			this->states.top()->update(this->dt);
+
+			// If the state wants to end
+			if (this->states.top()->hasAskedToQuit())
+			{
+				// Delete the state and pop it from the stack.
+				delete this->states.top();
+				this->states.pop();
+			}
 		}
 	}
 	// If there are no states
@@ -220,11 +223,15 @@ void Game::render()
 	// Clear window
 	this->window->clear();
 
-	// If there are states stack
+	// If there are states in the stack
 	if (!this->states.empty())
 	{
-		// Render them into the window.
-		this->states.top()->render(*this->window);
+		// If the window has focus
+		if (this->window->hasFocus())
+		{
+			// Render them into the window.
+			this->states.top()->render(*this->window);
+		}
 	}
 
 	// Display window

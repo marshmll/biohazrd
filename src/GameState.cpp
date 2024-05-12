@@ -216,7 +216,7 @@ void GameState::renderToBuffer()
 	this->renderBuffer.clear();
 
 	this->renderBuffer.setView(this->playerCamera);
-	this->tileMap->render(this->renderBuffer);
+	this->tileMap->render(this->renderBuffer, this->player);
 	this->player->render(this->renderBuffer);
 
 	if (this->isPaused)

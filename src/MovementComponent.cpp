@@ -4,29 +4,20 @@
 /* INITIALIZERS */
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-MovementComponent::MovementComponent(sf::Sprite &sprite,
-		float maxVelocity, float acceleration, float deceleration) :
-		sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration),
-				state(IDLE), direction(DOWN)
-{
 
+MovementComponent::MovementComponent(sf::Sprite &sprite, float maxVelocity, float acceleration, float deceleration) : sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration),
+																																																											state(IDLE), direction(DOWN)
+{
 }
 
 MovementComponent::~MovementComponent()
 {
-
 }
 
 /* FUNCTIONS */
+
 void MovementComponent::update(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Decelerates entity until it reaches 0 velocity.
-	 * -> Sets the movement state.
-	 */
-
 	/* Deceleration */
 
 	// If player is moving right
@@ -38,7 +29,6 @@ void MovementComponent::update(const float &dt)
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.x < 0.f)
 			this->velocity.x = 0.f;
-
 	}
 	// If player is moving left
 	else if (this->velocity.x <= 0.f)
@@ -49,7 +39,6 @@ void MovementComponent::update(const float &dt)
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.x > 0.f)
 			this->velocity.x = 0.f;
-
 	}
 
 	// If player is moving down
@@ -61,7 +50,6 @@ void MovementComponent::update(const float &dt)
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.y < 0.f)
 			this->velocity.y = 0.f;
-
 	}
 	// If player is moving up
 	else if (this->velocity.y <= 0.f)
@@ -72,7 +60,6 @@ void MovementComponent::update(const float &dt)
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.y > 0)
 			this->velocity.y = 0;
-
 	}
 
 	// Set state to idle
@@ -85,14 +72,6 @@ void MovementComponent::update(const float &dt)
 
 void MovementComponent::move(const float dir_x, const float dir_y, const float &dt)
 {
-	/*
-	 * @return void
-	 *
-	 * Moves a entity into some x and y direction.
-	 * -> Accelerates the entity until it reaches the max velocity.
-	 * -> Updates movement state.
-	 */
-
 	/* Acceleration */
 
 	// Accelerate player x
@@ -141,53 +120,24 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 		this->direction = UP;
 }
 
-/* ACESSORS */
-const sf::Vector2f& MovementComponent::getVelocity() const
+/* ACCESSORS */
+const sf::Vector2f &MovementComponent::getVelocity() const
 {
-	/**
-	 * @return const sf::Vectorf&
-	 *
-	 * Returns entity's current velocity.
-	 */
-
 	return this->velocity;
 }
 
-const float& MovementComponent::getMaxVelocity() const
+const float &MovementComponent::getMaxVelocity() const
 {
-	/**
-	 * @return const float&
-	 *
-	 * Returns the entity max velocity.
-	 */
-
 	return this->maxVelocity;
 }
 
-const short unsigned& MovementComponent::getCurrentState() const
+const short unsigned &MovementComponent::getCurrentState() const
 {
-	/**
-	 * @return short unsigned&
-	 *
-	 * Returns current state.
-	 */
-
 	return this->state;
 }
 
 const std::string MovementComponent::getDirection() const
 {
-	/**
-	 * @return std::string
-	 *
-	 * Returns the current facing direction
-	 * Can return 4 strings:
-	 * -> "DOWN"
-	 * -> "UP"
-	 * -> "RIGHT"
-	 * -> "LEFT"
-	 */
-
 	std::string direction;
 
 	switch (this->direction)
@@ -207,4 +157,21 @@ const std::string MovementComponent::getDirection() const
 	}
 
 	return direction;
+}
+
+/* MODIFIERS */
+
+void MovementComponent::stopVelocity()
+{
+	this->velocity = sf::Vector2f(0.f, 0.f);
+}
+
+void MovementComponent::stopVelocityX()
+{
+	this->velocity.x = 0.f;
+}
+
+void MovementComponent::stopVelocityY()
+{
+	this->velocity.y = 0.f;
 }

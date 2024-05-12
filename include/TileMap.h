@@ -11,6 +11,7 @@ class TileMap
 {
 private:
 	/* VARIABLES */
+
 	float gridSizeF;
 	unsigned gridSizeU;
 	unsigned layers;
@@ -18,37 +19,139 @@ private:
 	sf::Vector2u tileMapGridDimensions;
 	sf::Vector2f tileMapWorldDimensions;
 
-	std::vector<std::vector<std::vector<Tile*> > > tileMap;
+	std::vector<std::vector<std::vector<Tile *>>> tileMap;
 
 	std::string texture_file_path;
-
 	sf::Texture tileTextureSheet;
 
 	sf::RectangleShape collisionBox;
 
+	int startX;
+	int endX;
+	int startY;
+	int endY;
+	int layer;
+
 	/* PRIVATE FUNCTIONS */
+
+	/**
+	 * @return void
+	 *
+	 * @brief Frees all alocated memory for the tiles and texture.
+	 */
 	void clear();
+
+	/**
+	 * @return void
+	 *
+	 * @brief Resizers the entire map, given the tilemap dimensions.
+	 */
 	void resize();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
+
+	/**
+	 * @brief This constructor initializes a tilemap.
+	 * The constructor also initializes a 3D vector for the x,
+	 * y and z coordinates. Also uses a resize vector method to
+	 * ensure the vectors are big enough.
+	 *
+	 * @note The tilemap has some importart properties as:
+	 * @note -> Gridsize: the size of each tile, in pixels
+	 * @note -> Layers: how many layers each tile position will have
+	 * @note -> Dimensions: the size of the tileMap, in tiles
+	 */
 	TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std::string texture_file_path);
+
+	/**
+	 * @brief
+	 * Frees all alocated memory for the tiles and texture.
+	 */
 	virtual ~TileMap();
 
 	/* FUNCTIONS */
+
+	/**
+	 * @return void
+	 *
+	 * @brief Loads a tilemap from a file in the Maps folder.\n
+	 * @note Format
+	 * @note CONFIG
+	 * @note -> Size X and Y.
+	 * @note -> Grid size.
+	 * @note -> Layers
+	 * @note -> Texture file
+	 * @note TILES
+	 * @note -> Grid position x, y, and layer
+	 * @note -> Texture rect x and y
+	 * @note -> Collision
+	 * @note -> Type.
+	 */
 	void loadFromFile(const std::string file_name);
+
+	/**
+	 * @return void
+	 *
+	 * @brief Saves the tilemap to a file in the Maps folder.
+	 * @note Format
+	 * @note CONFIG
+	 * @note -> Size X and Y.
+	 * @note -> Grid size.
+	 * @note -> Layers
+	 * @note -> Texture file
+	 *
+	 * @note TILES
+	 * @note -> Grid position x, y, and layer
+	 * @note -> Texture rect x and y
+	 * @note -> Collision
+	 * @note -> Type.
+	 */
 	void saveToFile(const std::string file_name);
-	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &textureRect,
-			const bool &collision, const short &type);
+
+	/**
+	 * @return void
+	 *
+	 * @brief Adds a tile to the tilemap.
+	 * X and Y are indexes of the tilemap grid.
+	 */
+
+	void addTile(const unsigned x, const unsigned y, const unsigned z,
+							 const sf::IntRect &textureRect,
+							 const bool &collision, const short &type);
+
+	/**
+	 * @return void
+	 *
+	 * @brief  Removes a tile from the tilemap.
+	 * X and Y are indexes of the tilemap grid.
+	 */
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
 
 	void update();
+
+	/**
+	 * @return void
+	 *
+	 * @brief Renders each layer of each tile position (x, y).
+	 */
 	void render(sf::RenderTarget &target, Entity *entity = nullptr);
 
+	/**
+	 * @return void
+	 *
+	 * @brief Updates the collisions for a entity.
+	 */
 	void updateCollision(Entity *entity = nullptr);
 
 	/* ACCESSORS */
-	const sf::Texture* getTileTextureSheet() const;
+
+	/**
+	 * @return sf::Texture*
+	 *
+	 * @brief Returns the tile texture sheet of the tilemap.
+	 */
+	const sf::Texture *getTileTextureSheet() const;
 };
 
 #endif /* TILEMAP_H_ */

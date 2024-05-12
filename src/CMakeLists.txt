@@ -13,7 +13,11 @@ target_sources(BIOHAZRD PRIVATE
   Player.cpp
   SettingsState.cpp
   State.cpp
-  stdafx.cpp
   Tile.cpp
   TileMap.cpp
 )
+
+file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
+file(COPY Config DESTINATION ${CMAKE_BINARY_DIR}/bin)
+file(COPY Fonts DESTINATION ${CMAKE_BINARY_DIR}/bin)
+file(COPY Maps DESTINATION ${CMAKE_BINARY_DIR}/bin)
