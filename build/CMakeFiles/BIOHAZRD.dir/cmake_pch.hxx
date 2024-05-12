@@ -2,5 +2,5 @@
 
 #pragma GCC system_header
 #ifdef __cplusplus
-#include "/home/renan/biohazrd/include/stdafx.h"
+#include "/home/renan/Área de Trabalho/rpg-game/include/stdafx.h"
 #endif // __cplusplus

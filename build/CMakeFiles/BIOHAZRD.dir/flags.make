@@ -4,43 +4,43 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DSFML_STATIC
 
-CXX_INCLUDES = -I/home/renan/biohazrd/include -I/home/renan/biohazrd/build/_deps/sfml-src/include
+CXX_INCLUDES = -I"/home/renan/Área de Trabalho/rpg-game/include" -I"/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/include"
 
 CXX_FLAGS = 
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx.gch_OPTIONS = -Winvalid-pch;-x;c++-header;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx.gch_OPTIONS = -Winvalid-pch;-x;c++-header;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/main.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/main.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/AnimationComponent.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/AnimationComponent.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/EditorState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/EditorState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/Entity.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/Entity.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/Game.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/Game.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/GameState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/GameState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/GraphicsSettings.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/GraphicsSettings.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/GUI.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/GUI.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/HitboxComponent.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/HitboxComponent.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/MainMenuState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/MainMenuState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/MovementComponent.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/MovementComponent.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/Player.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/Player.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/SettingsState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/SettingsState.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/State.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/State.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/stdafx.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/stdafx.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/Tile.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/Tile.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 
-# PCH options: CMakeFiles/BIOHAZRD.dir/src/TileMap.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
+# PCH options: CMakeFiles/BIOHAZRD.dir/src/TileMap.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/renan/Área de Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx
 

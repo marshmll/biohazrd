@@ -1,4 +1,4 @@
-# Install script for directory: /home/renan/biohazrd/build/_deps/sfml-src/src/SFML/Audio
+# Install script for directory: /home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/src/SFML/Audio
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,6 +43,6 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xdevelx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/renan/biohazrd/build/_deps/sfml-build/lib/libsfml-audio.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-build/lib/libsfml-audio.a")
 endif()
 

@@ -1,4 +1,4 @@
-# Install script for directory: /home/renan/biohazrd/src
+# Install script for directory: /home/renan/Área de Trabalho/rpg-game/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

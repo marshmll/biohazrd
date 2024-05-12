@@ -1,12 +1,13 @@
 CMakeFiles/BIOHAZRD.dir/src/SettingsState.cpp.o: \
- /home/renan/biohazrd/src/SettingsState.cpp /usr/include/stdc-predef.h \
- /home/renan/biohazrd/include/stdafx.h \
- /home/renan/biohazrd/include/SettingsState.h \
- /home/renan/biohazrd/include/State.h \
- /home/renan/biohazrd/include/Player.h \
- /home/renan/biohazrd/include/Entity.h \
- /home/renan/biohazrd/include/HitboxComponent.h \
- /home/renan/biohazrd/include/MovementComponent.h \
- /home/renan/biohazrd/include/AnimationComponent.h \
- /home/renan/biohazrd/include/GUI.h \
- /home/renan/biohazrd/include/GraphicsSettings.h
+ /home/renan/Área\ de\ Trabalho/rpg-game/src/SettingsState.cpp \
+ /usr/include/stdc-predef.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/stdafx.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/SettingsState.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/State.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/Player.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/Entity.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/HitboxComponent.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/MovementComponent.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/AnimationComponent.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/GUI.h \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/GraphicsSettings.h

@@ -1,9 +1,9 @@
 CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx.gch: \
- /home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx.cxx \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx.cxx \
  /usr/include/stdc-predef.h \
- /home/renan/biohazrd/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx \
- /home/renan/biohazrd/include/stdafx.h /usr/include/c++/11/algorithm \
- /usr/include/c++/11/utility \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx \
+ /home/renan/Área\ de\ Trabalho/rpg-game/include/stdafx.h \
+ /usr/include/c++/11/algorithm /usr/include/c++/11/utility \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -232,110 +232,110 @@ CMakeFiles/BIOHAZRD.dir/cmake_pch.hxx.gch: \
  /usr/include/c++/11/tr1/poly_hermite.tcc \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Config.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Clock.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Export.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Time.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Err.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/FileInputStream.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/InputStream.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/NonCopyable.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Lock.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/MemoryInputStream.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Mutex.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Sleep.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/String.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Utf.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Utf.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Config.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Clock.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Export.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Time.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Err.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/FileInputStream.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/InputStream.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/NonCopyable.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Lock.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/MemoryInputStream.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Mutex.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Sleep.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/String.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Utf.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Utf.inl \
  /usr/include/c++/11/iterator /usr/include/c++/11/bits/stream_iterator.h \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/String.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Thread.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Thread.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/ThreadLocal.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/ThreadLocalPtr.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/ThreadLocalPtr.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Vector2.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Vector2.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Vector3.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/System/Vector3.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Clipboard.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Export.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Context.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/GlResource.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/ContextSettings.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Cursor.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Event.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Joystick.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Keyboard.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Mouse.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Sensor.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Touch.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/VideoMode.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Window.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/WindowBase.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/Vulkan.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/WindowHandle.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/String.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Thread.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Thread.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/ThreadLocal.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/ThreadLocalPtr.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/ThreadLocalPtr.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Vector2.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Vector2.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Vector3.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/System/Vector3.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Clipboard.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Export.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Context.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/GlResource.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/ContextSettings.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Cursor.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Event.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Joystick.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Keyboard.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Mouse.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Sensor.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Touch.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/VideoMode.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Window.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/WindowBase.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/Vulkan.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/WindowHandle.hpp \
  /usr/include/c++/11/cstddef \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Window/WindowStyle.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/BlendMode.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Export.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/CircleShape.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Shape.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Drawable.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/RenderStates.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Transform.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Rect.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Rect.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Transformable.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/VertexArray.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Vertex.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Color.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/PrimitiveType.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/ConvexShape.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Font.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Glyph.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Texture.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Image.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/RectangleShape.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/RenderTarget.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/View.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/RenderTexture.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/RenderWindow.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Shader.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Glsl.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Glsl.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Sprite.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/Text.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/InputSoundFile.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/Export.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/Listener.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/Music.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundStream.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundSource.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/AlResource.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/OutputSoundFile.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/Sound.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundBuffer.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundBufferRecorder.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundRecorder.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundFileFactory.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundFileFactory.inl \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundFileReader.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Audio/SoundFileWriter.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/Ftp.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/Export.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/TcpSocket.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/Socket.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/SocketHandle.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/Http.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/IpAddress.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/Packet.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/SocketSelector.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/TcpListener.hpp \
- /home/renan/biohazrd/build/_deps/sfml-src/include/SFML/Network/UdpSocket.hpp
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Window/WindowStyle.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/BlendMode.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Export.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/CircleShape.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Shape.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Drawable.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/RenderStates.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Transform.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Rect.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Rect.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Transformable.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/VertexArray.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Vertex.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Color.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/PrimitiveType.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/ConvexShape.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Font.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Glyph.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Texture.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Image.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/RectangleShape.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/RenderTarget.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/View.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/RenderTexture.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/RenderWindow.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Shader.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Glsl.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Glsl.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Sprite.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/Text.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/InputSoundFile.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/Export.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/Listener.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/Music.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundStream.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundSource.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/AlResource.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/OutputSoundFile.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/Sound.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundBuffer.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundBufferRecorder.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundRecorder.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundFileFactory.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundFileFactory.inl \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundFileReader.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Audio/SoundFileWriter.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/Ftp.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/Export.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/TcpSocket.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/Socket.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/SocketHandle.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/Http.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/IpAddress.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/Packet.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/SocketSelector.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/TcpListener.hpp \
+ /home/renan/Área\ de\ Trabalho/rpg-game/build/_deps/sfml-src/include/SFML/Network/UdpSocket.hpp

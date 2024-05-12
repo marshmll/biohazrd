@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DFLAC__NO_DLL -DOV_EXCLUDE_STATIC_CALLBACKS -DSFML_STATIC
 
-CXX_INCLUDES = -I/home/renan/biohazrd/build/_deps/sfml-src/include -I/home/renan/biohazrd/build/_deps/sfml-src/src -isystem /home/renan/biohazrd/build/_deps/sfml-src/extlibs/headers/minimp3 -isystem /usr/include/AL
+CXX_INCLUDES = -I"/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/include" -I"/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/src" -isystem "/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/extlibs/headers/minimp3" -isystem /usr/include/AL
 
 CXX_FLAGS = -fvisibility=hidden
 

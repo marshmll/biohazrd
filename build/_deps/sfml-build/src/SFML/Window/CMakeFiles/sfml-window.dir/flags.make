@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DSFML_STATIC
 
-CXX_INCLUDES = -I/home/renan/biohazrd/build/_deps/sfml-src/include -I/home/renan/biohazrd/build/_deps/sfml-src/src -I/home/renan/biohazrd/build/_deps/sfml-src/extlibs/headers/vulkan -isystem /home/renan/biohazrd/build/_deps/sfml-src/extlibs/headers/glad/include
+CXX_INCLUDES = -I"/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/include" -I"/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/src" -I"/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/extlibs/headers/vulkan" -isystem "/home/renan/Área de Trabalho/rpg-game/build/_deps/sfml-src/extlibs/headers/glad/include"
 
 CXX_FLAGS = -fvisibility=hidden
 
