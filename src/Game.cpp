@@ -1,22 +1,10 @@
-/*
- * Game class that acts as the game engine.
- *
- *  Created on: 13 de abr. de 2024
- *      Author: Renan Andrade
- */
-
 #include "stdafx.h"
 #include "Game.h"
 
 /* INITIALIZERS FUNCTIONS */
+
 void Game::initVariables()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes game variables
-	 */
-
 	this->currentPath = std::filesystem::current_path().string();
 
 	this->window = nullptr;
@@ -28,24 +16,11 @@ void Game::initVariables()
 
 void Game::initGraphicsSettings()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes graphics settings from a file.
-	 */
-
 	this->gfxSettings.loadFromFile("Config/graphics.ini");
 }
 
 void Game::initWindow()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes the RenderWindow
-	 * -> Creates the window.
-	 */
-
 	// Create the window
 	if (this->gfxSettings.fullscreen) // If in fullscreen mode
 	{
@@ -64,13 +39,6 @@ void Game::initWindow()
 
 void Game::initKeys()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes all accepted keys and adds them to a map.
-	 * Maps strings to Key enum.
-	 */
-
 	std::ifstream ifs("Config/accepted_keys.ini");
 
 	if (ifs.is_open())
@@ -89,12 +57,6 @@ void Game::initKeys()
 
 void Game::initStateData()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes the data struct members.
-	 */
-
 	this->data.states = &this->states;
 	this->data.gfxSettings = &this->gfxSettings;
 	this->data.window = this->window;
@@ -104,28 +66,13 @@ void Game::initStateData()
 
 void Game::initStates()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializates states and push them into states stack.
-	 */
-
 	this->states.push(new MainMenuState(&this->data));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
+
 Game::Game()
 {
-	/**
-	 * @constructor
-	 *
-	 * Game Class Constructor
-	 * -> Initializes variables
-	 * -> Initializes window
-	 * -> Initializes keys
-	 * -> Initializes states.
-	 */
-
 	this->initVariables();
 	this->initGraphicsSettings();
 	this->initWindow();
@@ -136,13 +83,6 @@ Game::Game()
 
 Game::~Game()
 {
-	/**
-	 * @destructor
-	 *
-	 * Frees the window allocated memory and free all
-	 * states allocated memory.
-	 */
-
 	delete this->window;
 
 	while (!this->states.empty())
@@ -153,15 +93,9 @@ Game::~Game()
 }
 
 /* MAIN FUNCTIONS */
+
 void Game::run()
 {
-	/**
-	 * @return void
-	 *
-	 * Keeps updating and rendering the game while
-	 * the game is running
-	 */
-
 	while (this->isRunning())
 	{
 		this->updateDeltaTime();
@@ -172,18 +106,6 @@ void Game::run()
 
 void Game::update()
 {
-	/**
-	 * @return void
-	 *
-	 * Polls SFML events and updates the states
-	 * in the game.
-	 * -> Poll SFML events
-	 * -> Update the top state in the stack
-	 * -> Check for ending the top state in the stack
-	 * -> If there are not more states in the stack,
-	 *    exit the applicaiton.
-	 */
-
 	this->pollSFMLEvents();
 
 	// If there are still states available
@@ -214,12 +136,6 @@ void Game::update()
 
 void Game::render()
 {
-	/**
-	 * @return void
-	 *
-	 * Renders a frame into the window.
-	 */
-
 	// Clear window
 	this->window->clear();
 
@@ -241,24 +157,11 @@ void Game::render()
 /* AUXILIARY FUNCTIONS */
 void Game::updateDeltaTime()
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the delta time which is taken to update and
-	 * render a frame.
-	 */
-
 	this->dt = this->dtClock.restart().asSeconds();
 }
 
 void Game::pollSFMLEvents()
 {
-	/**
-	 * @return void
-	 *
-	 * Poll events from the window
-	 */
-
 	while (this->window->pollEvent(this->event))
 	{
 		switch (this->event.type)
@@ -275,23 +178,12 @@ void Game::pollSFMLEvents()
 
 void Game::endApplication()
 {
-	/**
-	 * @return void
-	 *
-	 * Closes the window and end application.
-	 */
-
 	this->window->close();
 }
 
 /* ACESSORS */
+
 const bool Game::isRunning() const
 {
-	/**
-	 * @return const bool
-	 *
-	 * Returns if the game is currently running
-	 */
-
 	return this->window->isOpen();
 }

@@ -26,6 +26,7 @@ private:
 
 protected:
 	/* VARIABLES */
+
 	StateData *data;
 	std::stack<State*> *states;
 
@@ -54,23 +55,28 @@ protected:
 	sf::Vector2u mousePosGrid;
 
 	/* ASSETS */
+
 	std::map<std::string, sf::Texture> textures;
 
 	/* FUNCTIONS */
+
 	virtual void initKeybinds() = 0;
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
+
 	State(StateData *data);
 	virtual ~State();
 
 	/* PURE VIRTUAL FUNCTIONS */
+
 	virtual void update(const float &dt) = 0;
 	virtual void render(sf::RenderTarget &target) = 0;
 
 	virtual void updateInput(const float &dt) = 0;
 
 	/* DEFINED VIRTUAL FUNCTIONS */
+
 	virtual void updateMousePositions(sf::View *view = nullptr);
 	virtual void updateKeytime(const float &dt);
 	virtual void updateMousetime(const float &dt);
@@ -80,6 +86,7 @@ public:
 	virtual void resume();
 
 	/* ACESSORS */
+	
 	const bool& hasAskedToQuit() const;
 	const bool hasCompletedKeytimeCicle();
 	const bool hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn);

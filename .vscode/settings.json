@@ -1,5 +1,8 @@
 {
   "files.associations": {
-    "new": "cpp"
-  }
+    "new": "cpp",
+    "cmath": "cpp"
+  },
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.guides.indentation": false
 }
