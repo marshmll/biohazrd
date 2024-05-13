@@ -7,7 +7,7 @@
 class State;
 class TileMap;
 
-class EditorState: public State
+class EditorState : public State
 {
 private:
 	/* VARIABLES */
@@ -17,7 +17,7 @@ private:
 	sf::Text cursorText;
 
 	gui::PauseMenu *pauseMenu;
-	std::map<std::string, gui::Button*> buttons;
+	std::map<std::string, gui::Button *> buttons;
 
 	TileMap *tileMap;
 
@@ -32,6 +32,7 @@ private:
 	float cameraSpeed;
 
 	/* INITIALIZERS */
+
 	void initVariables();
 	void initView();
 	void initKeybinds();
@@ -44,10 +45,12 @@ private:
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
+
 	EditorState(StateData *data);
 	virtual ~EditorState();
 
 	/* FUNCTIONS */
+
 	void update(const float &dt);
 	void render(sf::RenderTarget &target);
 

@@ -1,10 +1,11 @@
 #ifndef ANIMATIONCOMPONENT_H_
 #define ANIMATIONCOMPONENT_H_
 
+/* This class is responsible for managing animation functionalities. */
 class AnimationComponent
 {
 private:
-	/* ANIMATION SUBCLASS */
+	/* This class is an abstraction of a animation. */
 	class Animation
 	{
 	public:
@@ -23,31 +24,28 @@ private:
 		sf::IntRect currentCropRect;
 		sf::IntRect endCropRect;
 
+		/**
+		 * @brief Constructs an animation class object.
+		 * @note Parameters:
+		 * @note -> A sprite reference
+		 * @note -> A texture sheet reference
+		 * @note -> An animation update timer
+		 * @note -> The x-axis index of the texture sheet start frame.
+		 * @note -> The y-axis index of the texture sheet start frame.
+		 * @note -> The x-axis index of the texture sheet end frame.
+		 * @note -> The y-axis index of the texture sheet end frame.
+		 * @note -> Frame width
+		 * @note -> Frame height
+		 */
 		Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
-				float animation_timer,
-				int start_frame_x_index, int start_frame_y_index,
-				int end_frame_x_index, int end_frame_y_index,
-				int width, int height) :
+							float animation_timer,
+							int start_frame_x_index, int start_frame_y_index,
+							int end_frame_x_index, int end_frame_y_index,
+							int width, int height) :
 
-				sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
-						timer(0.f), width(width), height(height), done(false)
+																			 sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
+																			 timer(0.f), width(width), height(height), done(false)
 		{
-			/**
-			 * @constructor
-			 *
-			 * Constructs an animation class object.
-			 * Parameters:
-			 * -> A sprite reference
-			 * -> A texture sheet reference
-			 * -> An animation update timer
-			 * -> The x-axis index of the texture sheet start frame.
-			 * -> The y-axis index of the texture sheet start frame.
-			 * -> The x-axis index of the texture sheet end frame.
-			 * -> The y-axis index of the texture sheet end frame.
-			 * -> Frame width
-			 * -> Frame height
-			 */
-
 			this->startCropRect = sf::IntRect(start_frame_x_index * width, start_frame_y_index * height, width, height);
 			this->currentCropRect = this->startCropRect;
 			this->endCropRect = sf::IntRect(end_frame_x_index * width, end_frame_y_index * height, width, height);
@@ -60,17 +58,17 @@ private:
 		}
 
 		/* FUNCTIONS */
-		const bool& play(const float &dt)
-		{
-			/**
-			 * @return bool
-			 * Overloaded Method WITHOUT modifier.
-			 *
-			 * Plays the animation with the stardard animation timer.
-			 *
-			 * Returns if the animaton is done.
-			 */
 
+		/**
+		 * @brief Plays the animation with the stardard animation timer.
+		 *
+		 * @note Overloaded Method WITHOUT modifier.
+		 * @note Returns if the animaton is done.
+		 *
+		 * @return bool&
+		 */
+		const bool &play(const float &dt)
+		{
 			this->done = false;
 
 			// Increase timer
@@ -119,17 +117,16 @@ private:
 			return this->done;
 		}
 
-		const bool& play(const float &dt, float mod_percent)
+		/**
+		 * @brief Plays the animation with the stardard animation timer.
+		 *
+		 * @note Overloaded Method WITH modifier.
+		 * @note Returns if the animation is done.
+		 *
+		 * @return bool&
+		 */
+		const bool &play(const float &dt, float mod_percent)
 		{
-			/**
-			 * @return bool
-			 * Overloaded Method WITH modifier.
-			 *
-			 * Plays the animation with the stardard animation timer.
-			 *
-			 * Returns if the animation is done.
-			 */
-
 			// If modifier percent is too small
 			if (mod_percent < 0.7f)
 			{
@@ -185,31 +182,30 @@ private:
 			return this->done;
 		}
 
+		/**
+		 * @brief Resets animation to initial state.
+		 * @note -> Sets done to false
+		 * @note -> Sets timer to the animation timer
+		 * @note -> Sets current crop rect to the start crop rect.
+		 *
+		 * @return void
+		 */
 		void reset()
 		{
-			/*
-			 * @return void
-			 *
-			 * Resets animation to initial state.
-			 * -> Sets done to false
-			 * -> Sets timer to the animation timer
-			 * -> Sets current crop rect to the start crop rect.
-			 */
-
 			this->done = false;
 			this->timer = this->animationTimer;
 			this->currentCropRect = this->startCropRect;
 		}
 
 		/* ACCESSORS */
-		const bool& isDone()
-		{
-			/**
-			 * @return const bool&
-			 *
-			 * Returns if the animation is done.
-			 */
 
+		/**
+		 * @brief Returns if the animation is done.
+		 *
+		 * @return const bool&
+		 */
+		const bool &isDone()
+		{
 			return this->done;
 		}
 	};
@@ -217,17 +213,40 @@ private:
 	/* VARIABLES */
 	sf::Sprite &sprite;
 	sf::Texture &textureSheet;
-	std::map<std::string, Animation*> animations;
+	std::map<std::string, Animation *> animations;
 
 	Animation *previousAnimation;
 	Animation *priorityAnimation;
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
+
 	AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet);
+
+	/**
+	 * @brief Delete all animations allocated memory
+	 */
 	virtual ~AnimationComponent();
 
 	/* FUNCTIONS */
+
+	/**
+	 * @brief Adds a new animation to the animations map.
+	 * Sets a key for the animation and instantiates
+	 * an Animation object for the animation.
+	 *
+	 * @note Parameters:
+	 * @note -> A animation key
+	 * @note -> An animation update timer
+	 * @note -> The x-axis index of the texture sheet start frame.
+	 * @note -> The y-axis index of the texture sheet start frame.
+	 * @note -> The x-axis index of the texture sheet end frame.
+	 * @note -> The y-axis index of the texture sheet end frame.
+	 * @note -> Frame width
+	 * @note -> Frame height
+	 *
+	 * @return void
+	 */
 	void addAnimation(
 			const std::string key,
 			float animation_update_timer,
@@ -235,17 +254,67 @@ public:
 			int frames_x_amount, int frames_y_amount,
 			int width, int height);
 
+	/**
+	 * @brief Plays an animation from the animations map.
+	 * Plays the animation with the same key passed in, OR
+	 * Plays the priority animation until its done.
+	 * @note -> If switched animations, reset previous animation and
+	 * 	  update previous animation pointer.
+	 *
+	 *
+	 * @note Uses normal playing speed.
+	 * @note OVERLOADED METHOD
+	 *
+	 * @return const bool&
+	 */
 	const bool play(const std::string key, const float &dt, const bool priority = false);
 
-	const bool play(const std::string key, const float &dt, const float &modifier, const float &modifier_max,
-			const bool priority = false);
+	/**
+	 * @brief Plays an animation from the animations map.
+	 * Plays the animation with the same key passed in, OR
+	 * Plays the priority animation until its done.
+	 *
+	 * @note Uses a modifier and a modifier max for the playing speed.
+	 * @note OVERLOADED METHOD
+	 * @note -> If switched animations, reset previous animation and
+	 * 					update previous animation pointer.
+	 *
+	 * @return const bool&
+	 */
+	const bool play(const std::string key, const float &dt,
+									const float &modifier, const float &modifier_max,
+									const bool priority = false);
 
+	/**
+	 * @brief Sets previous animation pointer to be equal a
+	 * refered animation.
+	 *
+	 * @note OVERLOADED METHOD
+	 * @note Uses a std::string as parameter.
+	 *
+	 * @return void
+	 */
 	void setNewPreviousAnimation(std::string key);
+
+	/**
+	 * @brief Sets previous animation pointer to be equal a refered animation.
+	 *
+	 * @note OVERLOADED METHOD
+	 *
+	 * @note Uses a Animation* as parameter.
+	 *
+	 * @return void
+	 */
 	void setNewPreviousAnimation(Animation *animation);
 
 	/* ACCESSORS */
-	const bool& isAnimationDone(std::string key);
 
+	/**
+	 * @brief Returns is a animation is done playing.
+	 *
+	 * @return const bool&
+	 */
+	const bool &isAnimationDone(std::string key);
 };
 
 #endif /* ANIMATIONCOMPONENT_H_ */
