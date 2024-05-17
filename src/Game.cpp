@@ -155,6 +155,7 @@ void Game::render()
 }
 
 /* AUXILIARY FUNCTIONS */
+
 void Game::updateDeltaTime()
 {
 	this->dt = this->dtClock.restart().asSeconds();

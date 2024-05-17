@@ -141,6 +141,13 @@ public:
 	virtual const sf::FloatRect getGlobalBounds();
 
 	/**
+	 * @brief Returns the next global bounds based on the movement.
+	 * 
+	 * @return sf::FloatRect
+	 */
+	virtual const sf::FloatRect getNextPositionBounds();
+
+	/**
 	 * @brief Returns if the entity's hitbox has intersected a FloatRect.
 	 * @note -> Returns false if the entity does not have a hitbox component.
 	 *

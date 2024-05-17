@@ -128,6 +128,14 @@ const sf::FloatRect Entity::getGlobalBounds()
 		return this->sprite.getGlobalBounds();
 }
 
+const sf::FloatRect Entity::getNextPositionBounds()
+{
+	if (this->hitboxComponent && this->movementComponent)
+		return this->hitboxComponent->getNextPosiion(this->movementComponent->getVelocity());
+	else
+		return sf::FloatRect();
+}
+
 const bool Entity::hasCollided(sf::FloatRect &frect)
 {
 	if (this->hitboxComponent)

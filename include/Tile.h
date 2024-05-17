@@ -70,6 +70,13 @@ public:
 	 * @return void
 	 */
 	const std::string getPropertiesAsString() const;
+
+	/**
+	 * @brief Returns the tile's global bounds.
+	 * 
+	 * @return const sf::FloatRect
+	 */
+	const sf::FloatRect getGlobalBounds() const;
 };
 
 #endif /* TILE_H_ */

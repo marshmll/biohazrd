@@ -318,10 +318,31 @@ void TileMap::updateCollision(Entity *entity)
 	{
 		for (size_t y = this->startY; y < this->endY; y++)
 		{
+			sf::FloatRect playerBounds = entity->getGlobalBounds();
+			sf::FloatRect wallBounds = this->tileMap[x][y][layer]->getGlobalBounds();
+			sf::FloatRect nextPositionBounds = entity->getNextPositionBounds();
+
 			if (this->tileMap[x][y][this->layer]->isCollideable())
 			{
-				if (this->tileMap[x][y][this->layer]->intersects(entity->getGlobalBounds()))
+				if (this->tileMap[x][y][this->layer]->intersects(nextPositionBounds))
 				{
+					// Bottom colliison
+					if (playerBounds.top < wallBounds.top
+					&& playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
+					&& playerBounds.left < wallBounds.left + wallBounds.width
+					&& playerBounds.left + playerBounds.width > wallBounds.left)
+					{
+						entity->stopVelocityY();
+						entity->setPosition(sf::Vector2f(entity->getPosition().x, wallBounds.top - playerBounds.height));
+					}
+					else if (playerBounds.top > wallBounds.top
+					&& playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
+					&& playerBounds.left < wallBounds.left + wallBounds.width
+					&& playerBounds.left + playerBounds.width > wallBounds.left)
+					{
+						entity->stopVelocityY();
+						entity->setPosition(sf::Vector2f(entity->getPosition().x, wallBounds.top + wallBounds.height));
+					}
 				}
 			}
 		}

@@ -70,3 +70,8 @@ const std::string Tile::getPropertiesAsString() const
 
 	return ss.str();
 }
+
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+	return this->tile.getGlobalBounds();
+}
