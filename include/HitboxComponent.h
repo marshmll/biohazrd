@@ -27,7 +27,7 @@ public:
 	const sf::Vector2f &getPosition() const;
 	const sf::Vector2f &getSize() const;
 	const sf::FloatRect getGlobalBounds() const;
-	const sf::FloatRect &getNextPosiion(const sf::Vector2f &velocity);
+	const sf::FloatRect getNextPosition(const sf::Vector2f &velocity, const float& dt);
 	const bool intersects(sf::FloatRect &frect) const;
 
 	/* MODIFIERS */

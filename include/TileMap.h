@@ -128,7 +128,7 @@ public:
 	 */
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
 
-	void update();
+	void update(const float &dt);
 
 	/**
 	 * @return void
@@ -142,7 +142,7 @@ public:
 	 *
 	 * @brief Updates the collisions for a entity.
 	 */
-	void updateCollision(Entity *entity = nullptr);
+	void updateCollision(const float& dt, Entity *entity = nullptr);
 
 	/* ACCESSORS */
 

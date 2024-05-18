@@ -111,7 +111,7 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 
 		this->direction = LEFT;
 
-	if (yDirection == 1 && this->velocity.x == 0)
+	else if (yDirection == 1 && this->velocity.x == 0)
 
 		this->direction = DOWN;
 
@@ -157,6 +157,20 @@ const std::string MovementComponent::getDirection() const
 	}
 
 	return direction;
+}
+
+const std::string MovementComponent::getKeyboardDirection() const
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		return "UP";
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		return "DOWN";
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		return "LEFT";
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		return "RIGHT";
+	else
+		return "NONE";
 }
 
 /* MODIFIERS */

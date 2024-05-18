@@ -210,7 +210,7 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 	}
 }
 
-void TileMap::update()
+void TileMap::update(const float &dt)
 {
 }
 
@@ -256,7 +256,7 @@ void TileMap::render(sf::RenderTarget &target, Entity *entity)
 	}
 }
 
-void TileMap::updateCollision(Entity *entity)
+void TileMap::updateCollision(const float &dt, Entity *entity)
 {
 	/* WORLD BOUNDS */
 
@@ -318,30 +318,33 @@ void TileMap::updateCollision(Entity *entity)
 	{
 		for (size_t y = this->startY; y < this->endY; y++)
 		{
-			sf::FloatRect playerBounds = entity->getGlobalBounds();
-			sf::FloatRect wallBounds = this->tileMap[x][y][layer]->getGlobalBounds();
-			sf::FloatRect nextPositionBounds = entity->getNextPositionBounds();
-
 			if (this->tileMap[x][y][this->layer]->isCollideable())
 			{
-				if (this->tileMap[x][y][this->layer]->intersects(nextPositionBounds))
+				sf::FloatRect playerBounds = entity->getGlobalBounds();
+				sf::FloatRect wallBounds = this->tileMap[x][y][layer]->getGlobalBounds();
+				sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
+
+				if (nextPositionBounds.intersects(wallBounds))
 				{
-					// Bottom colliison
-					if (playerBounds.top < wallBounds.top
-					&& playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
-					&& playerBounds.left < wallBounds.left + wallBounds.width
-					&& playerBounds.left + playerBounds.width > wallBounds.left)
+					if (entity->getDirection() == "UP")
 					{
 						entity->stopVelocityY();
-						entity->setPosition(sf::Vector2f(entity->getPosition().x, wallBounds.top - playerBounds.height));
+						entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y + .5f));
 					}
-					else if (playerBounds.top > wallBounds.top
-					&& playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
-					&& playerBounds.left < wallBounds.left + wallBounds.width
-					&& playerBounds.left + playerBounds.width > wallBounds.left)
+					if (entity->getDirection() == "DOWN")
 					{
 						entity->stopVelocityY();
-						entity->setPosition(sf::Vector2f(entity->getPosition().x, wallBounds.top + wallBounds.height));
+						entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y - .5f));
+					}
+					if (entity->getDirection() == "LEFT")
+					{
+						entity->stopVelocityX();
+						entity->setPosition(sf::Vector2f(entity->getPosition().x + .5f, entity->getPosition().y));
+					}
+					if (entity->getDirection() == "RIGHT")
+					{
+						entity->stopVelocityX();
+						entity->setPosition(sf::Vector2f(entity->getPosition().x - .5f, entity->getPosition().y));
 					}
 				}
 			}

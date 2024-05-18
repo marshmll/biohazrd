@@ -32,8 +32,6 @@ HitboxComponent::HitboxComponent(sf::Sprite &sprite,
 	this->hitbox.setOutlineThickness(1.f);					// TEMP
 	this->hitbox.setOutlineColor(sf::Color::Green); // TEMP
 
-	this->nextPosition.left = 0.f;
-	this->nextPosition.top = 0.f;
 	this->nextPosition.width = width;
 	this->nextPosition.height = height;
 }
@@ -95,12 +93,12 @@ const sf::FloatRect HitboxComponent::getGlobalBounds() const
 	return this->hitbox.getGlobalBounds();
 }
 
-const sf::FloatRect &HitboxComponent::getNextPosiion(const sf::Vector2f &velocity)
+const sf::FloatRect HitboxComponent::getNextPosition(const sf::Vector2f &velocity, const float &dt)
 {
-	this->nextPosition.left = this->hitbox.getPosition().x + velocity.x;
-	this->nextPosition.top = this->hitbox.getPosition().y + velocity.y;
+	this->nextPosition.left = this->hitbox.getPosition().x + velocity.x * dt;
+	this->nextPosition.top = this->hitbox.getPosition().y + velocity.y * dt;
 
-	return this->nextPosition;
+	return nextPosition;
 }
 
 const bool HitboxComponent::intersects(sf::FloatRect &frect) const

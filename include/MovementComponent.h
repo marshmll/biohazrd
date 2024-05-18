@@ -92,6 +92,13 @@ public:
 	 */
 	const std::string getDirection() const;
 
+	/**
+	 * @brief Returns the direction based on the key pressed.
+	 * 
+	 * @return std::string
+	 */
+	const std::string getKeyboardDirection() const;
+
 	/* MODIFIERS */
 
 	/**

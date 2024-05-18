@@ -142,10 +142,17 @@ public:
 
 	/**
 	 * @brief Returns the next global bounds based on the movement.
-	 * 
+	 *
 	 * @return sf::FloatRect
 	 */
-	virtual const sf::FloatRect getNextPositionBounds();
+	virtual const sf::FloatRect getNextPositionBounds(const float &dt);
+
+	/**
+	 * @brief Returns the entity's last direction.
+	 *
+	 * @return const std::string
+	 */
+	virtual const std::string getDirection();
 
 	/**
 	 * @brief Returns if the entity's hitbox has intersected a FloatRect.

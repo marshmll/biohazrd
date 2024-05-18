@@ -158,22 +158,27 @@ void GameState::updateInput(const float &dt)
 void GameState::updatePlayerInput(const float &dt)
 {
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
+	{
 		this->player->move(0.f, -1.f, dt);
-
+	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
+	{
 		this->player->move(0.f, 1.f, dt);
-
+	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
+	{
 		this->player->move(-1.f, 0.f, dt);
-
+	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
+	{
 		this->player->move(1.f, 0.f, dt);
+	}
 }
 
 void GameState::updateTileMap(const float &dt)
 {
-	this->tileMap->update();
-	this->tileMap->updateCollision(this->player);
+	this->tileMap->update(dt);
+	this->tileMap->updateCollision(dt, this->player);
 }
 
 void GameState::updatePauseMenuButtons()
