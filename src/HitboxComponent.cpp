@@ -29,7 +29,7 @@ HitboxComponent::HitboxComponent(sf::Sprite &sprite,
 
 	this->hitbox.setFillColor(sf::Color::Transparent);
 
-	this->hitbox.setOutlineThickness(1.f);					// TEMP
+	this->hitbox.setOutlineThickness(-1.f);					// TEMP
 	this->hitbox.setOutlineColor(sf::Color::Green); // TEMP
 
 	this->nextPosition.width = width;

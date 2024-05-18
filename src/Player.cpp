@@ -13,24 +13,12 @@
 /* INITIALIZERS */
 void Player::initVariables()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes player variables.
-	 */
-
 	this->isJumping = false;
 	this->currentJumpAnimationName = "NONE";
 }
 
 void Player::initAnimations()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes player animations.
-	 */
-
 	this->animationComponent->addAnimation("IDLE_DOWN", 100.f, 0, 0, 0, 0, 64.f, 64.f);
 	this->animationComponent->addAnimation("IDLE_UP", 100.f, 0, 1, 0, 1, 64.f, 64.f);
 	this->animationComponent->addAnimation("IDLE_RIGHT", 100.f, 0, 2, 0, 2, 64.f, 64.f);
@@ -53,22 +41,13 @@ void Player::initAnimations()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
+
 Player::Player(float x, float y, sf::Texture &texture_sheet)
 {
-	/**
-	 * @constructor
-	 *
-	 * Player entity class constructor.
-	 * -> Initializes variables
-	 * -> Sets the player position with x and y arguments.
-	 * -> Initializes components
-	 * -> Initializes animations
-	 */
-
 	this->initVariables();
 	this->setPosition(sf::Vector2f(x, y));
 
-	this->createHitboxComponent(70.f, 45.f, 50.f, 85.f);
+	this->createHitboxComponent(75.f, 90.f, 42.f, 42.f);
 	this->createMovementComponent(200.f, 12.f, 8.f);
 	this->createAnimationComponent(texture_sheet);
 
@@ -77,22 +56,12 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 
 Player::~Player()
 {
-	/**
-	 * @destructor
-	 */
 }
 
 /* FUNCTIONS */
+
 void Player::update(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the player entity.
-	 * -> Updates the movement component.
-	 * -> Plays the respective animation.
-	 */
-
 	this->movementComponent->update(dt);
 	this->hitboxComponent->update();
 	this->updateJump(dt);
@@ -101,12 +70,6 @@ void Player::update(const float &dt)
 
 void Player::render(sf::RenderTarget &target)
 {
-	/**
-	 * @return void
-	 *
-	 * Renders the player into a target.
-	 */
-
 	target.draw(this->sprite);
 
 	this->hitboxComponent->render(target);
@@ -114,11 +77,6 @@ void Player::render(sf::RenderTarget &target)
 
 void Player::updateAnimation(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the player animations.
-	 */
 
 	switch (this->movementComponent->getCurrentState())
 	{
@@ -127,20 +85,14 @@ void Player::updateAnimation(const float &dt)
 		break;
 	case MOVING:
 		this->animationComponent->play("WALK_" + this->movementComponent->getDirection(), dt,
-				std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y),
-				this->movementComponent->getMaxVelocity());
+																	 std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y),
+																	 this->movementComponent->getMaxVelocity());
 		break;
 	}
 }
 
 void Player::updateJump(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the jump states and animations.
-	 */
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping)
 	{
 		this->isJumping = true;
@@ -153,6 +105,4 @@ void Player::updateJump(const float &dt)
 		if (this->animationComponent->isAnimationDone(this->currentJumpAnimationName))
 			this->isJumping = false;
 	}
-
 }
-

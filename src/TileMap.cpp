@@ -216,44 +216,64 @@ void TileMap::update(const float &dt)
 
 void TileMap::render(sf::RenderTarget &target, Entity *entity)
 {
-	if (entity)
+	for (auto &x : this->tileMap)
 	{
-		for (size_t x = this->startX; x < this->endX; x++)
+		for (auto &y : x)
 		{
-			for (size_t y = this->startY; y < this->endY; y++)
+			for (auto *z : y)
 			{
-				this->tileMap[x][y][this->layer]->render(target);
-				if (this->tileMap[x][y][this->layer]->isCollideable())
+				if (z != nullptr)
 				{
-					this->collisionBox.setPosition(this->tileMap[x][y][this->layer]->getPosition());
-					target.draw(this->collisionBox);
-				}
-			}
-		}
-	}
-	else
-	{
-		for (auto &x : this->tileMap)
-		{
-			for (auto &y : x)
-			{
-				for (auto *z : y)
-				{
-					if (z != nullptr)
-					{
-						z->render(target);
+					z->render(target);
 
-						// COLLISION DEBUG
-						if (z->isCollideable())
-						{
-							this->collisionBox.setPosition(z->getPosition());
-							target.draw(this->collisionBox);
-						}
+					// COLLISION DEBUG
+					if (z->isCollideable())
+					{
+						this->collisionBox.setPosition(z->getPosition());
+						target.draw(this->collisionBox);
 					}
 				}
 			}
 		}
 	}
+	// if (entity)
+	// {
+	// 	for (size_t x = this->startX; x < this->endX; x++)
+	// 	{
+	// 		for (size_t y = this->startY; y < this->endY; y++)
+	// 		{
+	// 			this->tileMap[x][y][this->layer]->render(target);
+	// 			if (this->tileMap[x][y][this->layer]->isCollideable())
+	// 			{
+	// 				this->collisionBox.setPosition(this->tileMap[x][y][this->layer]->getPosition());
+	// 				target.draw(this->collisionBox);
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// else
+	// {
+	// 	for (auto &x : this->tileMap)
+	// 	{
+	// 		for (auto &y : x)
+	// 		{
+	// 			for (auto *z : y)
+	// 			{
+	// 				if (z != nullptr)
+	// 				{
+	// 					z->render(target);
+
+	// 					// COLLISION DEBUG
+	// 					if (z->isCollideable())
+	// 					{
+	// 						this->collisionBox.setPosition(z->getPosition());
+	// 						target.draw(this->collisionBox);
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 void TileMap::updateCollision(const float &dt, Entity *entity)

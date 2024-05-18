@@ -16,7 +16,7 @@ private:
 	unsigned gridSizeU;
 	unsigned layers;
 
-	sf::Vector2u tileMapGridDimensions;
+	sf::Vector2i tileMapGridDimensions;
 	sf::Vector2f tileMapWorldDimensions;
 
 	std::vector<std::vector<std::vector<Tile *>>> tileMap;
