@@ -25,6 +25,7 @@ GraphicsSettings::~GraphicsSettings()
 }
 
 /* FUNCTIONS */
+
 void GraphicsSettings::saveToFile(const std::string path)
 {
 	std::ofstream ofs(path);

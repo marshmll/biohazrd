@@ -11,13 +11,7 @@
 /* INITIALIZERS */
 void EditorState::initVariables()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes MainMenuState variables
-	 */
-
-	this->textureRect = sf::IntRect(0, 0, (int) this->data->gridSize, (int) this->data->gridSize);
+	this->textureRect = sf::IntRect(0, 0, (int)this->data->gridSize, (int)this->data->gridSize);
 
 	this->collision = false;
 	this->type = TileTypes::DEFAULT;
@@ -25,26 +19,17 @@ void EditorState::initVariables()
 	this->cameraSpeed = 500.f;
 }
 
-void EditorState::initView()
+void EditorState::initEditorCamera()
 {
 	this->editorCamera.setSize(
 			sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
 
 	this->editorCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
-			this->data->gfxSettings->resolution.height / 2.f);
-
+															 this->data->gfxSettings->resolution.height / 2.f);
 }
 
 void EditorState::initKeybinds()
 {
-	/**
-	 * @return void
-	 *
-	 * Binds the accepted keys to its respective functionality.
-	 * It might differ from state to state, each state can have
-	 * its own function binding to a key.
-	 */
-
 	std::ifstream ifs("Config/editorstate_keybinds.ini");
 
 	if (ifs.is_open())
@@ -63,36 +48,18 @@ void EditorState::initKeybinds()
 
 void EditorState::initFonts()
 {
-	/**
-	 * @return void
-	 *
-	 * Loads font from file.
-	 */
-
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
 		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 }
 
 void EditorState::initText()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes the texts for the state.
-	 */
-
 	this->cursorText.setFont(this->font);
 	this->cursorText.setCharacterSize(12);
 }
 
 void EditorState::initPauseMenu()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes pause menu.
-	 */
-
 	this->pauseMenu = new gui::PauseMenu(*this->window, this->font);
 	this->pauseMenu->addButton("SAVE", 500.f, "Save");
 	this->pauseMenu->addButton("LOAD", 400.f, "Load");
@@ -100,34 +67,15 @@ void EditorState::initPauseMenu()
 
 void EditorState::initButtons()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes all the buttons of the EditorState.
-	 */
-
 }
 
 void EditorState::initTileMap()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes the tilemap for the editor.
-	 */
-
 	this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
 }
 
 void EditorState::initGUI()
 {
-	/**
-	 * @return void
-	 *
-	 * Initializes the GUI elements.
-	 * -> initializes selector rect.
-	 */
-
 	// Sidebar
 	this->sidebar.setSize(sf::Vector2f(60.f, this->data->gfxSettings->resolution.height));
 	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
@@ -153,22 +101,11 @@ void EditorState::initGUI()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
-EditorState::EditorState(StateData *data) :
-		State(data)
+EditorState::EditorState(StateData *data) : State(data)
 {
-	/**
-	 * @constructor
-	 *
-	 * Calls the parent constructor for State.
-	 * -> Initializes variables
-	 * -> Initializes fonts
-	 * -> Initializes keybinds
-	 * -> Initializes buttons
-	 */
-
 	this->initVariables();
 
-	this->initView();
+	this->initEditorCamera();
 
 	this->initFonts();
 
@@ -187,12 +124,6 @@ EditorState::EditorState(StateData *data) :
 
 EditorState::~EditorState()
 {
-	/**
-	 * @destructor
-	 *
-	 * Frees all the memory allocated for the buttons.
-	 */
-
 	for (auto &it : this->buttons)
 		delete it.second;
 
@@ -206,14 +137,6 @@ EditorState::~EditorState()
 /* FUNCTIONS */
 void EditorState::update(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the MainMenuState.
-	 * -> Checks for updates in the user input.
-	 * -> Update buttons.
-	 */
-
 	this->updateMousePositions(&this->editorCamera);
 	this->updateInput(dt);
 	this->updateKeytime(dt);
@@ -234,14 +157,6 @@ void EditorState::update(const float &dt)
 
 void EditorState::render(sf::RenderTarget &target)
 {
-	/**
-	 * @return void
-	 *
-	 * Renders the main menu.
-	 * -> Draw background
-	 * -> Render buttons.
-	 */
-
 	// Render tilemap in the editor camera
 	target.setView(this->editorCamera);
 	this->tileMap->render(target);
@@ -264,24 +179,12 @@ void EditorState::render(sf::RenderTarget &target)
 
 void EditorState::updateInput(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the user input.
-	 */
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds["PAUSE"]) && this->hasCompletedKeytimeCicle())
 		this->pauseToggle();
-
 }
+
 void EditorState::updateEditorInput(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the input specific for the editor
-	 */
-
 	// Move view
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_UP"]))
 		this->editorCamera.move(0.f, std::floor(-this->cameraSpeed * dt));
@@ -302,7 +205,7 @@ void EditorState::updateEditorInput(const float &dt)
 			if (!this->textureSelector->isActive())
 			{
 				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,
-						this->collision, this->type);
+															 this->collision, this->type);
 			}
 			else
 			{
@@ -316,7 +219,6 @@ void EditorState::updateEditorInput(const float &dt)
 		{
 			if (!this->textureSelector->isActive())
 				this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
-
 		}
 	}
 
@@ -340,26 +242,12 @@ void EditorState::updateEditorInput(const float &dt)
 
 void EditorState::updateButtons()
 {
-	/**
-	 * @return void
-	 *
-	 * Iterates over all buttons and update their states based on
-	 * mouse click and position.
-	 */
-
 	for (auto &it : this->buttons)
 		it.second->update(sf::Vector2f(this->mousePosWindow));
-
 }
 
 void EditorState::updatePauseMenuButtons()
 {
-	/**
-	 * @return void
-	 *
-	 * Updates pause menu buttons
-	 */
-
 	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->quit();
 
@@ -372,12 +260,6 @@ void EditorState::updatePauseMenuButtons()
 
 void EditorState::updateGUI(const float &dt)
 {
-	/**
-	 * @return void
-	 *
-	 * Updates the GUI elements.
-	 */
-
 	this->textureSelector->update(dt, this->mousePosWindow);
 
 	if (!this->textureSelector->isActive())
@@ -393,37 +275,22 @@ void EditorState::updateGUI(const float &dt)
 
 	std::stringstream ss;
 	ss << this->mousePosWindow.x << " " << this->mousePosWindow.y << "\n"
-			<< this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
-			<< this->textureRect.left << " " << this->textureRect.top << "\n"
-			<< "collision: " << (this->collision ? "true" : "false") << "\n"
-			<< "type: " << this->type;
+		 << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
+		 << this->textureRect.left << " " << this->textureRect.top << "\n"
+		 << "collision: " << (this->collision ? "true" : "false") << "\n"
+		 << "type: " << this->type;
 	this->cursorText.setString(ss.str());
-
 }
 
 void EditorState::renderButtons(sf::RenderTarget &target)
 {
-	/**
-	 * @return void
-	 *
-	 * Iterates over all buttons and renders them into a target.
-	 */
-
 	for (auto &it : this->buttons)
 		it.second->render(target);
-
 }
 
 void EditorState::renderGUI(sf::RenderTarget &target)
 {
-	/**
-	 * @return void
-	 *
-	 * Renders the GUI elements into a target
-	 */
-
-	if (!this->textureSelector->isActive()
-			&& !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
+	if (!this->textureSelector->isActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 	{
 		// Render selector rect in the editor camera
 		target.setView(this->editorCamera);
@@ -438,6 +305,4 @@ void EditorState::renderGUI(sf::RenderTarget &target)
 	// Render cursor text in the editor camera
 	target.setView(this->editorCamera);
 	target.draw(this->cursorText);
-
 }
-
