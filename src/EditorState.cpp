@@ -17,6 +17,8 @@ void EditorState::initVariables()
 	this->type = TileTypes::DEFAULT;
 
 	this->cameraSpeed = 500.f;
+
+	this->layer = 0;
 }
 
 void EditorState::initEditorCamera()
@@ -159,7 +161,7 @@ void EditorState::render(sf::RenderTarget &target)
 {
 	// Render tilemap in the editor camera
 	target.setView(this->editorCamera);
-	this->tileMap->render(target);
+	this->tileMap->render(target, this->mousePosGrid);
 
 	// Render buttons in the window view
 	target.setView(this->window->getDefaultView());
@@ -271,14 +273,15 @@ void EditorState::updateGUI(const float &dt)
 		this->selectorRect.setTextureRect(this->textureRect);
 	}
 
-	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x + 50.f, this->mousePosView.y));
+	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x + 40.f, this->mousePosView.y));
 
 	std::stringstream ss;
 	ss << this->mousePosWindow.x << " " << this->mousePosWindow.y << "\n"
 		 << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
 		 << this->textureRect.left << " " << this->textureRect.top << "\n"
 		 << "collision: " << (this->collision ? "true" : "false") << "\n"
-		 << "type: " << this->type;
+		 << "type: " << this->type << "\n"
+		 << "stacked tiles: " << this->tileMap->getAmountOfStackedTiles(mousePosGrid.x, mousePosGrid.y, this->layer);
 	this->cursorText.setString(ss.str());
 }
 

@@ -87,21 +87,25 @@ const sf::Vector2f &Entity::getPosition()
 
 const sf::Vector2f Entity::getCenteredPosition()
 {
+	if (this->hitboxComponent)
+
+		return this->hitboxComponent->getCenteredPosition();
+
 	return sf::Vector2f(
 			this->sprite.getPosition().x + this->sprite.getGlobalBounds().width / 2,
 			this->sprite.getPosition().y + this->sprite.getGlobalBounds().height / 2);
 }
 
-const sf::Vector2i Entity::getGridPosition(const unsigned gridSizeU) const
+const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 {
 	if (this->hitboxComponent)
 		return sf::Vector2i(
-				(int)this->hitboxComponent->getPosition().x / gridSizeU,
-				(int)this->hitboxComponent->getPosition().y / gridSizeU);
+				(int)this->hitboxComponent->getCenteredPosition().x / gridSizeI,
+				(int)this->hitboxComponent->getCenteredPosition().y / gridSizeI);
 
 	return sf::Vector2i(
-			(int)this->sprite.getPosition().x / gridSizeU,
-			(int)this->sprite.getPosition().y / gridSizeU);
+			(int)this->sprite.getPosition().x / gridSizeI,
+			(int)this->sprite.getPosition().y / gridSizeI);
 }
 
 const sf::Vector2f Entity::getSize()

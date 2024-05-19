@@ -53,6 +53,13 @@ public:
 	const sf::Vector2f &getPosition() const;
 
 	/**
+	 * @brief Returns the hitbox's center position.
+	 * 
+	 * @return const sf::Vector2f
+	 */
+	const sf::Vector2f getCenteredPosition() const;
+
+	/**
 	 * @brief Returns the hitbox size
 	 *
 	 * @return const sf::Vector2f&

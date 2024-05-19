@@ -98,32 +98,32 @@ void Game::run()
 {
 	while (this->isRunning())
 	{
-		this->updateDeltaTime();
-		this->update();
-		this->render();
+		// If windows has focus
+		if (this->window->hasFocus())
+		{
+			this->update();
+			this->render();
+		}
 	}
 }
 
 void Game::update()
 {
+	this->updateDeltaTime();
 	this->pollSFMLEvents();
 
 	// If there are still states available
 	if (!this->states.empty())
 	{
-		// If windows has focus
-		if (this->window->hasFocus())
-		{
-			// Update the top state in the states stack
-			this->states.top()->update(this->dt);
+		// Update the top state in the states stack
+		this->states.top()->update(this->dt);
 
-			// If the state wants to end
-			if (this->states.top()->hasAskedToQuit())
-			{
-				// Delete the state and pop it from the stack.
-				delete this->states.top();
-				this->states.pop();
-			}
+		// If the state wants to end
+		if (this->states.top()->hasAskedToQuit())
+		{
+			// Delete the state and pop it from the stack.
+			delete this->states.top();
+			this->states.pop();
 		}
 	}
 	// If there are no states

@@ -134,7 +134,7 @@ void GameState::renderToBuffer()
 	this->renderBuffer.clear();
 
 	this->renderBuffer.setView(this->playerCamera);
-	this->tileMap->render(this->renderBuffer, this->player);
+	this->tileMap->render(this->renderBuffer, this->player->getGridPosition((int)this->data->gridSize));
 	this->player->render(this->renderBuffer);
 
 	if (this->isPaused)

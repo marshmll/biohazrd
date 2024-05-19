@@ -53,6 +53,13 @@ const sf::Vector2f &HitboxComponent::getPosition() const
 	return this->hitbox.getPosition();
 }
 
+const sf::Vector2f HitboxComponent::getCenteredPosition() const
+{
+	return sf::Vector2f(
+			this->hitbox.getPosition().x + (this->hitbox.getSize().x / 2.f),
+			this->hitbox.getPosition().y + (this->hitbox.getSize().y / 2.f));
+}
+
 const sf::Vector2f &HitboxComponent::getSize() const
 {
 	return this->hitbox.getSize();

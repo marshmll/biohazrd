@@ -31,6 +31,7 @@ private:
 	bool collision;
 	short type;
 	float cameraSpeed;
+	unsigned layer;
 
 	/* INITIALIZERS */
 

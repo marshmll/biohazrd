@@ -13,13 +13,13 @@ private:
 	/* VARIABLES */
 
 	float gridSizeF;
-	unsigned gridSizeU;
+	int gridSizeI;
 	unsigned layers;
 
 	sf::Vector2i tileMapGridDimensions;
 	sf::Vector2f tileMapWorldDimensions;
 
-	std::vector<std::vector<std::vector<Tile *>>> tileMap;
+	std::vector<std::vector<std::vector<std::vector<Tile *>>>> tileMap;
 
 	std::string texture_file_path;
 	sf::Texture tileTextureSheet;
@@ -135,14 +135,28 @@ public:
 	 *
 	 * @brief Renders each layer of each tile position (x, y).
 	 */
-	void render(sf::RenderTarget &target, Entity *entity = nullptr);
+	void render(sf::RenderTarget &target, const sf::Vector2i &gridPosition);
 
 	/**
 	 * @return void
 	 *
 	 * @brief Updates the collisions for a entity.
 	 */
-	void updateCollision(const float& dt, Entity *entity = nullptr);
+	void updateCollision(const float &dt, Entity *entity = nullptr);
+
+	/**
+	 * @brief Updates the area dimensions around an entity.
+	 * 
+	 * @return void
+	 */
+	void updateMapActiveArea(Entity* entity, const int width, const int height);
+
+	/**
+	 * @brief Updates the area dimensions with a given grid position.
+	 * 
+	 * @return void
+	 */
+	void updateMapActiveArea(const sf::Vector2i gridPosition, const int width, const int height);
 
 	/* ACCESSORS */
 
@@ -152,6 +166,14 @@ public:
 	 * @brief Returns the tile texture sheet of the tilemap.
 	 */
 	const sf::Texture *getTileTextureSheet() const;
+
+	/**
+	 * @brief Returns how many tiles are in top of the other
+	 * in a certain grid position AND layer.
+	 * 
+	 * @return const unsigned
+	 */
+	const unsigned getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const;
 };
 
 #endif /* TILEMAP_H_ */

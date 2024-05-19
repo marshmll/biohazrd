@@ -111,18 +111,20 @@ public:
 	virtual const sf::Vector2f &getPosition();
 
 	/**
-	 * @brief Returns the position of the center of the sprite.
+	 * @brief Returns the hitbox center position, or the sprite center
+	 * position if there is no hitbox.
 	 *
-	 * @return const sf::Vector2f
+	 * @return sf::Vector2f
 	 */
 	virtual const sf::Vector2f getCenteredPosition();
 
 	/**
-	 * @brief Returns the grid position.
+	 * @brief Returns the hitbox grid position, or the sprite grid
+	 * position if there is no hitbox.
 	 *
 	 * @return sf::Vector2i
 	 */
-	virtual const sf::Vector2i getGridPosition(const unsigned gridSizeU) const;
+	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
 
 	/**
 	 * @brief Returns the hitbox size, or the sprite size
