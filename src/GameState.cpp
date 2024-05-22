@@ -54,6 +54,13 @@ void GameState::initFonts()
 		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
 }
 
+void GameState::initText()
+{
+	this->debugText.setFont(this->font);
+	this->debugText.setCharacterSize(14);
+	this->debugText.setPosition(10.f, 10.f);
+}
+
 void GameState::initTextures()
 {
 	if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
@@ -83,6 +90,7 @@ GameState::GameState(StateData *data) : State(data)
 	this->initView();
 	this->initKeybinds();
 	this->initFonts();
+	this->initText();
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
@@ -107,6 +115,12 @@ void GameState::update(const float &dt)
 	// Not-paused update
 	if (!this->isPaused)
 	{
+		/* DEBUG! */
+		std::stringstream ss;
+		ss << "dt: " << dt << "ms";
+		debugText.setString(ss.str());
+		/*********/
+
 		this->updatePlayerCamera(dt);
 		this->updatePlayerInput(dt);
 		this->player->update(dt);
@@ -126,6 +140,10 @@ void GameState::render(sf::RenderTarget &target)
 	this->renderToBuffer();
 
 	target.draw(this->renderSprite);
+
+	/* DEBUG! */
+	target.draw(this->debugText);
+	/**********/
 }
 
 void GameState::renderToBuffer()

@@ -24,7 +24,7 @@ void MovementComponent::update(const float &dt)
 	if (this->velocity.x >= 0.f)
 	{
 		// Decrease velocity
-		this->velocity.x -= this->deceleration;
+		this->velocity.x -= this->deceleration * dt;
 
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.x < 0.f)
@@ -34,7 +34,7 @@ void MovementComponent::update(const float &dt)
 	else if (this->velocity.x <= 0.f)
 	{
 		// Decrease velocity
-		this->velocity.x += this->deceleration;
+		this->velocity.x += this->deceleration * dt;
 
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.x > 0.f)
@@ -45,7 +45,7 @@ void MovementComponent::update(const float &dt)
 	if (this->velocity.y >= 0.f)
 	{
 		// Decrease velocity
-		this->velocity.y -= this->deceleration;
+		this->velocity.y -= this->deceleration * dt;
 
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.y < 0.f)
@@ -55,7 +55,7 @@ void MovementComponent::update(const float &dt)
 	else if (this->velocity.y <= 0.f)
 	{
 		// Decrease velocity
-		this->velocity.y += this->deceleration;
+		this->velocity.y += this->deceleration * dt;
 
 		// If velocity hits 0, keep it at 0.
 		if (this->velocity.y > 0)
@@ -75,7 +75,7 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 	/* Acceleration */
 
 	// Accelerate player x
-	this->velocity.x += this->acceleration * dir_x;
+	this->velocity.x += this->acceleration * dir_x * dt;
 
 	// Get the x and y directions coeficients (-1.0 or +1.0)
 	// +1.0 for DOWN and RIGHT.
@@ -91,7 +91,7 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 	}
 
 	// Accelerate player y
-	this->velocity.y += this->acceleration * dir_y;
+	this->velocity.y += this->acceleration * dir_y * dt;
 
 	// If player hits max velocity in y axis
 	if (std::fabs(this->velocity.y) > this->maxVelocity)

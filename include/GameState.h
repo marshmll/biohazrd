@@ -15,6 +15,7 @@ private:
 	sf::View playerCamera;
 	sf::RenderTexture renderBuffer;
 	sf::Sprite renderSprite;
+	sf::Text debugText; // TEMP
 
 	gui::PauseMenu *pauseMenu;
 
@@ -57,6 +58,13 @@ private:
 	 * @return void
 	 */
 	void initFonts();
+
+	/**
+	 * @brief Initializes text.
+	 * 
+	 * @return void
+	 */
+	void initText();
 
 	/**
 	 * @brief nitializes textures used in the game.
