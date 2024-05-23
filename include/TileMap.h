@@ -21,6 +21,8 @@ private:
 
 	std::vector<std::vector<std::vector<std::vector<Tile *>>>> tileMap;
 
+	std::stack<Tile*> deferredTileRendering;
+
 	std::string texture_file_path;
 	sf::Texture tileTextureSheet;
 
@@ -157,6 +159,14 @@ public:
 	 * @return void
 	 */
 	void updateMapActiveArea(const sf::Vector2i gridPosition, const int width, const int height);
+
+	/**
+	 * @brief Deferred render for tiles that are suposed to be rendered
+	 * later on.
+	 * 
+	 * @return void
+	 */
+	void deferredRender(sf::RenderTarget &target);
 
 	/* ACCESSORS */
 

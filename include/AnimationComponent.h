@@ -128,10 +128,10 @@ private:
 		const bool &play(const float &dt, float mod_percent)
 		{
 			// If modifier percent is too small
-			if (mod_percent < 0.7f)
+			if (mod_percent < 0.5f)
 			{
 				// Assure its at least 50%
-				mod_percent = 0.7f;
+				mod_percent = 0.5f;
 			}
 
 			this->done = false;

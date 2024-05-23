@@ -79,7 +79,7 @@ void GameState::initPlayers()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
+	this->tileMap = new TileMap(this->data->gridSize, 1000, 1000, "Assets/Images/Tiles/tilesheet.png");
 	this->tileMap->loadFromFile("test.biomap");
 }
 
@@ -154,6 +154,7 @@ void GameState::renderToBuffer()
 	this->renderBuffer.setView(this->playerCamera);
 	this->tileMap->render(this->renderBuffer, this->player->getGridPosition((int)this->data->gridSize));
 	this->player->render(this->renderBuffer);
+	this->tileMap->deferredRender(this->renderBuffer);
 
 	if (this->isPaused)
 	{

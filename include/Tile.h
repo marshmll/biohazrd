@@ -4,7 +4,8 @@
 enum TileTypes
 {
 	DEFAULT = 0,
-	HARMFUL
+	HARMFUL,
+	DOODAD
 };
 
 class Tile
@@ -62,7 +63,14 @@ public:
 	 *
 	 * @return const bool&
 	 */
-	const bool &isCollideable();
+	const bool &isCollideable() const;
+
+	/**
+	 * @brief Returns the tyle's type
+	 * 
+	 * @return short (TileTypes enum);
+	 */
+	const short &getType() const;
 
 	/**
 	 * @brief Returns the tile properties as a std::string.

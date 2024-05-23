@@ -73,7 +73,7 @@ void EditorState::initButtons()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
+	this->tileMap = new TileMap(this->data->gridSize, 1000, 1000, "Assets/Images/Tiles/tilesheet.png");
 }
 
 void EditorState::initGUI()
@@ -162,6 +162,7 @@ void EditorState::render(sf::RenderTarget &target)
 	// Render tilemap in the editor camera
 	target.setView(this->editorCamera);
 	this->tileMap->render(target, this->mousePosGrid);
+	this->tileMap->deferredRender(target);
 
 	// Render buttons in the window view
 	target.setView(this->window->getDefaultView());

@@ -186,7 +186,7 @@ void TileMap::saveToFile(const std::string file_name)
 					{
 						out_file << x << " " << y << " " << z << " " << k << " "
 										 << this->tileMap[x][y][z][k]->getPropertiesAsString()
-										 << "\n";
+										 << " ";
 					}
 				}
 			}
@@ -235,7 +235,15 @@ void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition)
 		{
 			for (size_t k = 0; k < this->tileMap[x][y][this->layer].size(); k++)
 			{
-				this->tileMap[x][y][this->layer][k]->render(target);
+				if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::DOODAD)
+				{
+					this->deferredTileRendering.push(this->tileMap[x][y][this->layer][k]);
+				}
+				else
+				{
+					this->tileMap[x][y][this->layer][k]->render(target);
+				}
+
 				if (this->tileMap[x][y][this->layer][k]->isCollideable())
 				{
 					this->collisionBox.setPosition(this->tileMap[x][y][this->layer][k]->getPosition());
@@ -377,6 +385,15 @@ void TileMap::updateMapActiveArea(const sf::Vector2i gridPosition, const int wid
 		this->endY = 0;
 	else if (this->endY >= this->tileMapGridDimensions.y)
 		this->endY = this->tileMapGridDimensions.y;
+}
+
+void TileMap::deferredRender(sf::RenderTarget &target)
+{
+	while (!this->deferredTileRendering.empty())
+	{
+		this->deferredTileRendering.top()->render(target);
+		this->deferredTileRendering.pop();
+	}
 }
 
 /* ACCESSORS */

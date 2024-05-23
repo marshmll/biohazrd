@@ -56,9 +56,14 @@ const sf::Vector2f &Tile::getPosition() const
 	return this->tile.getPosition();
 }
 
-const bool &Tile::isCollideable()
+const bool &Tile::isCollideable() const
 {
 	return this->collision;
+}
+
+const short &Tile::getType() const
+{
+  return this->type;
 }
 
 const std::string Tile::getPropertiesAsString() const
