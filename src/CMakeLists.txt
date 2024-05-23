@@ -1,6 +1,7 @@
 target_sources(BIOHAZRD PRIVATE
   main.cpp
   AnimationComponent.cpp
+  AttributeComponent.cpp
   EditorState.cpp
   Entity.cpp
   Game.cpp

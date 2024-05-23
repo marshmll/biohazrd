@@ -30,6 +30,7 @@ Entity::~Entity()
 	delete this->hitboxComponent;
 	delete this->movementComponent;
 	delete this->animationComponent;
+	delete this->attributeComponent;
 }
 /* COMPONENT FUNCTIONS */
 
@@ -55,6 +56,11 @@ void Entity::createMovementComponent(const float maxVelocity, const float accere
 void Entity::createAnimationComponent(sf::Texture &texture_sheet)
 {
 	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
+}
+
+void Entity::createAttributeComponent()
+{
+	this->attributeComponent = new AttributeComponent();
 }
 
 /* FUNCTIONS */
