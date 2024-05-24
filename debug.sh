@@ -8,4 +8,17 @@ then
   cd ../
 fi
 
-clear && cd Debug/ && make && cd bin/ && ./BIOHAZRD && cd ../../
+rm -rf Debug/bin/Assets/ Debug/bin/Config/ Debug/bin/Fonts/ Debug/bin/Maps
+cp -r src/Assets/ Debug/bin/
+cp -r src/Config/ Debug/bin/
+cp -r src/Fonts/ Debug/bin/
+cp -r src/Maps/ Debug/bin/
+
+clear
+cd Debug/ && make && cd bin/ && ./BIOHAZRD && cd ../../
+
+rm -rf src/Assets/ src/Config/ src/Fonts/ src/Maps/
+cp -r Debug/bin/Assets src/
+cp -r Debug/bin/Config src/
+cp -r Debug/bin/Fonts src/
+cp -r Debug/bin/Maps src/
