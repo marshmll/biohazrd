@@ -67,7 +67,9 @@ public:
 	 *
 	 * @return void
 	 */
-	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
+	void createMovementComponent(
+			const float maxVelocity,
+			const float acceleration, const float deceleration);
 
 	/**
 	 * @brief Creates an animation functionality component for the
@@ -83,7 +85,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void createAttributeComponent();
+	void createAttributeComponent(const unsigned level);
 
 	/* FUNCTIONS */
 

@@ -8,24 +8,45 @@ public:
 
   unsigned level;
   unsigned exp;
+  unsigned expNext;
   unsigned attributePoints;
 
   /* ATTRIBUTES */
 
-  unsigned strength;
-  unsigned vitality;
-  unsigned dexterity;
-  unsigned agillity;
-  unsigned intelligence;
+  int vitality;
+  int strength;
+  int dexterity;
+  int agillity;
+  int intelligence;
 
   /* STATS */
 
+  int hp;
+  int hpMax;
+
+  int damageMin;
+  int damageMax;
+
+  int accuracy;
+  int defense;
+
+  int luck;
+
   /* CONSTRUCTOR AND DESTRUCTOR */
 
-  AttributeComponent();
+  AttributeComponent(unsigned level);
   virtual ~AttributeComponent();
 
   /* FUNCTIONS */
+
+  void update();
+
+  void updateStats(const bool reset);
+  void updateLevel();
+
+  void earnExp(const unsigned exp);
+
+  void debugPrint();
 };
 
 #endif

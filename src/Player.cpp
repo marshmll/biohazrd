@@ -50,6 +50,7 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 	this->createHitboxComponent(75.f, 90.f, 42.f, 42.f);
 	this->createMovementComponent(180.f, 1200.f, 800.f);
 	this->createAnimationComponent(texture_sheet);
+	this->createAttributeComponent(1);
 
 	this->initAnimations();
 }
@@ -62,6 +63,11 @@ Player::~Player()
 
 void Player::update(const float &dt)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		this->attributeComponent->earnExp(20);
+
+	this->attributeComponent->debugPrint();
+
 	this->movementComponent->update(dt);
 	this->hitboxComponent->update();
 	this->updateJump(dt);
