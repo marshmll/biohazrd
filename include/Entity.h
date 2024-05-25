@@ -58,8 +58,8 @@ public:
 	 * @return void
 	 */
 	void createHitboxComponent(
-			const float offset_x, const float offset_y,
-			const float width, const float height);
+		const float offset_x, const float offset_y,
+		const float width, const float height);
 
 	/**
 	 * @brief Creates a movement functionality component for the
@@ -68,8 +68,8 @@ public:
 	 * @return void
 	 */
 	void createMovementComponent(
-			const float maxVelocity,
-			const float acceleration, const float deceleration);
+		const float maxVelocity,
+		const float acceleration, const float deceleration);
 
 	/**
 	 * @brief Creates an animation functionality component for the

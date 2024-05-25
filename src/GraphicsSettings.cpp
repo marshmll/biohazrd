@@ -21,7 +21,6 @@ GraphicsSettings::GraphicsSettings()
 
 GraphicsSettings::~GraphicsSettings()
 {
-
 }
 
 /* FUNCTIONS */
@@ -47,7 +46,7 @@ void GraphicsSettings::saveToFile(const std::string path)
 	else
 	{
 		throw std::runtime_error(
-				"GRAPHICSSETTINGS::SAVETOFILE::ERROR_COULD_NOT_SAVE_GRAPHICS_INI\n");
+			"GRAPHICSSETTINGS::SAVETOFILE::ERROR_COULD_NOT_SAVE_GRAPHICS_INI\n");
 	}
 
 	ofs.close();
@@ -73,7 +72,7 @@ void GraphicsSettings::loadFromFile(const std::string path)
 	else
 	{
 		throw std::runtime_error(
-				"GRAPHICSSETTINGS::LOADFROMFILE::ERROR_COULD_NOT_LOAD_GRAPHICS_INI\n");
+			"GRAPHICSSETTINGS::LOADFROMFILE::ERROR_COULD_NOT_LOAD_GRAPHICS_INI\n");
 	}
 
 	ifs.close();

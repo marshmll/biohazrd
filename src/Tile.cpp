@@ -11,9 +11,9 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
-					 const sf::Texture &texture, const sf::IntRect textureRect,
-					 bool collision,
-					 short type)
+		   const sf::Texture &texture, const sf::IntRect textureRect,
+		   bool collision,
+		   short type)
 {
 	this->tile.setSize(sf::Vector2f(gridSizeF, gridSizeF));
 
@@ -63,7 +63,7 @@ const bool &Tile::isCollideable() const
 
 const short &Tile::getType() const
 {
-  return this->type;
+	return this->type;
 }
 
 const std::string Tile::getPropertiesAsString() const
@@ -71,7 +71,7 @@ const std::string Tile::getPropertiesAsString() const
 	std::stringstream ss;
 
 	ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-		 << this->collision << " " << this->type;
+	   << this->collision << " " << this->type;
 
 	return ss.str();
 }

@@ -10,18 +10,18 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 HitboxComponent::HitboxComponent(sf::Sprite &sprite,
-																 float offset_x, float offset_y,
-																 float width, float height) : sprite(sprite), offsetX(offset_x), offsetY(offset_y)
+								 float offset_x, float offset_y,
+								 float width, float height) : sprite(sprite), offsetX(offset_x), offsetY(offset_y)
 {
 	this->hitbox.setPosition(
-			this->sprite.getPosition().x + offset_x,
-			this->sprite.getPosition().y + offset_y);
+		this->sprite.getPosition().x + offset_x,
+		this->sprite.getPosition().y + offset_y);
 
 	this->hitbox.setSize(sf::Vector2f(width, height));
 
 	this->hitbox.setFillColor(sf::Color::Transparent);
 
-	this->hitbox.setOutlineThickness(-1.f);					// TEMP
+	this->hitbox.setOutlineThickness(-1.f);			// TEMP
 	this->hitbox.setOutlineColor(sf::Color::Green); // TEMP
 
 	this->nextPosition.width = width;
@@ -37,8 +37,8 @@ HitboxComponent::~HitboxComponent()
 void HitboxComponent::update()
 {
 	this->hitbox.setPosition(
-			this->sprite.getPosition().x + this->offsetX,
-			this->sprite.getPosition().y + this->offsetY);
+		this->sprite.getPosition().x + this->offsetX,
+		this->sprite.getPosition().y + this->offsetY);
 }
 
 void HitboxComponent::render(sf::RenderTarget &target)
@@ -56,8 +56,8 @@ const sf::Vector2f &HitboxComponent::getPosition() const
 const sf::Vector2f HitboxComponent::getCenteredPosition() const
 {
 	return sf::Vector2f(
-			this->hitbox.getPosition().x + (this->hitbox.getSize().x / 2.f),
-			this->hitbox.getPosition().y + (this->hitbox.getSize().y / 2.f));
+		this->hitbox.getPosition().x + (this->hitbox.getSize().x / 2.f),
+		this->hitbox.getPosition().y + (this->hitbox.getSize().y / 2.f));
 }
 
 const sf::Vector2f &HitboxComponent::getSize() const

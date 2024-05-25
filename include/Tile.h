@@ -20,8 +20,8 @@ protected:
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
 	Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
-			 const sf::Texture &texture, const sf::IntRect textureRect,
-			 bool collision = false, short type = TileTypes::HARMFUL);
+		 const sf::Texture &texture, const sf::IntRect textureRect,
+		 bool collision = false, short type = TileTypes::HARMFUL);
 
 	virtual ~Tile();
 
@@ -67,7 +67,7 @@ public:
 
 	/**
 	 * @brief Returns the tyle's type
-	 * 
+	 *
 	 * @return short (TileTypes enum);
 	 */
 	const short &getType() const;
@@ -79,14 +79,14 @@ public:
 	 * @note -> Texture rectangle top
 	 * @note -> Collision
 	 * @note -> Type
-	 * 
+	 *
 	 * @return void
 	 */
 	const std::string getPropertiesAsString() const;
 
 	/**
 	 * @brief Returns the tile's global bounds.
-	 * 
+	 *
 	 * @return const sf::FloatRect
 	 */
 	const sf::FloatRect getGlobalBounds() const;

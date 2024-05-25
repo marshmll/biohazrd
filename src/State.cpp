@@ -53,8 +53,8 @@ void State::updateMousePositions(sf::View *view)
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
 
 	this->mousePosGrid = sf::Vector2i(
-			static_cast<int>(this->mousePosView.x) / static_cast<int>(this->data->gridSize),
-			static_cast<int>(this->mousePosView.y) / static_cast<int>(this->data->gridSize));
+		static_cast<int>(this->mousePosView.x) / static_cast<int>(this->data->gridSize),
+		static_cast<int>(this->mousePosView.y) / static_cast<int>(this->data->gridSize));
 
 	this->window->setView(this->window->getDefaultView());
 }

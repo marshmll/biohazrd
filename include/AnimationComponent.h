@@ -38,13 +38,11 @@ private:
 		 * @note -> Frame height
 		 */
 		Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
-							float animation_timer,
-							int start_frame_x_index, int start_frame_y_index,
-							int end_frame_x_index, int end_frame_y_index,
-							int width, int height) :
-
-																			 sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
-																			 timer(0.f), width(width), height(height), done(false)
+				  float animation_timer,
+				  int start_frame_x_index, int start_frame_y_index,
+				  int end_frame_x_index, int end_frame_y_index,
+				  int width, int height) : sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
+										   timer(0.f), width(width), height(height), done(false)
 		{
 			this->startCropRect = sf::IntRect(start_frame_x_index * width, start_frame_y_index * height, width, height);
 			this->currentCropRect = this->startCropRect;
@@ -248,11 +246,11 @@ public:
 	 * @return void
 	 */
 	void addAnimation(
-			const std::string key,
-			float animation_update_timer,
-			int start_frame_x_index, int start_frame_y_index,
-			int frames_x_amount, int frames_y_amount,
-			int width, int height);
+		const std::string key,
+		float animation_update_timer,
+		int start_frame_x_index, int start_frame_y_index,
+		int frames_x_amount, int frames_y_amount,
+		int width, int height);
 
 	/**
 	 * @brief Plays an animation from the animations map.
@@ -282,8 +280,8 @@ public:
 	 * @return const bool&
 	 */
 	const bool play(const std::string key, const float &dt,
-									const float &modifier, const float &modifier_max,
-									const bool priority = false);
+					const float &modifier, const float &modifier_max,
+					const bool priority = false);
 
 	/**
 	 * @brief Sets previous animation pointer to be equal a

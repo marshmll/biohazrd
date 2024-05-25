@@ -11,7 +11,7 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet) : sprite(sprite), textureSheet(texture_sheet),
-																																												 previousAnimation(nullptr), priorityAnimation(nullptr)
+																						 previousAnimation(nullptr), priorityAnimation(nullptr)
 {
 }
 
@@ -24,18 +24,18 @@ AnimationComponent::~AnimationComponent()
 /* FUNCTIONS */
 
 void AnimationComponent::addAnimation(
-		const std::string key,
-		float animation_update_timer,
-		int start_frame_x_index, int start_frame_y_index,
-		int end_frame_x_index, int end_frame_y_index,
-		int width, int height)
+	const std::string key,
+	float animation_update_timer,
+	int start_frame_x_index, int start_frame_y_index,
+	int end_frame_x_index, int end_frame_y_index,
+	int width, int height)
 {
 	this->animations[key] = new Animation(
-			this->sprite, this->textureSheet,
-			animation_update_timer,
-			start_frame_x_index, start_frame_y_index,
-			end_frame_x_index, end_frame_y_index,
-			width, height);
+		this->sprite, this->textureSheet,
+		animation_update_timer,
+		start_frame_x_index, start_frame_y_index,
+		end_frame_x_index, end_frame_y_index,
+		width, height);
 }
 
 const bool AnimationComponent::play(const std::string key, const float &dt, const bool priority)
@@ -78,8 +78,8 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
 }
 
 const bool AnimationComponent::play(const std::string key, const float &dt,
-																		const float &modifier, const float &modifier_max,
-																		const bool priority)
+									const float &modifier, const float &modifier_max,
+									const bool priority)
 {
 
 	bool done = false;

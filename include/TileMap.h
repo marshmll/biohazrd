@@ -21,7 +21,7 @@ private:
 
 	std::vector<std::vector<std::vector<std::vector<Tile *>>>> tileMap;
 
-	std::stack<Tile*> deferredTileRendering;
+	std::stack<Tile *> deferredTileRendering;
 
 	std::string texture_file_path;
 	sf::Texture tileTextureSheet;
@@ -119,8 +119,8 @@ public:
 	 */
 
 	void addTile(const unsigned x, const unsigned y, const unsigned z,
-							 const sf::IntRect &textureRect,
-							 const bool &collision, const short &type);
+				 const sf::IntRect &textureRect,
+				 const bool &collision, const short &type);
 
 	/**
 	 * @return void
@@ -148,14 +148,14 @@ public:
 
 	/**
 	 * @brief Updates the area dimensions around an entity.
-	 * 
+	 *
 	 * @return void
 	 */
-	void updateMapActiveArea(Entity* entity, const int width, const int height);
+	void updateMapActiveArea(Entity *entity, const int width, const int height);
 
 	/**
 	 * @brief Updates the area dimensions with a given grid position.
-	 * 
+	 *
 	 * @return void
 	 */
 	void updateMapActiveArea(const sf::Vector2i gridPosition, const int width, const int height);
@@ -163,7 +163,7 @@ public:
 	/**
 	 * @brief Deferred render for tiles that are suposed to be rendered
 	 * later on.
-	 * 
+	 *
 	 * @return void
 	 */
 	void deferredRender(sf::RenderTarget &target);
@@ -180,7 +180,7 @@ public:
 	/**
 	 * @brief Returns how many tiles are in top of the other
 	 * in a certain grid position AND layer.
-	 * 
+	 *
 	 * @return const unsigned
 	 */
 	const unsigned getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const;

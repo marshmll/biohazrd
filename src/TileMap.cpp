@@ -146,12 +146,12 @@ void TileMap::loadFromFile(const std::string file_name)
 	while (in_file >> grid_x >> grid_y >> z >> k >> txtrRectX >> txtrRectY >> collision >> type)
 	{
 		this->tileMap[grid_x][grid_y][z].insert(this->tileMap[grid_x][grid_y][z].begin() + k, new Tile(
-																																															grid_x, grid_y,
-																																															this->gridSizeF,
-																																															this->tileTextureSheet,
-																																															sf::IntRect(txtrRectX, txtrRectY, this->gridSizeI, this->gridSizeI),
-																																															collision,
-																																															type));
+																								  grid_x, grid_y,
+																								  this->gridSizeF,
+																								  this->tileTextureSheet,
+																								  sf::IntRect(txtrRectX, txtrRectY, this->gridSizeI, this->gridSizeI),
+																								  collision,
+																								  type));
 	}
 
 	in_file.close();
@@ -169,9 +169,9 @@ void TileMap::saveToFile(const std::string file_name)
 		throw std::runtime_error("TILEMAP::SAVETOFILE::ERR_COULD_NOT_SAVE_TILEMAP_TO_FILE: " + file_name);
 
 	out_file << this->tileMapGridDimensions.x << " " << this->tileMapGridDimensions.y << "\n"
-					 << this->gridSizeI << "\n"
-					 << this->layers << "\n"
-					 << this->texture_file_path << "\n";
+			 << this->gridSizeI << "\n"
+			 << this->layers << "\n"
+			 << this->texture_file_path << "\n";
 
 	// Write all tiles information
 	for (size_t x = 0; x < this->tileMapGridDimensions.x; x++)
@@ -185,8 +185,8 @@ void TileMap::saveToFile(const std::string file_name)
 					for (size_t k = 0; k < this->tileMap[x][y][z].size(); k++)
 					{
 						out_file << x << " " << y << " " << z << " " << k << " "
-										 << this->tileMap[x][y][z][k]->getPropertiesAsString()
-										 << " ";
+								 << this->tileMap[x][y][z][k]->getPropertiesAsString()
+								 << " ";
 					}
 				}
 			}
@@ -197,8 +197,8 @@ void TileMap::saveToFile(const std::string file_name)
 }
 
 void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z,
-											const sf::IntRect &textureRect,
-											const bool &collision, const short &type)
+					  const sf::IntRect &textureRect,
+					  const bool &collision, const short &type)
 {
 	// If position is in the map bounds
 	if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
@@ -268,7 +268,7 @@ void TileMap::updateCollision(const float &dt, Entity *entity)
 	{
 		entity->stopVelocityX();
 		entity->setPosition(
-				sf::Vector2f(this->tileMapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
+			sf::Vector2f(this->tileMapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
 	}
 
 	// Y axis
@@ -281,7 +281,7 @@ void TileMap::updateCollision(const float &dt, Entity *entity)
 	{
 		entity->stopVelocityY();
 		entity->setPosition(
-				sf::Vector2f(entity->getPosition().x, this->tileMapWorldDimensions.y - entity->getSize().y));
+			sf::Vector2f(entity->getPosition().x, this->tileMapWorldDimensions.y - entity->getSize().y));
 	}
 
 	/* TILES */

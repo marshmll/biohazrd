@@ -57,13 +57,13 @@ namespace gui
 		 * @note -> Sets text position centered in button.
 		 */
 		Button(float x, float y, float width, float height,
-					 sf::Font *font, std::string text, unsigned character_size,
-					 sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-					 sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-					 sf::Color outline_idle_color = sf::Color::Transparent,
-					 sf::Color outline_hover_color = sf::Color::Transparent,
-					 sf::Color outline_active_color = sf::Color::Transparent,
-					 short unsigned id = 0);
+			   sf::Font *font, std::string text, unsigned character_size,
+			   sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+			   sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+			   sf::Color outline_idle_color = sf::Color::Transparent,
+			   sf::Color outline_hover_color = sf::Color::Transparent,
+			   sf::Color outline_active_color = sf::Color::Transparent,
+			   short unsigned id = 0);
 
 		/**
 		 * @brief Creates a button instance WITH IMAGE.
@@ -75,12 +75,12 @@ namespace gui
 		 * @note -> Sets image position centered in button.
 		 */
 		Button(float x, float y, float width, float height,
-					 sf::Texture *texture, float img_w, float img_h,
-					 sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-					 sf::Color outline_idle_color = sf::Color::Transparent,
-					 sf::Color outline_hover_color = sf::Color::Transparent,
-					 sf::Color outline_active_color = sf::Color::Transparent,
-					 short unsigned id = 0);
+			   sf::Texture *texture, float img_w, float img_h,
+			   sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+			   sf::Color outline_idle_color = sf::Color::Transparent,
+			   sf::Color outline_hover_color = sf::Color::Transparent,
+			   sf::Color outline_active_color = sf::Color::Transparent,
+			   short unsigned id = 0);
 
 		virtual ~Button();
 
@@ -172,7 +172,7 @@ namespace gui
 		 * @brief Initializes the drop down list.
 		 */
 		DropDownList(float x, float y, float width, float height,
-								 sf::Font &font, std::string elements_name[], unsigned numOfElements, short unsigned default_index = 0);
+					 sf::Font &font, std::string elements_name[], unsigned numOfElements, short unsigned default_index = 0);
 
 		/**
 		 * @brief Frees all memory allocated to the drop down list.

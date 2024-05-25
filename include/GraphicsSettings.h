@@ -31,15 +31,15 @@ public:
 	/**
 	 * @brief Saves the graphics settings into a graphics.ini
 	 * file.
-	 * 
+	 *
 	 * @return void
 	 */
 	void saveToFile(const std::string path);
-	
+
 	/**
 	 * @brief Loads the graphics settings from a graphics.ini
 	 * file.
-	 * 
+	 *
 	 * @return void
 	 */
 	void loadFromFile(const std::string path);

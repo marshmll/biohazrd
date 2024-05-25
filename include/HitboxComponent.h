@@ -22,8 +22,8 @@ public:
 	 * @note -> Sets fill color to transparent
 	 */
 	HitboxComponent(sf::Sprite &sprite,
-									float offset_x, float offset_y,
-									float width, float height);
+					float offset_x, float offset_y,
+					float width, float height);
 
 	virtual ~HitboxComponent();
 
@@ -54,7 +54,7 @@ public:
 
 	/**
 	 * @brief Returns the hitbox's center position.
-	 * 
+	 *
 	 * @return const sf::Vector2f
 	 */
 	const sf::Vector2f getCenteredPosition() const;

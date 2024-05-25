@@ -13,21 +13,21 @@
 void GameState::initBufferedRender()
 {
 	this->renderBuffer.create(
-			this->data->gfxSettings->resolution.width,
-			this->data->gfxSettings->resolution.height);
+		this->data->gfxSettings->resolution.width,
+		this->data->gfxSettings->resolution.height);
 
 	this->renderSprite.setTexture(this->renderBuffer.getTexture());
 
 	this->renderSprite.setTextureRect(
-			sf::IntRect(0, 0, this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+		sf::IntRect(0, 0, this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
 }
 
 void GameState::initView()
 {
 	this->playerCamera.setSize(
-			sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+		sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
 	this->playerCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
-															 this->data->gfxSettings->resolution.height / 2.f);
+								 this->data->gfxSettings->resolution.height / 2.f);
 }
 
 void GameState::initKeybinds()
@@ -226,6 +226,6 @@ void GameState::updatePauseMenuButtons()
 void GameState::updatePlayerCamera(const float &dt)
 {
 	this->playerCamera.setCenter(
-			std::floor(this->player->getCenteredPosition().x),
-			std::floor(this->player->getCenteredPosition().y));
+		std::floor(this->player->getCenteredPosition().x),
+		std::floor(this->player->getCenteredPosition().y));
 }

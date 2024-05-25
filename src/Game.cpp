@@ -25,12 +25,12 @@ void Game::initWindow()
 	if (this->gfxSettings.fullscreen) // If in fullscreen mode
 	{
 		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
-																				sf::Style::Fullscreen, this->gfxSettings.contextSettings);
+											sf::Style::Fullscreen, this->gfxSettings.contextSettings);
 	}
 	else // If in window mode
 	{
 		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
-																				sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
+											sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
 	}
 
 	this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);

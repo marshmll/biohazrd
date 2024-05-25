@@ -42,8 +42,8 @@ void Entity::setTexture(sf::Texture &texture)
 }
 
 void Entity::createHitboxComponent(
-		const float offset_x, const float offset_y,
-		const float width, const float height)
+	const float offset_x, const float offset_y,
+	const float width, const float height)
 {
 	this->hitboxComponent = new HitboxComponent(this->sprite, offset_x, offset_y, width, height);
 }
@@ -98,20 +98,20 @@ const sf::Vector2f Entity::getCenteredPosition()
 		return this->hitboxComponent->getCenteredPosition();
 
 	return sf::Vector2f(
-			this->sprite.getPosition().x + this->sprite.getGlobalBounds().width / 2,
-			this->sprite.getPosition().y + this->sprite.getGlobalBounds().height / 2);
+		this->sprite.getPosition().x + this->sprite.getGlobalBounds().width / 2,
+		this->sprite.getPosition().y + this->sprite.getGlobalBounds().height / 2);
 }
 
 const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 {
 	if (this->hitboxComponent)
 		return sf::Vector2i(
-				(int)this->hitboxComponent->getCenteredPosition().x / gridSizeI,
-				(int)this->hitboxComponent->getCenteredPosition().y / gridSizeI);
+			(int)this->hitboxComponent->getCenteredPosition().x / gridSizeI,
+			(int)this->hitboxComponent->getCenteredPosition().y / gridSizeI);
 
 	return sf::Vector2i(
-			(int)this->sprite.getPosition().x / gridSizeI,
-			(int)this->sprite.getPosition().y / gridSizeI);
+		(int)this->sprite.getPosition().x / gridSizeI,
+		(int)this->sprite.getPosition().y / gridSizeI);
 }
 
 const sf::Vector2f Entity::getSize()
@@ -119,14 +119,14 @@ const sf::Vector2f Entity::getSize()
 	if (this->hitboxComponent)
 	{
 		return sf::Vector2f(
-				this->hitboxComponent->getSize().x,
-				this->hitboxComponent->getSize().y);
+			this->hitboxComponent->getSize().x,
+			this->hitboxComponent->getSize().y);
 	}
 	else
 	{
 		return sf::Vector2f(
-				this->sprite.getGlobalBounds().width,
-				this->sprite.getGlobalBounds().height);
+			this->sprite.getGlobalBounds().width,
+			this->sprite.getGlobalBounds().height);
 	}
 }
 

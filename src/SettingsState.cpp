@@ -22,7 +22,7 @@ void SettingsState::initBackground()
 	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
 	{
 		throw std::runtime_error(
-				"ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
+			"ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
 	}
 
 	this->background.setTexture(&this->backgroundTexture);
@@ -55,14 +55,14 @@ void SettingsState::initKeybinds()
 void SettingsState::initGUI()
 {
 	this->buttons["BACK"] = new gui::Button(this->background.getGlobalBounds().width - 200.f, 660.f, 150.f, 50.f,
-																					&this->font, "Back", 30,
-																					sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-																					sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+											&this->font, "Back", 30,
+											sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+											sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["APPLY"] = new gui::Button(this->background.getGlobalBounds().width - 400.f, 660.f, 150.f, 50.f,
-																					 &this->font, "Apply", 30,
-																					 sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-																					 sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+											 &this->font, "Apply", 30,
+											 sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+											 sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	std::vector<std::string> modes_str;
 
@@ -70,7 +70,7 @@ void SettingsState::initGUI()
 		modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
 
 	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(320, 320, 200, 50, this->font, modes_str.data(),
-																														 modes_str.size());
+															   modes_str.size());
 }
 
 void SettingsState::initText()

@@ -91,8 +91,8 @@ void Player::updateAnimation(const float &dt)
 		break;
 	case MOVING:
 		this->animationComponent->play("WALK_" + this->movementComponent->getDirection(), dt,
-																	 std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y) * .8f,
-																	 this->movementComponent->getMaxVelocity());
+									   std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y) * .8f,
+									   this->movementComponent->getMaxVelocity());
 		break;
 	}
 }
