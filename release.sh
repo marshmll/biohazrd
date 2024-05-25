@@ -15,7 +15,11 @@ cp -r src/Fonts/ Release/bin/
 cp -r src/Maps/ Release/bin/
 
 clear
-cd Release/ && make && cd bin/ && ./BIOHAZRD && cd ../../
+cd Release/ &&
+make &&
+cd bin/ &&
+./BIOHAZRD &&
+cd ../../
 
 rm -rf src/Assets/ src/Config/ src/Fonts/ src/Maps/
 cp -r Release/bin/Assets src/

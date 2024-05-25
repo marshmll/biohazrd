@@ -77,6 +77,11 @@ void GameState::initPlayers()
 	this->player = new Player(0.f, 0.f, this->textures["PLAYER_SPRITESHEET"]);
 }
 
+void GameState::initPlayerGUI()
+{
+	this->playerGUI = new PlayerGUI(this->player);
+}
+
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
@@ -94,6 +99,7 @@ GameState::GameState(StateData *data) : State(data)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initPlayerGUI();
 	this->initTileMap();
 }
 
@@ -101,10 +107,12 @@ GameState::~GameState()
 {
 	delete this->pauseMenu;
 	delete this->player;
+	delete this->playerGUI;
 	delete this->tileMap;
 }
 
 /* FUNCTIONS */
+
 void GameState::update(const float &dt)
 {
 
@@ -116,14 +124,15 @@ void GameState::update(const float &dt)
 	if (!this->isPaused)
 	{
 		/* DEBUG! */
-		std::stringstream ss;
-		ss << "dt: " << dt << "ms";
-		debugText.setString(ss.str());
+		// std::stringstream ss;
+		// ss << "dt: " << dt << "ms";
+		// debugText.setString(ss.str());
 		/*********/
 
 		this->updatePlayerCamera(dt);
 		this->updatePlayerInput(dt);
 		this->player->update(dt);
+		this->playerGUI->update(dt);
 		this->updateTileMap(dt);
 	}
 
@@ -142,7 +151,7 @@ void GameState::render(sf::RenderTarget &target)
 	target.draw(this->renderSprite);
 
 	/* DEBUG! */
-	target.draw(this->debugText);
+	// target.draw(this->debugText);
 	/**********/
 }
 
@@ -156,9 +165,12 @@ void GameState::renderToBuffer()
 	this->player->render(this->renderBuffer);
 	this->tileMap->deferredRender(this->renderBuffer);
 
+	this->renderBuffer.setView(this->renderBuffer.getDefaultView());
+	this->playerGUI->render(this->renderBuffer);
+
 	if (this->isPaused)
 	{
-		this->renderBuffer.setView(this->renderBuffer.getDefaultView());
+		// this->renderBuffer.setView(this->renderBuffer.getDefaultView());
 		this->pauseMenu->render(this->renderBuffer);
 	}
 
@@ -192,6 +204,11 @@ void GameState::updatePlayerInput(const float &dt)
 	{
 		this->player->move(1.f, 0.f, dt);
 	}
+}
+
+void GameState::updatePlayerGUI(const float &dt)
+{
+	this->playerGUI->update(dt);
 }
 
 void GameState::updateTileMap(const float &dt)

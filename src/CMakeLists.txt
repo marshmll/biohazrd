@@ -12,6 +12,7 @@ target_sources(BIOHAZRD PRIVATE
   MainMenuState.cpp
   MovementComponent.cpp
   Player.cpp
+  PlayerGUI.cpp
   SettingsState.cpp
   State.cpp
   Tile.cpp

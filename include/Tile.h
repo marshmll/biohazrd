@@ -74,7 +74,12 @@ public:
 
 	/**
 	 * @brief Returns the tile properties as a std::string.
-	 *
+	 * @note Returns:
+	 * @note -> Texture rectangle left
+	 * @note -> Texture rectangle top
+	 * @note -> Collision
+	 * @note -> Type
+	 * 
 	 * @return void
 	 */
 	const std::string getPropertiesAsString() const;

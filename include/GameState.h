@@ -3,10 +3,7 @@
 
 #include "State.h"
 #include "TileMap.h"
-
-class PauseMenu;
-class Player;
-class TileMap;
+#include "PlayerGUI.h"
 
 class GameState : public State
 {
@@ -20,6 +17,7 @@ private:
 	gui::PauseMenu *pauseMenu;
 
 	Player *player;
+	PlayerGUI *playerGUI;
 
 	sf::Font font;
 
@@ -61,7 +59,7 @@ private:
 
 	/**
 	 * @brief Initializes text.
-	 * 
+	 *
 	 * @return void
 	 */
 	void initText();
@@ -86,6 +84,13 @@ private:
 	 * @return void
 	 */
 	void initPlayers();
+
+	/**
+	 * @brief Initializes the player gui.
+	 *
+	 * @return void
+	 */
+	void initPlayerGUI();
 
 	/**
 	 * @brief Initializes a tilemap for the gamestate.
@@ -162,6 +167,13 @@ public:
 	 * @return void
 	 */
 	void updatePlayerInput(const float &dt);
+
+	/**
+	 * @brief Updates the player's GUI.
+	 *
+	 * @return void
+	 */
+	void updatePlayerGUI(const float &dt);
 
 	/**
 	 * @brief Updates tilemap and collisions.

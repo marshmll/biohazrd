@@ -74,8 +74,16 @@ public:
 	 *
 	 * @return void
 	 */
-
 	void updateJump(const float &dt);
+
+	/* ACCESSORS */
+
+	/**
+	 * @brief Returns a pointer to the player's atribute component.
+	 * 
+	 * @return AttributeComponent*
+	 */
+	AttributeComponent* getAttributeComponent();
 };
 
 #endif /* PLAYER_H_ */

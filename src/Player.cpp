@@ -63,10 +63,10 @@ Player::~Player()
 
 void Player::update(const float &dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-		this->attributeComponent->earnExp(20);
+	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	// 	this->attributeComponent->earnExp(20);
 
-	this->attributeComponent->debugPrint();
+	// this->attributeComponent->debugPrint();
 
 	this->movementComponent->update(dt);
 	this->hitboxComponent->update();
@@ -111,4 +111,9 @@ void Player::updateJump(const float &dt)
 		if (this->animationComponent->isAnimationDone(this->currentJumpAnimationName))
 			this->isJumping = false;
 	}
+}
+
+AttributeComponent *Player::getAttributeComponent()
+{
+	return this->attributeComponent;
 }
