@@ -86,6 +86,28 @@ public:
 
 	virtual ~State();
 
+	/* AUXILIARY FUNCTIONS */
+
+	/**
+	 * @brief Converts a screen width percentage to a pixel
+	 * coordinate dynamically.
+	 *
+	 * @param percent Percentage relative to screen width
+	 *
+	 * @return const float;
+	 */
+	const float p2pX(const float percent);
+
+	/**
+	 * @brief Converts a screen height percentage to a pixel
+	 * coordinate dynamically.
+	 *
+	 * @param percent Percentage relative to screen height
+	 *
+	 * @return const float;
+	 */
+	const float p2pY(const float percent);
+
 	/* PURE VIRTUAL FUNCTIONS */
 
 	virtual void update(const float &dt) = 0;

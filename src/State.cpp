@@ -39,6 +39,28 @@ State::~State()
 {
 }
 
+/* AUXILIARY FUNCTIONS */
+
+const float State::p2pX(const float percent)
+{
+	if (percent >= 100.f)
+		return static_cast<float>(this->data->gfxSettings->resolution.width);
+	else if (percent <= 0.f)
+		return 0.f;
+
+	return std::floor(static_cast<float>(this->data->gfxSettings->resolution.width) * (percent / 100.f));
+}
+
+const float State::p2pY(const float percent)
+{
+	if (percent >= 100.f)
+		return static_cast<float>(this->data->gfxSettings->resolution.height);
+	else if (percent <= 0.f)
+		return 0.f;
+
+	return std::floor(static_cast<float>(this->data->gfxSettings->resolution.height) * (percent / 100.f));
+}
+
 /* DEFINED VIRTUAL FUNCTIONS */
 
 void State::updateMousePositions(sf::View *view)
