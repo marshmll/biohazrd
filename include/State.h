@@ -89,20 +89,20 @@ public:
 	/* AUXILIARY FUNCTIONS */
 
 	/**
-	 * @brief Converts a screen width percentage to a pixel
+	 * @brief Converts a window width percentage to a pixel
 	 * coordinate dynamically.
 	 *
-	 * @param percent Percentage relative to screen width
+	 * @param percent Percentage relative to window width
 	 *
 	 * @return const float;
 	 */
 	const float p2pX(const float percent);
 
 	/**
-	 * @brief Converts a screen height percentage to a pixel
+	 * @brief Converts a window height percentage to a pixel
 	 * coordinate dynamically.
 	 *
-	 * @param percent Percentage relative to screen height
+	 * @param percent Percentage relative to window height
 	 *
 	 * @return const float;
 	 */
