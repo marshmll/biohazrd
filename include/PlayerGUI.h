@@ -13,8 +13,9 @@ private:
   sf::Font font;
 
   gui::ProgressBar *hpBar;
-
   gui::ProgressBar *expBar;
+
+  gui::SolidBar *levelBar;
 
   /* INITIALIZERS */
 
@@ -24,6 +25,13 @@ private:
    * @return void
    */
   void initFont();
+
+  /**
+   * @brief
+   *
+   * @return void
+   */
+  void initLevelBar();
 
   /**
    * @brief Initializes the hp bar.
@@ -67,6 +75,13 @@ public:
    * @return void
    */
   void render(sf::RenderTarget &target);
+
+  /**
+   * @brief Updates the player's level bar.
+   *
+   * @return void
+   */
+  void updateLevelBar();
 
   /**
    * @brief Updates the Player's Hp bar.

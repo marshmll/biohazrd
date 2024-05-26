@@ -425,6 +425,48 @@ namespace gui
 
 	/**********************************************************************************************************
 	 *
+	 * SOLID BAR
+	 *
+	 *********************************************************************************************************/
+
+	class SolidBar
+	{
+	private:
+		/* VARIABLES */
+		sf::RectangleShape bar;
+		sf::Vector2f barMaxSize;
+		sf::Font *font;
+		sf::Text barText;
+
+	public:
+		/* CONSTRUCTOR AND DESTRUCTOR */
+
+		SolidBar(const float x, const float y,
+				 const float width, const float height,
+				 const sf::Color bg_color, const sf::Color text_color,
+				 const sf::Font &font, const unsigned char_size,
+				 const std::string string = "");
+
+		virtual ~SolidBar();
+
+		/* FUNCTIONS */
+
+		void update();
+
+		void render(sf::RenderTarget &target);
+
+		/* MODIFIERS */
+
+		/**
+		 * @brief Sets the bar's text string and update text position.
+		 *
+		 * @return void
+		 */
+		void setString(const std::string string);
+	};
+
+	/**********************************************************************************************************
+	 *
 	 * PROGRESS BAR
 	 *
 	 *********************************************************************************************************/
@@ -444,9 +486,9 @@ namespace gui
 
 		ProgressBar(const float x, const float y,
 					const float width, const float height,
-					const sf::Color bgColor, const sf::Color fillColor,
-					const sf::Font &font, const unsigned charSize,
-					const std::string string);
+					const sf::Color bg_color, const sf::Color fill_color,
+					const sf::Font &font, const sf::Color text_color,
+					const unsigned char_size, const std::string string = "");
 
 		virtual ~ProgressBar();
 

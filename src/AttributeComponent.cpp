@@ -3,11 +3,11 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-AttributeComponent::AttributeComponent(unsigned level)
+AttributeComponent::AttributeComponent(const int level)
 {
   this->level = level;
   this->exp = 0;
-  this->expNext = static_cast<unsigned>((50 / 14) * (std::pow(this->level, 2) / 4 * std::pow(this->level, 2) + (this->level * 17) - 12));
+  this->expNext = static_cast<int>((50 / 14) * (std::pow(this->level, 2) / 6 * std::pow(this->level, 2) + (this->level * 17) - 12));
   this->attributePoints = 1;
 
   this->vitality = 1;
@@ -52,7 +52,7 @@ void AttributeComponent::updateLevel()
   {
     ++this->level;
     this->exp -= this->expNext;
-    this->expNext = static_cast<unsigned>((50 / 14) * (std::pow(this->level, 2) / 4 * std::pow(this->level, 2) + (this->level * 17) - 12));
+    this->expNext = static_cast<int>((50 / 14) * (std::pow(this->level, 2) / 6 * std::pow(this->level, 2) + (this->level * 17) - 12));
     ++this->attributePoints;
   }
 }
@@ -69,7 +69,7 @@ void AttributeComponent::debugPrint()
 
 /* MODIFIERS */
 
-void AttributeComponent::earnHp(const unsigned hpAmount)
+void AttributeComponent::earnHp(const int hpAmount)
 {
   this->hp += hpAmount;
 
@@ -77,7 +77,7 @@ void AttributeComponent::earnHp(const unsigned hpAmount)
     this->hp = this->hpMax;
 }
 
-void AttributeComponent::loseHp(const unsigned hpAmount)
+void AttributeComponent::loseHp(const int hpAmount)
 {
   this->hp -= hpAmount;
 
@@ -85,14 +85,14 @@ void AttributeComponent::loseHp(const unsigned hpAmount)
     this->hp = 0;
 }
 
-void AttributeComponent::earnExp(const unsigned expAmount)
+void AttributeComponent::earnExp(const int expAmount)
 {
   this->exp += expAmount;
 
   this->updateLevel();
 }
 
-void AttributeComponent::loseExp(const unsigned expAmount)
+void AttributeComponent::loseExp(const int expAmount)
 {
   this->exp -= expAmount;
 

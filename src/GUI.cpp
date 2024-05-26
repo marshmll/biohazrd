@@ -521,6 +521,66 @@ const sf::IntRect &gui::TextureSelector::getTextureRect() const
 
 /**********************************************************************************************************
  *
+ * SOLID BAR
+ *
+ *********************************************************************************************************/
+
+/* CONSTRUCTOR AND DESTRUCTOR */
+
+gui::SolidBar::SolidBar(const float x, const float y,
+						const float width, const float height,
+						const sf::Color bg_color, const sf::Color text_color,
+						const sf::Font &font, const unsigned char_size,
+						const std::string string)
+{
+	this->barMaxSize.x = width;
+	this->barMaxSize.y = height;
+
+	this->bar.setSize(this->barMaxSize);
+	this->bar.setPosition(x, y);
+	this->bar.setFillColor(bg_color);
+
+	this->barText.setFont(font);
+	this->barText.setCharacterSize(char_size);
+	this->barText.setFillColor(text_color);
+	this->barText.setString(string);
+
+	// Center bar text in the bar.
+	this->barText.setPosition(
+		this->bar.getPosition().x + this->bar.getSize().x / 2.f - std::roundf(this->barText.getGlobalBounds().width / 2.f),
+		this->bar.getPosition().y + this->bar.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
+}
+
+gui::SolidBar::~SolidBar()
+{
+}
+
+/* FUNCTIONS */
+
+void gui::SolidBar::update()
+{
+}
+
+void gui::SolidBar::render(sf::RenderTarget &target)
+{
+	target.draw(this->bar);
+	target.draw(this->barText);
+}
+
+/* MODIFIERS */
+
+void gui::SolidBar::setString(const std::string string)
+{
+	this->barText.setString(string);
+
+	// Center bar text in the bar.
+	this->barText.setPosition(
+		this->bar.getPosition().x + this->bar.getSize().x / 2.f - std::roundf(this->barText.getGlobalBounds().width / 2.f),
+		this->bar.getPosition().y + this->bar.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
+}
+
+/**********************************************************************************************************
+ *
  * PROGRESS BAR
  *
  *********************************************************************************************************/
@@ -529,33 +589,30 @@ const sf::IntRect &gui::TextureSelector::getTextureRect() const
 
 gui::ProgressBar::ProgressBar(const float x, const float y,
 							  const float width, const float height,
-							  const sf::Color bgColor, const sf::Color fillColor,
-							  const sf::Font &font, const unsigned charSize,
-							  const std::string string)
+							  const sf::Color bg_color, const sf::Color fill_color,
+							  const sf::Font &font, const sf::Color text_color,
+							  const unsigned char_size, const std::string string)
 {
 	this->barMaxSize.x = width;
 	this->barMaxSize.y = height;
 
 	this->barBg.setSize(this->barMaxSize);
 	this->barBg.setPosition(x, y);
-	this->barBg.setFillColor(bgColor);
+	this->barBg.setFillColor(bg_color);
 
 	this->barFill.setSize(this->barMaxSize);
 	this->barFill.setPosition(x, y);
-	this->barFill.setFillColor(fillColor);
+	this->barFill.setFillColor(fill_color);
 
 	this->barText.setFont(font);
-	this->barText.setCharacterSize(charSize);
+	this->barText.setCharacterSize(char_size);
+	this->barText.setFillColor(text_color);
 	this->barText.setString(string);
 
 	// Center bar text in the bar.
 	this->barText.setPosition(
-		this->barBg.getPosition().x +
-			this->barBg.getSize().x / 2 -
-			this->barText.getGlobalBounds().width / 2,
-		this->barBg.getPosition().y +
-			this->barBg.getSize().y / 2 -
-			this->barText.getGlobalBounds().height / 2);
+		this->barBg.getPosition().x + this->barBg.getSize().x / 10.f,
+		this->barBg.getPosition().y + this->barBg.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
 }
 
 gui::ProgressBar::~ProgressBar()
@@ -583,12 +640,8 @@ void gui::ProgressBar::setString(const std::string string)
 
 	// Center bar text in the bar.
 	this->barText.setPosition(
-		this->barBg.getPosition().x +
-			this->barBg.getSize().x / 2 -
-			this->barText.getGlobalBounds().width / 2,
-		this->barBg.getPosition().y +
-			this->barBg.getSize().y / 2 -
-			this->barText.getGlobalBounds().height / 2);
+		this->barBg.getPosition().x + this->barBg.getSize().x / 10.f,
+		this->barBg.getPosition().y + this->barBg.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
 }
 
 void gui::ProgressBar::setProgressPercent(float percent)

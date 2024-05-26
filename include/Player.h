@@ -93,7 +93,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void earnHp(const unsigned hpAmount);
+	void earnHp(const int hpAmount);
 
 	/**
 	 * @brief Decreases hp by a given amount.
@@ -101,7 +101,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void loseHp(const unsigned hpAmount);
+	void loseHp(const int hpAmount);
 
 	/**
 	 * @brief Increases exp by a given amount.
@@ -109,7 +109,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void earnExp(const unsigned expAmount);
+	void earnExp(const int expAmount);
 
 	/**
 	 * @brief Decreases exp by a given amount.
@@ -117,7 +117,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void loseExp(const unsigned expAmount);
+	void loseExp(const int expAmount);
 };
 
 #endif /* PLAYER_H_ */

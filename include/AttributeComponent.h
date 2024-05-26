@@ -6,10 +6,10 @@ class AttributeComponent
 public:
   /* LEVELLING */
 
-  unsigned level;
-  unsigned exp;
-  unsigned expNext;
-  unsigned attributePoints;
+  int level;
+  int exp;
+  int expNext;
+  int attributePoints;
 
   /* ATTRIBUTES */
 
@@ -37,7 +37,7 @@ public:
   /**
    * @brief Creates an attribute component given a level.
    */
-  AttributeComponent(unsigned level);
+  AttributeComponent(const int level);
 
   /**
    * @brief Attribute component class destructor
@@ -79,7 +79,7 @@ public:
    *
    * @return void
    */
-  void earnHp(const unsigned hpAmount);
+  void earnHp(const int hpAmount);
 
   /**
    * @brief Decreases hp by a given amount.
@@ -87,7 +87,7 @@ public:
    *
    * @return void
    */
-  void loseHp(const unsigned hpAmount);
+  void loseHp(const int hpAmount);
 
   /**
    * @brief Increases exp by a given amount.
@@ -95,7 +95,7 @@ public:
    *
    * @return void
    */
-  void earnExp(const unsigned expAmount);
+  void earnExp(const int expAmount);
 
   /**
    * @brief Decreases exp by a given amount.
@@ -103,7 +103,7 @@ public:
    *
    * @return void
    */
-  void loseExp(const unsigned expAmount);
+  void loseExp(const int expAmount);
 
   /**
    * @brief Print data for debuggin purposes.
