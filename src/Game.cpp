@@ -11,7 +11,7 @@ void Game::initVariables()
 
 	this->dt = 0.f;
 
-	this->gridSize = 80.f; // Tile size.
+	this->gridSize = 64.f; // Tile size.
 }
 
 void Game::initGraphicsSettings()

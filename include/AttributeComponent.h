@@ -59,7 +59,7 @@ public:
    *
    * @return void
    */
-  void updateStats(const bool reset);
+  void updateStats(const bool reset = false);
 
   /**
    * @brief Updates the level while the exp is bigger than or
@@ -69,19 +69,47 @@ public:
    */
   void updateLevel();
 
+  void debugPrint();
+
+  /* MODIFIERS */
+
   /**
-   * @brief Increases a the exp by a given amount.
+   * @brief Increases hp by a given amount.
+   * @note -> Limits hp to hpMax
    *
    * @return void
    */
-  void earnExp(const unsigned exp);
+  void earnHp(const unsigned hpAmount);
+
+  /**
+   * @brief Decreases hp by a given amount.
+   * @note -> Limits hp to 0
+   *
+   * @return void
+   */
+  void loseHp(const unsigned hpAmount);
+
+  /**
+   * @brief Increases exp by a given amount.
+   * @note -> Updates the level.
+   *
+   * @return void
+   */
+  void earnExp(const unsigned expAmount);
+
+  /**
+   * @brief Decreases exp by a given amount.
+   * @note -> Limits exp to 0
+   *
+   * @return void
+   */
+  void loseExp(const unsigned expAmount);
 
   /**
    * @brief Print data for debuggin purposes.
    *
    * @return void
    */
-  void debugPrint();
 };
 
 #endif

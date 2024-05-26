@@ -422,6 +422,56 @@ namespace gui
 		 */
 		const sf::IntRect &getTextureRect() const;
 	};
+
+	/**********************************************************************************************************
+	 *
+	 * PROGRESS BAR
+	 *
+	 *********************************************************************************************************/
+
+	class ProgressBar
+	{
+	private:
+		/* VARIABLES */
+		sf::RectangleShape barBg;
+		sf::RectangleShape barFill;
+		sf::Vector2f barMaxSize;
+		sf::Font *font;
+		sf::Text barText;
+
+	public:
+		/* CONSTRUCTOR AND DESTRUCTOR */
+
+		ProgressBar(const float x, const float y,
+					const float width, const float height,
+					const sf::Color bgColor, const sf::Color fillColor,
+					const sf::Font &font, const unsigned charSize,
+					const std::string string);
+
+		virtual ~ProgressBar();
+
+		/* FUNCTIONS */
+
+		void update();
+
+		void render(sf::RenderTarget &target);
+
+		/* MODIFIERS */
+
+		/**
+		 * @brief Sets the bar's text string and update text position.
+		 *
+		 * @return void
+		 */
+		void setString(const std::string string);
+
+		/**
+		 * @brief Sets the bar's fill width based on a percentage.
+		 *
+		 * @return void
+		 */
+		void setProgressPercent(float percent);
+	};
 }
 
 #endif /* GUI_H_ */

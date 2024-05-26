@@ -392,7 +392,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	this->gridSize = gridSize;
 	this->active = false;
 	this->hidden = true;
-	float offset = 100.f;
+	float offset = gridSize;
 
 	// Outer box
 	this->bounds.setSize(sf::Vector2f(width, height));
@@ -517,4 +517,88 @@ const bool gui::TextureSelector::hasCompletedMousetimeCicle()
 const sf::IntRect &gui::TextureSelector::getTextureRect() const
 {
 	return this->textureRect;
+}
+
+/**********************************************************************************************************
+ *
+ * PROGRESS BAR
+ *
+ *********************************************************************************************************/
+
+/* CONSTRUCTOR AND DESTRUCTOR */
+
+gui::ProgressBar::ProgressBar(const float x, const float y,
+							  const float width, const float height,
+							  const sf::Color bgColor, const sf::Color fillColor,
+							  const sf::Font &font, const unsigned charSize,
+							  const std::string string)
+{
+	this->barMaxSize.x = width;
+	this->barMaxSize.y = height;
+
+	this->barBg.setSize(this->barMaxSize);
+	this->barBg.setPosition(x, y);
+	this->barBg.setFillColor(bgColor);
+
+	this->barFill.setSize(this->barMaxSize);
+	this->barFill.setPosition(x, y);
+	this->barFill.setFillColor(fillColor);
+
+	this->barText.setFont(font);
+	this->barText.setCharacterSize(charSize);
+	this->barText.setString(string);
+
+	// Center bar text in the bar.
+	this->barText.setPosition(
+		this->barBg.getPosition().x +
+			this->barBg.getSize().x / 2 -
+			this->barText.getGlobalBounds().width / 2,
+		this->barBg.getPosition().y +
+			this->barBg.getSize().y / 2 -
+			this->barText.getGlobalBounds().height / 2);
+}
+
+gui::ProgressBar::~ProgressBar()
+{
+}
+
+/* FUNCTIONS */
+
+void gui::ProgressBar::update()
+{
+}
+
+void gui::ProgressBar::render(sf::RenderTarget &target)
+{
+	target.draw(this->barBg);
+	target.draw(this->barFill);
+	target.draw(this->barText);
+}
+
+/* MODIFIERS */
+
+void gui::ProgressBar::setString(const std::string string)
+{
+	this->barText.setString(string);
+
+	// Center bar text in the bar.
+	this->barText.setPosition(
+		this->barBg.getPosition().x +
+			this->barBg.getSize().x / 2 -
+			this->barText.getGlobalBounds().width / 2,
+		this->barBg.getPosition().y +
+			this->barBg.getSize().y / 2 -
+			this->barText.getGlobalBounds().height / 2);
+}
+
+void gui::ProgressBar::setProgressPercent(float percent)
+{
+	if (percent < 0.f)
+		percent = 0.f;
+	else if (percent > 1.f)
+		percent = 1.f;
+
+	this->barFill.setSize(sf::Vector2f(
+		static_cast<float>(std::floor(this->barMaxSize.x * percent)),
+		this->barMaxSize.y));
 }

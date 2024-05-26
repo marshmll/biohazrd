@@ -57,12 +57,6 @@ void AttributeComponent::updateLevel()
   }
 }
 
-void AttributeComponent::earnExp(const unsigned exp)
-{
-  this->exp += exp;
-  this->updateLevel();
-}
-
 void AttributeComponent::debugPrint()
 {
   system("clear");
@@ -71,4 +65,37 @@ void AttributeComponent::debugPrint()
             << "Exp: " << this->exp << "\n"
             << "Exp next: " << this->expNext << "\n"
             << "Attribute points: " << this->attributePoints << "\n";
+}
+
+/* MODIFIERS */
+
+void AttributeComponent::earnHp(const unsigned hpAmount)
+{
+  this->hp += hpAmount;
+
+  if (this->hp >= this->hpMax)
+    this->hp = this->hpMax;
+}
+
+void AttributeComponent::loseHp(const unsigned hpAmount)
+{
+  this->hp -= hpAmount;
+
+  if (this->hp <= 0)
+    this->hp = 0;
+}
+
+void AttributeComponent::earnExp(const unsigned expAmount)
+{
+  this->exp += expAmount;
+
+  this->updateLevel();
+}
+
+void AttributeComponent::loseExp(const unsigned expAmount)
+{
+  this->exp -= expAmount;
+
+  if (this->exp <= 0)
+    this->exp = 0;
 }

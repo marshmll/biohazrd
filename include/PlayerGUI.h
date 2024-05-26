@@ -2,6 +2,7 @@
 #define PLAYERGUI_H_
 
 #include "Player.h"
+#include "GUI.h"
 
 class PlayerGUI
 {
@@ -11,12 +12,32 @@ private:
 
   sf::Font font;
 
-  sf::RectangleShape hpBarBg;
-  sf::RectangleShape hpBarFill;
+  gui::ProgressBar *hpBar;
+
+  gui::ProgressBar *expBar;
 
   /* INITIALIZERS */
+
+  /**
+   * @brief Initializes the font.
+   *
+   * @return void
+   */
   void initFont();
+
+  /**
+   * @brief Initializes the hp bar.
+   *
+   * @return void
+   */
   void initHpBar();
+
+  /**
+   * @brief Initializes the exp bar.
+   *
+   * @return void
+   */
+  void initExpBar();
 
 public:
   /* CONSTRUCTOR AND DESTRUCTOR */
@@ -55,11 +76,11 @@ public:
   void updateHpBar();
 
   /**
-   * @brief Renders the Player's Hp bar.
+   * @brief Updates the Player's exp bar.
    *
    * @return void
    */
-  void renderHpBar(sf::RenderTarget &target);
+  void updateExpBar();
 };
 
 #endif

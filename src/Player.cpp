@@ -63,8 +63,8 @@ Player::~Player()
 
 void Player::update(const float &dt)
 {
-	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-	// 	this->attributeComponent->earnExp(20);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		this->attributeComponent->earnExp(20);
 
 	// this->attributeComponent->debugPrint();
 
@@ -72,6 +72,8 @@ void Player::update(const float &dt)
 	this->hitboxComponent->update();
 	this->updateJump(dt);
 	this->updateAnimation(dt);
+
+	this->attributeComponent->updateStats();
 }
 
 void Player::render(sf::RenderTarget &target)
@@ -116,4 +118,26 @@ void Player::updateJump(const float &dt)
 AttributeComponent *Player::getAttributeComponent()
 {
 	return this->attributeComponent;
+}
+
+/* MODIFIERS */
+
+void Player::earnHp(const unsigned hpAmount)
+{
+	this->attributeComponent->earnHp(hpAmount);
+}
+
+void Player::loseHp(const unsigned hpAmount)
+{
+	this->attributeComponent->loseHp(hpAmount);
+}
+
+void Player::earnExp(const unsigned expAmount)
+{
+	this->attributeComponent->earnExp(expAmount);
+}
+
+void Player::loseExp(const unsigned expAmount)
+{
+	this->attributeComponent->loseExp(expAmount);
 }
