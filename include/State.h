@@ -38,6 +38,7 @@ protected:
 
 	GraphicsSettings *gfxSettings;
 	sf::RenderWindow *window;
+	sf::VideoMode &vm;
 
 	std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
 	std::map<std::string, sf::Keyboard::Key> keybinds;

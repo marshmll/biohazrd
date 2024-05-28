@@ -11,7 +11,7 @@
 /* INITIALIZERS */
 void EditorState::initVariables()
 {
-	this->textureRect = sf::IntRect(0, 0, (int)this->data->gridSize, (int)this->data->gridSize);
+	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->data->gridSize), static_cast<int>(this->data->gridSize));
 
 	this->collision = false;
 	this->type = TileTypes::DEFAULT;
@@ -24,7 +24,8 @@ void EditorState::initVariables()
 void EditorState::initEditorCamera()
 {
 	this->editorCamera.setSize(
-		sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+		sf::Vector2f(this->data->gfxSettings->resolution.width,
+					 this->data->gfxSettings->resolution.height));
 
 	this->editorCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
 								 this->data->gfxSettings->resolution.height / 2.f);
@@ -62,12 +63,10 @@ void EditorState::initText()
 
 void EditorState::initPauseMenu()
 {
-	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
-
-	this->pauseMenu = new gui::PauseMenu(*this->window, this->font, gui::calc_char_size(vm, 60));
-	this->pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.7f), gui::calc_char_size(vm, 70), "Exit");
-	this->pauseMenu->addButton("SAVE", gui::p2pY(vm, 62.5f), gui::calc_char_size(vm, 70), "Save");
-	this->pauseMenu->addButton("LOAD", gui::p2pY(vm, 50.f), gui::calc_char_size(vm, 70), "Load");
+	this->pauseMenu = new gui::PauseMenu(this->vm, this->font);
+	this->pauseMenu->addButton("QUIT", gui::p2pY(this->vm, 83.7f), "Exit");
+	this->pauseMenu->addButton("SAVE", gui::p2pY(this->vm, 62.5f), "Save");
+	this->pauseMenu->addButton("LOAD", gui::p2pY(this->vm, 50.f), "Load");
 }
 
 void EditorState::initButtons()
@@ -82,27 +81,26 @@ void EditorState::initTileMap()
 void EditorState::initGUI()
 {
 	// Sidebar
-	this->sidebar.setSize(sf::Vector2f(60.f, this->data->gfxSettings->resolution.height));
+	this->sidebar.setSize(sf::Vector2f(this->data->gridSize, this->vm.height));
 	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
 	this->sidebar.setOutlineThickness(1.f);
 	this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
 
 	// World selector
 	this->selectorRect.setSize(sf::Vector2f(this->data->gridSize, this->data->gridSize));
-
 	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 200));
-
 	this->selectorRect.setOutlineColor(sf::Color::Red);
 	this->selectorRect.setOutlineThickness(1.f);
-
 	this->selectorRect.setTexture(this->tileMap->getTileTextureSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
 	// Texture selector
 	this->textureSelector = new gui::TextureSelector(
-		this->sidebar.getSize().x / 2 - 25.f, 20.f, 480.f, 480.f,
-		this->data->gridSize,
-		this->tileMap->getTileTextureSheet());
+		this->sidebar.getSize().x / 2 - 50.f / 2, gui::p2pY(this->vm, 5.f),
+		50.f, 50.f,
+		this->sidebar.getSize().x + gui::p2pY(this->vm, 2.5f), gui::p2pY(this->vm, 2.5f),
+		384.f, 384.f,
+		this->data->gridSize, this->tileMap->getTileTextureSheet());
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */

@@ -277,6 +277,7 @@ namespace gui
 	{
 	private:
 		/* VARIABLES */
+		sf::VideoMode &vm;
 		sf::Font &font;
 		sf::Text pmenuText;
 
@@ -303,7 +304,7 @@ namespace gui
 		 * @note -> Sets the text
 		 * @note -> Initialize buttons.
 		 */
-		PauseMenu(sf::RenderWindow &window, sf::Font &font, const unsigned char_size);
+		PauseMenu(sf::VideoMode &vm, sf::Font &font);
 
 		/**
 		 * @brief Free allocated memory from the pause menu
@@ -340,7 +341,7 @@ namespace gui
 		 *
 		 * @return void
 		 */
-		void addButton(std::string key, float y, const unsigned char_size, const std::string text);
+		void addButton(const std::string key, const float y, const std::string text);
 
 		/**
 		 * @brief Returns if a button is pressed based on its key.
@@ -393,7 +394,11 @@ namespace gui
 		/**
 		 * @brief Creates a texture selector.
 		 */
-		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture *texture_sheet);
+		TextureSelector(const float btn_x, const float btn_y,
+						const float btn_width, const float btn_height,
+						const float txtr_slctr_x, const float txtr_slctr_y,
+						const float txtr_slctr_width, const float txtr_slctr_height,
+						const float gridSize, const sf::Texture *texture_sheet);
 
 		/**
 		 * @brief Frees all buttons memory.

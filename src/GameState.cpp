@@ -57,8 +57,8 @@ void GameState::initFonts()
 void GameState::initText()
 {
 	this->debugText.setFont(this->font);
-	this->debugText.setCharacterSize(14);
-	this->debugText.setPosition(10.f, 10.f);
+	this->debugText.setCharacterSize(gui::calc_char_size(this->vm, 150));
+	this->debugText.setPosition(this->vm.width - gui::p2pX(this->vm, 10.f), gui::p2pY(this->vm, 5.f));
 }
 
 void GameState::initTextures()
@@ -69,10 +69,8 @@ void GameState::initTextures()
 
 void GameState::initPauseMenu()
 {
-	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
-
-	this->pauseMenu = new gui::PauseMenu(*this->window, this->font, gui::calc_char_size(vm, 60));
-	this->pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.7f), gui::calc_char_size(vm, 70), "Exit");
+	this->pauseMenu = new gui::PauseMenu(this->vm, this->font);
+	this->pauseMenu->addButton("QUIT", gui::p2pY(this->vm, 83.7f), "Exit");
 }
 
 void GameState::initPlayers()
@@ -127,9 +125,9 @@ void GameState::update(const float &dt)
 	if (!this->isPaused)
 	{
 		/* DEBUG! */
-		// std::stringstream ss;
-		// ss << "dt: " << dt << "ms";
-		// debugText.setString(ss.str());
+		std::stringstream ss;
+		ss << "dt: " << dt << "ms";
+		debugText.setString(ss.str());
 		/*********/
 
 		this->updatePlayerCamera(dt);
@@ -154,7 +152,7 @@ void GameState::render(sf::RenderTarget &target)
 	target.draw(this->renderSprite);
 
 	/* DEBUG! */
-	// target.draw(this->debugText);
+	target.draw(this->debugText);
 	/**********/
 }
 
