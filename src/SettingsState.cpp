@@ -54,30 +54,40 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGUI()
 {
-	this->buttons["BACK"] = new gui::Button(this->background.getGlobalBounds().width - 200.f, 660.f, 150.f, 50.f,
-											&this->font, "Back", 30,
-											sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-											sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
 
-	this->buttons["APPLY"] = new gui::Button(this->background.getGlobalBounds().width - 400.f, 660.f, 150.f, 50.f,
-											 &this->font, "Apply", 30,
-											 sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-											 sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+	this->buttons["BACK"] = new gui::Button(
+		gui::p2pX(vm, 84.3f), gui::p2pY(vm, 82.5f),
+		gui::p2pX(vm, 11.7f), gui::p2pY(vm, 6.2f),
+		&this->font, "Back", gui::calc_char_size(vm, 65),
+		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["APPLY"] = new gui::Button(
+		gui::p2pX(vm, 68.7f), gui::p2pY(vm, 82.5f),
+		gui::p2pX(vm, 11.7f), gui::p2pY(vm, 6.2f),
+		&this->font, "Apply", gui::calc_char_size(vm, 65),
+		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	std::vector<std::string> modes_str;
 
 	for (auto &mode : this->videoModes)
 		modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
 
-	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(320, 320, 200, 50, this->font, modes_str.data(),
-															   modes_str.size());
+	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(
+		gui::p2pX(vm, 25.f), gui::p2pY(vm, 40.f),
+		gui::p2pX(vm, 15.6f), gui::p2pY(vm, 6.2f),
+		this->font, modes_str.data(), modes_str.size());
 }
 
 void SettingsState::initText()
 {
+	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
+
 	this->optionsText.setFont(this->font);
-	this->optionsText.setPosition(sf::Vector2f(80.f, 320.f));
-	this->optionsText.setCharacterSize(30);
+	this->optionsText.setPosition(gui::p2pX(vm, 6.2f), gui::p2pY(vm, 40.f));
+	this->optionsText.setCharacterSize(gui::calc_char_size(vm, 65));
 	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
 	this->optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n");
 }

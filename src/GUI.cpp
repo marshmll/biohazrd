@@ -13,6 +13,37 @@
 
 /**********************************************************************************************************
  *
+ * AUXILIARY FUNCTIONS
+ *
+ *********************************************************************************************************/
+
+const float gui::p2pX(const sf::VideoMode &vm, const float percent)
+{
+	if (percent >= 100.f)
+		return static_cast<float>(vm.width);
+	else if (percent <= 0.f)
+		return 0.f;
+
+	return std::floor(static_cast<float>(vm.width) * (percent / 100.f));
+}
+
+const float gui::p2pY(const sf::VideoMode &vm, const float percent)
+{
+	if (percent >= 100.f)
+		return static_cast<float>(vm.height);
+	else if (percent <= 0.f)
+		return 0.f;
+
+	return std::floor(static_cast<float>(vm.height) * (percent / 100.f));
+}
+
+const unsigned gui::calc_char_size(const sf::VideoMode &vm, unsigned constant)
+{
+	return (vm.width + vm.height) / constant;
+}
+
+/**********************************************************************************************************
+ *
  * BUTTON
  *
  *********************************************************************************************************/
@@ -294,12 +325,11 @@ const bool gui::DropDownList::hasCompletedKeytimeCicle()
 
 void gui::PauseMenu::initButtons()
 {
-	this->addButton("QUIT", 670.f, "Exit");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-gui::PauseMenu::PauseMenu(sf::RenderWindow &window, sf::Font &font) : font(font)
+gui::PauseMenu::PauseMenu(sf::RenderWindow &window, sf::Font &font, const unsigned char_size) : font(font)
 {
 	// Background
 	this->background.setSize(sf::Vector2f(window.getSize()));
@@ -316,12 +346,12 @@ gui::PauseMenu::PauseMenu(sf::RenderWindow &window, sf::Font &font) : font(font)
 	// Pause menu text
 	this->pmenuText.setFont(this->font);
 	this->pmenuText.setFillColor(sf::Color(255, 255, 255, 200));
-	this->pmenuText.setCharacterSize(40);
+	this->pmenuText.setCharacterSize(char_size);
 	this->pmenuText.setString("PAUSED");
 
 	this->pmenuText.setPosition(sf::Vector2f(
 		this->container.getPosition().x + this->container.getSize().x / 2 - this->pmenuText.getGlobalBounds().width / 2,
-		this->container.getPosition().y + 60.f - this->pmenuText.getGlobalBounds().height / 2));
+		this->container.getPosition().y + char_size - this->pmenuText.getGlobalBounds().height / 2));
 
 	this->initButtons();
 }
@@ -354,16 +384,18 @@ void gui::PauseMenu::render(sf::RenderTarget &target)
 	}
 }
 
-void gui::PauseMenu::addButton(std::string key, float y, const std::string text)
+void gui::PauseMenu::addButton(std::string key, float y, const unsigned char_size, const std::string text)
 {
-	float width = 250.f;
+	float width = this->container.getSize().x / 1.5f;
+	float height = this->container.getSize().y / 15.f;
 
 	float x = this->container.getPosition().x + this->container.getSize().x / 2 - width / 2;
 
-	this->buttons[key] = new Button(x, y, width, 50.f,
-									&this->font, text, 30,
-									sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-									sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+	this->buttons[key] = new Button(
+		x, y, width, height,
+		&this->font, text, char_size,
+		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
 const bool gui::PauseMenu::isButtonPressed(const std::string key)

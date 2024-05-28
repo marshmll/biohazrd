@@ -10,6 +10,47 @@ enum button_states
 
 namespace gui
 {
+	/**********************************************************************************************************
+	 *
+	 * AUXILIARY FUNCTIONS
+	 *
+	 *********************************************************************************************************/
+
+	/**
+	 * @brief Converts a window width percent to a pixel
+	 * coordinate dynamically.
+	 *
+	 * @param vm sf::VideoMode&
+	 * @param percent percent relative to window width
+	 *
+	 * @return const float;
+	 */
+	const float p2pX(const sf::VideoMode &vm, const float percent);
+
+	/**
+	 * @brief Converts a window height percent to a pixel
+	 * coordinate dynamically.
+	 *
+	 * @param vm sf::VideoMode&
+	 * @param percent percent relative to window height
+	 *
+	 * @return const float;
+	 */
+	const float p2pY(const sf::VideoMode &vm, const float percent);
+
+	/**
+	 * @brief Calculates the adequate character size based
+	 * on the window resolution
+	 *
+	 * @param vm sf::VideoMode&
+	 * @param constant A constant parameter for calculating the
+	 * char size (default = 60)
+	 *
+	 * @note The bigger the constant, the smaller the char size.
+	 *
+	 * @return const unsigned
+	 */
+	const unsigned calc_char_size(const sf::VideoMode &vm, unsigned constant = 60);
 
 	/**********************************************************************************************************
 	 *
@@ -262,7 +303,7 @@ namespace gui
 		 * @note -> Sets the text
 		 * @note -> Initialize buttons.
 		 */
-		PauseMenu(sf::RenderWindow &window, sf::Font &font);
+		PauseMenu(sf::RenderWindow &window, sf::Font &font, const unsigned char_size);
 
 		/**
 		 * @brief Free allocated memory from the pause menu
@@ -299,7 +340,7 @@ namespace gui
 		 *
 		 * @return void
 		 */
-		void addButton(std::string key, float y, const std::string text);
+		void addButton(std::string key, float y, const unsigned char_size, const std::string text);
 
 		/**
 		 * @brief Returns if a button is pressed based on its key.

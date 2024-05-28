@@ -24,10 +24,10 @@ void EditorState::initVariables()
 void EditorState::initEditorCamera()
 {
 	this->editorCamera.setSize(
-			sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+		sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
 
 	this->editorCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
-															 this->data->gfxSettings->resolution.height / 2.f);
+								 this->data->gfxSettings->resolution.height / 2.f);
 }
 
 void EditorState::initKeybinds()
@@ -62,9 +62,12 @@ void EditorState::initText()
 
 void EditorState::initPauseMenu()
 {
-	this->pauseMenu = new gui::PauseMenu(*this->window, this->font);
-	this->pauseMenu->addButton("SAVE", 500.f, "Save");
-	this->pauseMenu->addButton("LOAD", 400.f, "Load");
+	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
+
+	this->pauseMenu = new gui::PauseMenu(*this->window, this->font, gui::calc_char_size(vm, 60));
+	this->pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.7f), gui::calc_char_size(vm, 70), "Exit");
+	this->pauseMenu->addButton("SAVE", gui::p2pY(vm, 62.5f), gui::calc_char_size(vm, 70), "Save");
+	this->pauseMenu->addButton("LOAD", gui::p2pY(vm, 50.f), gui::calc_char_size(vm, 70), "Load");
 }
 
 void EditorState::initButtons()
@@ -97,9 +100,9 @@ void EditorState::initGUI()
 
 	// Texture selector
 	this->textureSelector = new gui::TextureSelector(
-			this->sidebar.getSize().x / 2 - 25.f, 20.f, 480.f, 480.f,
-			this->data->gridSize,
-			this->tileMap->getTileTextureSheet());
+		this->sidebar.getSize().x / 2 - 25.f, 20.f, 480.f, 480.f,
+		this->data->gridSize,
+		this->tileMap->getTileTextureSheet());
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -208,7 +211,7 @@ void EditorState::updateEditorInput(const float &dt)
 			if (!this->textureSelector->isActive())
 			{
 				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,
-															 this->collision, this->type);
+									   this->collision, this->type);
 			}
 			else
 			{
@@ -268,8 +271,8 @@ void EditorState::updateGUI(const float &dt)
 	if (!this->textureSelector->isActive())
 	{
 		this->selectorRect.setPosition(
-				this->mousePosGrid.x * this->data->gridSize,
-				this->mousePosGrid.y * this->data->gridSize);
+			this->mousePosGrid.x * this->data->gridSize,
+			this->mousePosGrid.y * this->data->gridSize);
 
 		this->selectorRect.setTextureRect(this->textureRect);
 	}
@@ -278,11 +281,11 @@ void EditorState::updateGUI(const float &dt)
 
 	std::stringstream ss;
 	ss << this->mousePosWindow.x << " " << this->mousePosWindow.y << "\n"
-		 << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
-		 << this->textureRect.left << " " << this->textureRect.top << "\n"
-		 << "collision: " << (this->collision ? "true" : "false") << "\n"
-		 << "type: " << this->type << "\n"
-		 << "stacked tiles: " << this->tileMap->getAmountOfStackedTiles(mousePosGrid.x, mousePosGrid.y, this->layer);
+	   << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
+	   << this->textureRect.left << " " << this->textureRect.top << "\n"
+	   << "collision: " << (this->collision ? "true" : "false") << "\n"
+	   << "type: " << this->type << "\n"
+	   << "stacked tiles: " << this->tileMap->getAmountOfStackedTiles(mousePosGrid.x, mousePosGrid.y, this->layer);
 	this->cursorText.setString(ss.str());
 }
 
