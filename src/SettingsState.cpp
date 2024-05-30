@@ -15,19 +15,6 @@ void SettingsState::initVariables()
 	this->videoModes = sf::VideoMode::getFullscreenModes();
 }
 
-void SettingsState::initBackground()
-{
-	this->background.setSize(sf::Vector2f(this->window->getSize()));
-
-	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
-	{
-		throw std::runtime_error(
-			"ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
-	}
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
 void SettingsState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
@@ -56,6 +43,18 @@ void SettingsState::initGUI()
 {
 	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
 
+	// Background
+	this->background.setSize(sf::Vector2f(vm.width, vm.height));
+
+	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
+	{
+		throw std::runtime_error(
+			"ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
+
+	// Buttons
 	this->buttons["BACK"] = new gui::Button(
 		gui::p2pX(vm, 84.3f), gui::p2pY(vm, 82.5f),
 		gui::p2pX(vm, 11.7f), gui::p2pY(vm, 6.2f),
@@ -70,6 +69,7 @@ void SettingsState::initGUI()
 		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
+	// Drop down lists
 	std::vector<std::string> modes_str;
 
 	for (auto &mode : this->videoModes)
@@ -78,18 +78,27 @@ void SettingsState::initGUI()
 	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(
 		gui::p2pX(vm, 25.f), gui::p2pY(vm, 40.f),
 		gui::p2pX(vm, 15.6f), gui::p2pY(vm, 6.2f),
-		this->font, modes_str.data(), modes_str.size());
-}
-
-void SettingsState::initText()
-{
-	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
+		this->font, modes_str.data(), modes_str.size(),
+		gui::calc_char_size(vm, 120));
 
 	this->optionsText.setFont(this->font);
 	this->optionsText.setPosition(gui::p2pX(vm, 6.2f), gui::p2pY(vm, 40.f));
-	this->optionsText.setCharacterSize(gui::calc_char_size(vm, 65));
+	this->optionsText.setCharacterSize(gui::calc_char_size(vm, 70));
 	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
 	this->optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n");
+}
+
+void SettingsState::resetGUI()
+{
+	for (auto &it : this->buttons)
+		delete it.second;
+	this->buttons.clear();
+
+	for (auto &it : this->dropDownLists)
+		delete it.second;
+	this->dropDownLists.clear();
+
+	this->initGUI();
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -98,15 +107,11 @@ SettingsState::SettingsState(StateData *data) : State(data)
 {
 	this->initVariables();
 
-	this->initBackground();
-
 	this->initFonts();
 
 	this->initKeybinds();
 
 	this->initGUI();
-
-	this->initText();
 }
 
 SettingsState::~SettingsState()
@@ -173,6 +178,8 @@ void SettingsState::updateGUI(const float &dt)
 		this->gfxSettings->resolution = this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
 		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
+
+		this->resetGUI();
 	}
 }
 

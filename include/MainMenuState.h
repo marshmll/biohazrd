@@ -29,15 +29,6 @@ private:
 	void initVariables();
 
 	/**
-	 * @brief Sets background size to screen size, loads
-	 * background texture and sets background texture
-	 * to the background area.
-	 *
-	 * @return void
-	 */
-	void initBackground();
-
-	/**
 	 * @brief Loads font from file.
 	 *
 	 * @return void
@@ -54,11 +45,20 @@ private:
 	void initKeybinds();
 
 	/**
-	 * @brief Initializes all the buttons of the MainMenuState.
+	 * @brief Initializes all the GUI of the MainMenuState.
 	 *
 	 * @return void
 	 */
-	void initButtons();
+	void initGUI();
+
+	/**
+	 * @brief Resets the entire GUI.
+	 * @note -> Deletes all the elements and erase pointers
+	 * to gui elements
+	 * @note -> Resets background.
+	 * @note -> Re-initializes GUI.
+	 */
+	void resetGUI();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
@@ -107,20 +107,22 @@ public:
 	void updateInput(const float &dt);
 
 	/**
-	 * @brief Iterates over all buttons and update their states based on
+	 * @brief Updates the GUI.
+	 * @note Iterates over all buttons and update their states based on
 	 * mouse click and position.
 	 * @note Executes a functionality for each button.
 	 *
 	 * @return void
 	 */
-	void updateButtons();
+	void updateGUI();
 
 	/**
-	 * @return void
+	 * @brief Renders the GUI into a target.
+	 * @note Iterates over all buttons and renders them into a target.
 	 *
-	 * @brief Iterates over all buttons and renders them into a target.
+	 * @return void
 	 */
-	void renderButtons(sf::RenderTarget &target);
+	void renderGUI(sf::RenderTarget &target);
 };
 
 #endif /* MAINMENUSTATE_H_ */

@@ -14,19 +14,6 @@ void MainMenuState::initVariables()
 {
 }
 
-void MainMenuState::initBackground()
-{
-	this->background.setSize(sf::Vector2f(this->window->getSize()));
-
-	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
-	{
-		throw std::runtime_error(
-			"ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
-	}
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
 void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
@@ -57,10 +44,22 @@ void MainMenuState::initKeybinds()
 	ifs.close();
 }
 
-void MainMenuState::initButtons()
+void MainMenuState::initGUI()
 {
 	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
 
+	// Background
+	this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+
+	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
+	{
+		throw std::runtime_error(
+			"ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
+
+	// Buttons
 	this->buttons["GAME_STATE"] = new gui::Button(
 		gui::p2pX(vm, 8.6f), gui::p2pY(vm, 40.f),
 		gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
@@ -90,18 +89,24 @@ void MainMenuState::initButtons()
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
+void MainMenuState::resetGUI()
+{
+	for (auto &it : this->buttons)
+		delete it.second;
+
+	this->buttons.clear();
+
+	this->initGUI();
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR */
 MainMenuState::MainMenuState(StateData *data) : State(data)
 {
 	this->initVariables();
-
-	this->initBackground();
-
 	this->initFonts();
-
 	this->initKeybinds();
-
-	this->initButtons();
+	this->initGUI();
+	this->resetGUI();
 }
 
 MainMenuState::~MainMenuState()
@@ -116,14 +121,14 @@ void MainMenuState::update(const float &dt)
 {
 	this->updateMousetime(dt);
 	this->updateInput(dt);
-	this->updateButtons();
+	this->updateGUI();
 }
 
 void MainMenuState::render(sf::RenderTarget &target)
 {
 
 	target.draw(this->background);
-	this->renderButtons(target);
+	this->renderGUI(target);
 
 	//////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
 	//	sf::Text mouseText;
@@ -144,7 +149,7 @@ void MainMenuState::updateInput(const float &dt)
 	this->updateMousePositions();
 }
 
-void MainMenuState::updateButtons()
+void MainMenuState::updateGUI()
 {
 	// Updates all buttons based on mouse position view.
 	for (auto &it : this->buttons)
@@ -170,7 +175,7 @@ void MainMenuState::updateButtons()
 	}
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget &target)
+void MainMenuState::renderGUI(sf::RenderTarget &target)
 {
 	for (auto &it : this->buttons)
 		it.second->render(target);

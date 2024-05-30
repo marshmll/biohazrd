@@ -212,8 +212,11 @@ namespace gui
 		/**
 		 * @brief Initializes the drop down list.
 		 */
-		DropDownList(float x, float y, float width, float height,
-					 sf::Font &font, std::string elements_name[], unsigned numOfElements, short unsigned default_index = 0);
+		DropDownList(const float x, const float y,
+					 const float width, const float height,
+					 sf::Font &font, const std::string elements_name[],
+					 const unsigned numOfElements, const unsigned char_size,
+					 const short unsigned default_index = 0);
 
 		/**
 		 * @brief Frees all memory allocated to the drop down list.

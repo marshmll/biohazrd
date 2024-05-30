@@ -221,24 +221,26 @@ void gui::Button::setText(std::string text)
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 gui::DropDownList::DropDownList(
-	float x, float y, float width, float height,
-	sf::Font &font, std::string elements_name[],
-	unsigned numOfElements, short unsigned default_index) : font(font), showList(false),
-															keytime(0.f), keytimeMax(20.f)
+	const float x, const float y,
+	const float width, const float height,
+	sf::Font &font, const std::string elements_name[],
+	const unsigned numOfElements, const unsigned char_size,
+	const short unsigned default_index) : font(font), showList(false),
+										  keytime(0.f), keytimeMax(20.f)
 {
 	this->selectedElement = new gui::Button(
 		x, y, width, height,
-		&this->font, elements_name[default_index], 16,
+		&this->font, elements_name[default_index], char_size,
 		sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
 		sf::Color(120, 120, 120, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
 		sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50));
 
-	for (size_t i = 0; i < numOfElements; i++)
+	for (unsigned i = 0; i < numOfElements; i++)
 	{
 		this->list.push_back(
 			new gui::Button(
 				x, y + ((i + 1) * height), width, height,
-				&this->font, elements_name[i], 16,
+				&this->font, elements_name[i], char_size,
 				sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
 				sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
 				sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),

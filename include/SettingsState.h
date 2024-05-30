@@ -29,15 +29,6 @@ private:
 	void initVariables();
 
 	/**
-	 * @brief Sets background size to screen size, loads
-	 * background texture and sets background texture
-	 * to the background area.
-	 *
-	 * @return void
-	 */
-	void initBackground();
-
-	/**
 	 * @brief Loads font from file.
 	 *
 	 * @return void
@@ -61,11 +52,13 @@ private:
 	void initGUI();
 
 	/**
-	 * @brief Initializes the texts for the settings state.
-	 *
-	 * @return void
+	 * @brief Resets the entire GUI.
+	 * @note -> Deletes all the elements and erase pointers
+	 * to gui elements
+	 * @note -> Resets background.
+	 * @note -> Re-initializes GUI.
 	 */
-	void initText();
+	void resetGUI();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
