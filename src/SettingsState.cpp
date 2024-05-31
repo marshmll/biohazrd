@@ -103,8 +103,10 @@ void SettingsState::resetGUI()
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-SettingsState::SettingsState(StateData *data) : State(data)
+SettingsState::SettingsState(StateData *data, MainMenuState *main_menu_state) : State(data)
 {
+	this->mainMenuState = main_menu_state;
+
 	this->initVariables();
 
 	this->initFonts();
@@ -180,6 +182,8 @@ void SettingsState::updateGUI(const float &dt)
 		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
 
 		this->resetGUI();
+
+		this->mainMenuState->resetGUI();
 	}
 }
 

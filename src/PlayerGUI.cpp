@@ -13,30 +13,37 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initLevelBar()
 {
-	this->levelBar = new gui::SolidBar(20.f, 20.f, 30.f, 30.f,
-									   sf::Color(20, 20, 250, 200), sf::Color::White,
-									   this->font, 14);
+	this->levelBar = new gui::SolidBar(
+		gui::p2pX(this->vm, 1.5f), gui::p2pY(this->vm, 2.5f),
+		gui::p2pX(this->vm, 2.3f), gui::p2pY(this->vm, 3.7f),
+		sf::Color(20, 20, 250, 200), sf::Color::White,
+		this->font, gui::calc_char_size(this->vm, 140));
 }
 
 void PlayerGUI::initHpBar()
 {
-	this->hpBar = new gui::ProgressBar(20.f, 60.f, 250.f, 30.f,
-									   sf::Color(50, 50, 50, 200), sf::Color(250, 20, 20, 200),
-									   this->font, sf::Color::White, 14);
+	this->hpBar = new gui::ProgressBar(
+		gui::p2pX(this->vm, 1.5f), gui::p2pY(this->vm, 7.5f),
+		gui::p2pX(this->vm, 19.5f), gui::p2pY(this->vm, 3.7f),
+		sf::Color(50, 50, 50, 200), sf::Color(250, 20, 20, 200),
+		this->font, sf::Color::White, gui::calc_char_size(this->vm, 140));
 }
 
 void PlayerGUI::initExpBar()
 {
-	this->expBar = new gui::ProgressBar(20.f, 100.f, 200.f, 20.f,
-										sf::Color(50, 50, 50, 200), sf::Color(20, 250, 20, 200),
-										this->font, sf::Color::White, 14);
+	this->expBar = new gui::ProgressBar(
+		gui::p2pX(this->vm, 1.5f), gui::p2pY(this->vm, 12.5f),
+		gui::p2pX(this->vm, 15.6f), gui::p2pY(this->vm, 2.5f),
+		sf::Color(50, 50, 50, 200), sf::Color(20, 250, 20, 200),
+		this->font, sf::Color::White, gui::calc_char_size(this->vm, 140));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-PlayerGUI::PlayerGUI(Player *player)
+PlayerGUI::PlayerGUI(Player *player, sf::VideoMode &vm) : vm(vm)
 {
 	this->player = player;
+
 	this->initFont();
 	this->initLevelBar();
 	this->initHpBar();

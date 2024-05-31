@@ -51,15 +51,6 @@ private:
 	 */
 	void initGUI();
 
-	/**
-	 * @brief Resets the entire GUI.
-	 * @note -> Deletes all the elements and erase pointers
-	 * to gui elements
-	 * @note -> Resets background.
-	 * @note -> Re-initializes GUI.
-	 */
-	void resetGUI();
-
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
 
@@ -123,6 +114,17 @@ public:
 	 * @return void
 	 */
 	void renderGUI(sf::RenderTarget &target);
+
+	/* MODIFIERS */
+
+	/**
+	 * @brief Resets the entire GUI.
+	 * @note -> Deletes all the elements and erase pointers
+	 * to gui elements
+	 * @note -> Resets background.
+	 * @note -> Re-initializes GUI.
+	 */
+	void resetGUI();
 };
 
 #endif /* MAINMENUSTATE_H_ */

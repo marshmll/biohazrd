@@ -11,6 +11,8 @@
 
 #include "MainMenuState.h"
 
+class MainMenuState;
+
 class Game
 {
 private:

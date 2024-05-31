@@ -6,6 +6,11 @@
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
 
+class HitboxComponent;
+class MovementComponent;
+class AnimationComponent;
+class AttributeComponent;
+
 class Entity
 {
 private:

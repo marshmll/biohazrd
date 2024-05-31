@@ -89,16 +89,6 @@ void MainMenuState::initGUI()
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
-void MainMenuState::resetGUI()
-{
-	for (auto &it : this->buttons)
-		delete it.second;
-
-	this->buttons.clear();
-
-	this->initGUI();
-}
-
 /* CONSTRUCTOR AND DESTRUCTOR */
 MainMenuState::MainMenuState(StateData *data) : State(data)
 {
@@ -167,7 +157,7 @@ void MainMenuState::updateGUI()
 
 		// Settings
 		else if (this->buttons["SETTINGS_STATE"]->isPressed())
-			this->states->push(new SettingsState(this->data));
+			this->states->push(new SettingsState(this->data, this));
 
 		// Exit
 		else if (this->buttons["EXIT_STATE"]->isPressed())
@@ -179,4 +169,16 @@ void MainMenuState::renderGUI(sf::RenderTarget &target)
 {
 	for (auto &it : this->buttons)
 		it.second->render(target);
+}
+
+/* MODIFIERS */
+
+void MainMenuState::resetGUI()
+{
+	for (auto &it : this->buttons)
+		delete it.second;
+
+	this->buttons.clear();
+
+	this->initGUI();
 }

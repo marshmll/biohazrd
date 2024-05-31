@@ -573,11 +573,12 @@ const sf::IntRect &gui::TextureSelector::getTextureRect() const
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-gui::SolidBar::SolidBar(const float x, const float y,
-						const float width, const float height,
-						const sf::Color bg_color, const sf::Color text_color,
-						const sf::Font &font, const unsigned char_size,
-						const std::string string)
+gui::SolidBar::SolidBar(
+	const float x, const float y,
+	const float width, const float height,
+	const sf::Color bg_color, const sf::Color text_color,
+	const sf::Font &font, const unsigned char_size,
+	const std::string string)
 {
 	this->barMaxSize.x = width;
 	this->barMaxSize.y = height;

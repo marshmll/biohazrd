@@ -4,11 +4,16 @@
 #include "Player.h"
 #include "GUI.h"
 
+class Player;
+class GUI;
+
 class PlayerGUI
 {
 private:
   /* VARIABLES */
   Player *player;
+
+  sf::VideoMode &vm;
 
   sf::Font font;
 
@@ -53,7 +58,7 @@ public:
   /**
    * @brief Creates a instance for the player GUI.
    */
-  PlayerGUI(Player *player);
+  PlayerGUI(Player *player, sf::VideoMode &vm);
 
   /**
    * @brief Player GUI class destructor.

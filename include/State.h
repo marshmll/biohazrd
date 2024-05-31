@@ -7,6 +7,7 @@
 
 class State;
 class Player;
+class GUI;
 class GraphicsSettings;
 
 /**

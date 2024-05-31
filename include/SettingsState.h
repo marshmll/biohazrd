@@ -2,11 +2,18 @@
 #define SETTINGSSTATE_H_
 
 #include "State.h"
+#include "MainMenuState.h"
+
+class State;
+class MainMenuState;
 
 class SettingsState : public State
 {
 private:
 	/* VARIABLES */
+
+	MainMenuState *mainMenuState;
+
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::Font font;
@@ -72,7 +79,7 @@ public:
 	 * @note -> Initializes GUI
 	 * @note -> Initializes text
 	 */
-	SettingsState(StateData *data);
+	SettingsState(StateData *data, MainMenuState *main_menu_state);
 
 	/**
 	 * @brief Frees all the memory allocated for the buttons.
