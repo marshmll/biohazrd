@@ -188,6 +188,13 @@ public:
 	 */
 
 	void renderGUI(sf::RenderTarget &target);
+
+	/**
+	 * @brief Returns the tile type's name.
+	 * 
+	 * @return const std::string
+	 */
+	const std::string getTypeName() const;
 };
 
 #endif /* EDITORSTATE_H_ */

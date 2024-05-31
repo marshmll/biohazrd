@@ -227,6 +227,6 @@ void GameState::updatePauseMenuButtons()
 void GameState::updatePlayerCamera(const float &dt)
 {
 	this->playerCamera.setCenter(
-		std::floor(this->player->getCenteredPosition().x),
-		std::floor(this->player->getCenteredPosition().y));
+		std::floor(this->player->getCenteredPosition().x + ((this->mousePosWindow.x) - static_cast<float>(this->vm.width / 2)) / 20.f),
+		std::floor(this->player->getCenteredPosition().y + ((this->mousePosWindow.y) - static_cast<float>(this->vm.height / 2)) / 20.f));
 }

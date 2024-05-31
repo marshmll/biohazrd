@@ -21,7 +21,7 @@ public:
 	/* CONSTRUCTOR AND DESTRUCTOR */
 	Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
 		 const sf::Texture &texture, const sf::IntRect textureRect,
-		 bool collision = false, short type = TileTypes::HARMFUL);
+		 bool collision = false, short type = TileTypes::DEFAULT);
 
 	virtual ~Tile();
 

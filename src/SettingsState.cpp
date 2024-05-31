@@ -72,15 +72,28 @@ void SettingsState::initGUI()
 	// Drop down lists
 	std::vector<std::string> modes_str;
 
+	// Get the video modes strings
 	for (auto &mode : this->videoModes)
 		modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
 
+	// Find the index of the current videomode in videomodes
+	unsigned i;
+	auto it = std::find(this->videoModes.begin(), this->videoModes.end(), this->vm);
+	if (it != this->videoModes.end())
+	{
+		auto index = std::distance(this->videoModes.begin(), it);
+
+		i = static_cast<unsigned>(index);
+	}
+
+	// Create the drop down list.
 	this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(
 		gui::p2pX(vm, 25.f), gui::p2pY(vm, 40.f),
 		gui::p2pX(vm, 15.6f), gui::p2pY(vm, 6.2f),
 		this->font, modes_str.data(), modes_str.size(),
-		gui::calc_char_size(vm, 120));
+		gui::calc_char_size(vm, 120), i);
 
+	// Create options text
 	this->optionsText.setFont(this->font);
 	this->optionsText.setPosition(gui::p2pX(vm, 6.2f), gui::p2pY(vm, 40.f));
 	this->optionsText.setCharacterSize(gui::calc_char_size(vm, 70));
@@ -179,7 +192,7 @@ void SettingsState::updateGUI(const float &dt)
 	{
 		this->gfxSettings->resolution = this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
-		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
+		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Fullscreen);
 
 		this->resetGUI();
 

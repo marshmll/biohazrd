@@ -137,7 +137,7 @@ public:
 	 *
 	 * @brief Renders each layer of each tile position (x, y).
 	 */
-	void render(sf::RenderTarget &target, const sf::Vector2i &gridPosition);
+	void render(sf::RenderTarget &target, const sf::Vector2i &gridPosition, const bool show_collision_box = false);
 
 	/**
 	 * @return void

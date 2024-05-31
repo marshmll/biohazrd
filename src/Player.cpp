@@ -66,7 +66,6 @@ void Player::update(const float &dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		this->attributeComponent->earnExp(20);
 
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 		this->attributeComponent->loseExp(20);
 
@@ -80,11 +79,12 @@ void Player::update(const float &dt)
 	this->attributeComponent->updateStats();
 }
 
-void Player::render(sf::RenderTarget &target)
+void Player::render(sf::RenderTarget &target, const bool show_hitbox)
 {
 	target.draw(this->sprite);
 
-	this->hitboxComponent->render(target);
+	if (show_hitbox)
+		this->hitboxComponent->render(target);
 }
 
 void Player::updateAnimation(const float &dt)

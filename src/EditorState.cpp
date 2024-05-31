@@ -24,11 +24,11 @@ void EditorState::initVariables()
 void EditorState::initEditorCamera()
 {
 	this->editorCamera.setSize(
-		sf::Vector2f(this->data->gfxSettings->resolution.width,
-					 this->data->gfxSettings->resolution.height));
+		sf::Vector2f(this->vm.width,
+					 this->vm.height));
 
-	this->editorCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
-								 this->data->gfxSettings->resolution.height / 2.f);
+	this->editorCamera.setCenter(this->vm.width / 2.f,
+								 this->vm.height / 2.f);
 }
 
 void EditorState::initKeybinds()
@@ -99,7 +99,7 @@ void EditorState::initGUI()
 		this->sidebar.getSize().x / 2 - 50.f / 2, gui::p2pY(this->vm, 5.f),
 		50.f, 50.f,
 		this->sidebar.getSize().x + gui::p2pY(this->vm, 2.5f), gui::p2pY(this->vm, 2.5f),
-		384.f, 384.f,
+		640.f, 640.f,
 		this->data->gridSize, this->tileMap->getTileTextureSheet());
 }
 
@@ -162,7 +162,7 @@ void EditorState::render(sf::RenderTarget &target)
 {
 	// Render tilemap in the editor camera
 	target.setView(this->editorCamera);
-	this->tileMap->render(target, this->mousePosGrid);
+	this->tileMap->render(target, this->mousePosGrid, true);
 	this->tileMap->deferredRender(target);
 
 	// Render buttons in the window view
@@ -282,7 +282,7 @@ void EditorState::updateGUI(const float &dt)
 	   << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
 	   << this->textureRect.left << " " << this->textureRect.top << "\n"
 	   << "collision: " << (this->collision ? "true" : "false") << "\n"
-	   << "type: " << this->type << "\n"
+	   << "type selected: " << this->getTypeName() << "\n"
 	   << "stacked tiles: " << this->tileMap->getAmountOfStackedTiles(mousePosGrid.x, mousePosGrid.y, this->layer);
 	this->cursorText.setString(ss.str());
 }
@@ -310,4 +310,23 @@ void EditorState::renderGUI(sf::RenderTarget &target)
 	// Render cursor text in the editor camera
 	target.setView(this->editorCamera);
 	target.draw(this->cursorText);
+}
+
+const std::string EditorState::getTypeName() const
+{
+	switch (this->type)
+	{
+	case TileTypes::DEFAULT:
+		return "DEFAULT";
+		break;
+	case TileTypes::DOODAD:
+		return "DOODAD";
+		break;
+	case TileTypes::HARMFUL:
+		return "HARMFUL";
+		break;
+	default:
+		return "UNKNOWN";
+		break;
+	}
 }

@@ -106,7 +106,7 @@ public:
 	 *
 	 * @return void
 	 */
-	virtual void render(sf::RenderTarget &target) = 0;
+	virtual void render(sf::RenderTarget &target, const bool show_hitbox = false) = 0;
 
 	/**
 	 * @brief Moves the movement component (whick moves the sprite) into some

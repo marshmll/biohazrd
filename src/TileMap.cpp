@@ -225,7 +225,7 @@ void TileMap::update(const float &dt)
 {
 }
 
-void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition)
+void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition, const bool show_collision_box)
 {
 	this->updateMapActiveArea(gridPosition, 10, 10);
 
@@ -244,10 +244,13 @@ void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition)
 					this->tileMap[x][y][this->layer][k]->render(target);
 				}
 
-				if (this->tileMap[x][y][this->layer][k]->isCollideable())
+				if (show_collision_box)
 				{
-					this->collisionBox.setPosition(this->tileMap[x][y][this->layer][k]->getPosition());
-					target.draw(this->collisionBox);
+					if (this->tileMap[x][y][this->layer][k]->isCollideable())
+					{
+						this->collisionBox.setPosition(this->tileMap[x][y][this->layer][k]->getPosition());
+						target.draw(this->collisionBox);
+					}
 				}
 			}
 		}
