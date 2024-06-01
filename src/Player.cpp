@@ -54,10 +54,13 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 
 	this->initAnimations();
 
-	if (!this->weaponTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe.png"))
+	if (!this->weaponVerticalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_vertical.png"))
 		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
 
-	this->weaponSprite.setTexture(this->weaponTexture);
+	if (!this->weaponHorizontalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_horizontal.png"))
+		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
+
+	this->weaponSprite.setTexture(this->weaponVerticalTexture);
 
 	this->weaponSprite.setOrigin(
 		this->weaponSprite.getGlobalBounds().width / 2.f,
@@ -94,24 +97,29 @@ void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 
 	if (this->getDirection() == "LEFT")
 	{
+		this->weaponSprite.setTexture(this->weaponHorizontalTexture);
 		angle = -90.f;
-		position.x = this->getCenteredPosition().x;
+		position.x = this->getCenteredPosition().x - 10.f;
 		position.y = this->getCenteredPosition().y - 10.f;
 	}
 	else if (this->getDirection() == "RIGHT")
 	{
+		this->weaponSprite.setTexture(this->weaponHorizontalTexture);
 		angle = 90.f;
-		position = this->getCenteredPosition();
+		position.x = this->getCenteredPosition().x;
+		position.y = this->getCenteredPosition().y - 10.f;
 	}
 	else if (this->getDirection() == "UP")
 	{
-		position.x = this->getCenteredPosition().x + this->getSize().x / 2.f;
-		position.y = this->getCenteredPosition().y;
+		this->weaponSprite.setTexture(this->weaponVerticalTexture);
+		position.x = this->getCenteredPosition().x + this->getSize().x / 2.f - 5.f;
+		position.y = this->getCenteredPosition().y - 10.f;
 		angle = 0.f;
 	}
 	else if (this->getDirection() == "DOWN")
 	{
-		position.x = this->getCenteredPosition().x - this->getSize().x / 2.f;
+		this->weaponSprite.setTexture(this->weaponVerticalTexture);
+		position.x = this->getCenteredPosition().x - this->getSize().x / 2.f + 5.f;
 		position.y = this->getCenteredPosition().y;
 		angle = 180.f;
 	}
