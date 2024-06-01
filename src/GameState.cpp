@@ -141,7 +141,7 @@ void GameState::update(const float &dt)
 
 		this->updatePlayerCamera(dt);
 		this->updatePlayerInput(dt);
-		this->player->update(dt);
+		this->player->update(dt, this->mousePosView);
 		this->playerGUI->update(dt);
 		this->updateTileMap(dt);
 	}
@@ -177,7 +177,7 @@ void GameState::renderToBuffer()
 		this->player->getGridPosition((int)this->data->gridSize), false,
 		&this->coreShader, this->player->getCenteredPosition());
 
-	this->player->render(this->renderBuffer, &this->coreShader);
+	this->player->render(this->renderBuffer, false, &this->coreShader);
 
 	this->tileMap->deferredRender(
 		this->renderBuffer,
@@ -246,4 +246,16 @@ void GameState::updatePlayerCamera(const float &dt)
 	this->playerCamera.setCenter(
 		std::floor(this->player->getCenteredPosition().x + ((this->mousePosWindow.x) - static_cast<float>(this->vm.width / 2)) / 20.f),
 		std::floor(this->player->getCenteredPosition().y + ((this->mousePosWindow.y) - static_cast<float>(this->vm.height / 2)) / 20.f));
+
+	if (this->playerCamera.getCenter().x - this->playerCamera.getSize().x / 2.f < 0.f)
+		this->playerCamera.setCenter(0.f + this->playerCamera.getSize().x / 2.f, this->playerCamera.getCenter().y);
+
+	else if (this->playerCamera.getCenter().x + this->playerCamera.getSize().x / 2.f > this->tileMap->getSize().x)
+		this->playerCamera.setCenter(this->tileMap->getSize().x - this->playerCamera.getSize().x / 2.f, this->playerCamera.getCenter().y);
+
+	if (this->playerCamera.getCenter().y - this->playerCamera.getSize().y / 2.f < 0.f)
+		this->playerCamera.setCenter(this->playerCamera.getCenter().x, 0.f + this->playerCamera.getSize().y / 2.f);
+
+	else if (this->playerCamera.getCenter().y + this->playerCamera.getSize().y / 2.f > this->tileMap->getSize().y)
+		this->playerCamera.setCenter(this->playerCamera.getCenter().x, this->tileMap->getSize().y - this->playerCamera.getSize().y / 2.f);
 }

@@ -10,7 +10,7 @@ class Entity;
 class TileMap
 {
 private:
-	/* VARIABLES */
+	/* VARIABLES ====================================================================================== */
 
 	float gridSizeF;
 	int gridSizeI;
@@ -34,7 +34,7 @@ private:
 	int endY;
 	int layer;
 
-	/* PRIVATE FUNCTIONS */
+	/* PRIVATE FUNCTIONS ====================================================================================== */
 
 	/**
 	 * @brief Frees all alocated memory for the tiles and texture.
@@ -51,7 +51,7 @@ private:
 	void resize();
 
 public:
-	/* CONSTRUCTOR AND DESTRUCTOR */
+	/* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
 
 	/**
 	 * @brief This constructor initializes a tilemap.
@@ -72,7 +72,7 @@ public:
 	 */
 	virtual ~TileMap();
 
-	/* FUNCTIONS */
+	/* FUNCTIONS ====================================================================================== */
 
 	/**
 	 * @brief Loads a tilemap from a file in the Maps folder.\n
@@ -182,7 +182,14 @@ public:
 	 */
 	void updateMapActiveArea(const sf::Vector2i gridPosition, const int width, const int height);
 
-	/* ACCESSORS */
+	/* ACCESSORS ====================================================================================== */
+
+	/**
+	 * @brief Returns the tilemap's size.
+	 *
+	 * @return sf::Vector2f
+	 */
+	const sf::Vector2f &getSize() const;
 
 	/**
 	 * @brief Returns the tile texture sheet of the tilemap.

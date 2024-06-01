@@ -192,7 +192,7 @@ void SettingsState::updateGUI(const float &dt)
 	{
 		this->gfxSettings->resolution = this->videoModes[this->dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
-		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Fullscreen);
+		this->window->create(this->gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
 
 		this->resetGUI();
 

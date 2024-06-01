@@ -53,6 +53,15 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 	this->createAttributeComponent(1);
 
 	this->initAnimations();
+
+	if (!this->weaponTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe.png"))
+		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
+
+	this->weaponSprite.setTexture(this->weaponTexture);
+
+	this->weaponSprite.setOrigin(
+		this->weaponSprite.getGlobalBounds().width / 2.f,
+		this->weaponSprite.getGlobalBounds().height - 5.f);
 }
 
 Player::~Player()
@@ -61,7 +70,7 @@ Player::~Player()
 
 /* FUNCTIONS */
 
-void Player::update(const float &dt)
+void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		this->attributeComponent->earnExp(20);
@@ -69,28 +78,75 @@ void Player::update(const float &dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 		this->attributeComponent->loseExp(20);
 
-	// this->attributeComponent->debugPrint();
-
 	this->movementComponent->update(dt);
 	this->hitboxComponent->update();
-	this->updateJump(dt);
 	this->updateAnimation(dt);
 
 	this->attributeComponent->updateStats();
+
+	// float dx = mouse_pos_view.x - this->weaponSprite.getPosition().x;
+	// float dy = mouse_pos_view.y - this->weaponSprite.getPosition().y;
+	// float PI = 3.14159265359f;
+	// float angle = atan2(dy, dx) * 180 / PI;
+
+	float angle;
+	sf::Vector2f position;
+
+	if (this->getDirection() == "LEFT")
+	{
+		angle = -90.f;
+		position.x = this->getCenteredPosition().x;
+		position.y = this->getCenteredPosition().y - 10.f;
+	}
+	else if (this->getDirection() == "RIGHT")
+	{
+		angle = 90.f;
+		position = this->getCenteredPosition();
+	}
+	else if (this->getDirection() == "UP")
+	{
+		position.x = this->getCenteredPosition().x + this->getSize().x / 2.f;
+		position.y = this->getCenteredPosition().y;
+		angle = 0.f;
+	}
+	else if (this->getDirection() == "DOWN")
+	{
+		position.x = this->getCenteredPosition().x - this->getSize().x / 2.f;
+		position.y = this->getCenteredPosition().y;
+		angle = 180.f;
+	}
+
+	this->weaponSprite.setPosition(position);
+	this->weaponSprite.setRotation(angle);
 }
 
 void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader)
 {
 	if (shader)
 	{
+
+		if (this->getDirection() == "LEFT" || this->getDirection() == "UP")
+		{
+			shader->setUniform("hasTexture", true);
+			shader->setUniform("lightPos", this->getCenteredPosition());
+			target.draw(this->weaponSprite, shader);
+		}
+
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", this->getCenteredPosition());
-
 		target.draw(this->sprite, shader);
+
+		if (this->getDirection() == "RIGHT" || this->getDirection() == "DOWN")
+		{
+			shader->setUniform("hasTexture", true);
+			shader->setUniform("lightPos", this->getCenteredPosition());
+			target.draw(this->weaponSprite, shader);
+		}
 	}
 	else
 	{
 		target.draw(this->sprite);
+		target.draw(this->weaponSprite);
 	}
 
 	if (show_hitbox)
@@ -103,12 +159,14 @@ void Player::updateAnimation(const float &dt)
 	switch (this->movementComponent->getCurrentState())
 	{
 	case IDLE:
-		this->animationComponent->play("IDLE_" + this->movementComponent->getDirection(), dt);
+		this->animationComponent->play(
+			"IDLE_" + this->movementComponent->getDirection(), dt);
 		break;
 	case MOVING:
-		this->animationComponent->play("WALK_" + this->movementComponent->getDirection(), dt,
-									   std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y) * .8f,
-									   this->movementComponent->getMaxVelocity());
+		this->animationComponent->play(
+			"WALK_" + this->movementComponent->getDirection(), dt,
+			std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y) * .8f,
+			this->movementComponent->getMaxVelocity());
 		break;
 	}
 }

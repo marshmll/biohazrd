@@ -99,7 +99,7 @@ public:
 	 *
 	 * @return void
 	 */
-	virtual void update(const float &dt) = 0;
+	virtual void update(const float &dt, const sf::Vector2f &mouse_pos_view) = 0;
 
 	/**
 	 * @brief Renders the entity into a target.

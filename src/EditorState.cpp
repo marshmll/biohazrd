@@ -99,7 +99,7 @@ void EditorState::initGUI()
 		this->sidebar.getSize().x / 2 - 50.f / 2, gui::p2pY(this->vm, 5.f),
 		50.f, 50.f,
 		this->sidebar.getSize().x + gui::p2pY(this->vm, 2.5f), gui::p2pY(this->vm, 2.5f),
-		640.f, 640.f,
+		960.f, 640.f,
 		this->data->gridSize, this->tileMap->getTileTextureSheet());
 }
 

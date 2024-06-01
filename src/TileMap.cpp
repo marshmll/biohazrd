@@ -411,6 +411,11 @@ void TileMap::updateMapActiveArea(const sf::Vector2i gridPosition, const int wid
 
 /* ACCESSORS */
 
+const sf::Vector2f &TileMap::getSize() const
+{
+	return this->tileMapWorldDimensions;
+}
+
 const sf::Texture *TileMap::getTileTextureSheet() const
 {
 	return &this->tileTextureSheet;

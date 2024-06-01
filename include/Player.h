@@ -13,6 +13,9 @@ private:
 	bool isJumping;
 	std::string currentJumpAnimationName;
 
+	sf::Texture weaponTexture;
+	sf::Sprite weaponSprite;
+
 	/* INITIALIZERS */
 
 	/**
@@ -55,7 +58,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void update(const float &dt);
+	void update(const float &dt, const sf::Vector2f &mouse_pos_view);
 
 	/**
 	 * @brief Renders the player into a target.

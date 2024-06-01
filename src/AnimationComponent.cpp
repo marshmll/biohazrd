@@ -10,8 +10,9 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet) : sprite(sprite), textureSheet(texture_sheet),
-																						 previousAnimation(nullptr), priorityAnimation(nullptr)
+AnimationComponent::AnimationComponent(
+	sf::Sprite &sprite, sf::Texture &texture_sheet) : sprite(sprite), textureSheet(texture_sheet),
+													  previousAnimation(nullptr), priorityAnimation(nullptr)
 {
 }
 

@@ -466,14 +466,14 @@ gui::TextureSelector::TextureSelector(
 			sf::IntRect(0, 0, this->sheet.getGlobalBounds().width, this->bounds.getGlobalBounds().height));
 	}
 
-	// Selector
+	// Selector Box
 	this->selector.setPosition(txtr_slctr_x, txtr_slctr_y);
 	this->selector.setSize(sf::Vector2f(gridSize, gridSize));
 	this->selector.setFillColor(sf::Color::Transparent);
 	this->selector.setOutlineThickness(1.f);
 	this->selector.setOutlineColor(sf::Color::Green);
 
-	// Texture rect
+	// Mouse texture selector
 	this->textureRect.width = static_cast<int>(gridSize);
 	this->textureRect.height = static_cast<int>(gridSize);
 
