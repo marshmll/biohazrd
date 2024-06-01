@@ -15,11 +15,7 @@ Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
 		   bool collision,
 		   short type)
 {
-	this->tile.setSize(sf::Vector2f(gridSizeF, gridSizeF));
-
-	this->tile.setFillColor(sf::Color::White);
-
-	this->tile.setTexture(&texture);
+	this->tile.setTexture(texture);
 
 	this->tile.setPosition(grid_x * gridSizeF, grid_y * gridSizeF);
 
@@ -39,9 +35,19 @@ void Tile::update()
 {
 }
 
-void Tile::render(sf::RenderTarget &target)
+void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f lightPos)
 {
-	target.draw(this->tile);
+	if (shader)
+	{
+		shader->setUniform("hasTexture", true);
+		shader->setUniform("lightPos", lightPos);
+
+		target.draw(this->tile, shader);
+	}
+	else
+	{
+		target.draw(this->tile);
+	}
 }
 
 const bool Tile::intersects(const sf::FloatRect &bounds) const

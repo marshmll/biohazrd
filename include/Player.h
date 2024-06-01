@@ -62,7 +62,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void render(sf::RenderTarget &target, const bool show_hitbox = false);
+	void render(sf::RenderTarget &target, const bool show_hitbox = false, sf::Shader *shader = nullptr);
 
 	/**
 	 * @brief Updates the player animations.

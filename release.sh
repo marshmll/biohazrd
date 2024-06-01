@@ -13,6 +13,7 @@ cp -r src/Assets/ Release/bin/
 cp -r src/Config/ Release/bin/
 cp -r src/Fonts/ Release/bin/
 cp -r src/Maps/ Release/bin/
+cp -r src/Shaders/ Release/bin/
 
 clear
 cd Release/ &&
@@ -26,3 +27,4 @@ cp -r Release/bin/Assets src/
 cp -r Release/bin/Config src/
 cp -r Release/bin/Fonts src/
 cp -r Release/bin/Maps src/
+cp -r Release/bin/Shaders src/

@@ -89,6 +89,14 @@ void GameState::initTileMap()
 	this->tileMap->loadFromFile("test.biomap");
 }
 
+void GameState::initShaders()
+{
+	if (!this->coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
+	{
+		// std::cerr << "GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS" << std::endl;
+	}
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR */
 GameState::GameState(StateData *data) : State(data)
 {
@@ -102,6 +110,7 @@ GameState::GameState(StateData *data) : State(data)
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
+	this->initShaders();
 }
 
 GameState::~GameState()
@@ -162,9 +171,17 @@ void GameState::renderToBuffer()
 	this->renderBuffer.clear();
 
 	this->renderBuffer.setView(this->playerCamera);
-	this->tileMap->render(this->renderBuffer, this->player->getGridPosition((int)this->data->gridSize));
-	this->player->render(this->renderBuffer);
-	this->tileMap->deferredRender(this->renderBuffer);
+
+	this->tileMap->render(
+		this->renderBuffer,
+		this->player->getGridPosition((int)this->data->gridSize), false,
+		&this->coreShader, this->player->getCenteredPosition());
+
+	this->player->render(this->renderBuffer, &this->coreShader);
+
+	this->tileMap->deferredRender(
+		this->renderBuffer,
+		&this->coreShader, this->player->getCenteredPosition());
 
 	this->renderBuffer.setView(this->renderBuffer.getDefaultView());
 	this->playerGUI->render(this->renderBuffer);

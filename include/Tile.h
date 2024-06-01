@@ -12,7 +12,7 @@ class Tile
 {
 private:
 protected:
-	sf::RectangleShape tile;
+	sf::Sprite tile;
 
 	bool collision;
 	short type;
@@ -36,10 +36,15 @@ public:
 
 	/**
 	 * @brief Renders the tile into a target.
+	 * @note If a shader pointer is passed in, it will be used for rendering.
+	 * 
+	 * @param target A render target reference.
+	 * @param shader A shader pointer. (optional)
+	 * @param lightPos The lighting position (needed if using shaders)
 	 *
 	 * @return void
 	 */
-	void render(sf::RenderTarget &target);
+	void render(sf::RenderTarget &target, sf::Shader* shader = nullptr, const sf::Vector2f lightPos = sf::Vector2f());
 
 	/**
 	 * @brief Returns if the tile intersects a given

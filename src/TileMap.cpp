@@ -225,9 +225,12 @@ void TileMap::update(const float &dt)
 {
 }
 
-void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition, const bool show_collision_box)
+void TileMap::render(
+	sf::RenderTarget &target, const sf::Vector2i &gridPosition,
+	const bool show_collision_box, sf::Shader *shader,
+	const sf::Vector2f playerPosition)
 {
-	this->updateMapActiveArea(gridPosition, 10, 10);
+	this->updateMapActiveArea(gridPosition, 22, 22);
 
 	for (size_t x = this->startX; x < this->endX; x++)
 	{
@@ -241,7 +244,10 @@ void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition,
 				}
 				else
 				{
-					this->tileMap[x][y][this->layer][k]->render(target);
+					if (shader)
+						this->tileMap[x][y][this->layer][k]->render(target, shader, playerPosition);
+					else
+						this->tileMap[x][y][this->layer][k]->render(target);
 				}
 
 				if (show_collision_box)
@@ -254,6 +260,19 @@ void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &gridPosition,
 				}
 			}
 		}
+	}
+}
+
+void TileMap::deferredRender(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f playerPosition)
+{
+	while (!this->deferredTileRendering.empty())
+	{
+		if (shader)
+			this->deferredTileRendering.top()->render(target, shader, playerPosition);
+		else
+			this->deferredTileRendering.top()->render(target);
+
+		this->deferredTileRendering.pop();
 	}
 }
 
@@ -388,15 +407,6 @@ void TileMap::updateMapActiveArea(const sf::Vector2i gridPosition, const int wid
 		this->endY = 0;
 	else if (this->endY >= this->tileMapGridDimensions.y)
 		this->endY = this->tileMapGridDimensions.y;
-}
-
-void TileMap::deferredRender(sf::RenderTarget &target)
-{
-	while (!this->deferredTileRendering.empty())
-	{
-		this->deferredTileRendering.top()->render(target);
-		this->deferredTileRendering.pop();
-	}
 }
 
 /* ACCESSORS */

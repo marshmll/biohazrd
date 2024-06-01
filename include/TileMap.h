@@ -37,16 +37,16 @@ private:
 	/* PRIVATE FUNCTIONS */
 
 	/**
-	 * @return void
-	 *
 	 * @brief Frees all alocated memory for the tiles and texture.
+	 *
+	 * @return void
 	 */
 	void clear();
 
 	/**
-	 * @return void
-	 *
 	 * @brief Resizers the entire map, given the tilemap dimensions.
+	 *
+	 * @return void
 	 */
 	void resize();
 
@@ -75,8 +75,6 @@ public:
 	/* FUNCTIONS */
 
 	/**
-	 * @return void
-	 *
 	 * @brief Loads a tilemap from a file in the Maps folder.\n
 	 * @note Format
 	 * @note CONFIG
@@ -89,12 +87,12 @@ public:
 	 * @note -> Texture rect x and y
 	 * @note -> Collision
 	 * @note -> Type.
+	 *
+	 * @return void
 	 */
 	void loadFromFile(const std::string file_name);
 
 	/**
-	 * @return void
-	 *
 	 * @brief Saves the tilemap to a file in the Maps folder.
 	 * @note Format
 	 * @note CONFIG
@@ -108,14 +106,16 @@ public:
 	 * @note -> Texture rect x and y
 	 * @note -> Collision
 	 * @note -> Type.
+	 *
+	 * @return void
 	 */
 	void saveToFile(const std::string file_name);
 
 	/**
-	 * @return void
-	 *
 	 * @brief Adds a tile to the tilemap.
 	 * X and Y are indexes of the tilemap grid.
+	 *
+	 * @return void
 	 */
 
 	void addTile(const unsigned x, const unsigned y, const unsigned z,
@@ -123,33 +123,55 @@ public:
 				 const bool &collision, const short &type);
 
 	/**
-	 * @return void
-	 *
 	 * @brief  Removes a tile from the tilemap.
 	 * X and Y are indexes of the tilemap grid.
+	 *
+	 * @return void
 	 */
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
 
 	void update(const float &dt);
 
 	/**
-	 * @return void
+	 * @brief Renders all the tiles in the tilemap.
+	 * @note Renders each x, y, z and k tiles.
+	 * @note If a shader is passed in, it will be used for
+	 * rendering the tiles.
 	 *
-	 * @brief Renders each layer of each tile position (x, y).
+	 * @param target A render target for rendering the tiles.
+	 * @param gridPosition A culling area for rendering
+	 * @param show_collision_box A flag for rendering the collision boxes (default: false)
+	 * @param shader A pointer to a shader. (default: nullptr)
+	 * @param player_positon A sf::Vector2f for the player's center position.
+	 *
+	 * @return void
 	 */
-	void render(sf::RenderTarget &target, const sf::Vector2i &gridPosition, const bool show_collision_box = false);
+	void render(
+		sf::RenderTarget &target, const sf::Vector2i &gridPosition,
+		const bool show_collision_box = false, sf::Shader *shader = nullptr,
+		const sf::Vector2f playerPosition = sf::Vector2f());
 
 	/**
-	 * @return void
+	 * @brief Deferred render for tiles that are suposed to be rendered
+	 * later on.
 	 *
+	 * @return void
+	 */
+	void deferredRender(
+		sf::RenderTarget &target, sf::Shader *shader = nullptr,
+		const sf::Vector2f playerPosition = sf::Vector2f());
+
+	/**
 	 * @brief Updates the collisions for a entity.
+	 *
+	 * @return void
 	 */
 	void updateCollision(const float &dt, Entity *entity = nullptr);
 
 	/**
-	 * @brief Updates the area dimensions around an entity.
-	 *
 	 * @return void
+	 *
+	 * @brief Updates the area dimensions around an entity.
 	 */
 	void updateMapActiveArea(Entity *entity, const int width, const int height);
 
@@ -160,20 +182,12 @@ public:
 	 */
 	void updateMapActiveArea(const sf::Vector2i gridPosition, const int width, const int height);
 
-	/**
-	 * @brief Deferred render for tiles that are suposed to be rendered
-	 * later on.
-	 *
-	 * @return void
-	 */
-	void deferredRender(sf::RenderTarget &target);
-
 	/* ACCESSORS */
 
 	/**
-	 * @return sf::Texture*
-	 *
 	 * @brief Returns the tile texture sheet of the tilemap.
+	 *
+	 * @return sf::Texture*
 	 */
 	const sf::Texture *getTileTextureSheet() const;
 

@@ -27,6 +27,8 @@ private:
 
 	TileMap *tileMap;
 
+	sf::Shader coreShader;
+
 	/* INITIALIZERS */
 
 	/**
@@ -102,6 +104,13 @@ private:
 	 * @return void
 	 */
 	void initTileMap();
+
+	/**
+	 * @brief Initializes the game shaders.
+	 * 
+	 * @return void
+	 */
+	void initShaders();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR */

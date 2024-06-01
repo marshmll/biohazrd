@@ -102,11 +102,16 @@ public:
 	virtual void update(const float &dt) = 0;
 
 	/**
-	 * @brief Renders the entity
+	 * @brief Renders the entity into a target.
+	 * @note If a shader pointer is passed in, it will be used for rendering.
+	 *
+	 * @param target A render target reference.
+	 * @param show_hitbox Flag for rendering hitbox outine. (default: false)
+	 * @param shader A shader pointer. (default: nullptr)
 	 *
 	 * @return void
 	 */
-	virtual void render(sf::RenderTarget &target, const bool show_hitbox = false) = 0;
+	virtual void render(sf::RenderTarget &target, const bool show_hitbox = false, sf::Shader *shader = nullptr) = 0;
 
 	/**
 	 * @brief Moves the movement component (whick moves the sprite) into some

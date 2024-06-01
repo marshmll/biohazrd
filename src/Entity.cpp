@@ -63,14 +63,6 @@ void Entity::createAttributeComponent(const unsigned level)
 
 /* FUNCTIONS */
 
-void Entity::update(const float &dt)
-{
-}
-
-void Entity::render(sf::RenderTarget &target, const bool show_hitbox)
-{
-}
-
 void Entity::move(const float dir_x, const float dir_y, const float &dt)
 {
 	if (this->movementComponent)
