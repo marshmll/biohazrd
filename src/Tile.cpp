@@ -61,6 +61,11 @@ const sf::Vector2f &Tile::getPosition() const
 	return this->tile.getPosition();
 }
 
+const sf::IntRect &Tile::getTextureRect() const
+{
+	return this->tile.getTextureRect();
+}
+
 const bool &Tile::isCollideable() const
 {
 	return this->collision;

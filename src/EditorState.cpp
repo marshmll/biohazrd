@@ -150,7 +150,7 @@ void EditorState::update(const float &dt)
 		this->updateButtons();
 		this->updateGUI(dt);
 		this->updateEditorInput(dt);
-		this->updateEditorCamera();
+		this->updateEditorCamera(dt);
 	}
 	else
 	{
@@ -190,19 +190,6 @@ void EditorState::updateInput(const float &dt)
 
 void EditorState::updateEditorInput(const float &dt)
 {
-	// Move view
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_UP"]))
-		this->editorCamera.move(0.f, std::floor(-this->cameraSpeed * dt));
-
-	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_DOWN"]))
-		this->editorCamera.move(0.f, std::floor(this->cameraSpeed * dt));
-
-	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_LEFT"]))
-		this->editorCamera.move(std::floor(-this->cameraSpeed * dt), 0.f);
-
-	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_RIGHT"]))
-		this->editorCamera.move(std::floor(this->cameraSpeed * dt), 0.f);
-
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->hasCompletedKeytimeCicle())
 	{
 		if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
@@ -246,8 +233,20 @@ void EditorState::updateEditorInput(const float &dt)
 	}
 }
 
-void EditorState::updateEditorCamera()
+void EditorState::updateEditorCamera(const float &dt)
 {
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_UP"]))
+		this->editorCamera.move(0.f, std::floor(-this->cameraSpeed * dt));
+
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_DOWN"]))
+		this->editorCamera.move(0.f, std::floor(this->cameraSpeed * dt));
+
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_LEFT"]))
+		this->editorCamera.move(std::floor(-this->cameraSpeed * dt), 0.f);
+
+	else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_RIGHT"]))
+		this->editorCamera.move(std::floor(this->cameraSpeed * dt), 0.f);
+
 	this->editorCameraPosGrid.x = static_cast<int>(this->editorCamera.getCenter().x) / static_cast<int>(this->data->gridSize);
 	this->editorCameraPosGrid.y = static_cast<int>(this->editorCamera.getCenter().y) / static_cast<int>(this->data->gridSize);
 }

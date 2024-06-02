@@ -64,6 +64,13 @@ public:
 	const sf::Vector2f &getPosition() const;
 
 	/**
+	 * @brief Returns the tile's texture rect.
+	 * 
+	 * @return sf::IntRect&
+	 */
+	const sf::IntRect &getTextureRect() const;
+
+	/**
 	 * @brief Returns if the tile is collideable.
 	 *
 	 * @return const bool&

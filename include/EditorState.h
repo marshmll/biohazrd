@@ -154,11 +154,13 @@ public:
 	void updateEditorInput(const float &dt);
 
 	/**
-	 * @brief Updates the editor camera variables.
+	 * @brief Updates the editor camera.
+	 * @note Moves the camera.
+	 * @note Update editorCameraPosGrid.
 	 * 
 	 * @return void
 	 */
-	void updateEditorCamera();
+	void updateEditorCamera(const float &dt);
 
 	/**
 	 * @brief Iterates over all buttons and update their states based on

@@ -202,7 +202,17 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z,
 	// If position is in the map bounds
 	if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
 	{
-		this->tileMap[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileTextureSheet, textureRect, collision, type));
+		if (!this->tileMap[x][y][z].empty())
+		{
+			// If the texture of the tile to be placed is not equal to
+			// the texture of the tile already on the vector
+			if (this->tileMap[x][y][z].back()->getTextureRect() != textureRect)
+			{
+				this->tileMap[x][y][z].push_back(new Tile(
+					x, y, this->gridSizeF, this->tileTextureSheet,
+					textureRect, collision, type));
+			}
+		}
 	}
 }
 
