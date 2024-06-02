@@ -55,16 +55,27 @@ public:
 
 	/**
 	 * @brief This constructor initializes a tilemap.
-	 * The constructor also initializes a 3D vector for the x,
-	 * y and z coordinates. Also uses a resize vector method to
-	 * ensure the vectors are big enough.
+	 * The constructor also initializes a 4D vector for the x,
+	 * y, z and k coordinates. Also uses a resize vector method to
+	 * ensure the vectors allocate the required amount of memory.
 	 *
-	 * @note The tilemap has some importart properties as:
-	 * @note -> Gridsize: the size of each tile, in pixels
-	 * @note -> Layers: how many layers each tile position will have
-	 * @note -> Dimensions: the size of the tileMap, in tiles
+	 * @param grid_size The grid size for the tiles.
+	 * @param grid_width The width of the tilemap based on the grid size.
+	 * @param grid_height The height of the tilemap based on the grid size.
+	 * @param texture_file_path The relative path to the texture sheet.
 	 */
-	TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std::string texture_file_path);
+	TileMap(const float grid_size, const unsigned grid_width, const unsigned grid_height,
+			const std::string texture_file_path);
+
+	/**
+	 * @brief This constructor initializes a tilemap.
+	 * The constructor also initializes a 4D vector for the x,
+	 * y, z and k coordinates. Also uses a resize vector method to
+	 * ensure the vectors allocate the required amount of memory.
+	 *
+	 * @param map_file_path The relative path to a map file.
+	 */
+	TileMap(const std::string map_file_path);
 
 	/**
 	 * @brief
@@ -90,7 +101,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void loadFromFile(const std::string file_name);
+	void loadFromFile(const std::string file_path);
 
 	/**
 	 * @brief Saves the tilemap to a file in the Maps folder.
@@ -109,7 +120,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void saveToFile(const std::string file_name);
+	void saveToFile(const std::string file_path);
 
 	/**
 	 * @brief Adds a tile to the tilemap.

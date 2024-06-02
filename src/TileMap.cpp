@@ -52,17 +52,18 @@ void TileMap::resize()
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-TileMap::TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std::string texture_file_path)
+TileMap::TileMap(const float grid_size, const unsigned grid_width, const unsigned grid_height,
+				 const std::string texture_file_path)
 {
-	this->gridSizeF = gridSize;
+	this->gridSizeF = grid_size;
 	this->gridSizeI = (int)this->gridSizeF;
 	this->layers = 1;
 
 	this->tileMapGridDimensions.x = grid_width;
 	this->tileMapGridDimensions.y = grid_height;
 
-	this->tileMapWorldDimensions.x = grid_width * gridSize;
-	this->tileMapWorldDimensions.y = grid_height * gridSize;
+	this->tileMapWorldDimensions.x = grid_width * grid_size;
+	this->tileMapWorldDimensions.y = grid_height * grid_size;
 
 	this->resize();
 
@@ -83,6 +84,11 @@ TileMap::TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std:
 	this->layer = 0;
 }
 
+TileMap::TileMap(const std::string map_file_path)
+{
+	this->loadFromFile(map_file_path);
+}
+
 TileMap::~TileMap()
 {
 	this->clear();
@@ -90,20 +96,21 @@ TileMap::~TileMap()
 
 /* FUNCTIONS */
 
-void TileMap::loadFromFile(const std::string file_name)
+void TileMap::loadFromFile(const std::string file_path)
 {
 	std::ifstream in_file;
 
 	// Try to open a file.
-	in_file.open("Maps/" + file_name);
+	in_file.open(file_path);
 
 	// If couldn'd open file, runtime error.
 	if (!in_file.is_open())
 		ErrorHandler::throwErr("TILEMAP::LOADFROMFILE::ERR_COULD_NOT_LOAD_TILEMAP_FROM_FILE\n");
 
 	// Data to be loaded in
-	sf::Vector2u size;
-	int gridSize = 0;
+	unsigned grid_width = 0;
+	unsigned grid_height = 0;
+	int grid_size = 0;
 
 	unsigned layers = 0;
 
@@ -121,26 +128,40 @@ void TileMap::loadFromFile(const std::string file_name)
 	short type = TileTypes::DEFAULT;
 
 	// Load CONFIG
-	in_file >> size.x >> size.y >> gridSize >> layers >> texture_file_path;
+	in_file >> grid_width >> grid_height >> grid_size >> layers >> texture_file_path;
 
-	this->tileMapGridDimensions.x = size.x;
-	this->tileMapGridDimensions.y = size.y;
-
-	this->gridSizeF = (float)gridSize;
-	this->gridSizeI = gridSize;
+	this->gridSizeF = (float)grid_size;
+	this->gridSizeI = grid_size;
 	this->layers = layers;
 
-	// Clear the map
-	this->clear();
+	this->tileMapGridDimensions.x = grid_width;
+	this->tileMapGridDimensions.y = grid_height;
 
-	// Resize the map
-	this->resize();
+	this->tileMapWorldDimensions.x = static_cast<float>(grid_width) * gridSizeF;
+	this->tileMapWorldDimensions.y = static_cast<float>(grid_height) * gridSizeF;
 
 	this->texture_file_path = texture_file_path;
 
 	// If failed to load texture
 	if (!this->tileTextureSheet.loadFromFile(texture_file_path))
 		ErrorHandler::throwErr("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE\n");
+
+	this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
+	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+	this->collisionBox.setOutlineColor(sf::Color(255, 0, 0, 100));
+	this->collisionBox.setOutlineThickness(1.f);
+
+	this->startX = 0;
+	this->endX = 0;
+	this->startY = 0;
+	this->endY = 0;
+	this->layer = 0;
+
+	// Clear the map
+	this->clear();
+
+	// Resize the map
+	this->resize();
 
 	// While not in the end of file
 	while (in_file >> grid_x >> grid_y >> z >> k >> txtrRectX >> txtrRectY >> collision >> type)
@@ -156,12 +177,12 @@ void TileMap::loadFromFile(const std::string file_name)
 	in_file.close();
 }
 
-void TileMap::saveToFile(const std::string file_name)
+void TileMap::saveToFile(const std::string file_path)
 {
 	std::ofstream out_file;
 
 	// Try to open a file.
-	out_file.open("Maps/" + file_name);
+	out_file.open(file_path);
 
 	// If couldn'd open file, throw runtime error.
 	if (!out_file.is_open())

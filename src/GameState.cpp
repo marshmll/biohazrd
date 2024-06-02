@@ -81,8 +81,7 @@ void GameState::initPlayerGUI()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
-	this->tileMap->loadFromFile("test.biomap");
+	this->tileMap = new TileMap("Maps/test2.biomap");
 }
 
 void GameState::initShaders()
@@ -241,17 +240,25 @@ void GameState::updatePlayerCamera(const float &dt)
 		std::floor(this->player->getCenteredPosition().x + ((this->mousePosWindow.x) - static_cast<float>(this->vm.width / 2)) / 20.f),
 		std::floor(this->player->getCenteredPosition().y + ((this->mousePosWindow.y) - static_cast<float>(this->vm.height / 2)) / 20.f));
 
-	if (this->playerCamera.getCenter().x - this->playerCamera.getSize().x / 2.f < 0.f)
-		this->playerCamera.setCenter(0.f + this->playerCamera.getSize().x / 2.f, this->playerCamera.getCenter().y);
+	// Make sure that the player camera width is smaller than the world
+	if (this->playerCamera.getSize().x <= this->tileMap->getSize().x)
+	{
+		if (this->playerCamera.getCenter().x - this->playerCamera.getSize().x / 2.f < 0.f)
+			this->playerCamera.setCenter(0.f + this->playerCamera.getSize().x / 2.f, this->playerCamera.getCenter().y);
 
-	else if (this->playerCamera.getCenter().x + this->playerCamera.getSize().x / 2.f > this->tileMap->getSize().x)
-		this->playerCamera.setCenter(this->tileMap->getSize().x - this->playerCamera.getSize().x / 2.f, this->playerCamera.getCenter().y);
+		else if (this->playerCamera.getCenter().x + this->playerCamera.getSize().x / 2.f > this->tileMap->getSize().x)
+			this->playerCamera.setCenter(this->tileMap->getSize().x - this->playerCamera.getSize().x / 2.f, this->playerCamera.getCenter().y);
+	}
 
-	if (this->playerCamera.getCenter().y - this->playerCamera.getSize().y / 2.f < 0.f)
-		this->playerCamera.setCenter(this->playerCamera.getCenter().x, 0.f + this->playerCamera.getSize().y / 2.f);
+	// Make sure that the player camera height is smaller than the world
+	if (this->playerCamera.getSize().x <= this->tileMap->getSize().x)
+	{
+		if (this->playerCamera.getCenter().y - this->playerCamera.getSize().y / 2.f < 0.f)
+			this->playerCamera.setCenter(this->playerCamera.getCenter().x, 0.f + this->playerCamera.getSize().y / 2.f);
 
-	else if (this->playerCamera.getCenter().y + this->playerCamera.getSize().y / 2.f > this->tileMap->getSize().y)
-		this->playerCamera.setCenter(this->playerCamera.getCenter().x, this->tileMap->getSize().y - this->playerCamera.getSize().y / 2.f);
+		else if (this->playerCamera.getCenter().y + this->playerCamera.getSize().y / 2.f > this->tileMap->getSize().y)
+			this->playerCamera.setCenter(this->playerCamera.getCenter().x, this->tileMap->getSize().y - this->playerCamera.getSize().y / 2.f);
+	}
 
 	this->playerCameraPosGrid.x = static_cast<int>(this->playerCamera.getCenter().x) / static_cast<int>(this->data->gridSize);
 	this->playerCameraPosGrid.y = static_cast<int>(this->playerCamera.getCenter().y) / static_cast<int>(this->data->gridSize);

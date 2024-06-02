@@ -75,7 +75,7 @@ void EditorState::initButtons()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
+	this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
 }
 
 void EditorState::initGUI()
@@ -263,10 +263,10 @@ void EditorState::updatePauseMenuButtons()
 		this->quit();
 
 	else if (this->pauseMenu->isButtonPressed("SAVE"))
-		this->tileMap->saveToFile("test.biomap");
+		this->tileMap->saveToFile("Maps/test.biomap");
 
 	else if (this->pauseMenu->isButtonPressed("LOAD"))
-		this->tileMap->loadFromFile("test.biomap");
+		this->tileMap->loadFromFile("Maps/test.biomap");
 }
 
 void EditorState::updateGUI(const float &dt)
