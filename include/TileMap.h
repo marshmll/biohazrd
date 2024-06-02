@@ -201,10 +201,11 @@ public:
 	/**
 	 * @brief Returns how many tiles are in top of the other
 	 * in a certain grid position AND layer.
+	 * @note -> Returns -1 if the position is out of bounds.
 	 *
-	 * @return const unsigned
+	 * @return const int
 	 */
-	const unsigned getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const;
+	const int getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const;
 };
 
 #endif /* TILEMAP_H_ */

@@ -5,10 +5,11 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-MovementComponent::MovementComponent(sf::Sprite &sprite, float maxVelocity,
-									 float acceleration, float deceleration) : sprite(sprite), maxVelocity(maxVelocity),
-																			   acceleration(acceleration), deceleration(deceleration),
-																			   state(states::IDLE), direction(directions::DOWN)
+MovementComponent::MovementComponent(
+	sf::Sprite &sprite, float maxVelocity,
+	float acceleration, float deceleration) : sprite(sprite), maxVelocity(maxVelocity),
+											  acceleration(acceleration), deceleration(deceleration),
+											  state(states::IDLE), direction(directions::DOWN)
 {
 }
 

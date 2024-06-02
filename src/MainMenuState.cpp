@@ -17,9 +17,7 @@ void MainMenuState::initVariables()
 void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
-	{
-		throw std::runtime_error("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
-	}
+		ErrorHandler::throwErr("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
 }
 
 void MainMenuState::initKeybinds()
@@ -37,54 +35,47 @@ void MainMenuState::initKeybinds()
 		}
 	}
 	else
-	{
-		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
-	}
+		ErrorHandler::throwErr("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n");
 
 	ifs.close();
 }
 
 void MainMenuState::initGUI()
 {
-	const sf::VideoMode &vm = this->data->gfxSettings->resolution;
-
 	// Background
-	this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+	this->background.setSize(sf::Vector2f(static_cast<float>(this->vm.width), static_cast<float>(this->vm.height)));
 
 	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
-	{
-		throw std::runtime_error(
-			"ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
-	}
+		ErrorHandler::throwErr("ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n");
 
 	this->background.setTexture(&this->backgroundTexture);
 
 	// Buttons
 	this->buttons["GAME_STATE"] = new gui::Button(
-		gui::p2pX(vm, 8.6f), gui::p2pY(vm, 40.f),
-		gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
-		&this->font, "New Game", gui::calc_char_size(vm, 65),
+		gui::p2pX(this->vm, 8.6f), gui::p2pY(this->vm, 40.f),
+		gui::p2pX(this->vm, 19.5f), gui::p2pY(this->vm, 6.2f),
+		&this->font, "New Game", gui::calc_char_size(this->vm, 65),
 		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["EDITOR_STATE"] = new gui::Button(
-		gui::p2pX(vm, 8.6f), gui::p2pY(vm, 49.f),
-		gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
-		&this->font, "Editor", gui::calc_char_size(vm, 65),
+		gui::p2pX(this->vm, 8.6f), gui::p2pY(this->vm, 49.f),
+		gui::p2pX(this->vm, 19.5f), gui::p2pY(this->vm, 6.2f),
+		&this->font, "Editor", gui::calc_char_size(this->vm, 65),
 		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["SETTINGS_STATE"] = new gui::Button(
-		gui::p2pX(vm, 8.6f), gui::p2pY(vm, 58.f),
-		gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
-		&this->font, "Settings", gui::calc_char_size(vm, 65),
+		gui::p2pX(this->vm, 8.6f), gui::p2pY(this->vm, 58.f),
+		gui::p2pX(this->vm, 19.5f), gui::p2pY(this->vm, 6.2f),
+		&this->font, "Settings", gui::calc_char_size(this->vm, 65),
 		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["EXIT_STATE"] = new gui::Button(
-		gui::p2pX(vm, 8.6f), gui::p2pY(vm, 82.f),
-		gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
-		&this->font, "Exit", gui::calc_char_size(vm, 65),
+		gui::p2pX(this->vm, 8.6f), gui::p2pY(this->vm, 82.f),
+		gui::p2pX(this->vm, 19.5f), gui::p2pY(this->vm, 6.2f),
+		&this->font, "Exit", gui::calc_char_size(this->vm, 65),
 		sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }

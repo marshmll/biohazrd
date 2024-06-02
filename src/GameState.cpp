@@ -12,22 +12,18 @@
 
 void GameState::initBufferedRender()
 {
-	this->renderBuffer.create(
-		this->data->gfxSettings->resolution.width,
-		this->data->gfxSettings->resolution.height);
+	this->renderBuffer.create(this->vm.width, this->vm.height);
 
 	this->renderSprite.setTexture(this->renderBuffer.getTexture());
 
-	this->renderSprite.setTextureRect(
-		sf::IntRect(0, 0, this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
+	this->renderSprite.setTextureRect(sf::IntRect(0, 0, this->vm.width, this->vm.height));
 }
 
 void GameState::initView()
 {
-	this->playerCamera.setSize(
-		sf::Vector2f(this->data->gfxSettings->resolution.width, this->data->gfxSettings->resolution.height));
-	this->playerCamera.setCenter(this->data->gfxSettings->resolution.width / 2.f,
-								 this->data->gfxSettings->resolution.height / 2.f);
+	this->playerCamera.setSize(sf::Vector2f(this->vm.width, this->vm.height));
+
+	this->playerCamera.setCenter(this->vm.width / 2.f, this->vm.height / 2.f);
 }
 
 void GameState::initKeybinds()
@@ -43,7 +39,7 @@ void GameState::initKeybinds()
 			this->keybinds[action] = this->acceptedKeys->at(key);
 	}
 	else
-		throw std::runtime_error("GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
+		ErrorHandler::throwErr("GAMESTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n");
 
 	ifs.close();
 }
@@ -51,7 +47,7 @@ void GameState::initKeybinds()
 void GameState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
-		throw std::runtime_error("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
+		ErrorHandler::throwErr("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
 }
 
 void GameState::initText()
@@ -64,7 +60,7 @@ void GameState::initText()
 void GameState::initTextures()
 {
 	if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
-		throw std::runtime_error("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE\n" + this->currentPath);
+		ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE\n");
 }
 
 void GameState::initPauseMenu()
@@ -92,9 +88,7 @@ void GameState::initTileMap()
 void GameState::initShaders()
 {
 	if (!this->coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
-	{
-		// std::cerr << "GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS" << std::endl;
-	}
+		ErrorHandler::throwErr("GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS\n");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */

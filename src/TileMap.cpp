@@ -69,7 +69,7 @@ TileMap::TileMap(float gridSize, unsigned grid_width, unsigned grid_height, std:
 	this->texture_file_path = texture_file_path;
 
 	if (!this->tileTextureSheet.loadFromFile(texture_file_path))
-		throw std::runtime_error("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE: " + texture_file_path);
+		ErrorHandler::throwErr("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE\n");
 
 	this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
 	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
@@ -97,9 +97,9 @@ void TileMap::loadFromFile(const std::string file_name)
 	// Try to open a file.
 	in_file.open("Maps/" + file_name);
 
-	// If couldn'd open file, throw runtime error.
+	// If couldn'd open file, runtime error.
 	if (!in_file.is_open())
-		throw std::runtime_error("TILEMAP::LOADFROMFILE::ERR_COULD_NOT_LOAD_TILEMAP_FROM_FILE: " + file_name);
+		ErrorHandler::throwErr("TILEMAP::LOADFROMFILE::ERR_COULD_NOT_LOAD_TILEMAP_FROM_FILE\n");
 
 	// Data to be loaded in
 	sf::Vector2u size;
@@ -140,18 +140,17 @@ void TileMap::loadFromFile(const std::string file_name)
 
 	// If failed to load texture
 	if (!this->tileTextureSheet.loadFromFile(texture_file_path))
-		throw std::runtime_error("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE: " + texture_file_path);
+		ErrorHandler::throwErr("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE\n");
 
 	// While not in the end of file
 	while (in_file >> grid_x >> grid_y >> z >> k >> txtrRectX >> txtrRectY >> collision >> type)
 	{
-		this->tileMap[grid_x][grid_y][z].insert(this->tileMap[grid_x][grid_y][z].begin() + k, new Tile(
-																								  grid_x, grid_y,
-																								  this->gridSizeF,
-																								  this->tileTextureSheet,
-																								  sf::IntRect(txtrRectX, txtrRectY, this->gridSizeI, this->gridSizeI),
-																								  collision,
-																								  type));
+		this->tileMap[grid_x][grid_y][z].insert(
+			this->tileMap[grid_x][grid_y][z].begin() + k,
+			new Tile(
+				grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
+				sf::IntRect(txtrRectX, txtrRectY, this->gridSizeI, this->gridSizeI),
+				collision, type));
 	}
 
 	in_file.close();
@@ -166,7 +165,7 @@ void TileMap::saveToFile(const std::string file_name)
 
 	// If couldn'd open file, throw runtime error.
 	if (!out_file.is_open())
-		throw std::runtime_error("TILEMAP::SAVETOFILE::ERR_COULD_NOT_SAVE_TILEMAP_TO_FILE: " + file_name);
+		ErrorHandler::throwErr("TILEMAP::SAVETOFILE::ERR_COULD_NOT_SAVE_TILEMAP_TO_FILE\n");
 
 	out_file << this->tileMapGridDimensions.x << " " << this->tileMapGridDimensions.y << "\n"
 			 << this->gridSizeI << "\n"
@@ -186,7 +185,7 @@ void TileMap::saveToFile(const std::string file_name)
 					{
 						out_file << x << " " << y << " " << z << " " << k << " "
 								 << this->tileMap[x][y][z][k]->getPropertiesAsString()
-								 << " ";
+								 << "\n";
 					}
 				}
 			}
@@ -421,7 +420,7 @@ const sf::Texture *TileMap::getTileTextureSheet() const
 	return &this->tileTextureSheet;
 }
 
-const unsigned TileMap::getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const
+const int TileMap::getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const
 {
 	if (x >= 0 && y >= 0 && x < this->tileMap.size())
 	{
@@ -434,5 +433,5 @@ const unsigned TileMap::getAmountOfStackedTiles(const int x, const int y, const 
 		}
 	}
 
-	return 0;
+	return -1;
 }

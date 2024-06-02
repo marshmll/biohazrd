@@ -4,6 +4,7 @@ target_sources(BIOHAZRD PRIVATE
   AttributeComponent.cpp
   EditorState.cpp
   Entity.cpp
+  ErrorHandler.cpp
   Game.cpp
   GameState.cpp
   GraphicsSettings.cpp

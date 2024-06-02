@@ -477,7 +477,8 @@ gui::TextureSelector::TextureSelector(
 	this->textureRect.width = static_cast<int>(gridSize);
 	this->textureRect.height = static_cast<int>(gridSize);
 
-	this->hideBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png");
+	if (!this->hideBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png"))
+		ErrorHandler::throwErr("GUI::TEXTURESELECTOR::TEXTURESELECTOR::ERR_COULD_NOT_LOAD_TEXTURE_SELECTOR_ICON");
 
 	this->hideBtn = new gui::Button(
 		btn_x, btn_x, btn_width, btn_height,
@@ -634,11 +635,12 @@ void gui::SolidBar::setString(const std::string string)
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-gui::ProgressBar::ProgressBar(const float x, const float y,
-							  const float width, const float height,
-							  const sf::Color bg_color, const sf::Color fill_color,
-							  const sf::Font &font, const sf::Color text_color,
-							  const unsigned char_size, const std::string string)
+gui::ProgressBar::ProgressBar(
+	const float x, const float y,
+	const float width, const float height,
+	const sf::Color bg_color, const sf::Color fill_color,
+	const sf::Font &font, const sf::Color text_color,
+	const unsigned char_size, const std::string string)
 {
 	this->barMaxSize.x = width;
 	this->barMaxSize.y = height;

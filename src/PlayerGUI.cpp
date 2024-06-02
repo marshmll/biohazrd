@@ -6,9 +6,7 @@
 void PlayerGUI::initFont()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
-	{
-		throw std::runtime_error("PLAYERGUI::INITFONT::ERR::COULD_NOT_LOAD_FONT");
-	}
+		ErrorHandler::throwErr("PLAYERGUI::INITFONT::ERR::COULD_NOT_LOAD_FONT\n");
 }
 
 void PlayerGUI::initLevelBar()

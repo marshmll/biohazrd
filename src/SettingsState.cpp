@@ -18,7 +18,7 @@ void SettingsState::initVariables()
 void SettingsState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
-		throw std::runtime_error("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
+		ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
 }
 
 void SettingsState::initKeybinds()
@@ -34,7 +34,7 @@ void SettingsState::initKeybinds()
 			this->keybinds[action] = this->acceptedKeys->at(key);
 	}
 	else
-		throw std::runtime_error("ERROR::SETTINGSSTATE::INITKEYBINDS_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
+		ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITKEYBINDS_COULD_NOT_LOAD_KEYBINDS\n");
 
 	ifs.close();
 }
@@ -47,10 +47,7 @@ void SettingsState::initGUI()
 	this->background.setSize(sf::Vector2f(vm.width, vm.height));
 
 	if (!this->backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
-	{
-		throw std::runtime_error(
-			"ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n" + this->currentPath);
-	}
+		ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n");
 
 	this->background.setTexture(&this->backgroundTexture);
 

@@ -44,10 +44,7 @@ void GraphicsSettings::saveToFile(const std::string path)
 		ofs << this->contextSettings.antialiasingLevel;
 	}
 	else
-	{
-		throw std::runtime_error(
-			"GRAPHICSSETTINGS::SAVETOFILE::ERROR_COULD_NOT_SAVE_GRAPHICS_INI\n");
-	}
+		ErrorHandler::throwErr("GRAPHICSSETTINGS::SAVETOFILE::ERROR_COULD_NOT_SAVE_GRAPHICS_INI\n");
 
 	ofs.close();
 }
@@ -70,10 +67,7 @@ void GraphicsSettings::loadFromFile(const std::string path)
 		ifs >> this->contextSettings.antialiasingLevel;
 	}
 	else
-	{
-		throw std::runtime_error(
-			"GRAPHICSSETTINGS::LOADFROMFILE::ERROR_COULD_NOT_LOAD_GRAPHICS_INI\n");
-	}
+		ErrorHandler::throwErr("GRAPHICSSETTINGS::LOADFROMFILE::ERROR_COULD_NOT_LOAD_GRAPHICS_INI\n");
 
 	ifs.close();
 }

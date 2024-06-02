@@ -9,9 +9,10 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-HitboxComponent::HitboxComponent(sf::Sprite &sprite,
-								 float offset_x, float offset_y,
-								 float width, float height) : sprite(sprite), offsetX(offset_x), offsetY(offset_y)
+HitboxComponent::HitboxComponent(
+	sf::Sprite &sprite,
+	float offset_x, float offset_y,
+	float width, float height) : sprite(sprite), offsetX(offset_x), offsetY(offset_y)
 {
 	this->hitbox.setPosition(
 		this->sprite.getPosition().x + offset_x,
@@ -21,8 +22,8 @@ HitboxComponent::HitboxComponent(sf::Sprite &sprite,
 
 	this->hitbox.setFillColor(sf::Color::Transparent);
 
-	this->hitbox.setOutlineThickness(-1.f);			// TEMP
-	this->hitbox.setOutlineColor(sf::Color::Green); // TEMP
+	this->hitbox.setOutlineThickness(-1.f);
+	this->hitbox.setOutlineColor(sf::Color::Green);
 
 	this->nextPosition.width = width;
 	this->nextPosition.height = height;

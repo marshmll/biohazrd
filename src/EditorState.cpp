@@ -44,7 +44,7 @@ void EditorState::initKeybinds()
 			this->keybinds[action] = this->acceptedKeys->at(key);
 	}
 	else
-		throw std::runtime_error("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n" + this->currentPath);
+		ErrorHandler::throwErr("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n");
 
 	ifs.close();
 }
@@ -52,7 +52,7 @@ void EditorState::initKeybinds()
 void EditorState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
-		throw std::runtime_error("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n" + this->currentPath);
+		ErrorHandler::throwErr("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
 }
 
 void EditorState::initText()
@@ -208,7 +208,8 @@ void EditorState::updateEditorInput(const float &dt)
 		{
 			if (!this->textureSelector->isActive())
 			{
-				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,
+				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y,
+									   0, this->textureRect,
 									   this->collision, this->type);
 			}
 			else

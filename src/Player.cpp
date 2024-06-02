@@ -56,13 +56,13 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 
 	// All of this is temporary
 	if (!this->weaponHorizontalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(0, 0, 64, 64)))
-		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
+		ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
 
 	if (!this->weaponUpTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(64, 0, 64, 64)))
-		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
+		ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
 
 	if (!this->weaponDownTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(128, 0, 64, 64)))
-		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
+		ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
 
 	this->weaponSprite.setTexture(this->weaponDownTexture);
 

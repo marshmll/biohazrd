@@ -50,7 +50,7 @@ void Game::initKeys()
 			this->acceptedKeys[key] = sf::Keyboard::Key(key_value);
 	}
 	else
-		throw std::runtime_error("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI\n" + this->currentPath);
+		ErrorHandler::throwErr("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI\n");
 
 	ifs.close();
 }

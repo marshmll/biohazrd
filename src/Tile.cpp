@@ -12,8 +12,7 @@
 
 Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
 		   const sf::Texture &texture, const sf::IntRect textureRect,
-		   bool collision,
-		   short type)
+		   bool collision, short type)
 {
 	this->tile.setTexture(texture);
 
