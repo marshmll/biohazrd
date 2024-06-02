@@ -1,23 +1,35 @@
 target_sources(BIOHAZRD PRIVATE
+  Components/AnimationComponent.cpp
+  Components/AttributeComponent.cpp
+  Components/HitboxComponent.cpp
+  Components/MovementComponent.cpp
+
+  Engine/Game.cpp
+  Entities/Entity.cpp
+  Entities/Player.cpp
+
+  GUI/GUI.cpp
+  GUI/PlayerGUI.cpp
+
+  Items/MeleeWeapons/MeleeWeapon.cpp
+  Items/MeleeWeapons/Sword.cpp
+  Items/RangedWeapons/RangedWeapon.cpp
+  Items/RangedWeapons/Bow.cpp
+  Items/Item.cpp
+
+  States/EditorState.cpp
+  States/GameState.cpp
+  States/MainMenuState.cpp
+  States/SettingsState.cpp
+  States/State.cpp
+
+  TileMap/TileMap.cpp
+  Tile/Tile.cpp
+
+  Utils/ErrorHandler.cpp
+  Utils/GraphicsSettings.cpp
+
   main.cpp
-  AnimationComponent.cpp
-  AttributeComponent.cpp
-  EditorState.cpp
-  Entity.cpp
-  ErrorHandler.cpp
-  Game.cpp
-  GameState.cpp
-  GraphicsSettings.cpp
-  GUI.cpp
-  HitboxComponent.cpp
-  MainMenuState.cpp
-  MovementComponent.cpp
-  Player.cpp
-  PlayerGUI.cpp
-  SettingsState.cpp
-  State.cpp
-  Tile.cpp
-  TileMap.cpp
 )
 
 file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR}/bin)

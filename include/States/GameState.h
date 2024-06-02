@@ -4,10 +4,12 @@
 #include "State.h"
 #include "TileMap.h"
 #include "PlayerGUI.h"
+#include "Sword.h"
 
 class State;
 class TileMap;
 class PlayerGUI;
+class Sword;
 
 class GameState : public State
 {

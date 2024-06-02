@@ -20,7 +20,20 @@ add_subdirectory(src)
 
 target_link_libraries(BIOHAZRD PRIVATE sfml-graphics)
 target_compile_features(BIOHAZRD PRIVATE cxx_std_17)
+
 target_include_directories(BIOHAZRD PRIVATE include)
+target_include_directories(BIOHAZRD PRIVATE include/Components)
+target_include_directories(BIOHAZRD PRIVATE include/Engine)
+target_include_directories(BIOHAZRD PRIVATE include/Entities)
+target_include_directories(BIOHAZRD PRIVATE include/GUI)
+target_include_directories(BIOHAZRD PRIVATE include/Items)
+target_include_directories(BIOHAZRD PRIVATE include/Items/MeleeWeapons)
+target_include_directories(BIOHAZRD PRIVATE include/Items/RangedWeapons)
+target_include_directories(BIOHAZRD PRIVATE include/States)
+target_include_directories(BIOHAZRD PRIVATE include/Tile)
+target_include_directories(BIOHAZRD PRIVATE include/TileMap)
+target_include_directories(BIOHAZRD PRIVATE include/Utils)
+
 target_precompile_headers(BIOHAZRD PRIVATE include/stdafx.h)
 
 if(WIN32)

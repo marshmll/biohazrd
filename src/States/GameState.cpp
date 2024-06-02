@@ -81,7 +81,7 @@ void GameState::initPlayerGUI()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap("Maps/test2.biomap");
+	this->tileMap = new TileMap("Maps/test.biomap");
 }
 
 void GameState::initShaders()
@@ -91,6 +91,7 @@ void GameState::initShaders()
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
+
 GameState::GameState(StateData *data) : State(data)
 {
 	this->initBufferedRender();
@@ -104,6 +105,8 @@ GameState::GameState(StateData *data) : State(data)
 	this->initPlayerGUI();
 	this->initTileMap();
 	this->initShaders();
+
+	Sword sword;
 }
 
 GameState::~GameState()
