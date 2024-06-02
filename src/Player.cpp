@@ -54,13 +54,17 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
 
 	this->initAnimations();
 
-	if (!this->weaponVerticalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_vertical.png"))
+	// All of this is temporary
+	if (!this->weaponHorizontalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(0, 0, 64, 64)))
 		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
 
-	if (!this->weaponHorizontalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_horizontal.png"))
+	if (!this->weaponUpTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(64, 0, 64, 64)))
 		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
 
-	this->weaponSprite.setTexture(this->weaponVerticalTexture);
+	if (!this->weaponDownTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(128, 0, 64, 64)))
+		throw std::runtime_error("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE");
+
+	this->weaponSprite.setTexture(this->weaponDownTexture);
 
 	this->weaponSprite.setOrigin(
 		this->weaponSprite.getGlobalBounds().width / 2.f,
@@ -87,11 +91,7 @@ void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 
 	this->attributeComponent->updateStats();
 
-	// float dx = mouse_pos_view.x - this->weaponSprite.getPosition().x;
-	// float dy = mouse_pos_view.y - this->weaponSprite.getPosition().y;
-	// float PI = 3.14159265359f;
-	// float angle = atan2(dy, dx) * 180 / PI;
-
+	// All of this is temporary
 	float angle;
 	sf::Vector2f position;
 
@@ -99,29 +99,29 @@ void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 	{
 		this->weaponSprite.setTexture(this->weaponHorizontalTexture);
 		angle = -90.f;
-		position.x = this->getCenteredPosition().x - 10.f;
+		position.x = this->getCenteredPosition().x;
 		position.y = this->getCenteredPosition().y - 10.f;
 	}
 	else if (this->getDirection() == "RIGHT")
 	{
 		this->weaponSprite.setTexture(this->weaponHorizontalTexture);
 		angle = 90.f;
-		position.x = this->getCenteredPosition().x;
+		position.x = this->getCenteredPosition().x - 15.f;
 		position.y = this->getCenteredPosition().y - 10.f;
 	}
 	else if (this->getDirection() == "UP")
 	{
-		this->weaponSprite.setTexture(this->weaponVerticalTexture);
+		this->weaponSprite.setTexture(this->weaponUpTexture);
 		position.x = this->getCenteredPosition().x + this->getSize().x / 2.f - 5.f;
-		position.y = this->getCenteredPosition().y - 10.f;
+		position.y = this->getCenteredPosition().y;
 		angle = 0.f;
 	}
 	else if (this->getDirection() == "DOWN")
 	{
-		this->weaponSprite.setTexture(this->weaponVerticalTexture);
-		position.x = this->getCenteredPosition().x - this->getSize().x / 2.f + 5.f;
-		position.y = this->getCenteredPosition().y;
-		angle = 180.f;
+		this->weaponSprite.setTexture(this->weaponDownTexture);
+		position.x = this->getCenteredPosition().x - this->getSize().x / 2.f + 10.f;
+		position.y = this->getCenteredPosition().y + 15.f;
+		angle = 0.f;
 	}
 
 	this->weaponSprite.setPosition(position);
@@ -132,11 +132,11 @@ void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader
 {
 	if (shader)
 	{
-
+		// Temp
 		if (this->getDirection() == "LEFT" || this->getDirection() == "UP")
 		{
 			shader->setUniform("hasTexture", true);
-			shader->setUniform("lightPos", this->getCenteredPosition());
+			shader->setUniform("lightPos", this->weaponSprite.getPosition());
 			target.draw(this->weaponSprite, shader);
 		}
 
@@ -144,10 +144,11 @@ void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader
 		shader->setUniform("lightPos", this->getCenteredPosition());
 		target.draw(this->sprite, shader);
 
+		// Temp
 		if (this->getDirection() == "RIGHT" || this->getDirection() == "DOWN")
 		{
 			shader->setUniform("hasTexture", true);
-			shader->setUniform("lightPos", this->getCenteredPosition());
+			shader->setUniform("lightPos", this->weaponSprite.getPosition());
 			target.draw(this->weaponSprite, shader);
 		}
 	}

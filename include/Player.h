@@ -13,7 +13,8 @@ private:
 	bool isJumping;
 	std::string currentJumpAnimationName;
 
-	sf::Texture weaponVerticalTexture;
+	sf::Texture weaponUpTexture;
+	sf::Texture weaponDownTexture;
 	sf::Texture weaponHorizontalTexture;
 	sf::Sprite weaponSprite;
 
