@@ -13,6 +13,7 @@ private:
 	/* VARIABLES */
 
 	sf::View editorCamera;
+	sf::Vector2i editorCameraPosGrid;
 
 	sf::Font font;
 	sf::Text cursorText;
@@ -151,6 +152,13 @@ public:
 	 * @return void
 	 */
 	void updateEditorInput(const float &dt);
+
+	/**
+	 * @brief Updates the editor camera variables.
+	 * 
+	 * @return void
+	 */
+	void updateEditorCamera();
 
 	/**
 	 * @brief Iterates over all buttons and update their states based on

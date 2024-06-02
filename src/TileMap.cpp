@@ -225,11 +225,14 @@ void TileMap::update(const float &dt)
 }
 
 void TileMap::render(
-	sf::RenderTarget &target, const sf::Vector2i &gridPosition,
+	sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
 	const bool show_collision_box, sf::Shader *shader,
-	const sf::Vector2f playerPosition)
+	const sf::Vector2f player_position)
 {
-	this->updateMapActiveArea(gridPosition, 22, 22);
+	int active_area_width = static_cast<int>(std::ceil(static_cast<float>(vm.width) / this->gridSizeF)) + 2;
+	int active_area_height = static_cast<int>(std::ceil(static_cast<float>(vm.height) / this->gridSizeF) + 2);
+
+	this->updateMapActiveArea(grid_position, active_area_width, active_area_height);
 
 	for (size_t x = this->startX; x < this->endX; x++)
 	{
@@ -244,7 +247,7 @@ void TileMap::render(
 				else
 				{
 					if (shader)
-						this->tileMap[x][y][this->layer][k]->render(target, shader, playerPosition);
+						this->tileMap[x][y][this->layer][k]->render(target, shader, player_position);
 					else
 						this->tileMap[x][y][this->layer][k]->render(target);
 				}
@@ -262,12 +265,12 @@ void TileMap::render(
 	}
 }
 
-void TileMap::deferredRender(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f playerPosition)
+void TileMap::deferredRender(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f player_position)
 {
 	while (!this->deferredTileRendering.empty())
 	{
 		if (shader)
-			this->deferredTileRendering.top()->render(target, shader, playerPosition);
+			this->deferredTileRendering.top()->render(target, shader, player_position);
 		else
 			this->deferredTileRendering.top()->render(target);
 

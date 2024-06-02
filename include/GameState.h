@@ -14,8 +14,11 @@ class GameState : public State
 private:
 	/* VARIABLES */
 	sf::View playerCamera;
+	sf::Vector2i playerCameraPosGrid;
+
 	sf::RenderTexture renderBuffer;
 	sf::Sprite renderSprite;
+	
 	sf::Text debugText; // TEMP
 
 	gui::PauseMenu *pauseMenu;

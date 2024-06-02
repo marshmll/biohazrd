@@ -167,9 +167,9 @@ void GameState::renderToBuffer()
 	this->renderBuffer.setView(this->playerCamera);
 
 	this->tileMap->render(
-		this->renderBuffer,
-		this->player->getGridPosition((int)this->data->gridSize), false,
-		&this->coreShader, this->player->getCenteredPosition());
+		this->renderBuffer, this->playerCameraPosGrid,
+		this->vm, false, &this->coreShader,
+		this->player->getCenteredPosition());
 
 	this->player->render(this->renderBuffer, false, &this->coreShader);
 
@@ -252,4 +252,7 @@ void GameState::updatePlayerCamera(const float &dt)
 
 	else if (this->playerCamera.getCenter().y + this->playerCamera.getSize().y / 2.f > this->tileMap->getSize().y)
 		this->playerCamera.setCenter(this->playerCamera.getCenter().x, this->tileMap->getSize().y - this->playerCamera.getSize().y / 2.f);
+
+	this->playerCameraPosGrid.x = static_cast<int>(this->playerCamera.getCenter().x) / static_cast<int>(this->data->gridSize);
+	this->playerCameraPosGrid.y = static_cast<int>(this->playerCamera.getCenter().y) / static_cast<int>(this->data->gridSize);
 }

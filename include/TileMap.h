@@ -147,9 +147,9 @@ public:
 	 * @return void
 	 */
 	void render(
-		sf::RenderTarget &target, const sf::Vector2i &gridPosition,
+		sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
 		const bool show_collision_box = false, sf::Shader *shader = nullptr,
-		const sf::Vector2f playerPosition = sf::Vector2f());
+		const sf::Vector2f player_position = sf::Vector2f());
 
 	/**
 	 * @brief Deferred render for tiles that are suposed to be rendered

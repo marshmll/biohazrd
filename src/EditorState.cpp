@@ -150,6 +150,7 @@ void EditorState::update(const float &dt)
 		this->updateButtons();
 		this->updateGUI(dt);
 		this->updateEditorInput(dt);
+		this->updateEditorCamera();
 	}
 	else
 	{
@@ -162,7 +163,7 @@ void EditorState::render(sf::RenderTarget &target)
 {
 	// Render tilemap in the editor camera
 	target.setView(this->editorCamera);
-	this->tileMap->render(target, this->mousePosGrid, true);
+	this->tileMap->render(target, this->editorCameraPosGrid, this->vm, true);
 	this->tileMap->deferredRender(target);
 
 	// Render buttons in the window view
@@ -243,6 +244,12 @@ void EditorState::updateEditorInput(const float &dt)
 		if (this->type > 0)
 			--this->type;
 	}
+}
+
+void EditorState::updateEditorCamera()
+{
+	this->editorCameraPosGrid.x = static_cast<int>(this->editorCamera.getCenter().x) / static_cast<int>(this->data->gridSize);
+	this->editorCameraPosGrid.y = static_cast<int>(this->editorCamera.getCenter().y) / static_cast<int>(this->data->gridSize);
 }
 
 void EditorState::updateButtons()
