@@ -213,6 +213,12 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z,
 					textureRect, collision, type));
 			}
 		}
+		else
+		{
+			this->tileMap[x][y][z].push_back(new Tile(
+				x, y, this->gridSizeF, this->tileTextureSheet,
+				textureRect, collision, type));
+		}
 	}
 }
 
