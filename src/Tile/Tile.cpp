@@ -11,17 +11,17 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
-		   const sf::Texture &texture, const sf::IntRect textureRect,
-		   bool collision, short type)
+           const sf::Texture &texture, const sf::IntRect textureRect,
+           bool collision, short type)
 {
-	this->tile.setTexture(texture);
+    this->tile.setTexture(texture);
 
-	this->tile.setPosition(grid_x * gridSizeF, grid_y * gridSizeF);
+    this->tile.setPosition(grid_x * gridSizeF, grid_y * gridSizeF);
 
-	this->tile.setTextureRect(textureRect);
+    this->tile.setTextureRect(textureRect);
 
-	this->collision = collision;
-	this->type = type;
+    this->collision = collision;
+    this->type = type;
 }
 
 Tile::~Tile()
@@ -36,57 +36,57 @@ void Tile::update()
 
 void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f lightPos)
 {
-	if (shader)
-	{
-		shader->setUniform("hasTexture", true);
-		shader->setUniform("lightPos", lightPos);
+    if (shader)
+    {
+        shader->setUniform("hasTexture", true);
+        shader->setUniform("lightPos", lightPos);
 
-		target.draw(this->tile, shader);
-	}
-	else
-	{
-		target.draw(this->tile);
-	}
+        target.draw(this->tile, shader);
+    }
+    else
+    {
+        target.draw(this->tile);
+    }
 }
 
 const bool Tile::intersects(const sf::FloatRect &bounds) const
 {
-	return this->tile.getGlobalBounds().intersects(bounds);
+    return this->tile.getGlobalBounds().intersects(bounds);
 }
 
 /* ACCESSORS */
 
 const sf::Vector2f &Tile::getPosition() const
 {
-	return this->tile.getPosition();
+    return this->tile.getPosition();
 }
 
 const sf::IntRect &Tile::getTextureRect() const
 {
-	return this->tile.getTextureRect();
+    return this->tile.getTextureRect();
 }
 
 const bool &Tile::isCollideable() const
 {
-	return this->collision;
+    return this->collision;
 }
 
 const short &Tile::getType() const
 {
-	return this->type;
+    return this->type;
 }
 
 const std::string Tile::getPropertiesAsString() const
 {
-	std::stringstream ss;
+    std::stringstream ss;
 
-	ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-	   << this->collision << " " << this->type;
+    ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
+       << this->collision << " " << this->type;
 
-	return ss.str();
+    return ss.str();
 }
 
 const sf::FloatRect Tile::getGlobalBounds() const
 {
-	return this->tile.getGlobalBounds();
+    return this->tile.getGlobalBounds();
 }
