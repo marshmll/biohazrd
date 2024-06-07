@@ -3,11 +3,16 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
+const int AttributeComponent::calc_next_exp()
+{
+    return static_cast<int>(std::pow(this->level, 4) + std::pow(this->level + 6, 3));
+}
+
 AttributeComponent::AttributeComponent(const int level)
 {
     this->level = level;
     this->exp = 0;
-    this->expNext = static_cast<int>((50 / 14) * (std::pow(this->level, 2) / 6 * std::pow(this->level, 2) + (this->level * 17) - 12));
+    this->expNext = this->calc_next_exp();
     this->attributePoints = 1;
 
     this->vitality = 1;
@@ -16,8 +21,10 @@ AttributeComponent::AttributeComponent(const int level)
     this->agillity = 1;
     this->intelligence = 1;
 
-    this->updateLevel();
-    this->updateStats(true);
+    this->levelUp();
+    this->levelDown();
+
+    this->updateStats(RESET);
 }
 
 AttributeComponent::~AttributeComponent()
@@ -28,7 +35,6 @@ AttributeComponent::~AttributeComponent()
 
 void AttributeComponent::update()
 {
-    this->updateLevel();
 }
 
 void AttributeComponent::updateStats(const bool reset)
@@ -46,14 +52,30 @@ void AttributeComponent::updateStats(const bool reset)
     }
 }
 
-void AttributeComponent::updateLevel()
+// TODO: fix bug
+void AttributeComponent::levelUp()
 {
-    while (this->exp >= this->expNext)
+    while (this->exp > this->expNext)
     {
-        ++this->level;
-        this->exp -= this->expNext;
-        this->expNext = static_cast<int>((50 / 14) * (std::pow(this->level, 2) / 6 * std::pow(this->level, 2) + (this->level * 17) - 12));
-        ++this->attributePoints;
+        this->level++;
+        this->attributePoints++;
+        this->expBefore = this->expNext;
+        this->expNext = this->calc_next_exp();
+
+         std::cout << "Before: " << expBefore << " Next: " << expNext << "\n";
+    }
+}
+
+void AttributeComponent::levelDown()
+{
+    while (this->exp < this->expBefore && this->level > 0)
+    {
+        this->level--;
+        this->attributePoints--;
+        this->expNext = this->expBefore + 10;
+        this->expBefore = this->calc_next_exp();
+
+        std::cout << "Before: " << expBefore << " Next: " << expNext << "\n";
     }
 }
 
@@ -79,7 +101,7 @@ void AttributeComponent::earnExp(const int expAmount)
 {
     this->exp += expAmount;
 
-    this->updateLevel();
+    this->levelUp();
 }
 
 void AttributeComponent::loseExp(const int expAmount)
@@ -88,4 +110,6 @@ void AttributeComponent::loseExp(const int expAmount)
 
     if (this->exp <= 0)
         this->exp = 0;
+
+    this->levelDown();
 }

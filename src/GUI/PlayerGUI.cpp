@@ -92,8 +92,8 @@ void PlayerGUI::updateHpBar()
 void PlayerGUI::updateExpBar()
 {
     // Calculate the percentage of the exp.
-    float percent = static_cast<float>(this->player->getAttributeComponent()->exp) /
-                    static_cast<float>(this->player->getAttributeComponent()->expNext);
+    float percent = static_cast<float>(this->player->getAttributeComponent()->exp - this->player->getAttributeComponent()->expBefore) /
+                    static_cast<float>(this->player->getAttributeComponent()->expNext - this->player->getAttributeComponent()->expBefore);
 
     std::stringstream expBarText;
     expBarText << this->player->getAttributeComponent()->exp << " | " << this->player->getAttributeComponent()->expNext;

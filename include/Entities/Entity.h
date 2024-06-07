@@ -79,6 +79,7 @@ public:
         const float maxVelocity,
         const float acceleration, const float deceleration);
 
+
     /**
      * @brief Creates an animation functionality component for the
      * entity.

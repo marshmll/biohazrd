@@ -202,6 +202,12 @@ void GameState::updateInput(const float &dt)
 
 void GameState::updatePlayerInput(const float &dt)
 {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && hasCompletedKeytimeCicle())
+        this->player->earnExp(100);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && hasCompletedKeytimeCicle())
+        this->player->loseExp(100);
+
     if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
     {
         this->player->move(0.f, -1.f, dt);

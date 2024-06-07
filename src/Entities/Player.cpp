@@ -63,17 +63,9 @@ Player::~Player()
 
 void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-        this->attributeComponent->earnExp(20);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-        this->attributeComponent->loseExp(20);
-
     this->movementComponent->update(dt);
     this->hitboxComponent->update();
     this->updateAnimation(dt);
-
-    this->attributeComponent->updateStats();
 
     this->sword.update(mouse_pos_view, this->getSize(), this->getCenteredPosition(), this->getDirection());
 }

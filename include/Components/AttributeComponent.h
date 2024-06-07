@@ -1,13 +1,19 @@
 #ifndef ATTRIBUTECOMPONENT_H_
 #define ATTRIBUTECOMPONENT_H_
 
+#define RESET true
+
 class AttributeComponent
 {
+private:
+    const int calc_next_exp();
+
 public:
     /* LEVELLING */
 
     int level;
     int exp;
+    int expBefore;
     int expNext;
     int attributePoints;
 
@@ -62,12 +68,20 @@ public:
     void updateStats(const bool reset = false);
 
     /**
-     * @brief Updates the level while the exp is bigger than or
-     * equal to the next exp.
+     * @brief Levels up and calculate the next exp value to level up
+     * if exp is greater than the current next exp value.
      *
      * @return void
      */
-    void updateLevel();
+    void levelUp();
+
+    /**
+     * @brief Levels down and recalculate the next exp value to level down
+     * with the new level, if level is greater than zero.
+     *
+     * @return void
+     */
+    void levelDown();
 
     /* MODIFIERS */
 
