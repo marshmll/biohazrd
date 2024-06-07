@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include "Entity.h"
+#include "Sword.h"
 
 class Entity;
 
@@ -13,10 +14,7 @@ private:
     bool isJumping;
     std::string currentJumpAnimationName;
 
-    sf::Texture weaponUpTexture;
-    sf::Texture weaponDownTexture;
-    sf::Texture weaponHorizontalTexture;
-    sf::Sprite weaponSprite;
+    Sword sword;
 
     /* INITIALIZERS */
 

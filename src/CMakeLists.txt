@@ -3,6 +3,7 @@ target_sources(BIOHAZRD PRIVATE
   Components/AttributeComponent.cpp
   Components/HitboxComponent.cpp
   Components/MovementComponent.cpp
+  Components/SkillComponent.cpp
 
   Engine/Game.cpp
   Entities/Entity.cpp

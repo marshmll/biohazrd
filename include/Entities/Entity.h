@@ -5,11 +5,13 @@
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
+#include "SkillComponent.h"
 
 class HitboxComponent;
 class MovementComponent;
 class AnimationComponent;
 class AttributeComponent;
+class SkillComponent;
 
 class Entity
 {
@@ -32,6 +34,7 @@ protected:
     MovementComponent *movementComponent;
     AnimationComponent *animationComponent;
     AttributeComponent *attributeComponent;
+    SkillComponent *skillComponent;
 
 public:
     /**
@@ -91,6 +94,8 @@ public:
      * @return void
      */
     void createAttributeComponent(const unsigned level);
+
+    void createSkillComponent();
 
     /* FUNCTIONS */
 
