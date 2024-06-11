@@ -97,14 +97,14 @@ namespace gui
          * @note -> Sets text string, character size and text color
          * @note -> Sets text position centered in button.
          */
-        Button(float x, float y, float width, float height,
-               sf::Font *font, std::string text, unsigned character_size,
+        Button(const float x, const float y, const float width, const float height,
+               sf::Font *font, std::string text, const unsigned character_size,
                sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
                sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
                sf::Color outline_idle_color = sf::Color::Transparent,
                sf::Color outline_hover_color = sf::Color::Transparent,
                sf::Color outline_active_color = sf::Color::Transparent,
-               short unsigned id = 0);
+               const short unsigned id = 0);
 
         /**
          * @brief Creates a button instance WITH IMAGE.
@@ -115,13 +115,13 @@ namespace gui
          * @note -> Sets image size, texture and position
          * @note -> Sets image position centered in button.
          */
-        Button(float x, float y, float width, float height,
-               sf::Texture *texture, float img_w, float img_h,
+        Button(const float x, const float y, const float width, const float height,
+               sf::Texture *texture, const float img_w, const float img_h,
                sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
                sf::Color outline_idle_color = sf::Color::Transparent,
                sf::Color outline_hover_color = sf::Color::Transparent,
                sf::Color outline_active_color = sf::Color::Transparent,
-               short unsigned id = 0);
+               const short unsigned id = 0);
 
         virtual ~Button();
 

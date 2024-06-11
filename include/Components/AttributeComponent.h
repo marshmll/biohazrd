@@ -9,11 +9,10 @@ private:
     const int calc_next_exp();
 
 public:
-    /* LEVELLING */
+    /* LEVELING */
 
     int level;
     int exp;
-    int expBefore;
     int expNext;
     int attributePoints;
 
@@ -68,20 +67,11 @@ public:
     void updateStats(const bool reset = false);
 
     /**
-     * @brief Levels up and calculate the next exp value to level up
-     * if exp is greater than the current next exp value.
+     * @brief Updates the level based on the exp.
      *
      * @return void
      */
-    void levelUp();
-
-    /**
-     * @brief Levels down and recalculate the next exp value to level down
-     * with the new level, if level is greater than zero.
-     *
-     * @return void
-     */
-    void levelDown();
+    void updateLevel();
 
     /* MODIFIERS */
 

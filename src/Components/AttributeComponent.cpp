@@ -21,8 +21,7 @@ AttributeComponent::AttributeComponent(const int level)
     this->agillity = 1;
     this->intelligence = 1;
 
-    this->levelUp();
-    this->levelDown();
+    this->updateLevel();
 
     this->updateStats(RESET);
 }
@@ -52,30 +51,14 @@ void AttributeComponent::updateStats(const bool reset)
     }
 }
 
-// TODO: fix bug
-void AttributeComponent::levelUp()
+void AttributeComponent::updateLevel()
 {
     while (this->exp > this->expNext)
     {
         this->level++;
         this->attributePoints++;
-        this->expBefore = this->expNext;
+        this->exp -= this->expNext;
         this->expNext = this->calc_next_exp();
-
-         std::cout << "Before: " << expBefore << " Next: " << expNext << "\n";
-    }
-}
-
-void AttributeComponent::levelDown()
-{
-    while (this->exp < this->expBefore && this->level > 0)
-    {
-        this->level--;
-        this->attributePoints--;
-        this->expNext = this->expBefore + 10;
-        this->expBefore = this->calc_next_exp();
-
-        std::cout << "Before: " << expBefore << " Next: " << expNext << "\n";
     }
 }
 
@@ -101,7 +84,7 @@ void AttributeComponent::earnExp(const int expAmount)
 {
     this->exp += expAmount;
 
-    this->levelUp();
+    this->updateLevel();
 }
 
 void AttributeComponent::loseExp(const int expAmount)
@@ -111,5 +94,5 @@ void AttributeComponent::loseExp(const int expAmount)
     if (this->exp <= 0)
         this->exp = 0;
 
-    this->levelDown();
+    this->updateLevel();
 }

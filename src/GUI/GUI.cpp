@@ -51,12 +51,12 @@ const unsigned gui::calc_char_size(const sf::VideoMode &vm, unsigned constant)
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 gui::Button::Button(
-    float x, float y, float width, float height,
-    sf::Font *font, std::string text, unsigned char_size,
+    const float x, const float y, const float width, const float height,
+    sf::Font *font, std::string text, const unsigned char_size,
     sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
     sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
-    short unsigned id)
+    const short unsigned id)
 {
     this->id = id;
     this->btn_state = BTN_IDLE;
@@ -92,11 +92,11 @@ gui::Button::Button(
 }
 
 gui::Button::Button(
-    float x, float y, float width, float height,
-    sf::Texture *texture, float img_w, float img_h,
+    const float x, const float y, const float width, const float height,
+    sf::Texture *texture, const float img_w, const float img_h,
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
     sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
-    short unsigned id)
+    const short unsigned id)
 {
     this->id = id;
     this->btn_state = BTN_IDLE;
