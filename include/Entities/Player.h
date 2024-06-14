@@ -42,7 +42,7 @@ public:
      * @note -> Initializes components
      * @note -> Initializes animations
      */
-    Player(float x, float y, sf::Texture &texture_sheet);
+    Player(const float x, const float y, sf::Texture &texture_sheet);
 
     /**
      * @brief Player destructor

@@ -1,24 +1,13 @@
-/*
- * The player entity class.
- *
- *  Created on: 19 de abr. de 2024
- *      Author: Renan Andrade
- */
-
 #include "stdafx.h"
-#include "Player.h"
-
-#define PRIORITARY true
+#include "Enemy.h"
 
 /* INITIALIZERS */
 
-void Player::initVariables()
+void Enemy::initVariables()
 {
-    this->isJumping = false;
-    this->currentJumpAnimationName = "NONE";
 }
 
-void Player::initAnimations()
+void Enemy::initAnimations()
 {
     this->animationComponent->addAnimation("IDLE_DOWN", 100.f, 0, 0, 0, 0, 64.f, 64.f);
     this->animationComponent->addAnimation("IDLE_UP", 100.f, 0, 1, 0, 1, 64.f, 64.f);
@@ -43,7 +32,7 @@ void Player::initAnimations()
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-Player::Player(const float x, const float y, sf::Texture &texture_sheet)
+Enemy::Enemy(const float x, const float y, sf::Texture &texture_sheet)
 {
     this->initVariables();
     this->setPosition(sf::Vector2f(x, y));
@@ -51,56 +40,41 @@ Player::Player(const float x, const float y, sf::Texture &texture_sheet)
     this->createHitboxComponent(75.f, 90.f, 42.f, 42.f);
     this->createMovementComponent(180.f, 1200.f, 800.f);
     this->createAnimationComponent(texture_sheet);
-    this->createAttributeComponent(1);
-    this->createSkillComponent();
 
     this->initAnimations();
 }
 
-Player::~Player()
+Enemy::~Enemy()
 {
 }
 
 /* FUNCTIONS */
 
-void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
+void Enemy::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {
     this->movementComponent->update(dt);
     this->hitboxComponent->update();
     this->updateAnimation(dt);
-
-    this->sword.update(mouse_pos_view, this->getSize(), this->getCenteredPosition(), this->getDirection());
 }
 
-void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader)
+void Enemy::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader)
 {
     if (shader)
     {
-        if (this->getDirection() == "LEFT" || this->getDirection() == "UP")
-        {
-            this->sword.render(target, shader);
-        }
-
         shader->setUniform("hasTexture", true);
         shader->setUniform("lightPos", this->getCenteredPosition());
         target.draw(this->sprite, shader);
-
-        if (this->getDirection() == "RIGHT" || this->getDirection() == "DOWN")
-        {
-            this->sword.render(target, shader);
-        }
     }
     else
     {
         target.draw(this->sprite);
-        this->sword.render(target);
     }
 
     if (show_hitbox)
         this->hitboxComponent->render(target);
 }
 
-void Player::updateAnimation(const float &dt)
+void Enemy::updateAnimation(const float &dt)
 {
     switch (this->movementComponent->getCurrentState())
     {
@@ -115,47 +89,4 @@ void Player::updateAnimation(const float &dt)
             this->movementComponent->getMaxVelocity());
         break;
     }
-}
-
-void Player::updateJump(const float &dt)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping)
-    {
-        this->isJumping = true;
-        this->animationComponent->play("JUMP_" + this->movementComponent->getDirection(), dt, PRIORITARY);
-        this->currentJumpAnimationName = "JUMP_" + this->movementComponent->getDirection();
-    }
-
-    if (this->currentJumpAnimationName != "NONE")
-    {
-        if (this->animationComponent->isAnimationDone(this->currentJumpAnimationName))
-            this->isJumping = false;
-    }
-}
-
-AttributeComponent *Player::getAttributeComponent()
-{
-    return this->attributeComponent;
-}
-
-/* MODIFIERS */
-
-void Player::earnHp(const int hpAmount)
-{
-    this->attributeComponent->earnHp(hpAmount);
-}
-
-void Player::loseHp(const int hpAmount)
-{
-    this->attributeComponent->loseHp(hpAmount);
-}
-
-void Player::earnExp(const int expAmount)
-{
-    this->attributeComponent->earnExp(expAmount);
-}
-
-void Player::loseExp(const int expAmount)
-{
-    this->attributeComponent->loseExp(expAmount);
 }

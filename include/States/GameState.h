@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "Sword.h"
+#include "Enemy.h"
 
 class State;
 class TileMap;
@@ -27,6 +28,8 @@ private:
 
     Player *player;
     PlayerGUI *playerGUI;
+
+    Enemy *enemy;
 
     sf::Font font;
 
