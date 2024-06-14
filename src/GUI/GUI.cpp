@@ -638,12 +638,18 @@ void gui::SolidBar::setString(const std::string string)
 gui::ProgressBar::ProgressBar(
     const float x, const float y,
     const float width, const float height,
+    const float current_value, const float max_value,
     const sf::Color bg_color, const sf::Color fill_color,
-    const sf::Font &font, const sf::Color text_color,
+    sf::Font *font, const sf::Color text_color,
     const unsigned char_size, const std::string string)
 {
     this->barMaxSize.x = width;
     this->barMaxSize.y = height;
+
+    this->font = font;
+
+    this->currentValue = current_value;
+    this->maxValue = max_value;
 
     this->barBg.setSize(this->barMaxSize);
     this->barBg.setPosition(x, y);
@@ -653,7 +659,7 @@ gui::ProgressBar::ProgressBar(
     this->barFill.setPosition(x, y);
     this->barFill.setFillColor(fill_color);
 
-    this->barText.setFont(font);
+    this->barText.setFont(*font);
     this->barText.setCharacterSize(char_size);
     this->barText.setFillColor(text_color);
     this->barText.setString(string);
@@ -662,6 +668,29 @@ gui::ProgressBar::ProgressBar(
     this->barText.setPosition(
         this->barBg.getPosition().x + this->barBg.getSize().x / 10.f,
         this->barBg.getPosition().y + this->barBg.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
+}
+
+gui::ProgressBar::ProgressBar(
+    const float x, const float y,
+    const float width, const float height,
+    const float current_value, const float max_value,
+    const sf::Color bg_color, const sf::Color fill_color)
+{
+    this->barMaxSize.x = width;
+    this->barMaxSize.y = height;
+
+    this->font = nullptr;
+
+    this->currentValue = current_value;
+    this->maxValue = max_value;
+
+    this->barBg.setSize(this->barMaxSize);
+    this->barBg.setPosition(x, y);
+    this->barBg.setFillColor(bg_color);
+
+    this->barFill.setSize(this->barMaxSize);
+    this->barFill.setPosition(x, y);
+    this->barFill.setFillColor(fill_color);
 }
 
 gui::ProgressBar::~ProgressBar()
@@ -678,27 +707,37 @@ void gui::ProgressBar::render(sf::RenderTarget &target)
 {
     target.draw(this->barBg);
     target.draw(this->barFill);
-    target.draw(this->barText);
+
+    if (this->font)
+        target.draw(this->barText);
 }
 
 /* MODIFIERS */
 
 void gui::ProgressBar::setString(const std::string string)
 {
-    this->barText.setString(string);
+    if (this->font)
+    {
+        this->barText.setString(string);
 
-    // Center bar text in the bar.
-    this->barText.setPosition(
-        this->barBg.getPosition().x + this->barBg.getSize().x / 10.f,
-        this->barBg.getPosition().y + this->barBg.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
+        // Center bar text in the bar.
+        this->barText.setPosition(
+            this->barBg.getPosition().x + this->barBg.getSize().x / 10.f,
+            this->barBg.getPosition().y + this->barBg.getSize().y / 2.f - std::floor(this->barText.getGlobalBounds().height / 2.f + 2.f));
+    }
 }
 
-void gui::ProgressBar::setProgressPercent(float percent)
+void gui::ProgressBar::setValue(const float value)
 {
-    if (percent < 0.f)
-        percent = 0.f;
-    else if (percent > 1.f)
-        percent = 1.f;
+    if (value < 0.f)
+        this->currentValue = 0.f;
+    else if (value > this->maxValue)
+        this->currentValue = this->maxValue;
+    else
+        this->currentValue = value;
+
+    float percent = static_cast<float>(this->currentValue) /
+                    static_cast<float>(this->maxValue);
 
     this->barFill.setSize(sf::Vector2f(
         static_cast<float>(std::floor(this->barMaxSize.x * percent)),

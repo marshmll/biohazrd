@@ -524,6 +524,10 @@ namespace gui
     {
     private:
         /* VARIABLES */
+
+        float currentValue;
+        float maxValue;
+
         sf::RectangleShape barBg;
         sf::RectangleShape barFill;
         sf::Vector2f barMaxSize;
@@ -533,11 +537,19 @@ namespace gui
     public:
         /* CONSTRUCTOR AND DESTRUCTOR */
 
-        ProgressBar(const float x, const float y,
-                    const float width, const float height,
-                    const sf::Color bg_color, const sf::Color fill_color,
-                    const sf::Font &font, const sf::Color text_color,
-                    const unsigned char_size, const std::string string = "");
+        ProgressBar(
+            const float x, const float y,
+            const float width, const float height,
+            const float current_value, const float max_value,
+            const sf::Color bg_color, const sf::Color fill_color,
+            sf::Font *font, const sf::Color text_color,
+            const unsigned char_size, const std::string string = "");
+
+        ProgressBar(
+            const float x, const float y,
+            const float width, const float height,
+            const float current_value, const float max_value,
+            const sf::Color bg_color, const sf::Color fill_color);
 
         virtual ~ProgressBar();
 
@@ -557,11 +569,12 @@ namespace gui
         void setString(const std::string string);
 
         /**
-         * @brief Sets the bar's fill width based on a percentage.
+         * @brief Sets the bar's current value and resizes it relative to the
+         * percentage of the max value.
          *
          * @return void
          */
-        void setProgressPercent(float percent);
+        void setValue(const float value);
     };
 }
 

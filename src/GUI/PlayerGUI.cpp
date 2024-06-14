@@ -23,8 +23,9 @@ void PlayerGUI::initHpBar()
     this->hpBar = new gui::ProgressBar(
         gui::p2pX(this->vm, 1.5f), gui::p2pY(this->vm, 7.5f),
         gui::p2pX(this->vm, 19.5f), gui::p2pY(this->vm, 3.7f),
+        this->player->getAttributeComponent()->hp, this->player->getAttributeComponent()->hpMax,
         sf::Color(50, 50, 50, 200), sf::Color(250, 20, 20, 200),
-        this->font, sf::Color::White, gui::calc_char_size(this->vm, 140));
+        &this->font, sf::Color::White, gui::calc_char_size(this->vm, 140));
 }
 
 void PlayerGUI::initExpBar()
@@ -32,8 +33,9 @@ void PlayerGUI::initExpBar()
     this->expBar = new gui::ProgressBar(
         gui::p2pX(this->vm, 1.5f), gui::p2pY(this->vm, 12.5f),
         gui::p2pX(this->vm, 15.6f), gui::p2pY(this->vm, 2.5f),
+        this->player->getAttributeComponent()->exp, this->player->getAttributeComponent()->expNext,
         sf::Color(50, 50, 50, 200), sf::Color(20, 250, 20, 200),
-        this->font, sf::Color::White, gui::calc_char_size(this->vm, 140));
+        &this->font, sf::Color::White, gui::calc_char_size(this->vm, 140));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -78,26 +80,18 @@ void PlayerGUI::updateLevelBar()
 
 void PlayerGUI::updateHpBar()
 {
-    // Calculate the percentage of the health.
-    float percent = static_cast<float>(this->player->getAttributeComponent()->hp) /
-                    static_cast<float>(this->player->getAttributeComponent()->hpMax);
-
     std::stringstream hpBarText;
     hpBarText << this->player->getAttributeComponent()->hp << " | " << this->player->getAttributeComponent()->hpMax;
 
     this->hpBar->setString(hpBarText.str());
-    this->hpBar->setProgressPercent(percent);
+    this->hpBar->setValue(this->player->getAttributeComponent()->hp);
 }
 
 void PlayerGUI::updateExpBar()
 {
-    // Calculate the percentage of the exp.
-    float percent = static_cast<float>(this->player->getAttributeComponent()->exp) /
-                    static_cast<float>(this->player->getAttributeComponent()->expNext);
-
     std::stringstream expBarText;
     expBarText << this->player->getAttributeComponent()->exp << " | " << this->player->getAttributeComponent()->expNext;
 
     this->expBar->setString(expBarText.str());
-    this->expBar->setProgressPercent(percent);
+    this->expBar->setValue(this->player->getAttributeComponent()->exp);
 }

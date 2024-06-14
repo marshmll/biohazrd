@@ -71,7 +71,7 @@ void GameState::initPauseMenu()
 
 void GameState::initPlayers()
 {
-    this->player = new Player(10.f, 10.f, this->textures["PLAYER_SPRITESHEET"]);
+    this->player = new Player(200.f, 200.f, this->textures["PLAYER_SPRITESHEET"]);
 }
 
 void GameState::initPlayerGUI()
