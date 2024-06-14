@@ -190,7 +190,7 @@ void EditorState::updateInput(const float &dt)
 
 void EditorState::updateEditorInput(const float &dt)
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->hasCompletedKeytimeCicle())
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
         {

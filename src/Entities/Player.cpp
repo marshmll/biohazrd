@@ -51,6 +51,7 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
     this->createMovementComponent(180.f, 1200.f, 800.f);
     this->createAnimationComponent(texture_sheet);
     this->createAttributeComponent(1);
+    this->createSkillComponent();
 
     this->initAnimations();
 }

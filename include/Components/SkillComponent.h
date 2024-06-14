@@ -1,6 +1,14 @@
 #ifndef SKILLCOMPONENT_H_
 #define SKILLCOMPONENT_H_
 
+enum SKILLS
+{
+    HEALTH = 0,
+    DAMAGE,
+    ACCURACY,
+    ENDURANCE,
+};
+
 class SkillComponent
 {
 private:
@@ -9,6 +17,7 @@ private:
     private:
         /* VARIABLES */
 
+        short unsigned type;
         int level;
         int levelMax;
 
@@ -19,8 +28,9 @@ private:
     public:
         /* CONSTRUCTOR AND DESTRUCTOR */
 
-        Skill()
+        Skill(const short unsigned type)
         {
+            this->type = type;
             this->level = 1;
             this->levelMax = 100;
 
@@ -59,11 +69,13 @@ private:
 
         /* ACCESSORS */
 
-        inline const int &getLevel() { return this->level; }
+        inline const short unsigned &getType() const { return this->type; }
 
-        inline const int &getExp() { return this->exp; }
+        inline const int &getLevel() const { return this->level; }
 
-        inline const int &getExpNext() { return this->expNext; }
+        inline const int &getExp() const { return this->exp; }
+
+        inline const int &getExpNext() const { return this->expNext; }
 
         /* MODIFIERS */
 
@@ -88,9 +100,23 @@ private:
         }
     };
 
+    std::vector<Skill> skills;
+
+    void check_skill_existence(const short unsigned skill);
+
 public:
     SkillComponent();
     virtual ~SkillComponent();
+
+    /* FUNCTIONS */
+
+    void gainExp(const short unsigned skill, const int exp_amount);
+
+    /* ACCESSORS */
+
+    const int getSkillLevel(const short unsigned skill);
+
+    const int getSkillExp(const short unsigned skill);
 };
 
 #endif /* SKILLCOMPONENT_H_ */
