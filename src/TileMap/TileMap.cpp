@@ -366,22 +366,22 @@ void TileMap::updateCollision(const float &dt, Entity *entity)
                         if (entity->getDirection() == "UP")
                         {
                             entity->stopVelocityY();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y + .5f));
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y + dt * (entity->getMaxVelocity() / 10.f)));
                         }
                         if (entity->getDirection() == "DOWN")
                         {
                             entity->stopVelocityY();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y - .5f));
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y - dt * (entity->getMaxVelocity() / 10.f)));
                         }
                         if (entity->getDirection() == "LEFT")
                         {
                             entity->stopVelocityX();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x + .5f, entity->getPosition().y));
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x + dt * (entity->getMaxVelocity() / 10.f), entity->getPosition().y));
                         }
                         if (entity->getDirection() == "RIGHT")
                         {
                             entity->stopVelocityX();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x - .5f, entity->getPosition().y));
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x - dt * (entity->getMaxVelocity() / 10.f), entity->getPosition().y));
                         }
                     }
                 }

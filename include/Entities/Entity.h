@@ -79,7 +79,6 @@ public:
         const float maxVelocity,
         const float acceleration, const float deceleration);
 
-
     /**
      * @brief Creates an animation functionality component for the
      * entity.
@@ -96,6 +95,12 @@ public:
      */
     void createAttributeComponent(const unsigned level);
 
+    /**
+     * @brief Creates an skill functionality component for the
+     * entity
+     *
+     * @return void
+     */
     void createSkillComponent();
 
     /* FUNCTIONS */
@@ -176,6 +181,20 @@ public:
      * @return sf::FloatRect
      */
     virtual const sf::FloatRect getNextPositionBounds(const float &dt);
+
+    /**
+     * @brief Returns the entity's current velocity.
+     *
+     * @return sf::Vector2f&
+     */
+    virtual const sf::Vector2f &getVelocity();
+
+    /**
+     * @brief Returns the entity's max velocity
+     *
+     * @return const float&
+     */
+    virtual const float &getMaxVelocity();
 
     /**
      * @brief Returns the entity's last direction.

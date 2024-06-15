@@ -149,6 +149,16 @@ const sf::FloatRect Entity::getNextPositionBounds(const float &dt)
         return sf::FloatRect();
 }
 
+const sf::Vector2f &Entity::getVelocity()
+{
+    return this->movementComponent->getVelocity();
+}
+
+const float &Entity::getMaxVelocity()
+{
+    return this->movementComponent->getMaxVelocity();
+}
+
 const std::string Entity::getDirection()
 {
     if (this->movementComponent)
