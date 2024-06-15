@@ -10,15 +10,15 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
-           const sf::Texture &texture, const sf::IntRect textureRect,
-           bool collision, short type)
+Tile::Tile(const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
+           const sf::Texture &texture, const sf::IntRect texture_rect,
+           const bool collision, const short type)
 {
     this->tile.setTexture(texture);
 
-    this->tile.setPosition(grid_x * gridSizeF, grid_y * gridSizeF);
+    this->tile.setPosition(grid_x * grid_size_f, grid_y * grid_size_f);
 
-    this->tile.setTextureRect(textureRect);
+    this->tile.setTextureRect(texture_rect);
 
     this->collision = collision;
     this->type = type;
@@ -34,12 +34,12 @@ void Tile::update()
 {
 }
 
-void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f lightPos)
+void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
 {
     if (shader)
     {
         shader->setUniform("hasTexture", true);
-        shader->setUniform("lightPos", lightPos);
+        shader->setUniform("lightPos", light_pos);
 
         target.draw(this->tile, shader);
     }

@@ -5,7 +5,8 @@ enum TileTypes
 {
     DEFAULT = 0,
     HARMFUL,
-    DOODAD
+    DOODAD,
+    SPAWNER
 };
 
 class Tile
@@ -19,9 +20,9 @@ protected:
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR */
-    Tile(unsigned grid_x, unsigned grid_y, float gridSizeF,
-         const sf::Texture &texture, const sf::IntRect textureRect,
-         bool collision = false, short type = TileTypes::DEFAULT);
+    Tile(const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
+         const sf::Texture &texture, const sf::IntRect texture_rect,
+         const bool collision = false, const short type = TileTypes::DEFAULT);
 
     virtual ~Tile();
 
@@ -32,7 +33,7 @@ public:
      *
      * @return void
      */
-    void update();
+    virtual void update();
 
     /**
      * @brief Renders the tile into a target.
@@ -40,11 +41,11 @@ public:
      *
      * @param target A render target reference.
      * @param shader A shader pointer. (optional)
-     * @param lightPos The lighting position (needed if using shaders)
+     * @param light_pos The lighting position (needed if using shaders)
      *
      * @return void
      */
-    void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f lightPos = sf::Vector2f());
+    virtual void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Returns if the tile intersects a given

@@ -20,8 +20,6 @@ target_sources(BIOHAZRD PRIVATE
   Items/RangedWeapons/Bow.cpp
   Items/Item.cpp
 
-  Spawners/EnemySpawner.cpp
-
   States/EditorState.cpp
   States/GameState.cpp
   States/MainMenuState.cpp
@@ -29,7 +27,9 @@ target_sources(BIOHAZRD PRIVATE
   States/State.cpp
 
   TileMap/TileMap.cpp
-  Tile/Tile.cpp
+
+  Tiles/EnemySpawner.cpp
+  Tiles/Tile.cpp
 
   Utils/ErrorHandler.cpp
   Utils/GraphicsSettings.cpp

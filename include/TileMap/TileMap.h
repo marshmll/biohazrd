@@ -141,7 +141,16 @@ public:
      */
     void removeTile(const unsigned x, const unsigned y, const unsigned z);
 
-    void update(const float &dt);
+    /**
+     * @brief Updates the entire tilemap.
+     * @note -> Updates the collision for a given entity.
+     *
+     * @param dt The game delta time.
+     * @param entity A pointer to an entity.
+     *
+     * @return void
+     */
+    void update(const float &dt, Entity *entity);
 
     /**
      * @brief Renders all the tiles in the tilemap.
@@ -171,13 +180,6 @@ public:
     void deferredRender(
         sf::RenderTarget &target, sf::Shader *shader = nullptr,
         const sf::Vector2f playerPosition = sf::Vector2f());
-
-    /**
-     * @brief Updates the collisions for a entity.
-     *
-     * @return void
-     */
-    void updateCollision(const float &dt, Entity *entity = nullptr);
 
     /**
      * @return void
