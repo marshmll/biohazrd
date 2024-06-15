@@ -91,7 +91,7 @@ void State::resume()
     this->isPaused = false;
 }
 
-/* ACESSORS */
+/* ACCESSORS */
 
 const bool &State::hasAskedToQuit() const
 {

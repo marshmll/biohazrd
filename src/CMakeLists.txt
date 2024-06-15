@@ -1,40 +1,42 @@
 target_sources(BIOHAZRD PRIVATE
-  Components/AnimationComponent.cpp
-  Components/AttributeComponent.cpp
-  Components/HitboxComponent.cpp
-  Components/MovementComponent.cpp
-  Components/SkillComponent.cpp
+    Components/AnimationComponent.cpp
+    Components/AttributeComponent.cpp
+    Components/HitboxComponent.cpp
+    Components/MovementComponent.cpp
+    Components/SkillComponent.cpp
 
-  Engine/Game.cpp
+    Engine/Game.cpp
 
-  Entities/Enemy.cpp
-  Entities/Entity.cpp
-  Entities/Player.cpp
+    Entities/Enemy.cpp
+    Entities/Entity.cpp
+    Entities/Player.cpp
 
-  GUI/GUI.cpp
-  GUI/PlayerGUI.cpp
+    GUI/GUI.cpp
+    GUI/PlayerGUI.cpp
 
-  Items/MeleeWeapons/MeleeWeapon.cpp
-  Items/MeleeWeapons/Sword.cpp
-  Items/RangedWeapons/RangedWeapon.cpp
-  Items/RangedWeapons/Bow.cpp
-  Items/Item.cpp
+    Items/MeleeWeapons/MeleeWeapon.cpp
+    Items/MeleeWeapons/Sword.cpp
+    Items/RangedWeapons/RangedWeapon.cpp
+    Items/RangedWeapons/Bow.cpp
+    Items/Item.cpp
 
-  States/EditorState.cpp
-  States/GameState.cpp
-  States/MainMenuState.cpp
-  States/SettingsState.cpp
-  States/State.cpp
+    States/EditorModes/DefaultEditorMode.cpp
+    States/EditorModes/EditorMode.cpp
+    States/EditorState.cpp
+    States/GameState.cpp
+    States/MainMenuState.cpp
+    States/SettingsState.cpp
+    States/State.cpp
 
-  TileMap/TileMap.cpp
+    TileMap/TileMap.cpp
 
-  Tiles/EnemySpawner.cpp
-  Tiles/Tile.cpp
+    Tiles/EnemySpawner.cpp
+    Tiles/Tile.cpp
 
-  Utils/ErrorHandler.cpp
-  Utils/GraphicsSettings.cpp
+    Utils/ErrorHandler.cpp
+    Utils/GraphicsSettings.cpp
 
-  main.cpp
+    main.cpp
 )
 
 file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR}/bin)

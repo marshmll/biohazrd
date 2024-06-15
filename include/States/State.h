@@ -26,7 +26,8 @@ typedef struct
     sf::RenderWindow *window;
     std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
     float gridSize;
-} StateData;
+}
+StateData;
 
 class State
 {
@@ -48,8 +49,8 @@ protected:
 
     std::string currentPath;
 
-    bool quitState;
     bool isPaused;
+    bool quitState;
 
     float keytime;
     float keytimeMax;

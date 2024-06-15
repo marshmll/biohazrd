@@ -3,36 +3,37 @@
 
 #include "State.h"
 #include "TileMap.h"
+#include "DefaultEditorMode.h"
 
 class State;
 class TileMap;
+class EditorMode;
+class DefaultEditorMode;
+
+enum EditorModes
+{
+    DEFAULT_MODE = 0,
+    ENEMY_MODE
+};
 
 class EditorState : public State
 {
 private:
     /* VARIABLES */
 
+    EditorStateData editorStateData;
+
     sf::View editorCamera;
     sf::Vector2i editorCameraPosGrid;
+    float cameraSpeed;
 
     sf::Font font;
-    sf::Text cursorText;
 
     gui::PauseMenu *pauseMenu;
+
     std::map<std::string, gui::Button *> buttons;
 
-    TileMap *tileMap;
-
-    sf::RectangleShape sidebar;
-    sf::RectangleShape selectorRect;
-    gui::TextureSelector *textureSelector;
-
-    sf::IntRect textureRect;
-
-    bool collision;
-    short type;
-    float cameraSpeed;
-    unsigned layer;
+    std::vector<EditorMode *> modes;
 
     /* INITIALIZERS */
 
@@ -67,13 +68,6 @@ private:
     void initFonts();
 
     /**
-     * @brief Initializes the texts for the state.
-     *
-     * @return void
-     */
-    void initText();
-
-    /**
      * @brief Initializes pause menu.
      *
      * @return void
@@ -102,7 +96,12 @@ private:
      */
     void initGUI();
 
+    void initEditorStateData();
+
+    void initModes();
+
 public:
+    TileMap *tileMap;
     /* CONSTRUCTOR AND DESTRUCTOR */
 
     /**
