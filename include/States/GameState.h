@@ -29,8 +29,6 @@ private:
     Player *player;
     PlayerGUI *playerGUI;
 
-    Enemy *enemy;
-
     sf::Font font;
 
     TileMap *tileMap;

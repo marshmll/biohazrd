@@ -105,8 +105,6 @@ GameState::GameState(StateData *data) : State(data)
     this->initPlayerGUI();
     this->initTileMap();
     this->initShaders();
-
-    this->enemy = new Enemy(300.f, 300.f, this->textures["PLAYER_SPRITESHEET"]);
 }
 
 GameState::~GameState()
@@ -138,7 +136,6 @@ void GameState::update(const float &dt)
         this->updatePlayerCamera(dt);
         this->updatePlayerInput(dt);
         this->player->update(dt, this->mousePosView);
-        this->enemy->update(dt, this->mousePosView);
         this->playerGUI->update(dt);
         this->updateTileMap(dt);
     }
@@ -175,7 +172,6 @@ void GameState::renderToBuffer()
         this->player->getCenteredPosition());
 
     this->player->render(this->renderBuffer, false, &this->coreShader);
-    this->enemy->render(this->renderBuffer, true, &this->coreShader);
 
     this->tileMap->deferredRender(
         this->renderBuffer,
@@ -237,7 +233,6 @@ void GameState::updateTileMap(const float &dt)
 {
     this->tileMap->update(dt);
     this->tileMap->updateCollision(dt, this->player);
-    this->tileMap->updateCollision(dt, this->enemy);
 }
 
 void GameState::updatePauseMenuButtons()

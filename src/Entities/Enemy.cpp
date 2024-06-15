@@ -32,7 +32,8 @@ void Enemy::initAnimations()
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-Enemy::Enemy(const float x, const float y, sf::Texture &texture_sheet)
+Enemy::Enemy(EnemySpawner &enemy_spawner, const float x, const float y, sf::Texture &texture_sheet)
+    : enemySpawner(enemy_spawner)
 {
     this->initVariables();
     this->setPosition(sf::Vector2f(x, y));

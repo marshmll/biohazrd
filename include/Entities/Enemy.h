@@ -2,11 +2,17 @@
 #define ENEMY_H_
 
 #include "Entity.h"
+#include "EnemySpawner.h"
+
+class Entity;
+class EnemySpawner;
 
 class Enemy : public Entity
 {
 private:
     /* VARIABLES */
+
+    EnemySpawner &enemySpawner;
 
     /* INITIALIZERS */
 
@@ -34,15 +40,40 @@ public:
      * @note -> Initializes components
      * @note -> Initializes animations
      */
-    Enemy(float x, float y, sf::Texture &texture_sheet);
+    Enemy(EnemySpawner& enemy_spawner, const float x, const float y, sf::Texture &texture_sheet);
 
     virtual ~Enemy();
 
     /* FUNCTIONS */
 
+    /**
+     * @brief Updates the enemy.
+     *
+     * @param dt The game delta time.
+     * @param mouse_pos_view The mouse position relative to the view.
+     *
+     * @return void
+     */
     void update(const float &dt, const sf::Vector2f &mouse_pos_view);
+
+    /**
+     * @brief Renders the enemy into a target.
+     *
+     * @param target A sf::RenderTarget& to render the enemy.
+     * @param show_hitbox A flag to enable hitbox debugging.
+     * @param shader A shader pointer to use. Default is nullptr.
+     *
+     * @return void
+     */
     void render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader = nullptr);
 
+    /**
+     * @brief Updates the enemy's animations.
+     *
+     * @param dt The game delta time.
+     *
+     * @return void
+     */
     void updateAnimation(const float &dt);
 };
 

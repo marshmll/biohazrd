@@ -20,6 +20,8 @@ target_sources(BIOHAZRD PRIVATE
   Items/RangedWeapons/Bow.cpp
   Items/Item.cpp
 
+  Spawners/EnemySpawner.cpp
+
   States/EditorState.cpp
   States/GameState.cpp
   States/MainMenuState.cpp
