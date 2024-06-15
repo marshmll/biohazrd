@@ -84,7 +84,11 @@ void PlayerGUI::updateHpBar()
     hpBarText << this->player->getAttributeComponent()->hp << " | " << this->player->getAttributeComponent()->hpMax;
 
     this->hpBar->setString(hpBarText.str());
-    this->hpBar->setValue(this->player->getAttributeComponent()->hp);
+
+    float percent = static_cast<float>(this->player->getAttributeComponent()->hp) /
+                    static_cast<float>(this->player->getAttributeComponent()->hpMax);
+
+    this->hpBar->setProgress(percent);
 }
 
 void PlayerGUI::updateExpBar()
@@ -93,5 +97,10 @@ void PlayerGUI::updateExpBar()
     expBarText << this->player->getAttributeComponent()->exp << " | " << this->player->getAttributeComponent()->expNext;
 
     this->expBar->setString(expBarText.str());
-    this->expBar->setValue(this->player->getAttributeComponent()->exp);
+    this->expBar->setMaxValue(this->player->getAttributeComponent()->expNext);
+
+    float percent = static_cast<float>(this->player->getAttributeComponent()->exp) /
+                    static_cast<float>(this->player->getAttributeComponent()->expNext);
+
+    this->expBar->setProgress(percent);
 }

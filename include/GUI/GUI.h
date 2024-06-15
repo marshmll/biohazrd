@@ -569,12 +569,26 @@ namespace gui
         void setString(const std::string string);
 
         /**
-         * @brief Sets the bar's current value and resizes it relative to the
-         * percentage of the max value.
+         * @brief Sets the bar's percent. Resizes the bar fill relative
+         * to the percent.
+         * 
+         * @return void
+         */
+        void setProgress(const float percent);
+
+        /**
+         * @brief Sets the bar's current value.
          *
          * @return void
          */
-        void setValue(const float value);
+        void setCurrentValue(const float value);
+
+        /**
+         * @brief Sets the bar's max value.
+         *
+         * @return void
+         */
+        void setMaxValue(const float value);
     };
 }
 
