@@ -3,12 +3,13 @@
 
 #include "State.h"
 #include "TileMap.h"
-#include "DefaultEditorMode.h"
+#include "EditorModes.h"
 
 class State;
 class TileMap;
 class EditorMode;
 class DefaultEditorMode;
+class EnemyEditorMode;
 
 enum EditorModes
 {
@@ -34,6 +35,8 @@ private:
     std::map<std::string, gui::Button *> buttons;
 
     std::vector<EditorMode *> modes;
+
+    unsigned activeEditorMode;
 
     /* INITIALIZERS */
 

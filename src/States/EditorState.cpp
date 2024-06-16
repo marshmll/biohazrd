@@ -12,16 +12,14 @@
 void EditorState::initVariables()
 {
     this->cameraSpeed = 500.f;
+    this->activeEditorMode = EditorModes::DEFAULT_MODE;
 }
 
 void EditorState::initEditorCamera()
 {
-    this->editorCamera.setSize(
-        sf::Vector2f(this->vm.width,
-                     this->vm.height));
+    this->editorCamera.setSize(sf::Vector2f(this->vm.width, this->vm.height));
 
-    this->editorCamera.setCenter(this->vm.width / 2.f,
-                                 this->vm.height / 2.f);
+    this->editorCamera.setCenter(this->vm.width / 2.f, this->vm.height / 2.f);
 }
 
 void EditorState::initKeybinds()
@@ -83,6 +81,7 @@ void EditorState::initEditorStateData()
 void EditorState::initModes()
 {
     this->modes.push_back(new DefaultEditorMode(this->data, &this->editorStateData, this->tileMap));
+    this->modes.push_back(new EnemyEditorMode(this->data, &this->editorStateData, this->tileMap));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -159,6 +158,13 @@ void EditorState::updateInput(const float &dt)
     // Pause menu toggle
     if (sf::Keyboard::isKeyPressed(this->keybinds["PAUSE"]) && this->hasCompletedKeytimeCicle())
         this->pauseToggle();
+
+    // Change between modes
+    if (sf::Keyboard::isKeyPressed(this->keybinds.at("DEFAULT_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
+        this->activeEditorMode = EditorModes::DEFAULT_MODE;
+
+    else if (sf::Keyboard::isKeyPressed(this->keybinds.at("ENEMY_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
+        this->activeEditorMode = EditorModes::ENEMY_MODE;
 }
 
 void EditorState::updateGUI(const float &dt)
@@ -200,7 +206,7 @@ void EditorState::updatePauseMenuInteraction()
 
 void EditorState::updateModes(const float &dt)
 {
-    this->modes[EditorModes::DEFAULT_MODE]->update(dt);
+    this->modes[this->activeEditorMode]->update(dt);
 }
 
 void EditorState::renderGUI(sf::RenderTarget &target)
@@ -209,5 +215,5 @@ void EditorState::renderGUI(sf::RenderTarget &target)
 
 void EditorState::renderModes(sf::RenderTarget &target)
 {
-    this->modes[EditorModes::DEFAULT_MODE]->render(target);
+    this->modes[this->activeEditorMode]->render(target);
 }

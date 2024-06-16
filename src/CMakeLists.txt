@@ -22,6 +22,7 @@ target_sources(BIOHAZRD PRIVATE
 
     States/EditorModes/DefaultEditorMode.cpp
     States/EditorModes/EditorMode.cpp
+    States/EditorModes/EnemyEditorMode.cpp
     States/EditorState.cpp
     States/GameState.cpp
     States/MainMenuState.cpp
