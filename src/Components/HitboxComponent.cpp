@@ -11,8 +11,8 @@
 
 HitboxComponent::HitboxComponent(
     sf::Sprite &sprite,
-    float offset_x, float offset_y,
-    float width, float height) : sprite(sprite), offsetX(offset_x), offsetY(offset_y)
+    const float offset_x, const float offset_y,
+    const float width, const float height) : sprite(sprite), offsetX(offset_x), offsetY(offset_y)
 {
     this->hitbox.setPosition(
         this->sprite.getPosition().x + offset_x,

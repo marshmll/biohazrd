@@ -22,8 +22,8 @@ public:
      * @note -> Sets fill color to transparent
      */
     HitboxComponent(sf::Sprite &sprite,
-                    float offset_x, float offset_y,
-                    float width, float height);
+                    const float offset_x, const float offset_y,
+                    const float width, const float height);
 
     virtual ~HitboxComponent();
 

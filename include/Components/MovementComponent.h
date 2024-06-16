@@ -1,13 +1,13 @@
 #ifndef MOVEMENTCOMPONENT_H_
 #define MOVEMENTCOMPONENT_H_
 
-enum states
+enum States
 {
     IDLE = 0,
     MOVING
 };
 
-enum directions
+enum Directions
 {
     DOWN = 0,
     UP,

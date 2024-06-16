@@ -1,8 +1,6 @@
 #ifndef ANIMATIONCOMPONENT_H_
 #define ANIMATIONCOMPONENT_H_
 
-#define PRIORITARY true
-
 /* This class is responsible for managing animation functionalities. */
 class AnimationComponent
 {

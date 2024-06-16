@@ -5,9 +5,6 @@
 #include "TileMap.h"
 #include "DefaultEditorMode.h"
 
-#define USE_DEFERRED_RENDER true
-#define SHOW_COLLISION_BOX true
-
 class State;
 class TileMap;
 class EditorMode;

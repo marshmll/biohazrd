@@ -12,7 +12,7 @@ class Enemy : public Entity
 private:
     /* VARIABLES */
 
-    EnemySpawner &enemySpawner;
+    // EnemySpawner &enemySpawner;
 
     /* INITIALIZERS */
 
@@ -21,14 +21,14 @@ private:
      *
      * @return void
      */
-    void initVariables();
+    virtual void initVariables();
 
     /**
      * @brief Initializes enemy animations.
      *
      * @return void
      */
-    void initAnimations();
+    virtual void initAnimations();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR */
@@ -40,7 +40,7 @@ public:
      * @note -> Initializes components
      * @note -> Initializes animations
      */
-    Enemy(EnemySpawner &enemy_spawner, const float x, const float y, sf::Texture &texture_sheet);
+    Enemy(const float x, const float y, sf::Texture &texture_sheet);
 
     virtual ~Enemy();
 
@@ -54,7 +54,7 @@ public:
      *
      * @return void
      */
-    void update(const float &dt, const sf::Vector2f &mouse_pos_view);
+    virtual void update(const float &dt, const sf::Vector2f &mouse_pos_view = sf::Vector2f());
 
     /**
      * @brief Renders the enemy into a target.
@@ -65,7 +65,7 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target, const bool show_hitbox,
+    virtual void render(sf::RenderTarget &target, const bool show_hitbox,
                 sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f());
 
     /**
@@ -75,7 +75,7 @@ public:
      *
      * @return void
      */
-    void updateAnimation(const float &dt);
+    virtual void updateAnimation(const float &dt);
 };
 
 #endif /* ENEMY_H_ */

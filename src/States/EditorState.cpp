@@ -108,7 +108,7 @@ EditorState::~EditorState()
 
     delete this->tileMap;
 
-    for (auto &mode : this->modes)
+    for (auto mode : this->modes)
         delete mode;
 }
 
@@ -136,7 +136,7 @@ void EditorState::render(sf::RenderTarget &target)
 {
     // Render tilemap in the editor camera
     target.setView(this->editorCamera);
-    this->tileMap->render(target, this->editorCameraPosGrid, this->vm, SHOW_COLLISION_BOX);
+    this->tileMap->render(target, this->editorCameraPosGrid, this->vm, SHOW_COL_BOX);
 
     if (!this->isPaused)
     {

@@ -110,7 +110,7 @@ public:
      *
      * @return void
      */
-    virtual void update(const float &dt, const sf::Vector2f &mouse_pos_view) = 0;
+    virtual void update(const float &dt, const sf::Vector2f &mouse_pos_view = sf::Vector2f()) = 0;
 
     /**
      * @brief Renders the entity into a target.
@@ -133,7 +133,7 @@ public:
      *
      * @return void
      */
-    virtual void move(const float x, const float y, const float &dt);
+    virtual void move(const float dir_x, const float dir_y, const float &dt);
 
     /* ACCESSORS */
 

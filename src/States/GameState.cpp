@@ -60,7 +60,10 @@ void GameState::initText()
 void GameState::initTextures()
 {
     if (!this->textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
-        ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE\n");
+        ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_PLAYER_SPRITESHEET\n");
+
+    if (!this->textures["SLIME_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Slime/slime.png"))
+        ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_SLIME_SPRITESHEEET\n");
 }
 
 void GameState::initPauseMenu()
@@ -105,6 +108,11 @@ GameState::GameState(StateData *data) : State(data)
     this->initPlayerGUI();
     this->initTileMap();
     this->initShaders();
+
+    this->enemies.push_back(new Enemy(300.f, 100.f, this->textures["SLIME_SPRITESHEET"]));
+    this->enemies.push_back(new Enemy(400.f, 120.f, this->textures["SLIME_SPRITESHEET"]));
+    this->enemies.push_back(new Enemy(430.f, 340.f, this->textures["SLIME_SPRITESHEET"]));
+    this->enemies.push_back(new Enemy(150.f, 500.f, this->textures["SLIME_SPRITESHEET"]));
 }
 
 GameState::~GameState()
@@ -113,6 +121,9 @@ GameState::~GameState()
     delete this->player;
     delete this->playerGUI;
     delete this->tileMap;
+
+    for (auto enemy : this->enemies)
+        delete enemy;
 }
 
 /* FUNCTIONS */
@@ -137,6 +148,10 @@ void GameState::update(const float &dt)
         this->updatePlayerInput(dt);
         this->player->update(dt, this->mousePosView);
         this->playerGUI->update(dt);
+
+        for (auto &enemy : this->enemies)
+            enemy->update(dt);
+
         this->updateTileMap(dt);
     }
 
@@ -168,10 +183,14 @@ void GameState::renderToBuffer()
 
     this->tileMap->render(
         this->renderBuffer, this->playerCameraPosGrid,
-        this->vm, DONT_SHOW_COLL_BOX, USE_DEFERRED_RENDER,
+        this->vm, DO_NOT_SHOW_COL_BOX, USE_DEFERRED_RENDER,
         &this->coreShader, this->player->getCenteredPosition());
 
-    this->player->render(this->renderBuffer, DONT_SHOW_HITBOX,
+    for (auto &enemy : this->enemies)
+        enemy->render(this->renderBuffer, DO_NOT_SHOW_COL_BOX,
+                      &this->coreShader, this->player->getCenteredPosition());
+
+    this->player->render(this->renderBuffer, DO_NOT_SHOW_HITBOX,
                          &this->coreShader, this->player->getCenteredPosition());
 
     this->tileMap->deferredRender(
@@ -210,18 +229,22 @@ void GameState::updatePlayerInput(const float &dt)
     if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
     {
         this->player->move(0.f, -1.f, dt);
+        this->enemies[0]->move(0.f, -1.f, dt);
     }
     else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
     {
         this->player->move(0.f, 1.f, dt);
+        this->enemies[0]->move(0.f, 1.f, dt);
     }
     else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
     {
         this->player->move(-1.f, 0.f, dt);
+        this->enemies[0]->move(-1.f, 0.f, dt);
     }
     else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
     {
         this->player->move(1.f, 0.f, dt);
+        this->enemies[0]->move(1.f, 0.f, dt);
     }
 }
 
@@ -233,6 +256,9 @@ void GameState::updatePlayerGUI(const float &dt)
 void GameState::updateTileMap(const float &dt)
 {
     this->tileMap->update(dt, this->player);
+
+    for (auto enemy : this->enemies)
+        this->tileMap->update(dt, enemy);
 }
 
 void GameState::updatePauseMenuButtons()

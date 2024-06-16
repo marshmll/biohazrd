@@ -1,8 +1,6 @@
 #ifndef ATTRIBUTECOMPONENT_H_
 #define ATTRIBUTECOMPONENT_H_
 
-#define RESET true
-
 class AttributeComponent
 {
 private:

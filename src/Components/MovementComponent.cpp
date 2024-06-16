@@ -9,7 +9,7 @@ MovementComponent::MovementComponent(
     sf::Sprite &sprite, float maxVelocity,
     float acceleration, float deceleration) : sprite(sprite), maxVelocity(maxVelocity),
                                               acceleration(acceleration), deceleration(deceleration),
-                                              state(states::IDLE), direction(directions::DOWN)
+                                              state(States::IDLE), direction(Directions::DOWN)
 {
 }
 
@@ -103,24 +103,24 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
         this->velocity.y = this->maxVelocity * yDirection;
     }
 
-    this->state = MOVING;
+    this->state = States::MOVING;
 
     // Update moving direction
     if (xDirection == 1 && this->velocity.y == 0)
 
-        this->direction = RIGHT;
+        this->direction = Directions::RIGHT;
 
     else if (xDirection == -1 && this->velocity.y == 0)
 
-        this->direction = LEFT;
+        this->direction = Directions::LEFT;
 
     else if (yDirection == 1 && this->velocity.x == 0)
 
-        this->direction = DOWN;
+        this->direction = Directions::DOWN;
 
     else if (yDirection == -1 && this->velocity.x == 0)
 
-        this->direction = UP;
+        this->direction = Directions::UP;
 }
 
 /* ACCESSORS */
@@ -145,16 +145,16 @@ const std::string MovementComponent::getDirection() const
 
     switch (this->direction)
     {
-    case DOWN:
+    case Directions::DOWN:
         direction = "DOWN";
         break;
-    case UP:
+    case Directions::UP:
         direction = "UP";
         break;
-    case RIGHT:
+    case Directions::RIGHT:
         direction = "RIGHT";
         break;
-    case LEFT:
+    case Directions::LEFT:
         direction = "LEFT";
         break;
     }

@@ -8,8 +8,6 @@
 #include "stdafx.h"
 #include "Player.h"
 
-#define PRIORITARY true
-
 /* INITIALIZERS */
 
 void Player::initVariables()
