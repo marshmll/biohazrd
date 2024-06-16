@@ -6,14 +6,14 @@
  *      Author: Renan Andrade
  */
 
-#ifndef GAME_H_
-#define GAME_H_
+#ifndef ENGINE_H_
+#define ENGINE_H_
 
 #include "MainMenuState.h"
 
 class MainMenuState;
 
-class Game
+class Engine
 {
 private:
     /* VARIABLES */
@@ -92,13 +92,13 @@ public:
      * @note -> Initializes keys
      * @note -> Initializes states.
      */
-    Game();
+    Engine();
 
     /**
      * @brief Frees the window allocated memory and free all
      * states allocated memory.
      */
-    virtual ~Game();
+    virtual ~Engine();
 
     /* MAIN FUNCTIONS */
 
@@ -163,4 +163,4 @@ public:
     const bool isRunning() const;
 };
 
-#endif /* GAME_H_ */
+#endif /* ENGINE_H_ */

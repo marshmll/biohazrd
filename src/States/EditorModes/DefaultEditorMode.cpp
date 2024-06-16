@@ -143,9 +143,12 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
 {
     if (!this->textureSelector->isActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
     {
-        // Render selector rect in the editor camera
-        target.setView(*this->editorData->editorCamera);
-        target.draw(this->selectorRect);
+        if (this->editorData->mousePosGrid->x >= 0 && this->editorData->mousePosGrid->y >= 0)
+        {
+            // Render selector rect in the editor camera
+            target.setView(*this->editorData->editorCamera);
+            target.draw(this->selectorRect);
+        }
     }
 
     // Render texture selector and sidebar in the window view

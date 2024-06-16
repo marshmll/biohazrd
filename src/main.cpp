@@ -1,11 +1,11 @@
 #include "stdafx.h"
-#include "Game.h"
+#include "Engine.h"
 
 int main()
 {
-    Game game;
+    Engine engine;
 
-    game.run();
+    engine.run();
 
     exit(EXIT_SUCCESS);
 }

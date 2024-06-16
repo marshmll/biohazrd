@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "Game.h"
+#include "Engine.h"
 
 /* INITIALIZERS FUNCTIONS */
 
-void Game::initVariables()
+void Engine::initVariables()
 {
     this->currentPath = std::filesystem::current_path().string();
 
@@ -14,12 +14,12 @@ void Game::initVariables()
     this->gridSize = 64.f; // Tile size.
 }
 
-void Game::initGraphicsSettings()
+void Engine::initGraphicsSettings()
 {
     this->gfxSettings.loadFromFile("Config/graphics.ini");
 }
 
-void Game::initWindow()
+void Engine::initWindow()
 {
     // Create the window
     if (this->gfxSettings.fullscreen) // If in fullscreen mode
@@ -37,7 +37,7 @@ void Game::initWindow()
     this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 }
 
-void Game::initKeys()
+void Engine::initKeys()
 {
     std::ifstream ifs("Config/accepted_keys.ini");
 
@@ -55,7 +55,7 @@ void Game::initKeys()
     ifs.close();
 }
 
-void Game::initStateData()
+void Engine::initStateData()
 {
     this->data.states = &this->states;
     this->data.gfxSettings = &this->gfxSettings;
@@ -64,14 +64,14 @@ void Game::initStateData()
     this->data.gridSize = this->gridSize;
 }
 
-void Game::initStates()
+void Engine::initStates()
 {
     this->states.push(new MainMenuState(&this->data));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-Game::Game()
+Engine::Engine()
 {
     this->initVariables();
     this->initGraphicsSettings();
@@ -81,7 +81,7 @@ Game::Game()
     this->initStates();
 }
 
-Game::~Game()
+Engine::~Engine()
 {
     delete this->window;
 
@@ -94,7 +94,7 @@ Game::~Game()
 
 /* MAIN FUNCTIONS */
 
-void Game::run()
+void Engine::run()
 {
     while (this->isRunning())
     {
@@ -107,7 +107,7 @@ void Game::run()
     }
 }
 
-void Game::update()
+void Engine::update()
 {
     this->updateDeltaTime();
     this->pollSFMLEvents();
@@ -134,7 +134,7 @@ void Game::update()
     }
 }
 
-void Game::render()
+void Engine::render()
 {
     // Clear window
     this->window->clear();
@@ -156,12 +156,12 @@ void Game::render()
 
 /* AUXILIARY FUNCTIONS */
 
-void Game::updateDeltaTime()
+void Engine::updateDeltaTime()
 {
     this->dt = this->dtClock.restart().asSeconds();
 }
 
-void Game::pollSFMLEvents()
+void Engine::pollSFMLEvents()
 {
     while (this->window->pollEvent(this->event))
     {
@@ -177,14 +177,14 @@ void Game::pollSFMLEvents()
     }
 }
 
-void Game::endApplication()
+void Engine::endApplication()
 {
     this->window->close();
 }
 
 /* ACESSORS */
 
-const bool Game::isRunning() const
+const bool Engine::isRunning() const
 {
     return this->window->isOpen();
 }

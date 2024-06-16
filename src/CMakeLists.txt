@@ -5,7 +5,7 @@ target_sources(BIOHAZRD PRIVATE
     Components/MovementComponent.cpp
     Components/SkillComponent.cpp
 
-    Engine/Game.cpp
+    Engine/Engine.cpp
 
     Entities/Enemy.cpp
     Entities/Entity.cpp
