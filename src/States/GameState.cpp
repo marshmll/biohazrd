@@ -168,8 +168,8 @@ void GameState::renderToBuffer()
 
     this->tileMap->render(
         this->renderBuffer, this->playerCameraPosGrid,
-        this->vm, false, &this->coreShader,
-        this->player->getCenteredPosition());
+        this->vm, DONT_SHOW_COLL_BOX, USE_DEFERRED_RENDER,
+        &this->coreShader, this->player->getCenteredPosition());
 
     this->player->render(this->renderBuffer, false, &this->coreShader);
 

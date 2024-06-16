@@ -5,6 +5,9 @@
 #include "TileMap.h"
 #include "DefaultEditorMode.h"
 
+#define USE_DEFERRED_RENDER true
+#define SHOW_COLLISION_BOX true
+
 class State;
 class TileMap;
 class EditorMode;
@@ -75,13 +78,6 @@ private:
     void initPauseMenu();
 
     /**
-     * @brief Initializes all the buttons of the EditorState.
-     *
-     * @return void
-     */
-    void initButtons();
-
-    /**
      * @brief Initializes the tilemap for the editor.
      *
      * @return void
@@ -90,7 +86,6 @@ private:
 
     /**
      * @brief Initializes the GUI elements.
-     * @note -> initializes selector rect.
      *
      * @return void
      */
@@ -138,19 +133,16 @@ public:
      */
     void render(sf::RenderTarget &target);
 
-    /**
-     * @brief Updates the user input.
-     *
-     * @return void
-     */
     void updateInput(const float &dt);
 
     /**
-     * @brief Updates the input specific for the editor
+     * @brief Updates the GUI elements.
+     * @note -> Iterates over all buttons and update their states based on
+     * mouse click and position.
      *
      * @return void
      */
-    void updateEditorInput(const float &dt);
+    void updateGUI(const float &dt);
 
     /**
      * @brief Updates the editor camera.
@@ -162,48 +154,23 @@ public:
     void updateEditorCamera(const float &dt);
 
     /**
-     * @brief Iterates over all buttons and update their states based on
-     * mouse click and position.
+     * @brief Updates pause menu interactions.
+     * @note -> Checks for executing functions for buttons presses.
      *
      * @return void
      */
-    void updateButtons();
+    void updatePauseMenuInteraction();
 
-    /**
-     * @brief Updates pause menu buttons
-     *
-     * @return void
-     */
-    void updatePauseMenuButtons();
-
-    /**
-     * @brief Updates the GUI elements.
-     *
-     * @return void
-     */
-    void updateGUI(const float &dt);
-
-    /**
-     * @brief Iterates over all buttons and renders them into a target.
-     *
-     * @return void
-     */
-    void renderButtons(sf::RenderTarget &target);
+    void updateModes(const float &dt);
 
     /**
      * @brief Renders the GUI elements into a target
      *
      * @return void
      */
-
     void renderGUI(sf::RenderTarget &target);
 
-    /**
-     * @brief Returns the tile type's name.
-     *
-     * @return const std::string
-     */
-    const std::string getTypeName() const;
+    void renderModes(sf::RenderTarget &target);
 };
 
 #endif /* EDITORSTATE_H_ */

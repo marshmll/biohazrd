@@ -168,8 +168,8 @@ public:
      */
     void render(
         sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
-        const bool show_collision_box = false, sf::Shader *shader = nullptr,
-        const sf::Vector2f player_position = sf::Vector2f());
+        const bool show_collision_box = false, const bool use_deferred_render = false,
+        sf::Shader *shader = nullptr, const sf::Vector2f player_position = sf::Vector2f());
 
     /**
      * @brief Deferred render for tiles that are suposed to be rendered

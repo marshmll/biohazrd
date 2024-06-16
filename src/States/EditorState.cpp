@@ -56,10 +56,6 @@ void EditorState::initPauseMenu()
     this->pauseMenu->addButton("LOAD", gui::p2pY(this->vm, 50.f), "Load");
 }
 
-void EditorState::initButtons()
-{
-}
-
 void EditorState::initTileMap()
 {
     this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
@@ -97,7 +93,6 @@ EditorState::EditorState(StateData *data) : State(data)
     this->initFonts();
     this->initKeybinds();
     this->initPauseMenu();
-    this->initButtons();
     this->initTileMap();
     this->initGUI();
     this->initEditorStateData();
@@ -127,16 +122,13 @@ void EditorState::update(const float &dt)
 
     if (!this->isPaused)
     {
-        this->updateButtons();
         this->updateGUI(dt);
-        this->updateEditorInput(dt);
         this->updateEditorCamera(dt);
-        this->modes[EditorModes::DEFAULT_MODE]->update(dt);
+        this->updateModes(dt);
     }
     else
     {
         this->pauseMenu->update(this->mousePosWindow);
-        this->updatePauseMenuButtons();
     }
 }
 
@@ -144,33 +136,36 @@ void EditorState::render(sf::RenderTarget &target)
 {
     // Render tilemap in the editor camera
     target.setView(this->editorCamera);
-    this->tileMap->render(target, this->editorCameraPosGrid, this->vm, true);
-    this->tileMap->deferredRender(target);
-
-    // Render buttons in the window view
-    target.setView(this->window->getDefaultView());
-    this->renderButtons(target);
+    this->tileMap->render(target, this->editorCameraPosGrid, this->vm, SHOW_COLLISION_BOX);
 
     if (!this->isPaused)
     {
+        // Render GUI in the window view
+        target.setView(this->window->getDefaultView());
         this->renderGUI(target);
+        this->renderModes(target);
     }
     else
     {
         // Render pause menu in the window view
         target.setView(this->window->getDefaultView());
         this->pauseMenu->render(target);
+        this->updatePauseMenuInteraction();
     }
 }
 
 void EditorState::updateInput(const float &dt)
 {
+    // Pause menu toggle
     if (sf::Keyboard::isKeyPressed(this->keybinds["PAUSE"]) && this->hasCompletedKeytimeCicle())
         this->pauseToggle();
 }
 
-void EditorState::updateEditorInput(const float &dt)
+void EditorState::updateGUI(const float &dt)
 {
+    // Buttons
+    for (auto &it : this->buttons)
+        it.second->update(sf::Vector2f(this->mousePosWindow));
 }
 
 void EditorState::updateEditorCamera(const float &dt)
@@ -191,13 +186,7 @@ void EditorState::updateEditorCamera(const float &dt)
     this->editorCameraPosGrid.y = static_cast<int>(this->editorCamera.getCenter().y) / static_cast<int>(this->data->gridSize);
 }
 
-void EditorState::updateButtons()
-{
-    for (auto &it : this->buttons)
-        it.second->update(sf::Vector2f(this->mousePosWindow));
-}
-
-void EditorState::updatePauseMenuButtons()
+void EditorState::updatePauseMenuInteraction()
 {
     if (this->pauseMenu->isButtonPressed("QUIT"))
         this->quit();
@@ -209,17 +198,16 @@ void EditorState::updatePauseMenuButtons()
         this->tileMap->loadFromFile("Maps/test.biomap");
 }
 
-void EditorState::updateGUI(const float &dt)
+void EditorState::updateModes(const float &dt)
 {
-}
-
-void EditorState::renderButtons(sf::RenderTarget &target)
-{
-    for (auto &it : this->buttons)
-        it.second->render(target);
+    this->modes[EditorModes::DEFAULT_MODE]->update(dt);
 }
 
 void EditorState::renderGUI(sf::RenderTarget &target)
+{
+}
+
+void EditorState::renderModes(sf::RenderTarget &target)
 {
     this->modes[EditorModes::DEFAULT_MODE]->render(target);
 }

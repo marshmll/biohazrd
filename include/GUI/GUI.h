@@ -318,8 +318,9 @@ namespace gui
         /* FUNCTIONS */
 
         /**
-         * @brief Updates the pause menu.
+         * @brief Updates the pause menu interaction.
          * @note-> Updates all buttons
+         * @note -> DOES NOT executes any function for the buttons.
          *
          * @return void
          */

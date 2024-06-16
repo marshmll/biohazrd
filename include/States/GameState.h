@@ -7,6 +7,9 @@
 #include "Sword.h"
 #include "Enemy.h"
 
+#define DONT_SHOW_COLL_BOX false
+#define USE_DEFERRED_RENDER true
+
 class State;
 class TileMap;
 class PlayerGUI;

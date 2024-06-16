@@ -336,7 +336,7 @@ void TileMap::update(const float &dt, Entity *entity)
 
 void TileMap::render(
     sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
-    const bool show_collision_box, sf::Shader *shader,
+    const bool show_collision_box, const bool use_deferred_render, sf::Shader *shader,
     const sf::Vector2f player_position)
 {
     int active_area_width = static_cast<int>(std::ceil(static_cast<float>(vm.width) / this->gridSizeF)) + 2;
@@ -350,7 +350,7 @@ void TileMap::render(
         {
             for (size_t k = 0; k < this->tileMap[x][y][this->layer].size(); k++)
             {
-                if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::DOODAD)
+                if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::DOODAD && use_deferred_render)
                 {
                     this->deferredTileRendering.push(this->tileMap[x][y][this->layer][k]);
                 }

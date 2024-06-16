@@ -9,7 +9,7 @@ class State;
 class Tile;
 class TileMap;
 
-typedef struct
+typedef struct EditorStateData
 {
     std::map<std::string, sf::Keyboard::Key> *keybinds;
     sf::View *editorCamera;
@@ -27,13 +27,13 @@ EditorStateData;
 
 class EditorMode
 {
-private:
-
 protected:
     /* VARIABLES */
 
     StateData *data;
+
     EditorStateData *editorData;
+
     TileMap *tileMap;
 
 public:

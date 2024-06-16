@@ -45,10 +45,8 @@ void DefaultEditorMode::initGUI()
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 DefaultEditorMode::DefaultEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
-    : EditorMode(data, editor_data)
+    : EditorMode(data, editor_data), tileMap(tile_map)
 {
-    this->tileMap = tile_map;
-
     this->initVariables();
     this->initGUI();
 }
