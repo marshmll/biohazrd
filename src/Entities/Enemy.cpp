@@ -58,12 +58,12 @@ void Enemy::update(const float &dt, const sf::Vector2f &mouse_pos_view)
     this->updateAnimation(dt);
 }
 
-void Enemy::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader)
+void Enemy::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader, sf::Vector2f light_pos)
 {
     if (shader)
     {
         shader->setUniform("hasTexture", true);
-        shader->setUniform("lightPos", this->getCenteredPosition());
+        shader->setUniform("lightPos", light_pos);
         target.draw(this->sprite, shader);
     }
     else

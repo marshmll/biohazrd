@@ -171,7 +171,8 @@ void GameState::renderToBuffer()
         this->vm, DONT_SHOW_COLL_BOX, USE_DEFERRED_RENDER,
         &this->coreShader, this->player->getCenteredPosition());
 
-    this->player->render(this->renderBuffer, false, &this->coreShader);
+    this->player->render(this->renderBuffer, DONT_SHOW_HITBOX,
+                         &this->coreShader, this->player->getCenteredPosition());
 
     this->tileMap->deferredRender(
         this->renderBuffer,

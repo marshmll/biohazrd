@@ -40,7 +40,7 @@ public:
      * @note -> Initializes components
      * @note -> Initializes animations
      */
-    Enemy(EnemySpawner& enemy_spawner, const float x, const float y, sf::Texture &texture_sheet);
+    Enemy(EnemySpawner &enemy_spawner, const float x, const float y, sf::Texture &texture_sheet);
 
     virtual ~Enemy();
 
@@ -65,7 +65,8 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader = nullptr);
+    void render(sf::RenderTarget &target, const bool show_hitbox,
+                sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Updates the enemy's animations.

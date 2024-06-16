@@ -72,7 +72,7 @@ void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
     this->sword.update(mouse_pos_view, this->getSize(), this->getCenteredPosition(), this->getDirection());
 }
 
-void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader)
+void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader, sf::Vector2f light_pos)
 {
     if (shader)
     {
@@ -82,7 +82,7 @@ void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader
         }
 
         shader->setUniform("hasTexture", true);
-        shader->setUniform("lightPos", this->getCenteredPosition());
+        shader->setUniform("lightPos", light_pos);
         target.draw(this->sprite, shader);
 
         if (this->getDirection() == "RIGHT" || this->getDirection() == "DOWN")

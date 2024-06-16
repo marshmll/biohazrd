@@ -119,10 +119,12 @@ public:
      * @param target A render target reference.
      * @param show_hitbox Flag for rendering hitbox outine. (default: false)
      * @param shader A shader pointer. (default: nullptr)
+     * @param light_pos The relative light position for shader rendering. (default sf::Vector2f(0, 0))
      *
      * @return void
      */
-    virtual void render(sf::RenderTarget &target, const bool show_hitbox = false, sf::Shader *shader = nullptr) = 0;
+    virtual void render(sf::RenderTarget &target, const bool show_hitbox = false,
+                        sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f()) = 0;
 
     /**
      * @brief Moves the movement component (whick moves the sprite) into some

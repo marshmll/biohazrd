@@ -65,7 +65,8 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target, const bool show_hitbox = false, sf::Shader *shader = nullptr);
+    void render(sf::RenderTarget &target, const bool show_hitbox = false,
+                sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Updates the player animations.
