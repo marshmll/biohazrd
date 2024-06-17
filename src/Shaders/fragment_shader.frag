@@ -12,7 +12,7 @@ void main()
     // Convert light to view coords
     vec2 lightPosTransformed = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
     
-    //Calculate the vector from light to pixel (Make circular)
+    // Calculate the vector from light to pixel (Make circular)
     vec2 lightToFrag = lightPosTransformed - vert_pos.xy;
     lightToFrag.y = lightToFrag.y / 1.7;
 

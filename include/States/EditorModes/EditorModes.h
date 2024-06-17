@@ -6,3 +6,4 @@
 
 #include "DefaultEditorMode.h"
 #include "EnemyEditorMode.h"
+#include "CollisionEditorMode.h"

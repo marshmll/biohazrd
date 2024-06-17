@@ -1,17 +1,13 @@
 #include "stdafx.h"
-#include "EnemyEditorMode.h"
+#include "CollisionEditorMode.h"
 
-/* INITIALIZERS ================================================================================= */
+/* INITIALIZERS =============================================================================== */
 
-void EnemyEditorMode::initVariables()
+void CollisionEditorMode::initVariables()
 {
-    this->type = 0;
-    this->amount = 1;
-    this->timeToSpawn = 60;
-    this->maxDistance = 500.f;
 }
 
-void EnemyEditorMode::initGUI()
+void CollisionEditorMode::initGUI()
 {
     // Cursor text
     this->cursorText.setFont(*this->editorData->font);
@@ -30,52 +26,39 @@ void EnemyEditorMode::initGUI()
     this->selectorRect.setOutlineThickness(1.f);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR =================================================================== */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================== */
 
-EnemyEditorMode::EnemyEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
-    : EditorMode(data, editor_data, "Enemy Editor Mode"), tileMap(tile_map)
+CollisionEditorMode::CollisionEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
+    : EditorMode(data, editor_data, "Collision Editor Mode")
 {
+    this->tileMap = tile_map;
+
     this->initVariables();
     this->initGUI();
 }
 
-EnemyEditorMode::~EnemyEditorMode()
+CollisionEditorMode::~CollisionEditorMode()
 {
 }
 
 /* FUNCTIONS ===================================================================================== */
 
-void EnemyEditorMode::update(const float &dt)
+void CollisionEditorMode::update(const float &dt)
 {
     this->updateInput(dt);
     this->updateGUI(dt);
 }
 
-void EnemyEditorMode::render(sf::RenderTarget &target)
+void CollisionEditorMode::render(sf::RenderTarget &target)
 {
     this->renderGUI(target);
 }
 
-void EnemyEditorMode::updateInput(const float &dt)
+void CollisionEditorMode::updateInput(const float &dt)
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
-        {
-            this->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, this->textureRect, false, TileTypes::SPAWNER);
-        }
-    }
-    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
-    {
-        if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
-        {
-            if (this->tileMap->checkType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
-                this->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
-        }
-    }
 }
 
-void EnemyEditorMode::updateGUI(const float &dt)
+void CollisionEditorMode::updateGUI(const float &dt)
 {
     this->selectorRect.setPosition(
         this->editorData->mousePosGrid->x * this->data->gridSize,
@@ -85,16 +68,12 @@ void EnemyEditorMode::updateGUI(const float &dt)
 
     std::stringstream cursor_ss;
     cursor_ss << this->editorData->mousePosWindow->x << " " << this->editorData->mousePosWindow->y << "\n"
-              << this->editorData->mousePosGrid->x << " " << this->editorData->mousePosGrid->y << "\n"
-              << "enemy type: " << this->type << "\n"
-              << "enemy amount: " << this->amount << "\n"
-              << "time to spawn: " << this->timeToSpawn << "\n"
-              << "enemy max distance: " << this->maxDistance << "\n";
+              << this->editorData->mousePosGrid->x << " " << this->editorData->mousePosGrid->y << "\n";
 
     this->cursorText.setString(cursor_ss.str());
 }
 
-void EnemyEditorMode::renderGUI(sf::RenderTarget &target)
+void CollisionEditorMode::renderGUI(sf::RenderTarget &target)
 {
     if (this->editorData->mousePosGrid->x >= 0 && this->editorData->mousePosGrid->y >= 0)
     {
@@ -116,9 +95,9 @@ void EnemyEditorMode::renderGUI(sf::RenderTarget &target)
     target.draw(this->modeIndicatorText);
 }
 
-/* ACCESSORS ====================================================================================== */
+/* ACCESSORS ===================================================================================== */
 
-const bool EnemyEditorMode::hasCompletedKeytimeCicle()
+const bool CollisionEditorMode::hasCompletedKeytimeCicle()
 {
     if (*this->editorData->keytime >= *this->editorData->keytimeMax)
     {
@@ -129,7 +108,7 @@ const bool EnemyEditorMode::hasCompletedKeytimeCicle()
     return false;
 }
 
-const bool EnemyEditorMode::hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn)
+const bool CollisionEditorMode::hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn)
 {
     if (*this->editorData->keytime >= *this->editorData->keytimeMax)
     {

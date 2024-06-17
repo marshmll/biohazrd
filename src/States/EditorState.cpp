@@ -82,6 +82,7 @@ void EditorState::initModes()
 {
     this->modes.push_back(new DefaultEditorMode(this->data, &this->editorStateData, this->tileMap));
     this->modes.push_back(new EnemyEditorMode(this->data, &this->editorStateData, this->tileMap));
+    this->modes.push_back(new CollisionEditorMode(this->data, &this->editorStateData, this->tileMap));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -165,6 +166,9 @@ void EditorState::updateInput(const float &dt)
 
     else if (sf::Keyboard::isKeyPressed(this->keybinds.at("ENEMY_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
         this->activeEditorMode = EditorModes::ENEMY_MODE;
+
+    else if (sf::Keyboard::isKeyPressed(this->keybinds.at("COLLISION_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
+        this->activeEditorMode = EditorModes::COLLISION_MODE;
 }
 
 void EditorState::updateGUI(const float &dt)

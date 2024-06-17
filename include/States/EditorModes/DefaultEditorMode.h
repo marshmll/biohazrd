@@ -56,7 +56,7 @@ public:
 
     const bool hasCompletedKeytimeCicle();
     
-    const bool hasCompletedMousetimeCicle(const sf::Mouse::Button mouseBtn);
+    const bool hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn);
 
     const std::string getTypeName() const;
 };

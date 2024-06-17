@@ -14,7 +14,8 @@ class EnemyEditorMode;
 enum EditorModes
 {
     DEFAULT_MODE = 0,
-    ENEMY_MODE
+    ENEMY_MODE,
+    COLLISION_MODE
 };
 
 class EditorState : public State

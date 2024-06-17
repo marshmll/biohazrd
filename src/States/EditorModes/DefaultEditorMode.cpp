@@ -176,11 +176,11 @@ const bool DefaultEditorMode::hasCompletedKeytimeCicle()
     return false;
 }
 
-const bool DefaultEditorMode::hasCompletedMousetimeCicle(const sf::Mouse::Button mouseBtn)
+const bool DefaultEditorMode::hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn)
 {
     if (*this->editorData->keytime >= *this->editorData->keytimeMax)
     {
-        if (sf::Mouse::isButtonPressed(mouseBtn))
+        if (sf::Mouse::isButtonPressed(mouse_btn))
             *this->editorData->keytime = 0.f;
 
         return true;

@@ -20,6 +20,7 @@ target_sources(BIOHAZRD PRIVATE
     Items/RangedWeapons/Bow.cpp
     Items/Item.cpp
 
+    States/EditorModes/CollisionEditorMode.cpp
     States/EditorModes/DefaultEditorMode.cpp
     States/EditorModes/EditorMode.cpp
     States/EditorModes/EnemyEditorMode.cpp

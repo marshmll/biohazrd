@@ -1,15 +1,11 @@
-#ifndef ENEMYEDITORMODE_H_
-#define ENEMYEDITORMODE_H_
+#ifndef COLLISIONEDITORMODE_H_
+#define COLLISIONEDITORMODE_H_
 
 #include "EditorMode.h"
-#include "EnemySpawner.h"
 
 class EditorMode;
-class Tile;
-class TileMap;
-class EnemySpawner;
 
-class EnemyEditorMode : public EditorMode
+class CollisionEditorMode : public EditorMode
 {
 private:
     /* VARIABLES ================================================================================= */
@@ -21,12 +17,7 @@ private:
     sf::RectangleShape selectorRect;
 
     sf::IntRect textureRect;
-
-    short type;
-    short amount;
-    short timeToSpawn;
-    float maxDistance;
-
+    
     /* INITIALIZERS ============================================================================== */
 
     void initVariables();
@@ -34,11 +25,11 @@ private:
     void initGUI();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ================================================================ */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================= */
 
-    EnemyEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map);
-
-    virtual ~EnemyEditorMode();
+    CollisionEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map);
+    
+    virtual ~CollisionEditorMode();
 
     /* FUNCTIONS ================================================================================== */
 
@@ -58,4 +49,5 @@ public:
 
     const bool hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn);
 };
-#endif /* ENEMYEDITORMODE_H_ */
+
+#endif /* COLLISIONEDITORMODE_H_ */
