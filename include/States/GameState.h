@@ -5,12 +5,13 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "Sword.h"
-#include "Enemy.h"
+#include "Enemies.h"
 
 class State;
 class TileMap;
 class PlayerGUI;
 class Sword;
+class Enemy;
 
 class GameState : public State
 {

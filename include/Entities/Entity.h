@@ -23,7 +23,7 @@ private:
      *
      * @return void
      */
-    void initVariables();
+    virtual void initVariables();
 
 protected:
     /* ENTITY SPRITE */

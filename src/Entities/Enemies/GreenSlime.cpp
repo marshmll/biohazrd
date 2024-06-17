@@ -1,13 +1,13 @@
 #include "stdafx.h"
-#include "Enemy.h"
+#include "GreenSlime.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ====================================================================== */
 
-void Enemy::initVariables()
+void GreenSlime::initVariables()
 {
 }
 
-void Enemy::initAnimations()
+void GreenSlime::initAnimations()
 {
     this->animationComponent->addAnimation("IDLE", 9.f, 0, 0, 9, 0, 32.f, 32.f);
     this->animationComponent->addAnimation("GESTURE", 9.f, 0, 1, 9, 1, 32.f, 32.f);
@@ -16,9 +16,10 @@ void Enemy::initAnimations()
     this->animationComponent->addAnimation("DEATH", 9.f, 0, 4, 9, 4, 32.f, 32.f);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ========================================================= */
 
-Enemy::Enemy(const float x, const float y, sf::Texture &texture_sheet)
+GreenSlime::GreenSlime(const float x, const float y, sf::Texture &texture_sheet)
+    : Enemy()
 {
     this->initVariables();
     this->setPosition(sf::Vector2f(x, y));
@@ -30,20 +31,20 @@ Enemy::Enemy(const float x, const float y, sf::Texture &texture_sheet)
     this->initAnimations();
 }
 
-Enemy::~Enemy()
+GreenSlime::~GreenSlime()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ========================================================================== */
 
-void Enemy::update(const float &dt, const sf::Vector2f &mouse_pos_view)
+void GreenSlime::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {
     this->movementComponent->update(dt);
     this->hitboxComponent->update();
     this->updateAnimation(dt);
 }
 
-void Enemy::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader, sf::Vector2f light_pos)
+void GreenSlime::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader, sf::Vector2f light_pos)
 {
     if (shader)
     {
@@ -61,7 +62,7 @@ void Enemy::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader 
         this->hitboxComponent->render(target);
 }
 
-void Enemy::updateAnimation(const float &dt)
+void GreenSlime::updateAnimation(const float &dt)
 {
     switch (this->movementComponent->getCurrentState())
     {
@@ -71,8 +72,8 @@ void Enemy::updateAnimation(const float &dt)
 
     case MOVING:
         this->animationComponent->play("WALK", dt,
-            std::abs(this->movementComponent->getVelocity().x) + std::abs(this->movementComponent->getVelocity().y),
-            this->movementComponent->getMaxVelocity(), PRIORITARY);
+                                       std::abs(this->movementComponent->getVelocity().x) + std::abs(this->movementComponent->getVelocity().y),
+                                       this->movementComponent->getMaxVelocity(), PRIORITARY);
         break;
     }
 }
