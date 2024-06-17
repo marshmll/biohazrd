@@ -8,11 +8,11 @@
 #include "stdafx.h"
 #include "AnimationComponent.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ===================================================================== */
 
-AnimationComponent::AnimationComponent(
-    sf::Sprite &sprite, sf::Texture &texture_sheet) : sprite(sprite), textureSheet(texture_sheet),
-                                                      previousAnimation(nullptr), priorityAnimation(nullptr)
+AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet)
+    : sprite(sprite), textureSheet(texture_sheet),
+      previousAnimation(nullptr), priorityAnimation(nullptr)
 {
 }
 
@@ -22,21 +22,20 @@ AnimationComponent::~AnimationComponent()
         delete it.second;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS =========================================================================================== */
 
 void AnimationComponent::addAnimation(
     const std::string key,
-    float animation_update_timer,
-    int start_frame_x_index, int start_frame_y_index,
-    int end_frame_x_index, int end_frame_y_index,
-    int width, int height)
+    const float animation_update_timer,
+    const int start_frame_x_index, const int start_frame_y_index,
+    const int end_frame_x_index, const int end_frame_y_index,
+    const float width, const float height)
 {
-    this->animations[key] = new Animation(
-        this->sprite, this->textureSheet,
-        animation_update_timer,
-        start_frame_x_index, start_frame_y_index,
-        end_frame_x_index, end_frame_y_index,
-        width, height);
+    this->animations[key] = new Animation(this->sprite, this->textureSheet,
+                                          animation_update_timer,
+                                          start_frame_x_index, start_frame_y_index,
+                                          end_frame_x_index, end_frame_y_index,
+                                          width, height);
 }
 
 const bool AnimationComponent::play(const std::string key, const float &dt, const bool priority)
@@ -150,7 +149,7 @@ void AnimationComponent::setNewPreviousAnimation(Animation *animation)
     }
 }
 
-/* ACCESSORS */
+/* ACCESSORS ===================================================================================== */
 
 const bool &AnimationComponent::isAnimationDone(std::string key)
 {

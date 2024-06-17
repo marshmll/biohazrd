@@ -10,7 +10,7 @@ class EnemySpawner;
 class Enemy : public Entity
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ==================================================================================== */
 
     // EnemySpawner &enemySpawner;
 
@@ -22,7 +22,7 @@ private:
     virtual void initAnimations() = 0;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ==================================================================== */
 
     /**
      * @brief Enemy entity class constructor.
@@ -35,7 +35,7 @@ public:
 
     virtual ~Enemy();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ==================================================================================== */
 
     /**
      * @brief Updates the enemy.
@@ -57,7 +57,7 @@ public:
      * @return void
      */
     virtual void render(sf::RenderTarget &target, const bool show_hitbox,
-                sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f()) = 0;
+                        sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f()) = 0;
 
     /**
      * @brief Updates the enemy's animations.

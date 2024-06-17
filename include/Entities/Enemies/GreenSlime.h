@@ -10,8 +10,18 @@ class GreenSlime : public Enemy
 private:
     /* INITIALIZERS ====================================================================== */
 
+    /**
+     * @brief Initializes all variables for the green Slime entity.
+     *
+     * @return void
+     */
     void initVariables();
 
+    /**
+     * @brief Initializes all animations for the green Slime entity.
+     *
+     * @return void
+     */
     void initAnimations();
 
 public:
@@ -23,11 +33,34 @@ public:
 
     /* FUNCTIONS ========================================================================== */
 
+    /**
+     * @brief Updates the green slime entity.
+     * @param dt The game delta time.
+     * @param mouse_pos_view The mouse position relative to the view (optional).
+     *
+     * @return void
+     */
     void update(const float &dt, const sf::Vector2f &mouse_pos_view = sf::Vector2f());
 
+    /**
+     * @brief Renders the slime into a target. Can use a shader.
+     *
+     * @param target The render target to be used.
+     * @param show_hitbox A flag for showing hitbox outline (debug).
+     * @param shader A shader pointer to be used. (default nullptr)
+     * @param light_pos The light position relative to the slime. Needed if
+     * using shaders.
+     *
+     * @return void
+     */
     void render(sf::RenderTarget &target, const bool show_hitbox = false,
                 sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f());
 
+    /**
+     * @brief Updates the animations being played for the slime entity.
+     *
+     * @return void
+     */
     void updateAnimation(const float &dt);
 };
 

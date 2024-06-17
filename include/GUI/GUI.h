@@ -86,7 +86,7 @@ namespace gui
         sf::Color outlineActiveColor;
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
         /**
          * @brief Creates a button instance WITH TEXT.
@@ -125,7 +125,7 @@ namespace gui
 
         virtual ~Button();
 
-        /* FUNCTIONS */
+        /* FUNCTIONS =========================================================================================== */
 
         /**
          * @brief Updates buttons states and colors.
@@ -146,7 +146,7 @@ namespace gui
          */
         void render(sf::RenderTarget &target);
 
-        /* ACCESSORS */
+        /* ACCESSORS ========================================================================================== */
 
         /**
          * @brief Returns if the button is pressed.
@@ -170,7 +170,7 @@ namespace gui
          */
         const std::string getText() const;
 
-        /* MODIFIERS */
+        /* MODIFIERS ========================================================================================== */
 
         /**
          * @brief Sets a new id for a button.
@@ -196,7 +196,8 @@ namespace gui
     class DropDownList
     {
     private:
-        /* VARIABLES */
+        /* VARIABLES ========================================================================================== */
+
         sf::Font &font;
         gui::Button *selectedElement;
         std::vector<gui::Button *> list;
@@ -207,7 +208,7 @@ namespace gui
         float keytimeMax;
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
         /**
          * @brief Initializes the drop down list.
@@ -215,7 +216,7 @@ namespace gui
         DropDownList(const float x, const float y,
                      const float width, const float height,
                      sf::Font &font, const std::string elements_name[],
-                     const unsigned numOfElements, const unsigned char_size,
+                     const unsigned num_of_elements, const unsigned char_size,
                      const short unsigned default_index = 0);
 
         /**
@@ -223,7 +224,7 @@ namespace gui
          */
         ~DropDownList();
 
-        /* FUNCTIONS */
+        /* FUNCTIONS ========================================================================================== */
 
         /**
          * @brief Updates the selected element from the list and
@@ -250,7 +251,7 @@ namespace gui
          */
         void updateKeytime(const float &dt);
 
-        /* ACESSORS */
+        /* ACCESSORS ========================================================================================== */
 
         /**
          * @brief Returns the selected element's id.
@@ -279,7 +280,8 @@ namespace gui
     class PauseMenu
     {
     private:
-        /* VARIABLES */
+        /* VARIABLES ========================================================================================== */
+
         sf::VideoMode &vm;
         sf::Font &font;
         sf::Text pmenuText;
@@ -288,7 +290,7 @@ namespace gui
         sf::RectangleShape container;
         std::map<std::string, gui::Button *> buttons;
 
-        /* INITIALIZERS */
+        /* INITIALIZERS ======================================================================================= */
 
         /**
          * @brief Initializes pause menu buttons.
@@ -298,7 +300,7 @@ namespace gui
         void initButtons();
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
         /**
          * @brief Creates the pause menu.
@@ -315,7 +317,7 @@ namespace gui
          */
         virtual ~PauseMenu();
 
-        /* FUNCTIONS */
+        /* FUNCTIONS ========================================================================================== */
 
         /**
          * @brief Updates the pause menu interaction.
@@ -354,7 +356,7 @@ namespace gui
          */
         const bool isButtonPressed(const std::string key);
 
-        /* ACCESSORS */
+        /* ACCESSORS ========================================================================================== */
 
         /**
          * @brief Returns the buttons map reference.
@@ -373,7 +375,8 @@ namespace gui
     class TextureSelector
     {
     private:
-        /* VARIABLES */
+        /* VARIABLES ========================================================================================== */
+
         float gridSize;
         bool active;
         bool hidden;
@@ -393,7 +396,7 @@ namespace gui
         sf::IntRect textureRect;
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
         /**
          * @brief Creates a texture selector.
@@ -409,7 +412,7 @@ namespace gui
          */
         ~TextureSelector();
 
-        /* FUNCTIONS */
+        /* FUNCTIONS ========================================================================================== */
 
         /**
          * @return void
@@ -444,7 +447,7 @@ namespace gui
          */
         void updateMousetime(const float &dt);
 
-        /* ACCESSORS */
+        /* ACCESSORS ========================================================================================== */
 
         /**
          * @brief Returns if the texture selector is active.
@@ -482,14 +485,15 @@ namespace gui
     class SolidBar
     {
     private:
-        /* VARIABLES */
+        /* VARIABLES ========================================================================================== */
+
         sf::RectangleShape bar;
         sf::Vector2f barMaxSize;
         sf::Font *font;
         sf::Text barText;
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
         SolidBar(const float x, const float y,
                  const float width, const float height,
@@ -499,13 +503,18 @@ namespace gui
 
         virtual ~SolidBar();
 
-        /* FUNCTIONS */
+        /* FUNCTIONS ========================================================================================== */
 
         void update();
 
+        /**
+         * @brief Renders the solid bar into a target.
+         *
+         * @return void
+         */
         void render(sf::RenderTarget &target);
 
-        /* MODIFIERS */
+        /* MODIFIERS ========================================================================================== */
 
         /**
          * @brief Sets the bar's text string and update text position.
@@ -524,7 +533,7 @@ namespace gui
     class ProgressBar
     {
     private:
-        /* VARIABLES */
+        /* VARIABLES ========================================================================================== */
 
         float currentValue;
         float maxValue;
@@ -536,8 +545,23 @@ namespace gui
         sf::Text barText;
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
+        /**
+         * @brief Progress bar constructor WITH text.
+         * @param x The x position
+         * @param y The y position
+         * @param width The progress bar width
+         * @param height The progress bar height
+         * @param current_value The progress bar's current value
+         * @param max_value The progress bar's maximum value
+         * @param bg_color The background color for the bar.
+         * @param fill_color The fill color for the bar.
+         * @param font A font pointer for the text.
+         * @param text_color The text color.
+         * @param char_size The character size for the text.
+         * @param string The initial string to display (default = "")
+         */
         ProgressBar(
             const float x, const float y,
             const float width, const float height,
@@ -546,6 +570,17 @@ namespace gui
             sf::Font *font, const sf::Color text_color,
             const unsigned char_size, const std::string string = "");
 
+        /**
+         * @brief Progress bar constructor WITHOUT text.
+         * @param x The x position
+         * @param y The y position
+         * @param width The progress bar width
+         * @param height The progress bar height
+         * @param current_value The progress bar's current value
+         * @param max_value The progress bar's maximum value
+         * @param bg_color The background color for the bar.
+         * @param fill_color The fill color for the bar.
+         */
         ProgressBar(
             const float x, const float y,
             const float width, const float height,
@@ -554,13 +589,13 @@ namespace gui
 
         virtual ~ProgressBar();
 
-        /* FUNCTIONS */
+        /* FUNCTIONS ========================================================================================== */
 
         void update();
 
         void render(sf::RenderTarget &target);
 
-        /* MODIFIERS */
+        /* MODIFIERS ========================================================================================== */
 
         /**
          * @brief Sets the bar's text string and update text position.
@@ -572,7 +607,7 @@ namespace gui
         /**
          * @brief Sets the bar's percent. Resizes the bar fill relative
          * to the percent.
-         * 
+         *
          * @return void
          */
         void setProgress(const float percent);

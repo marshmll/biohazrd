@@ -4,7 +4,8 @@
 class HitboxComponent
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ========================================================================================== */
+
     sf::Sprite &sprite;
     sf::RectangleShape hitbox;
     sf::FloatRect nextPosition;
@@ -13,7 +14,7 @@ private:
     float offsetY;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ========================================================================= */
 
     /**
      * @brief Creates a hitbox component for a entity.
@@ -27,7 +28,7 @@ public:
 
     virtual ~HitboxComponent();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ========================================================================================== */
 
     /**
      * @brief Updates the hitbox positions based on the sprite position.
@@ -43,7 +44,7 @@ public:
      */
     void render(sf::RenderTarget &target);
 
-    /* ACCESSORS */
+    /* ACCESSORS ========================================================================================== */
 
     /**
      * @brief Returns the hitbox position
@@ -76,6 +77,9 @@ public:
     /**
      * @brief Returns the next position's global bounds.
      *
+     * @param velocity The velocity to be used in the next position bounds calculation.
+     * @param dt The game delta time.
+     *
      * @return sf::FloatRect
      */
     const sf::FloatRect getNextPositionBounds(const sf::Vector2f &velocity, const float &dt);
@@ -88,7 +92,7 @@ public:
      */
     const bool intersects(sf::FloatRect &frect) const;
 
-    /* MODIFIERS */
+    /* MODIFIERS ========================================================================================== */
 
     /**
      * @brief Sets the hitbox position, and sets the sprite position

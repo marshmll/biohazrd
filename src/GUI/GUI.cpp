@@ -48,7 +48,7 @@ const unsigned gui::calc_char_size(const sf::VideoMode &vm, unsigned constant)
  *
  *********************************************************************************************************/
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 gui::Button::Button(
     const float x, const float y, const float width, const float height,
@@ -128,7 +128,7 @@ gui::Button::~Button()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void gui::Button::update(sf::Vector2f mousePos)
 {
@@ -179,7 +179,7 @@ void gui::Button::render(sf::RenderTarget &target)
         target.draw(this->image);
 }
 
-/* ACCESSORS */
+/* ACCESSORS ================================================================================================= */
 
 const bool gui::Button::isPressed() const
 {
@@ -196,7 +196,7 @@ const std::string gui::Button::getText() const
     return this->text.getString();
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void gui::Button::setId(const short unsigned id)
 {
@@ -218,13 +218,13 @@ void gui::Button::setText(std::string text)
  *
  *********************************************************************************************************/
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 gui::DropDownList::DropDownList(
     const float x, const float y,
     const float width, const float height,
     sf::Font &font, const std::string elements_name[],
-    const unsigned numOfElements, const unsigned char_size,
+    const unsigned num_of_elements, const unsigned char_size,
     const short unsigned default_index) : font(font), showList(false),
                                           keytime(0.f), keytimeMax(20.f)
 {
@@ -235,7 +235,7 @@ gui::DropDownList::DropDownList(
         sf::Color(120, 120, 120, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
         sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50));
 
-    for (unsigned i = 0; i < numOfElements; i++)
+    for (unsigned i = 0; i < num_of_elements; i++)
     {
         this->list.push_back(
             new gui::Button(
@@ -258,7 +258,7 @@ gui::DropDownList::~DropDownList()
     }
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void gui::DropDownList::update(const sf::Vector2i &mousePosWindow, const float &dt)
 {
@@ -312,7 +312,8 @@ const short unsigned gui::DropDownList::getSelectedElementId() const
     return this->selectedElement->getId();
 }
 
-/* ACESSORS */
+/* ACCESSORS ==================================================================================================== */
+
 const bool gui::DropDownList::hasCompletedKeytimeCicle()
 {
     if (this->keytime >= this->keytimeMax)
@@ -330,13 +331,13 @@ const bool gui::DropDownList::hasCompletedKeytimeCicle()
  *
  *********************************************************************************************************/
 
-/* INITIALIZERS */
+/* INITIALIZERS ============================================================================================== */
 
 void gui::PauseMenu::initButtons()
 {
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 gui::PauseMenu::PauseMenu(sf::VideoMode &vm, sf::Font &font) : vm(vm), font(font)
 {
@@ -376,7 +377,7 @@ gui::PauseMenu::~PauseMenu()
     }
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void gui::PauseMenu::update(const sf::Vector2i &mousePosWindow)
 {
@@ -413,7 +414,7 @@ const bool gui::PauseMenu::isButtonPressed(const std::string key)
     return this->buttons[key]->isPressed();
 }
 
-/* ACCESSORS */
+/* ACCESSORS ==================================================================================================== */
 
 std::map<std::string, gui::Button *> &gui::PauseMenu::getButtons()
 {
@@ -426,7 +427,7 @@ std::map<std::string, gui::Button *> &gui::PauseMenu::getButtons()
  *
  *********************************************************************************************************/
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 gui::TextureSelector::TextureSelector(
     const float btn_x, const float btn_y,
@@ -491,7 +492,7 @@ gui::TextureSelector::~TextureSelector()
     delete this->hideBtn;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void gui::TextureSelector::update(const float &dt, const sf::Vector2i mousePosWindow)
 {
@@ -543,7 +544,7 @@ void gui::TextureSelector::render(sf::RenderTarget &target)
     this->hideBtn->render(target);
 }
 
-/* ACCESSORS */
+/* ACCESSORS ================================================================================================= */
 
 const bool &gui::TextureSelector::isActive() const
 {
@@ -572,7 +573,7 @@ const sf::IntRect &gui::TextureSelector::getTextureRect() const
  *
  *********************************************************************************************************/
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 gui::SolidBar::SolidBar(
     const float x, const float y,
@@ -603,7 +604,7 @@ gui::SolidBar::~SolidBar()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void gui::SolidBar::update()
 {
@@ -615,7 +616,7 @@ void gui::SolidBar::render(sf::RenderTarget &target)
     target.draw(this->barText);
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void gui::SolidBar::setString(const std::string string)
 {
@@ -633,7 +634,7 @@ void gui::SolidBar::setString(const std::string string)
  *
  *********************************************************************************************************/
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 gui::ProgressBar::ProgressBar(
     const float x, const float y,
@@ -697,7 +698,7 @@ gui::ProgressBar::~ProgressBar()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void gui::ProgressBar::update()
 {
@@ -712,7 +713,7 @@ void gui::ProgressBar::render(sf::RenderTarget &target)
         target.draw(this->barText);
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void gui::ProgressBar::setString(const std::string string)
 {

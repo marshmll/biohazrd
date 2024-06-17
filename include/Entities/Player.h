@@ -9,14 +9,14 @@ class Entity;
 class Player : public Entity
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ========================================================================================== */
 
     bool isJumping;
     std::string currentJumpAnimationName;
 
     Sword sword;
 
-    /* INITIALIZERS */
+    /* INITIALIZERS ========================================================================================== */
 
     /**
      * @brief Initializes player variables.
@@ -33,7 +33,7 @@ private:
     void initAnimations();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     /**
      * @brief Player entity class constructor.
@@ -49,7 +49,7 @@ public:
      */
     virtual ~Player();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS =================================================================================================== */
 
     /**
      * @brief Updates the player entity.
@@ -82,7 +82,7 @@ public:
      */
     void updateJump(const float &dt);
 
-    /* ACCESSORS */
+    /* ACCESSORS =================================================================================================== */
 
     /**
      * @brief Returns a pointer to the player's atribute component.
@@ -91,7 +91,7 @@ public:
      */
     AttributeComponent *getAttributeComponent();
 
-    /* MODIFIERS */
+    /* MODIFIERS =================================================================================================== */
 
     /**
      * @brief Increases hp by a given amount.
@@ -99,7 +99,7 @@ public:
      *
      * @return void
      */
-    void earnHp(const int hpAmount);
+    void earnHp(const int hp_amount);
 
     /**
      * @brief Decreases hp by a given amount.
@@ -107,7 +107,7 @@ public:
      *
      * @return void
      */
-    void loseHp(const int hpAmount);
+    void loseHp(const int hp_amount);
 
     /**
      * @brief Increases exp by a given amount.
@@ -115,7 +115,7 @@ public:
      *
      * @return void
      */
-    void earnExp(const int expAmount);
+    void earnExp(const int exp_amount);
 
     /**
      * @brief Decreases exp by a given amount.
@@ -123,7 +123,7 @@ public:
      *
      * @return void
      */
-    void loseExp(const int expAmount);
+    void loseExp(const int exp_amount);
 };
 
 #endif /* PLAYER_H_ */

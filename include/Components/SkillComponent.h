@@ -16,7 +16,7 @@ private:
     class Skill
     {
     private:
-        /* VARIABLES */
+        /* VARIABLES ====================================================== */
 
         short unsigned type;
         int level;
@@ -27,7 +27,7 @@ private:
         int expNext;
 
     public:
-        /* CONSTRUCTOR AND DESTRUCTOR */
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================= */
 
         /**
          * @brief The Skill class constructor.
@@ -46,12 +46,18 @@ private:
 
         ~Skill() {}
 
-        /* FUNCTIONS */
+        /* FUNCTIONS ======================================================== */
 
         void update()
         {
         }
 
+        /**
+         * @brief Levels the skill up if the exp level hits the max.
+         * @note Recalculates the next exp level and levels up.
+         *
+         * @return void
+         */
         void levelUp()
         {
             if (this->exp > this->expNext && this->level < this->levelMax)
@@ -62,6 +68,12 @@ private:
             }
         }
 
+        /**
+         * @brief Levels the skill down if the exp level hits the max.
+         * @note Recalculates the before exp level and levels down.
+         *
+         * @return void
+         */
         void levelDown()
         {
             if (this->exp < this->expBefore && this->level > 0)
@@ -72,7 +84,7 @@ private:
             }
         }
 
-        /* ACCESSORS */
+        /* ACCESSORS ========================================================= */
 
         /**
          * @brief Returns the skills's type.
@@ -102,7 +114,7 @@ private:
          */
         inline const int &getExpNext() const { return this->expNext; }
 
-        /* MODIFIERS */
+        /* MODIFIERS ========================================================== */
 
         /**
          * @brief Sets the skills's level.
@@ -169,11 +181,13 @@ private:
     void check_skill_existence(const short unsigned skill);
 
 public:
+    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
+
     SkillComponent();
 
     virtual ~SkillComponent();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ========================================================================================== */
 
     /**
      * @brief Increases the exp of a skill with the exp_amount argument.
@@ -185,7 +199,7 @@ public:
      */
     void gainExp(const short unsigned skill, const int exp_amount);
 
-    /* ACCESSORS */
+    /* ACCESSORS ========================================================================================== */
 
     /**
      * @brief Returns the skill's level.

@@ -138,22 +138,22 @@ AttributeComponent *Player::getAttributeComponent()
 
 /* MODIFIERS */
 
-void Player::earnHp(const int hpAmount)
+void Player::earnHp(const int hp_amount)
 {
-    this->attributeComponent->earnHp(hpAmount);
+    this->attributeComponent->earnHp(hp_amount);
 }
 
-void Player::loseHp(const int hpAmount)
+void Player::loseHp(const int hp_amount)
 {
-    this->attributeComponent->loseHp(hpAmount);
+    this->attributeComponent->loseHp(hp_amount);
 }
 
-void Player::earnExp(const int expAmount)
+void Player::earnExp(const int exp_amount)
 {
-    this->attributeComponent->earnExp(expAmount);
+    this->attributeComponent->earnExp(exp_amount);
 }
 
-void Player::loseExp(const int expAmount)
+void Player::loseExp(const int exp_amount)
 {
-    this->attributeComponent->loseExp(expAmount);
+    this->attributeComponent->loseExp(exp_amount);
 }

@@ -9,7 +9,8 @@ private:
     class Animation
     {
     public:
-        /* VARIABLES */
+        /* VARIABLES ======================================================= */
+
         sf::Sprite &sprite;
         sf::Texture &textureSheet;
 
@@ -23,6 +24,8 @@ private:
         sf::IntRect startCropRect;
         sf::IntRect currentCropRect;
         sf::IntRect endCropRect;
+
+        /* CONSTRUCTOR AND DESTRUCTOR ========================================= */
 
         /**
          * @brief Constructs an animation class object.
@@ -55,7 +58,9 @@ private:
             this->sprite.setScale(3.f, 3.f);
         }
 
-        /* FUNCTIONS */
+        virtual ~Animation() {}
+
+        /* FUNCTIONS ======================================================= */
 
         /**
          * @brief Plays the animation with the stardard animation timer.
@@ -195,7 +200,7 @@ private:
             this->currentCropRect = this->startCropRect;
         }
 
-        /* ACCESSORS */
+        /* ACCESSORS ======================================================= */
 
         /**
          * @brief Returns if the animation is done.
@@ -208,7 +213,8 @@ private:
         }
     };
 
-    /* VARIABLES */
+    /* VARIABLES ============================================================================== */
+
     sf::Sprite &sprite;
     sf::Texture &textureSheet;
     std::map<std::string, Animation *> animations;
@@ -217,7 +223,7 @@ private:
     Animation *priorityAnimation;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ============================================================ */
 
     AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet);
 
@@ -226,31 +232,30 @@ public:
      */
     virtual ~AnimationComponent();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ============================================================================ */
 
     /**
      * @brief Adds a new animation to the animations map.
      * Sets a key for the animation and instantiates
      * an Animation object for the animation.
      *
-     * @note Parameters:
-     * @note -> A animation key
-     * @note -> An animation update timer
-     * @note -> The x-axis index of the texture sheet start frame.
-     * @note -> The y-axis index of the texture sheet start frame.
-     * @note -> The x-axis index of the texture sheet end frame.
-     * @note -> The y-axis index of the texture sheet end frame.
-     * @note -> Frame width
-     * @note -> Frame height
+     * @param key A animation key
+     * @param animation_update_timer An animation update timer
+     * @param start_frame_x_index The x-axis index of the texture sheet start frame
+     * @param start_frame_y_index The y-axis index of the texture sheet start frame
+     * @param end_frame_x_index The x-axis index of the texture sheet end frame
+     * @param end_frame_y_index The y-axis index of the texture sheet end frame
+     * @param width Frame width
+     * @param height Frame height
      *
      * @return void
      */
     void addAnimation(
         const std::string key,
-        float animation_update_timer,
-        int start_frame_x_index, int start_frame_y_index,
-        int frames_x_amount, int frames_y_amount,
-        int width, int height);
+        const float animation_update_timer,
+        const int start_frame_x_index, const int start_frame_y_index,
+        const int end_frame_x_index, const int end_frame_y_index,
+        const float width, const float height);
 
     /**
      * @brief Plays an animation from the animations map.
@@ -305,7 +310,7 @@ public:
      */
     void setNewPreviousAnimation(Animation *animation);
 
-    /* ACCESSORS */
+    /* ACCESSORS ================================================================================= */
 
     /**
      * @brief Returns is a animation is done playing.

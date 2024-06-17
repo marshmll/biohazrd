@@ -1,6 +1,5 @@
 /**
- *
- * Game class that acts as the game engine.
+ * Engine class that acts as the game engine.
  *
  *  Created on: 13 de abr. de 2024
  *      Author: Renan Andrade
@@ -16,7 +15,8 @@ class MainMenuState;
 class Engine
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ==================================================================================== */
+
     std::string currentPath;
 
     StateData data;
@@ -28,15 +28,15 @@ private:
 
     sf::Clock dtClock;
 
-    float dt; // Delta Time
+    float dt; // The delta time is the amount of time elapsed to process a entire frame.
 
     float gridSize;
 
-    std::stack<State *> states; // A stack with pointers to the game states
+    std::stack<State *> states; // A stack with pointers to the engine states
 
-    std::map<std::string, sf::Keyboard::Key> acceptedKeys; // Keys the game accepts
+    std::map<std::string, sf::Keyboard::Key> acceptedKeys; // The keys accepted by the engine.
 
-    /* INITIALIZERS FUNCTIONS */
+    /* INITIALIZERS FUNCTIONS ======================================================================== */
 
     /**
      * @brief Initializes game variables
@@ -76,17 +76,17 @@ private:
     void initStateData();
 
     /**
-     * @return void
+     * @brief Initializates states and push them into states stack.
      *
-     * @brief nitializates states and push them into states stack.
+     * @return void
      */
     void initStates();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================= */
 
     /**
-     * @brief Game Class Constructor
+     * @brief Engine Class Constructor
      * @note -> Initializes variables
      * @note -> Initializes window
      * @note -> Initializes keys
@@ -100,7 +100,7 @@ public:
      */
     virtual ~Engine();
 
-    /* MAIN FUNCTIONS */
+    /* MAIN FUNCTIONS ==================================================================================== */
 
     /**
      * @brief Keeps updating and rendering the game while
@@ -129,11 +129,11 @@ public:
      */
     void render();
 
-    /* AUXILIARY FUNCTIONS */
+    /* AUXILIARY FUNCTIONS ============================================================================ */
 
     /**
-     * @brief Updates the delta time which is taken to update and
-     * render a frame.
+     * @brief Updates the delta time which is the time taken to
+     * update and render a frame.
      *
      * @return void
      */
@@ -153,7 +153,7 @@ public:
      */
     void endApplication();
 
-    /* ACCESSORS */
+    /* ACCESSORS ======================================================================================== */
 
     /**
      * @brief Returns if the game is currently running

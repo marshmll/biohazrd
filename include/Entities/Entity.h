@@ -16,7 +16,7 @@ class SkillComponent;
 class Entity
 {
 private:
-    /* INITIALIZERS */
+    /* INITIALIZERS ======================================================================== */
 
     /**
      * @brief Initializes entity components.
@@ -37,6 +37,7 @@ protected:
     SkillComponent *skillComponent;
 
 public:
+    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
     /**
      * @brief Creates a entity instance.
      * @note -> Initializes variables
@@ -49,7 +50,7 @@ public:
      */
     virtual ~Entity();
 
-    /* COMPONENT FUNCTIONS */
+    /* COMPONENT FUNCTIONS ================================================================================= */
 
     /**
      * @brief Sets texture for the entity sprite.
@@ -76,7 +77,7 @@ public:
      * @return void
      */
     void createMovementComponent(
-        const float maxVelocity,
+        const float max_velocity,
         const float acceleration, const float deceleration);
 
     /**
@@ -103,7 +104,7 @@ public:
      */
     void createSkillComponent();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ========================================================================================== */
 
     /**
      * @brief Updates the entity.
@@ -135,7 +136,7 @@ public:
      */
     virtual void move(const float dir_x, const float dir_y, const float &dt);
 
-    /* ACCESSORS */
+    /* ACCESSORS ========================================================================================== */
 
     /**
      * @brief Returns the position of the hitbox or the position
@@ -159,7 +160,7 @@ public:
      *
      * @return sf::Vector2i
      */
-    virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
+    virtual const sf::Vector2i getGridPosition(const int grid_size_i) const;
 
     /**
      * @brief Returns the hitbox size, or the sprite size
@@ -213,7 +214,7 @@ public:
      */
     virtual const bool hasCollided(sf::FloatRect &frect);
 
-    /* MODIFIERS */
+    /* MODIFIERS ========================================================================================== */
 
     /**
      * @brief Sets a position to the entity's hitbox, or to

@@ -4,17 +4,22 @@
 class AttributeComponent
 {
 private:
+    /**
+     * @brief Calculates the next exp level to level up.
+     *
+     * @return void
+     */
     const int calc_next_exp();
 
 public:
-    /* LEVELING */
+    /* LEVELING ============================================================================== */
 
     int level;
     int exp;
     int expNext;
     int attributePoints;
 
-    /* ATTRIBUTES */
+    /* ATTRIBUTES ============================================================================= */
 
     int vitality;
     int strength;
@@ -22,7 +27,7 @@ public:
     int agillity;
     int intelligence;
 
-    /* STATS */
+    /* STATS =================================================================================== */
 
     int hp;
     int hpMax;
@@ -35,7 +40,7 @@ public:
 
     int luck;
 
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ===================================================================== */
 
     /**
      * @brief Creates an attribute component given a level.
@@ -47,7 +52,7 @@ public:
      */
     virtual ~AttributeComponent();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ======================================================================================== */
 
     /**
      * @brief Updates the attribute component
@@ -71,7 +76,7 @@ public:
      */
     void updateLevel();
 
-    /* MODIFIERS */
+    /* MODIFIERS ======================================================================================= */
 
     /**
      * @brief Increases hp by a given amount.
