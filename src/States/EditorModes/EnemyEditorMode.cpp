@@ -5,6 +5,10 @@
 
 void EnemyEditorMode::initVariables()
 {
+    this->type = 0;
+    this->amount = 1;
+    this->timeToSpawn = 60;
+    this->maxDistance = 500.f;
 }
 
 void EnemyEditorMode::initGUI()
@@ -29,7 +33,7 @@ void EnemyEditorMode::initGUI()
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================== */
 
 EnemyEditorMode::EnemyEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
-    : EditorMode(data, editor_data), tileMap(tile_map)
+    : EditorMode(data, editor_data, "Enemy Editor Mode"), tileMap(tile_map)
 {
     this->initVariables();
     this->initGUI();
@@ -54,6 +58,21 @@ void EnemyEditorMode::render(sf::RenderTarget &target)
 
 void EnemyEditorMode::updateInput(const float &dt)
 {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
+        {
+            this->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, this->textureRect, false, TileTypes::SPAWNER);
+        }
+    }
+    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
+    {
+        if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
+        {
+            if (this->tileMap->checkType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
+                this->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
+        }
+    }
 }
 
 void EnemyEditorMode::updateGUI(const float &dt)
@@ -66,7 +85,11 @@ void EnemyEditorMode::updateGUI(const float &dt)
 
     std::stringstream cursor_ss;
     cursor_ss << this->editorData->mousePosWindow->x << " " << this->editorData->mousePosWindow->y << "\n"
-              << this->editorData->mousePosGrid->x << " " << this->editorData->mousePosGrid->y << "\n";
+              << this->editorData->mousePosGrid->x << " " << this->editorData->mousePosGrid->y << "\n"
+              << "enemy type: " << this->type << "\n"
+              << "enemy amount: " << this->amount << "\n"
+              << "time to spawn: " << this->timeToSpawn << "\n"
+              << "enemy max distance: " << this->maxDistance << "\n";
 
     this->cursorText.setString(cursor_ss.str());
 }
@@ -84,9 +107,13 @@ void EnemyEditorMode::renderGUI(sf::RenderTarget &target)
     target.setView(this->data->window->getDefaultView());
     target.draw(this->sidebar);
 
-    // Render cursor text in the editor camera
+    // Render cursor in the editor camera
     target.setView(*this->editorData->editorCamera);
     target.draw(this->cursorText);
+
+    // Render mode indicator text in the window view
+    target.setView(this->data->window->getDefaultView());
+    target.draw(this->modeIndicatorText);
 }
 
 /* ACCESSORS ====================================================================================== */

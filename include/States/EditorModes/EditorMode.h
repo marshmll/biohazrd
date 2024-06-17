@@ -36,10 +36,12 @@ protected:
 
     TileMap *tileMap;
 
+    sf::Text modeIndicatorText;
+
 public:
     /* CONSTRUCTOR AND DESTRUCTOR */
 
-    EditorMode(StateData *data, EditorStateData *editor_data);
+    EditorMode(StateData *data, EditorStateData *editor_data, std::string mode_name);
 
     virtual ~EditorMode();
 

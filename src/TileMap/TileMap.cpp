@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-/* PRIVATE FUNCTIONS */
+/* PRIVATE FUNCTIONS =========================================================================================== */
 
 void TileMap::clear()
 {
@@ -50,7 +50,7 @@ void TileMap::resize()
     }
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
 TileMap::TileMap(const float grid_size, const unsigned grid_width, const unsigned grid_height,
                  const std::string texture_file_path)
@@ -94,7 +94,7 @@ TileMap::~TileMap()
     this->clear();
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void TileMap::loadFromFile(const std::string file_path)
 {
@@ -370,6 +370,12 @@ void TileMap::render(
                         target.draw(this->collisionBox);
                     }
                 }
+
+                if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::SPAWNER)
+                {
+                    this->collisionBox.setPosition(this->tileMap[x][y][this->layer][k]->getPosition());
+                    target.draw(this->collisionBox);
+                }
             }
         }
     }
@@ -446,7 +452,15 @@ void TileMap::updateMapActiveArea(const sf::Vector2i gridPosition, const int wid
         this->endY = this->tileMapGridDimensions.y;
 }
 
-/* ACCESSORS */
+/* ACCESSORS =================================================================================================== */
+
+const bool TileMap::checkType(const int x, const int y, const unsigned layer, const unsigned short type) const
+{
+    if (!this->isTileEmpty(x, y, layer))
+        return this->tileMap[x][y][layer].back()->getType() == type;
+
+    return false;
+}
 
 const sf::Vector2f &TileMap::getSize() const
 {
@@ -460,16 +474,21 @@ const sf::Texture *TileMap::getTileTextureSheet() const
 
 const int TileMap::getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const
 {
-    if (x >= 0 && y >= 0 && x < this->tileMap.size())
-    {
-        if (y < this->tileMap[x].size())
-        {
-            if (layer >= 0 && layer < this->tileMap[x][y].size())
-            {
-                return static_cast<int>(this->tileMap[x][y][layer].size());
-            }
-        }
-    }
+    if (!this->isTileEmpty(x, y, layer))
+        return static_cast<int>(this->tileMap[x][y][layer].size());
 
     return -1;
+}
+
+const bool TileMap::isTileEmpty(const int x, const int y, const unsigned layer) const
+{
+    if (x >= 0 && x < this->tileMapGridDimensions.x &&
+        y >= 0 && y < this->tileMapGridDimensions.y &&
+        layer >= 0 && layer < this->layers)
+    {
+        if (!this->tileMap[x][y][layer].empty())
+            return false;
+    }
+
+    return true;
 }

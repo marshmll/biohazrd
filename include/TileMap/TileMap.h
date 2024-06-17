@@ -198,6 +198,19 @@ public:
     /* ACCESSORS ====================================================================================== */
 
     /**
+     * @brief Checks if a tile in a x, y and z coordinate are from a given type.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param layer The layer.
+     * @param type The type to check.
+     * @note -> Use the TileTypes enum.
+     * @note -> Returns false if outside world bounds or empty tile.
+     *
+     * @return const bool
+     */
+    const bool checkType(const int x, const int y, const unsigned layer, const unsigned short type) const;
+
+    /**
      * @brief Returns the tilemap's size.
      *
      * @return sf::Vector2f
@@ -219,6 +232,17 @@ public:
      * @return const int
      */
     const int getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const;
+
+    /**
+     * @brief Checks if a tile in a x, y and z coordinate are from a given type.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param layer The layer.
+     * @note -> Returns true if outside world bounds.
+     *
+     * @return const bool
+     */
+    const bool isTileEmpty(const int x, const int y, const unsigned layer) const;
 };
 
 #endif /* TILEMAP_H_ */

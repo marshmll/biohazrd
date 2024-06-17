@@ -45,7 +45,7 @@ void DefaultEditorMode::initGUI()
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 DefaultEditorMode::DefaultEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
-    : EditorMode(data, editor_data), tileMap(tile_map)
+    : EditorMode(data, editor_data, "Default Editor Mode"), tileMap(tile_map)
 {
     this->initVariables();
     this->initGUI();
@@ -156,9 +156,13 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
     this->textureSelector->render(target);
     target.draw(this->sidebar);
 
-    // Render cursor text in the editor camera
+    // Render cursor in the editor camera
     target.setView(*this->editorData->editorCamera);
     target.draw(this->cursorText);
+
+    // Render mode indicator text in the window view
+    target.setView(this->data->window->getDefaultView());
+    target.draw(this->modeIndicatorText);
 }
 
 const bool DefaultEditorMode::hasCompletedKeytimeCicle()
