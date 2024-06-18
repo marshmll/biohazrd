@@ -26,8 +26,6 @@ private:
     std::string texture_file_path;
     sf::Texture tileTextureSheet;
 
-    sf::RectangleShape collisionBox;
-
     int startX;
     int endX;
     int startY;
@@ -129,9 +127,13 @@ public:
      * @return void
      */
 
-    void addTile(const unsigned x, const unsigned y, const unsigned z,
-                 const sf::IntRect &textureRect,
-                 const bool &collision, const short &type);
+    void addTile(
+        const unsigned x, const unsigned y, const unsigned z,
+        const sf::IntRect &texture_rect,
+        const bool &collision,
+        const float coll_box_width, const float coll_box_height,
+        const float coll_box_offset_x, const float coll_box_offset_y,
+        const short &type);
 
     /**
      * @brief  Removes a tile from the tilemap.

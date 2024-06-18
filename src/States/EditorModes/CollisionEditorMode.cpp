@@ -28,11 +28,9 @@ void CollisionEditorMode::initGUI()
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================== */
 
-CollisionEditorMode::CollisionEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
+CollisionEditorMode::CollisionEditorMode(StateData *data, EditorStateData *editor_data)
     : EditorMode(data, editor_data, "Collision Editor Mode")
 {
-    this->tileMap = tile_map;
-
     this->initVariables();
     this->initGUI();
 }

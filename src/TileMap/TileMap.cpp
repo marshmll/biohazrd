@@ -72,11 +72,6 @@ TileMap::TileMap(const float grid_size, const unsigned grid_width, const unsigne
     if (!this->tileTextureSheet.loadFromFile(texture_file_path))
         ErrorHandler::throwErr("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE\n");
 
-    this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
-    this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
-    this->collisionBox.setOutlineColor(sf::Color(255, 0, 0, 100));
-    this->collisionBox.setOutlineThickness(1.f);
-
     this->startX = 0;
     this->endX = 0;
     this->startY = 0;
@@ -121,10 +116,16 @@ void TileMap::loadFromFile(const std::string file_path)
     unsigned z = 0;
     unsigned k = 0;
 
-    unsigned txtrRectX;
-    unsigned txtrRectY;
+    unsigned txtr_rect_x;
+    unsigned txtr_rect_y;
 
     bool collision = false;
+
+    float coll_box_width = 0.f;
+    float coll_box_height = 0.f;
+    float coll_box_offset_x = 0.f;
+    float coll_box_offset_y = 0.f;
+
     short type = TileTypes::DEFAULT;
 
     // Load CONFIG
@@ -146,11 +147,6 @@ void TileMap::loadFromFile(const std::string file_path)
     if (!this->tileTextureSheet.loadFromFile(texture_file_path))
         ErrorHandler::throwErr("TILEMAP::TILEMAP::ERROR_COULD_NOT_LOAD_TILE_TEXTURES_FILE\n");
 
-    this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
-    this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
-    this->collisionBox.setOutlineColor(sf::Color(255, 0, 0, 100));
-    this->collisionBox.setOutlineThickness(1.f);
-
     this->startX = 0;
     this->endX = 0;
     this->startY = 0;
@@ -164,14 +160,18 @@ void TileMap::loadFromFile(const std::string file_path)
     this->resize();
 
     // While not in the end of file
-    while (in_file >> grid_x >> grid_y >> z >> k >> txtrRectX >> txtrRectY >> collision >> type)
+    while (in_file >> grid_x >> grid_y >> z >> k >> txtr_rect_x >> txtr_rect_y >> collision >>
+           coll_box_width >> coll_box_height >> coll_box_offset_x >> coll_box_offset_y >> type)
     {
         this->tileMap[grid_x][grid_y][z].insert(
             this->tileMap[grid_x][grid_y][z].begin() + k,
             new Tile(
                 grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
-                sf::IntRect(txtrRectX, txtrRectY, this->gridSizeI, this->gridSizeI),
-                collision, type));
+                sf::IntRect(txtr_rect_x, txtr_rect_y, this->gridSizeI, this->gridSizeI),
+                collision,
+                coll_box_width, coll_box_height,
+                coll_box_offset_x, coll_box_offset_y,
+                type));
     }
 
     in_file.close();
@@ -188,6 +188,7 @@ void TileMap::saveToFile(const std::string file_path)
     if (!out_file.is_open())
         ErrorHandler::throwErr("TILEMAP::SAVETOFILE::ERR_COULD_NOT_SAVE_TILEMAP_TO_FILE\n");
 
+    // CONFIG data
     out_file << this->tileMapGridDimensions.x << " " << this->tileMapGridDimensions.y << "\n"
              << this->gridSizeI << "\n"
              << this->layers << "\n"
@@ -216,9 +217,13 @@ void TileMap::saveToFile(const std::string file_path)
     out_file.close();
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z,
-                      const sf::IntRect &textureRect,
-                      const bool &collision, const short &type)
+void TileMap::addTile(
+    const unsigned x, const unsigned y, const unsigned z,
+    const sf::IntRect &texture_rect,
+    const bool &collision,
+    const float coll_box_width, const float coll_box_height,
+    const float coll_box_offset_x, const float coll_box_offset_y,
+    const short &type)
 {
     // If position is in the map bounds
     if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
@@ -227,18 +232,22 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z,
         {
             // If the texture of the tile to be placed is not equal to
             // the texture of the tile already on the vector
-            if (this->tileMap[x][y][z].back()->getTextureRect() != textureRect)
+            if (this->tileMap[x][y][z].back()->getTextureRect() != texture_rect)
             {
-                this->tileMap[x][y][z].push_back(new Tile(
-                    x, y, this->gridSizeF, this->tileTextureSheet,
-                    textureRect, collision, type));
+                this->tileMap[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileTextureSheet,
+                                                          texture_rect, collision,
+                                                          coll_box_width, coll_box_height,
+                                                          coll_box_offset_x, coll_box_offset_y,
+                                                          type));
             }
         }
         else
         {
-            this->tileMap[x][y][z].push_back(new Tile(
-                x, y, this->gridSizeF, this->tileTextureSheet,
-                textureRect, collision, type));
+            this->tileMap[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileTextureSheet,
+                                                      texture_rect, collision,
+                                                      coll_box_width, coll_box_height,
+                                                      coll_box_offset_x, coll_box_offset_y,
+                                                      type));
         }
     }
 }
@@ -366,15 +375,13 @@ void TileMap::render(
                 {
                     if (this->tileMap[x][y][this->layer][k]->isCollideable())
                     {
-                        this->collisionBox.setPosition(this->tileMap[x][y][this->layer][k]->getPosition());
-                        target.draw(this->collisionBox);
+                        target.draw(this->tileMap[x][y][this->layer][k]->getCollisionBox());
                     }
                 }
 
                 if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::SPAWNER)
                 {
-                    this->collisionBox.setPosition(this->tileMap[x][y][this->layer][k]->getPosition());
-                    target.draw(this->collisionBox);
+                    target.draw(this->tileMap[x][y][this->layer][k]->getCollisionBox());
                 }
             }
         }

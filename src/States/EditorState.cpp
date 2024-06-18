@@ -66,6 +66,7 @@ void EditorState::initGUI()
 void EditorState::initEditorStateData()
 {
     this->editorStateData.keybinds = &this->keybinds;
+    this->editorStateData.tileMap = this->tileMap;
     this->editorStateData.editorCamera = &this->editorCamera;
     this->editorStateData.font = &this->font;
     this->editorStateData.keytime = &this->keytime;
@@ -80,9 +81,9 @@ void EditorState::initEditorStateData()
 
 void EditorState::initModes()
 {
-    this->modes.push_back(new DefaultEditorMode(this->data, &this->editorStateData, this->tileMap));
-    this->modes.push_back(new EnemyEditorMode(this->data, &this->editorStateData, this->tileMap));
-    this->modes.push_back(new CollisionEditorMode(this->data, &this->editorStateData, this->tileMap));
+    this->modes[EditorModes::DEFAULT_MODE] = new DefaultEditorMode(this->data, &this->editorStateData);
+    this->modes[EditorModes::ENEMY_MODE] = new EnemyEditorMode(this->data, &this->editorStateData);
+    this->modes[EditorModes::COLLISION_MODE] = new CollisionEditorMode(this->data, &this->editorStateData);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -108,8 +109,8 @@ EditorState::~EditorState()
 
     delete this->tileMap;
 
-    for (auto mode : this->modes)
-        delete mode;
+    for (auto &it : this->modes)
+        delete it.second;
 }
 
 /* FUNCTIONS */

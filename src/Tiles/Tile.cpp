@@ -10,17 +10,27 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
-Tile::Tile(const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-           const sf::Texture &texture, const sf::IntRect texture_rect,
-           const bool collision, const short type)
+Tile::Tile(
+    const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
+    const sf::Texture &texture, const sf::IntRect texture_rect,
+    const bool collision,
+    const float coll_box_width, const float coll_box_height,
+    const float coll_box_offset_x, const float coll_box_offset_y,
+    const short type)
+    : collBoxOffsetX(coll_box_offset_x), collBoxOffsetY(coll_box_offset_y)
 {
     this->tile.setTexture(texture);
-
     this->tile.setPosition(grid_x * grid_size_f, grid_y * grid_size_f);
-
     this->tile.setTextureRect(texture_rect);
 
     this->collision = collision;
+
+    this->collBox.setSize(sf::Vector2f(coll_box_width, coll_box_height));
+    this->collBox.setPosition((grid_x * grid_size_f) + coll_box_offset_x, (grid_y * grid_size_f) + coll_box_offset_y);
+    this->collBox.setFillColor(sf::Color(255, 0, 0, 150));
+    this->collBox.setOutlineThickness(-1.f);
+    this->collBox.setOutlineColor(sf::Color(255, 0, 0, 200));
+
     this->type = type;
 }
 
@@ -51,7 +61,7 @@ void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector
 
 const bool Tile::intersects(const sf::FloatRect &bounds) const
 {
-    return this->tile.getGlobalBounds().intersects(bounds);
+    return this->collBox.getGlobalBounds().intersects(bounds);
 }
 
 /* ACCESSORS */
@@ -71,6 +81,11 @@ const bool &Tile::isCollideable() const
     return this->collision;
 }
 
+const sf::RectangleShape &Tile::getCollisionBox() const
+{
+    return this->collBox;
+}
+
 const short &Tile::getType() const
 {
     return this->type;
@@ -78,15 +93,18 @@ const short &Tile::getType() const
 
 const std::string Tile::getPropertiesAsString() const
 {
-    std::stringstream ss;
+    std::stringstream properties;
 
-    ss << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-       << this->collision << " " << this->type;
+    properties << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
+               << this->collision << " "
+               << this->collBox.getSize().x << " " << this->collBox.getSize().y << " "
+               << this->collBoxOffsetX << " " << this->collBoxOffsetY << " "
+               << this->type;
 
-    return ss.str();
+    return properties.str();
 }
 
 const sf::FloatRect Tile::getGlobalBounds() const
 {
-    return this->tile.getGlobalBounds();
+    return this->collBox.getGlobalBounds();
 }

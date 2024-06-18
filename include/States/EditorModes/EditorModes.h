@@ -1,7 +1,8 @@
 /**
  * Collection of Editor Modes.
- * 
- * 16/06/2024
+ *
+ * Created on 16/06/2024
+ *      Author: Renan Andrade
  */
 
 #include "DefaultEditorMode.h"

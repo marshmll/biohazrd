@@ -1,13 +1,19 @@
 #include "stdafx.h"
 #include "DefaultEditorMode.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ================================================================================================== */
 
 void DefaultEditorMode::initVariables()
 {
     this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->data->gridSize), static_cast<int>(this->data->gridSize));
 
     this->collision = false;
+
+    this->collBoxWidth = this->data->gridSize;
+    this->collBoxHeight = this->data->gridSize;
+    this->collBoxOffsetX = 0.f;
+    this->collBoxOffsetY = 0.f;
+
     this->type = TileTypes::DEFAULT;
 
     this->layer = 0;
@@ -30,7 +36,7 @@ void DefaultEditorMode::initGUI()
     this->selectorRect.setFillColor(sf::Color(255, 255, 255, 200));
     this->selectorRect.setOutlineColor(sf::Color::Red);
     this->selectorRect.setOutlineThickness(1.f);
-    this->selectorRect.setTexture(this->tileMap->getTileTextureSheet());
+    this->selectorRect.setTexture(this->editorData->tileMap->getTileTextureSheet());
     this->selectorRect.setTextureRect(this->textureRect);
 
     // Texture selector
@@ -39,13 +45,13 @@ void DefaultEditorMode::initGUI()
         50.f, 50.f,
         this->sidebar.getSize().x + gui::p2pY(this->data->gfxSettings->resolution, 2.5f), gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
         960.f, 640.f,
-        this->data->gridSize, this->tileMap->getTileTextureSheet());
+        this->data->gridSize, this->editorData->tileMap->getTileTextureSheet());
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-DefaultEditorMode::DefaultEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
-    : EditorMode(data, editor_data, "Default Editor Mode"), tileMap(tile_map)
+DefaultEditorMode::DefaultEditorMode(StateData *data, EditorStateData *editor_data)
+    : EditorMode(data, editor_data, "Default Editor Mode")
 {
     this->initVariables();
     this->initGUI();
@@ -56,7 +62,7 @@ DefaultEditorMode::~DefaultEditorMode()
     delete textureSelector;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ======================================================================================================= */
 
 void DefaultEditorMode::update(const float &dt)
 {
@@ -77,9 +83,12 @@ void DefaultEditorMode::updateInput(const float &dt)
         {
             if (!this->textureSelector->isActive())
             {
-                this->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y,
-                                       0, this->textureRect,
-                                       this->collision, this->type);
+                this->editorData->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y,
+                                                   0, this->textureRect,
+                                                   this->collision,
+                                                   this->collBoxWidth, this->collBoxHeight,
+                                                   this->collBoxOffsetX, this->collBoxOffsetY,
+                                                   this->type);
             }
             else
             {
@@ -92,7 +101,7 @@ void DefaultEditorMode::updateInput(const float &dt)
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
             if (!this->textureSelector->isActive())
-                this->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
+                this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
         }
     }
 
@@ -135,7 +144,7 @@ void DefaultEditorMode::updateGUI(const float &dt)
        << this->textureRect.left << " " << this->textureRect.top << "\n"
        << "collision: " << (this->collision ? "true" : "false") << "\n"
        << "type selected: " << this->getTypeName() << "\n"
-       << "stacked tiles: " << this->tileMap->getAmountOfStackedTiles(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, this->layer);
+       << "stacked tiles: " << this->editorData->tileMap->getAmountOfStackedTiles(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, this->layer);
     this->cursorText.setString(ss.str());
 }
 
@@ -164,6 +173,8 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
     target.setView(this->data->window->getDefaultView());
     target.draw(this->modeIndicatorText);
 }
+
+/* ACCESSORS ===================================================================================================== */
 
 const bool DefaultEditorMode::hasCompletedKeytimeCicle()
 {
@@ -201,6 +212,9 @@ const std::string DefaultEditorMode::getTypeName() const
         break;
     case TileTypes::HARMFUL:
         return "HARMFUL";
+        break;
+    case TileTypes::SPAWNER:
+        return "SPAWNER";
         break;
     default:
         return "UNKNOWN";

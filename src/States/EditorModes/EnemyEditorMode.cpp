@@ -32,8 +32,8 @@ void EnemyEditorMode::initGUI()
 
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================== */
 
-EnemyEditorMode::EnemyEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map)
-    : EditorMode(data, editor_data, "Enemy Editor Mode"), tileMap(tile_map)
+EnemyEditorMode::EnemyEditorMode(StateData *data, EditorStateData *editor_data)
+    : EditorMode(data, editor_data, "Enemy Editor Mode")
 {
     this->initVariables();
     this->initGUI();
@@ -62,15 +62,17 @@ void EnemyEditorMode::updateInput(const float &dt)
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            this->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, this->textureRect, false, TileTypes::SPAWNER);
+            this->editorData->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0,
+                                               this->textureRect, false, this->data->gridSize, this->data->gridSize,
+                                               0.f, 0.f, TileTypes::SPAWNER);
         }
     }
     else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            if (this->tileMap->checkType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
-                this->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
+            if (this->editorData->tileMap->checkType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
+                this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
         }
     }
 }

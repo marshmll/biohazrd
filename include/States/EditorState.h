@@ -1,8 +1,6 @@
 #ifndef EDITORSTATE_H_
 #define EDITORSTATE_H_
 
-#include "State.h"
-#include "TileMap.h"
 #include "EditorModes.h"
 
 class State;
@@ -10,6 +8,7 @@ class TileMap;
 class EditorMode;
 class DefaultEditorMode;
 class EnemyEditorMode;
+class CollisionEditorMode;
 
 enum EditorModes
 {
@@ -21,9 +20,11 @@ enum EditorModes
 class EditorState : public State
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================ */
 
     EditorStateData editorStateData;
+
+    TileMap *tileMap;
 
     sf::View editorCamera;
     sf::Vector2i editorCameraPosGrid;
@@ -35,11 +36,11 @@ private:
 
     std::map<std::string, gui::Button *> buttons;
 
-    std::vector<EditorMode *> modes;
+    std::map<short, EditorMode *> modes;
 
-    unsigned activeEditorMode;
+    short activeEditorMode;
 
-    /* INITIALIZERS */
+    /* INITIALIZERS ============================================================================================= */
 
     /**
      * @brief Initializes MainMenuState variables
@@ -97,7 +98,6 @@ private:
     void initModes();
 
 public:
-    TileMap *tileMap;
     /* CONSTRUCTOR AND DESTRUCTOR */
 
     /**

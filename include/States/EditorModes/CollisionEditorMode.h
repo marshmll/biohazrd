@@ -10,8 +10,6 @@ class CollisionEditorMode : public EditorMode
 private:
     /* VARIABLES ================================================================================= */
 
-    TileMap *tileMap;
-
     sf::Text cursorText;
     sf::RectangleShape sidebar;
     sf::RectangleShape selectorRect;
@@ -27,7 +25,7 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================= */
 
-    CollisionEditorMode(StateData *data, EditorStateData *editor_data, TileMap *tile_map);
+    CollisionEditorMode(StateData *data, EditorStateData *editor_data);
     
     virtual ~CollisionEditorMode();
 

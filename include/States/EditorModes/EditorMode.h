@@ -12,6 +12,7 @@ class TileMap;
 typedef struct EditorStateData
 {
     std::map<std::string, sf::Keyboard::Key> *keybinds;
+    TileMap *tileMap;
     sf::View *editorCamera;
     sf::Font *font;
     float *keytime;
@@ -21,31 +22,28 @@ typedef struct EditorStateData
     sf::Vector2i *mousePosScreen;
     sf::Vector2i *mousePosWindow;
     sf::Vector2f *mousePosView;
-    sf::Vector2i *mousePosGrid;     
-}
-EditorStateData;
+    sf::Vector2i *mousePosGrid;
+} EditorStateData;
 
 class EditorMode
 {
 protected:
-    /* VARIABLES */
+    /* VARIABLES =============================================================================================== */
 
     StateData *data;
 
     EditorStateData *editorData;
 
-    TileMap *tileMap;
-
     sf::Text modeIndicatorText;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
     EditorMode(StateData *data, EditorStateData *editor_data, std::string mode_name);
 
     virtual ~EditorMode();
 
-     /* FUNCTIONS */
+    /* FUNCTIONS =============================================================================================== */
 
     /**
      * @brief Updates the EditorMode.
