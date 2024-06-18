@@ -187,7 +187,7 @@ void GameState::renderToBuffer()
         &this->coreShader, this->player->getCenteredPosition());
 
     for (auto &enemy : this->enemies)
-        enemy->render(this->renderBuffer, DO_NOT_SHOW_COL_BOX,
+        enemy->render(this->renderBuffer, DO_NOT_SHOW_HITBOX,
                       &this->coreShader, this->player->getCenteredPosition());
 
     this->player->render(this->renderBuffer, DO_NOT_SHOW_HITBOX,

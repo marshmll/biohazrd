@@ -482,7 +482,7 @@ gui::TextureSelector::TextureSelector(
         ErrorHandler::throwErr("GUI::TEXTURESELECTOR::TEXTURESELECTOR::ERR_COULD_NOT_LOAD_TEXTURE_SELECTOR_ICON");
 
     this->hideBtn = new gui::Button(
-        btn_x, btn_x, btn_width, btn_height,
+        btn_x, btn_y, btn_width, btn_height,
         &this->hideBtnIcon, btn_width, btn_height,
         sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 }
@@ -522,14 +522,6 @@ void gui::TextureSelector::update(const float &dt, const sf::Vector2i mousePosWi
     }
 }
 
-void gui::TextureSelector::updateMousetime(const float &dt)
-{
-    if (this->mousetime < this->mousetimeMax)
-    {
-        this->mousetime += 100.f * dt;
-    }
-}
-
 void gui::TextureSelector::render(sf::RenderTarget &target)
 {
     if (!this->hidden)
@@ -544,11 +536,28 @@ void gui::TextureSelector::render(sf::RenderTarget &target)
     this->hideBtn->render(target);
 }
 
+void gui::TextureSelector::updateMousetime(const float &dt)
+{
+    if (this->mousetime < this->mousetimeMax)
+    {
+        this->mousetime += 100.f * dt;
+    }
+}
+void gui::TextureSelector::close()
+{
+    this->hidden = true;
+}
+
 /* ACCESSORS ================================================================================================= */
 
 const bool &gui::TextureSelector::isActive() const
 {
     return this->active;
+}
+
+const bool gui::TextureSelector::isVisible() const
+{
+    return this->hidden;
 }
 
 const bool gui::TextureSelector::hasCompletedMousetimeCicle()
@@ -563,6 +572,192 @@ const bool gui::TextureSelector::hasCompletedMousetimeCicle()
 }
 
 const sf::IntRect &gui::TextureSelector::getTextureRect() const
+{
+    return this->textureRect;
+}
+
+/**********************************************************************************************************
+ *
+ * COLLISION EDITOR
+ *
+ *********************************************************************************************************/
+
+gui::CollisionEditor::CollisionEditor(
+    const float btn_x, const float btn_y,
+    const float btn_width, const float btn_height,
+    const float col_editor_x, const float col_editor_y,
+    const float col_editor_width, const float col_editor_height,
+    const float grid_size_f, const sf::Texture *texture_sheet)
+    : mousetime(0.f), mousetimeMax(10.f)
+{
+    this->gridSizeF = grid_size_f;
+    this->active = false;
+    this->hidden = true;
+    this->editing = false;
+
+    float offset = grid_size_f;
+
+    // Outer box
+    this->bounds.setSize(sf::Vector2f(col_editor_width, col_editor_height));
+    this->bounds.setPosition(col_editor_x, col_editor_y);
+    this->bounds.setFillColor(sf::Color(50, 50, 50, 100));
+
+    this->bounds.setOutlineThickness(2.f);
+    this->bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
+
+    // Texture sheet
+    this->sheet.setTexture(*texture_sheet);
+    this->sheet.setPosition(col_editor_x, col_editor_y);
+
+    // If the sheet is larger than the outer box
+    if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
+    {
+        this->sheet.setTextureRect(
+            sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
+    }
+
+    // If the sheet is taller than the outer box
+    if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
+    {
+        this->sheet.setTextureRect(
+            sf::IntRect(0, 0, this->sheet.getGlobalBounds().width, this->bounds.getGlobalBounds().height));
+    }
+
+    // Mouse selector
+    this->selector.setPosition(col_editor_x, col_editor_y);
+    this->selector.setSize(sf::Vector2f(grid_size_f, grid_size_f));
+    this->selector.setFillColor(sf::Color::Transparent);
+    this->selector.setOutlineThickness(1.f);
+    this->selector.setOutlineColor(sf::Color::Green);
+
+    // Texture rectangle
+    this->textureRect.width = static_cast<int>(grid_size_f);
+    this->textureRect.height = static_cast<int>(grid_size_f);
+
+    if (!this->hideBtnIcon.loadFromFile("Assets/Images/Icons/collision_editor_icon.png"))
+        ErrorHandler::throwErr("GUI::COLLISIONEDITOR::COLLISIONEDITOR::ERR_COULD_NOT_LOAD_COLLISION_EDITOR_ICON\n");
+
+    this->hideBtn = new gui::Button(
+        btn_x, btn_y, btn_width, btn_height,
+        &this->hideBtnIcon, btn_width, btn_height,
+        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+
+    // Editing
+    this->editorBg.setSize(sf::Vector2f(this->gridSizeF * 2.f, this->gridSizeF * 2.f));
+    this->editorBg.setFillColor(sf::Color(100, 100, 100, 100));
+    this->editorBg.setOutlineThickness(1.f);
+    this->editorBg.setOutlineColor(sf::Color(100, 100, 100, 150));
+    this->editorBg.setPosition(col_editor_x, col_editor_y);
+
+    this->editorTile.setTexture(texture_sheet);
+    this->editorTile.setTextureRect(this->textureRect);
+    this->editorTile.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
+    this->editorTile.setPosition(this->editorBg.getPosition().x + this->editorTile.getSize().x / 2.f,
+                                 this->editorBg.getPosition().y + this->editorTile.getSize().y / 2.f);
+
+    this->editorCollBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
+    this->editorCollBox.setFillColor(sf::Color(255, 100, 100, 100));
+    this->editorCollBox.setOutlineThickness(1.f);
+    this->editorCollBox.setOutlineColor(sf::Color(255, 100, 100, 150));
+    this->editorCollBox.setPosition(this->editorTile.getPosition());
+}
+
+gui::CollisionEditor::~CollisionEditor()
+{
+    delete this->hideBtn;
+}
+
+void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window)
+{
+    this->updateMousetime(dt);
+
+    this->hideBtn->update(sf::Vector2f(mouse_pos_window));
+
+    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCicle() && !this->editing)
+        this->hidden = !this->hidden;
+
+    if (!this->hidden)
+    {
+        this->active = this->bounds.getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
+
+        if (this->active)
+        {
+            this->mousePosGrid.x = (mouse_pos_window.x - this->bounds.getPosition().x) / (unsigned)this->gridSizeF;
+            this->mousePosGrid.y = (mouse_pos_window.y - this->bounds.getPosition().y) / (unsigned)this->gridSizeF;
+
+            this->selector.setPosition(
+                this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSizeF,
+                this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSizeF);
+
+            this->textureRect.left = this->mousePosGrid.x * this->gridSizeF;
+            this->textureRect.top = this->mousePosGrid.y * this->gridSizeF;
+
+            this->editorTile.setTextureRect(this->textureRect);
+        }
+    }
+}
+
+void gui::CollisionEditor::render(sf::RenderTarget &target)
+{
+    if (!this->hidden)
+    {
+        target.draw(this->bounds);
+        target.draw(this->sheet);
+
+        if (this->active)
+            target.draw(this->selector);
+    }
+
+    if (this->editing)
+    {
+        target.draw(this->editorBg);
+        target.draw(this->editorTile);
+        target.draw(this->editorCollBox);
+    }
+
+    this->hideBtn->render(target);
+}
+
+void gui::CollisionEditor::updateMousetime(const float &dt)
+{
+    if (this->mousetime < this->mousetimeMax)
+    {
+        this->mousetime += 100.f * dt;
+    }
+}
+void gui::CollisionEditor::close()
+{
+    this->hidden = true;
+}
+
+void gui::CollisionEditor::openEditor()
+{
+    this->close();
+    this->editing = true;
+}
+
+const bool &gui::CollisionEditor::isActive() const
+{
+    return this->active;
+}
+
+const bool gui::CollisionEditor::isVisible() const
+{
+    return !this->hidden;
+}
+
+const bool gui::CollisionEditor::hasCompletedMousetimeCicle()
+{
+    if (this->mousetime >= this->mousetimeMax)
+    {
+        this->mousetime = 0.f;
+        return true;
+    }
+
+    return false;
+}
+
+const sf::IntRect &gui::CollisionEditor::getTextureRect() const
 {
     return this->textureRect;
 }

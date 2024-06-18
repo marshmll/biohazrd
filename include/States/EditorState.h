@@ -8,13 +8,11 @@ class TileMap;
 class EditorMode;
 class DefaultEditorMode;
 class EnemyEditorMode;
-class CollisionEditorMode;
 
 enum EditorModes
 {
     DEFAULT_MODE = 0,
-    ENEMY_MODE,
-    COLLISION_MODE
+    ENEMY_MODE
 };
 
 class EditorState : public State

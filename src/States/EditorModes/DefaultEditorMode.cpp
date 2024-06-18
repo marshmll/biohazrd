@@ -41,10 +41,20 @@ void DefaultEditorMode::initGUI()
 
     // Texture selector
     this->textureSelector = new gui::TextureSelector(
-        this->sidebar.getSize().x / 2 - 50.f / 2, gui::p2pY(this->data->gfxSettings->resolution, 5.f),
+        this->sidebar.getSize().x / 2.f - 50.f / 2.f, gui::p2pY(this->data->gfxSettings->resolution, 1.f),
         50.f, 50.f,
-        this->sidebar.getSize().x + gui::p2pY(this->data->gfxSettings->resolution, 2.5f), gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
+        this->sidebar.getSize().x + gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
+        gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
         960.f, 640.f,
+        this->data->gridSize, this->editorData->tileMap->getTileTextureSheet());
+
+    // Collision editor
+    this->collisionEditor = new gui::CollisionEditor(
+        this->sidebar.getSize().x / 2.f - 50.f / 2.f, 50.f + gui::p2pY(this->data->gfxSettings->resolution, 2.f),
+        50.f, 50.f,
+        this->sidebar.getSize().x + gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
+        gui::p2pY(this->data->gfxSettings->resolution, 5.f),
+        640.f, 640.f,
         this->data->gridSize, this->editorData->tileMap->getTileTextureSheet());
 }
 
@@ -60,6 +70,7 @@ DefaultEditorMode::DefaultEditorMode(StateData *data, EditorStateData *editor_da
 DefaultEditorMode::~DefaultEditorMode()
 {
     delete textureSelector;
+    delete collisionEditor;
 }
 
 /* FUNCTIONS ======================================================================================================= */
@@ -83,6 +94,24 @@ void DefaultEditorMode::updateInput(const float &dt)
         {
             if (!this->textureSelector->isActive())
             {
+                this->textureSelector->close();
+            }
+            else
+            {
+                this->textureRect = this->textureSelector->getTextureRect();
+            }
+
+            if (!this->collisionEditor->isActive())
+            {
+                this->collisionEditor->close();
+            }
+            else
+            {
+                this->collisionEditor->openEditor();
+            }
+
+            if (!this->textureSelector->isActive() && !this->collisionEditor->isActive())
+            {
                 this->editorData->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y,
                                                    0, this->textureRect,
                                                    this->collision,
@@ -90,18 +119,19 @@ void DefaultEditorMode::updateInput(const float &dt)
                                                    this->collBoxOffsetX, this->collBoxOffsetY,
                                                    this->type);
             }
-            else
-            {
-                this->textureRect = this->textureSelector->getTextureRect();
-            }
         }
     }
     else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            if (!this->textureSelector->isActive())
+            if (!this->textureSelector->isActive() && !this->collisionEditor->isActive())
+            {
+                this->textureSelector->close();
+                this->collisionEditor->close();
+
                 this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
+            }
         }
     }
 
@@ -126,6 +156,7 @@ void DefaultEditorMode::updateInput(const float &dt)
 void DefaultEditorMode::updateGUI(const float &dt)
 {
     this->textureSelector->update(dt, *this->editorData->mousePosWindow);
+    this->collisionEditor->update(dt, *this->editorData->mousePosWindow);
 
     if (!this->textureSelector->isActive())
     {
@@ -150,7 +181,8 @@ void DefaultEditorMode::updateGUI(const float &dt)
 
 void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
 {
-    if (!this->textureSelector->isActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
+    if (!this->textureSelector->isActive() && !this->collisionEditor->isActive() &&
+        !this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
     {
         if (this->editorData->mousePosGrid->x >= 0 && this->editorData->mousePosGrid->y >= 0)
         {
@@ -160,10 +192,11 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
         }
     }
 
-    // Render texture selector and sidebar in the window view
+    // Render texture selector, collision editor and sidebar in the window view
     target.setView(this->data->window->getDefaultView());
-    this->textureSelector->render(target);
     target.draw(this->sidebar);
+    this->textureSelector->render(target);
+    this->collisionEditor->render(target);
 
     // Render cursor in the editor camera
     target.setView(*this->editorData->editorCamera);

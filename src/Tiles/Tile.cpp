@@ -27,9 +27,9 @@ Tile::Tile(
 
     this->collBox.setSize(sf::Vector2f(coll_box_width, coll_box_height));
     this->collBox.setPosition((grid_x * grid_size_f) + coll_box_offset_x, (grid_y * grid_size_f) + coll_box_offset_y);
-    this->collBox.setFillColor(sf::Color(255, 0, 0, 150));
-    this->collBox.setOutlineThickness(-1.f);
-    this->collBox.setOutlineColor(sf::Color(255, 0, 0, 200));
+    this->collBox.setFillColor(sf::Color(255, 0, 0, 100));
+    this->collBox.setOutlineThickness(1.f);
+    this->collBox.setOutlineColor(sf::Color(255, 0, 0, 150));
 
     this->type = type;
 }

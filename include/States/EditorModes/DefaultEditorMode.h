@@ -20,6 +20,7 @@ private:
     sf::IntRect textureRect;
 
     gui::TextureSelector *textureSelector;
+    gui::CollisionEditor *collisionEditor;
 
     bool collision;
     

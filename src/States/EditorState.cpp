@@ -56,7 +56,7 @@ void EditorState::initPauseMenu()
 
 void EditorState::initTileMap()
 {
-    this->tileMap = new TileMap(this->data->gridSize, 10, 10, "Assets/Images/Tiles/tilesheet.png");
+    this->tileMap = new TileMap(this->data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
 }
 
 void EditorState::initGUI()
@@ -83,7 +83,6 @@ void EditorState::initModes()
 {
     this->modes[EditorModes::DEFAULT_MODE] = new DefaultEditorMode(this->data, &this->editorStateData);
     this->modes[EditorModes::ENEMY_MODE] = new EnemyEditorMode(this->data, &this->editorStateData);
-    this->modes[EditorModes::COLLISION_MODE] = new CollisionEditorMode(this->data, &this->editorStateData);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
@@ -167,9 +166,6 @@ void EditorState::updateInput(const float &dt)
 
     else if (sf::Keyboard::isKeyPressed(this->keybinds.at("ENEMY_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
         this->activeEditorMode = EditorModes::ENEMY_MODE;
-
-    else if (sf::Keyboard::isKeyPressed(this->keybinds.at("COLLISION_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
-        this->activeEditorMode = EditorModes::COLLISION_MODE;
 }
 
 void EditorState::updateGUI(const float &dt)

@@ -273,6 +273,18 @@ namespace gui
 
     /**********************************************************************************************************
      *
+     * INCREMENT/DECREMENT INPUT
+     *
+     *********************************************************************************************************/
+
+    class IncrementInput
+    {
+    private:
+    public:
+    };
+
+    /**********************************************************************************************************
+     *
      * PAUSEMENU
      *
      *********************************************************************************************************/
@@ -427,15 +439,6 @@ namespace gui
         void update(const float &dt, const sf::Vector2i mousePosWindow);
 
         /**
-         * @brief Updates the mousetime.
-         * The mousetime is used for key presses filtering and
-         * debugging.
-         *
-         * @return void
-         */
-        void render(sf::RenderTarget &target);
-
-        /**
          * @brief Renders the texture selector into a target if
          * not hidden.
          * @note -> Renders the hide button
@@ -445,16 +448,40 @@ namespace gui
          *
          * @return void
          */
+        void render(sf::RenderTarget &target);
+
+        /**
+         * @brief Updates the mousetime.
+         * The mousetime is used for key presses filtering and
+         * debugging.
+         *
+         * @return void
+         */
         void updateMousetime(const float &dt);
+
+        /**
+         * @brief Closes the texture selector by setting hidden to true.
+         *
+         * @return void
+         */
+        void close();
 
         /* ACCESSORS ========================================================================================== */
 
         /**
          * @brief Returns if the texture selector is active.
+         * @note -> Active means that the mouse is inside the box.
          *
          * @return const bool&
          */
         const bool &isActive() const;
+
+        /**
+         * @brief Returns if the texture selector is visible.
+         *
+         * @return const bool
+         */
+        const bool isVisible() const;
 
         /**
          * @brief Returns if a mousetime cicle has completed.
@@ -474,6 +501,136 @@ namespace gui
          * @return const sf::IntRect&
          */
         const sf::IntRect &getTextureRect() const;
+    };
+
+    /**********************************************************************************************************
+     *
+     * COLLISION EDITOR
+     *
+     *********************************************************************************************************/
+
+    class CollisionEditor
+    {
+    private:
+        /* VARIABLES =========================================================================================== */
+
+        float gridSizeF;
+        bool active;
+        bool hidden;
+        bool editing;
+
+        float mousetime;
+        const float mousetimeMax;
+
+        sf::Texture hideBtnIcon;
+        gui::Button *hideBtn;
+
+        sf::RectangleShape bounds;
+        sf::Sprite sheet;
+
+        sf::RectangleShape selector;
+        sf::Vector2u mousePosGrid;
+
+        sf::IntRect textureRect;
+
+        sf::RectangleShape editorBg;
+        sf::RectangleShape editorTile;
+        sf::RectangleShape editorCollBox;
+        sf::Texture exitEditorBtnIcon;
+        gui::Button *exitEditorBtn;
+
+    public:
+        /* CONSTRUCTOR AND DESTRUCTOR ========================================================================== */
+
+        CollisionEditor(const float btn_x, const float btn_y,
+                        const float btn_width, const float btn_height,
+                        const float col_editor_x, const float col_editor_y,
+                        const float col_editor_width, const float col_editor_height,
+                        const float grid_size_f, const sf::Texture *texture_sheet);
+
+        virtual ~CollisionEditor();
+
+        /* FUNCTIONS =========================================================================================== */
+
+        /**
+         * @return void
+         *
+         * @brief Updates the collision editor if not hidden.
+         * @note -> Updates mousetime
+         * @note -> Updates the hide button
+         * @note -> Updates the active state
+         * @note -> Changes the selector position
+         * @note -> Sets the texture rect.
+         */
+        void update(const float &dt, const sf::Vector2i mousePosWindow);
+
+        /**
+         * @brief Renders the collision editor into a target if
+         * not hidden.
+         * @note -> Renders the hide button
+         * @note -> Renders bounds
+         * @note -> Renders sheet
+         * @note -> Renders selector if active.
+         *
+         * @return void
+         */
+        void render(sf::RenderTarget &target);
+
+        /**
+         * @brief Updates the mousetime.
+         * The mousetime is used for key presses filtering and
+         * debugging.
+         *
+         * @return void
+         */
+        void updateMousetime(const float &dt);
+
+        /**
+         * @brief Closes the collision editor by setting hidden to true.
+         *
+         * @return void
+         */
+        void close();
+
+        void openEditor();
+
+        /* ACCESSORS =========================================================================================== */
+
+        /**
+         * @brief Returns if the collision editor is active.
+         * @note -> Active means that the mouse is inside the box.
+         *
+         * @return const bool&
+         */
+        const bool &isActive() const;
+
+        /**
+         * @brief Returns if the collision editor is visible.
+         *
+         * @return const bool
+         */
+        const bool isVisible() const;
+
+        /**
+         * @brief Returns if a mousetime cicle has completed.
+         * A mousetime cicle means that a defined amount of
+         * time has passed after a mouse button was pressed.
+         * @note -> Restarts mousetime after verification.
+         *
+         * @return const bool
+         */
+        const bool hasCompletedMousetimeCicle();
+
+        /**
+         * @brief Returns the collision editor's texture rect.
+         * The texture rect is the texture that is under
+         * the mouse posiitons.
+         *
+         * @return const sf::IntRect&
+         */
+        const sf::IntRect &getTextureRect() const;
+
+        /* MODIFIERS =========================================================================================== */
     };
 
     /**********************************************************************************************************
