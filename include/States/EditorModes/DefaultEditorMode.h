@@ -23,7 +23,7 @@ private:
     gui::CollisionEditor *collisionEditor;
 
     bool collision;
-    
+
     float collBoxWidth;
     float collBoxHeight;
     float collBoxOffsetX;

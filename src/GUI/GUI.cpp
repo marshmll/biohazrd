@@ -130,12 +130,12 @@ gui::Button::~Button()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::Button::update(sf::Vector2f mousePos)
+void gui::Button::update(sf::Vector2f mouse_pos)
 {
     this->btn_state = BTN_IDLE;
 
     // Hover
-    if (this->shape.getGlobalBounds().contains(mousePos))
+    if (this->shape.getGlobalBounds().contains(mouse_pos))
     {
         this->btn_state = BTN_HOVER;
 
@@ -260,11 +260,11 @@ gui::DropDownList::~DropDownList()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::DropDownList::update(const sf::Vector2i &mousePosWindow, const float &dt)
+void gui::DropDownList::update(const sf::Vector2i &mouse_pos_window, const float &dt)
 {
     this->updateKeytime(dt);
 
-    this->selectedElement->update(sf::Vector2f(mousePosWindow));
+    this->selectedElement->update(sf::Vector2f(mouse_pos_window));
 
     if (this->selectedElement->isPressed() && this->hasCompletedKeytimeCicle())
         this->showList = !this->showList;
@@ -273,7 +273,7 @@ void gui::DropDownList::update(const sf::Vector2i &mousePosWindow, const float &
     {
         for (auto &button : this->list)
         {
-            button->update(sf::Vector2f(mousePosWindow));
+            button->update(sf::Vector2f(mouse_pos_window));
 
             if (button->isPressed() && this->hasCompletedKeytimeCicle())
             {
@@ -323,6 +323,141 @@ const bool gui::DropDownList::hasCompletedKeytimeCicle()
     }
 
     return false;
+}
+
+/**********************************************************************************************************
+ *
+ * INCREMENT/DECREMENT INPUT
+ *
+ *********************************************************************************************************/
+
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
+
+gui::IncrementInput::IncrementInput(
+    const float x, const float y, const float width, const float height,
+    const float step, const sf::Color bg_color,
+    sf::Color buttons_idle_color, sf::Color buttons_hover_color, sf::Color buttons_active_color,
+    sf::Font *font, sf::Color text_color, const unsigned char_size, const float initial_value)
+    : mousetime(0.f), mousetimeMax(1.f)
+{
+    // Variables
+    this->value = initial_value;
+    this->step = step;
+    float btn_size = height;
+
+    // Background
+    this->inputBg.setPosition(x, y);
+    this->inputBg.setSize(sf::Vector2f(width, height));
+    this->inputBg.setFillColor(bg_color);
+
+    // Text
+    this->inputText.setFont(*font);
+    this->inputText.setCharacterSize(char_size);
+
+    std::stringstream ss;
+    ss << std::setprecision(4) << this->value;
+    this->inputText.setString(ss.str());
+
+    this->inputText.setFillColor(text_color);
+    this->inputText.setPosition(this->inputBg.getPosition().x + this->inputBg.getSize().x / 2.f - this->inputText.getGlobalBounds().width / 2.f,
+                                this->inputBg.getPosition().y + this->inputBg.getSize().y / 2.f - this->inputText.getGlobalBounds().height / 2.f);
+
+    // Buttons
+    if (!this->incrementBtnIcon.loadFromFile("Assets/Images/Icons/plus_icon.png"))
+        ErrorHandler::throwErr("GUI::INCREMENTINPUT::INCREMENTINPUT::ERR_COULD_NOT_LOAD_INCREMENT_ICON\n");
+
+    if (!this->decrementBtnIcon.loadFromFile("Assets/Images/Icons/minus_icon.png"))
+        ErrorHandler::throwErr("GUI::INCREMENTINPUT::INCREMENTINPUT::ERR_COULD_NOT_LOAD_DECREMENT_ICON\n");
+
+    this->incrementBtn = new gui::Button(
+        this->inputBg.getPosition().x + this->inputBg.getSize().x - btn_size, y, btn_size, btn_size,
+        &this->incrementBtnIcon, btn_size / 2.f, btn_size / 2.f,
+        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+
+    this->decrementBtn = new gui::Button(
+        x, y, btn_size, btn_size,
+        &this->decrementBtnIcon, btn_size / 2.f, btn_size / 2.f,
+        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+}
+
+gui::IncrementInput::~IncrementInput()
+{
+    delete this->incrementBtn;
+    delete this->decrementBtn;
+}
+
+/* FUNCTIONS =================================================================================================== */
+
+void gui::IncrementInput::update(const float &dt, sf::Vector2f mouse_pos)
+{
+    // Update mousetime
+    this->updateMousetime(dt);
+
+    // Update text
+    std::stringstream ss;
+    ss << std::setprecision(4) << this->value;
+    this->inputText.setString(ss.str());
+    this->inputText.setPosition(this->inputBg.getPosition().x + this->inputBg.getSize().x / 2.f - this->inputText.getGlobalBounds().width / 2.f,
+                                this->inputBg.getPosition().y + this->inputBg.getSize().y / 2.f - this->inputText.getGlobalBounds().height / 2.f);
+
+    // Update buttons
+    this->incrementBtn->update(mouse_pos);
+    this->decrementBtn->update(mouse_pos);
+
+    // Update input
+    this->updateInput();
+}
+
+void gui::IncrementInput::render(sf::RenderTarget &target)
+{
+    target.draw(this->inputBg);
+    target.draw(this->inputText);
+
+    this->incrementBtn->render(target);
+    this->decrementBtn->render(target);
+}
+
+void gui::IncrementInput::updateInput()
+{
+    if (this->incrementBtn->isPressed() && this->hasCompletedMousetimeCycle(sf::Mouse::Left))
+        this->value += this->step;
+
+    else if (this->decrementBtn->isPressed() && this->hasCompletedMousetimeCycle(sf::Mouse::Left))
+        this->value -= this->step;
+}
+
+void gui::IncrementInput::updateMousetime(const float &dt)
+{
+    if (this->mousetime < this->mousetimeMax)
+        this->mousetime += 10.f * dt;
+}
+
+/* ACCESSORS =================================================================================================== */
+
+const float gui::IncrementInput::getValue() const
+{
+    return this->value;
+}
+
+const bool gui::IncrementInput::hasCompletedMousetimeCycle(sf::Mouse::Button mouse_btn)
+{
+    if (sf::Mouse::isButtonPressed(mouse_btn))
+    {
+        if (this->mousetime >= this->mousetimeMax)
+        {
+            this->mousetime = 0.f;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/* MODIFIERS =================================================================================================== */
+
+void gui::IncrementInput::setValue(const float new_value)
+{
+    this->value = new_value;
 }
 
 /**********************************************************************************************************
@@ -379,10 +514,10 @@ gui::PauseMenu::~PauseMenu()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::PauseMenu::update(const sf::Vector2i &mousePosWindow)
+void gui::PauseMenu::update(const sf::Vector2i &mouse_pos_window)
 {
     for (auto &it : this->buttons)
-        it.second->update(sf::Vector2f(mousePosWindow));
+        it.second->update(sf::Vector2f(mouse_pos_window));
 }
 
 void gui::PauseMenu::render(sf::RenderTarget &target)
@@ -434,12 +569,12 @@ gui::TextureSelector::TextureSelector(
     const float btn_width, const float btn_height,
     const float txtr_slctr_x, const float txtr_slctr_y,
     const float txtr_slctr_width, const float txtr_slctr_height,
-    const float gridSize, const sf::Texture *texture_sheet) : mousetime(0.f), mousetimeMax(10.f)
+    const float grid_size_f, const sf::Texture *texture_sheet) : mousetime(0.f), mousetimeMax(10.f)
 {
-    this->gridSize = gridSize;
+    this->gridSizeF = grid_size_f;
     this->active = false;
     this->hidden = true;
-    float offset = gridSize;
+    float offset = grid_size_f;
 
     // Outer box
     this->bounds.setSize(sf::Vector2f(txtr_slctr_width, txtr_slctr_height));
@@ -469,14 +604,14 @@ gui::TextureSelector::TextureSelector(
 
     // Selector Box
     this->selector.setPosition(txtr_slctr_x, txtr_slctr_y);
-    this->selector.setSize(sf::Vector2f(gridSize, gridSize));
+    this->selector.setSize(sf::Vector2f(grid_size_f, grid_size_f));
     this->selector.setFillColor(sf::Color::Transparent);
     this->selector.setOutlineThickness(1.f);
     this->selector.setOutlineColor(sf::Color::Green);
 
     // Mouse texture selector
-    this->textureRect.width = static_cast<int>(gridSize);
-    this->textureRect.height = static_cast<int>(gridSize);
+    this->textureRect.width = static_cast<int>(grid_size_f);
+    this->textureRect.height = static_cast<int>(grid_size_f);
 
     if (!this->hideBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png"))
         ErrorHandler::throwErr("GUI::TEXTURESELECTOR::TEXTURESELECTOR::ERR_COULD_NOT_LOAD_TEXTURE_SELECTOR_ICON");
@@ -494,30 +629,30 @@ gui::TextureSelector::~TextureSelector()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::TextureSelector::update(const float &dt, const sf::Vector2i mousePosWindow)
+void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_window)
 {
     this->updateMousetime(dt);
 
-    this->hideBtn->update(sf::Vector2f(mousePosWindow));
+    this->hideBtn->update(sf::Vector2f(mouse_pos_window));
 
     if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCicle())
         this->hidden = !this->hidden;
 
     if (!this->hidden)
     {
-        this->active = this->bounds.getGlobalBounds().contains(sf::Vector2f(mousePosWindow));
+        this->active = this->bounds.getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
 
         if (this->active)
         {
-            this->mousePosGrid.x = (mousePosWindow.x - this->bounds.getPosition().x) / (unsigned)this->gridSize;
-            this->mousePosGrid.y = (mousePosWindow.y - this->bounds.getPosition().y) / (unsigned)this->gridSize;
+            this->mousePosGrid.x = (mouse_pos_window.x - this->bounds.getPosition().x) / (unsigned)this->gridSizeF;
+            this->mousePosGrid.y = (mouse_pos_window.y - this->bounds.getPosition().y) / (unsigned)this->gridSizeF;
 
             this->selector.setPosition(
-                this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSize,
-                this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSize);
+                this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSizeF,
+                this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSizeF);
 
-            this->textureRect.left = this->mousePosGrid.x * gridSize;
-            this->textureRect.top = this->mousePosGrid.y * gridSize;
+            this->textureRect.left = this->mousePosGrid.x * this->gridSizeF;
+            this->textureRect.top = this->mousePosGrid.y * this->gridSizeF;
         }
     }
 }
@@ -582,53 +717,24 @@ const sf::IntRect &gui::TextureSelector::getTextureRect() const
  *
  *********************************************************************************************************/
 
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
+
 gui::CollisionEditor::CollisionEditor(
     const float btn_x, const float btn_y,
     const float btn_width, const float btn_height,
     const float col_editor_x, const float col_editor_y,
     const float col_editor_width, const float col_editor_height,
-    const float grid_size_f, const sf::Texture *texture_sheet)
-    : mousetime(0.f), mousetimeMax(10.f)
+    const float grid_size_f, const sf::Texture *texture_sheet,
+    sf::Font *font, sf::VideoMode &vm)
+    : mousetime(0.f), mousetimeMax(10.f), vm(vm)
 {
     this->gridSizeF = grid_size_f;
     this->active = false;
     this->hidden = true;
     this->editing = false;
 
-    float offset = grid_size_f;
-
-    // Outer box
-    this->bounds.setSize(sf::Vector2f(col_editor_width, col_editor_height));
-    this->bounds.setPosition(col_editor_x, col_editor_y);
-    this->bounds.setFillColor(sf::Color(50, 50, 50, 100));
-
-    this->bounds.setOutlineThickness(2.f);
-    this->bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
-
-    // Texture sheet
-    this->sheet.setTexture(*texture_sheet);
-    this->sheet.setPosition(col_editor_x, col_editor_y);
-
-    // If the sheet is larger than the outer box
-    if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
-    {
-        this->sheet.setTextureRect(
-            sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
-    }
-
-    // If the sheet is taller than the outer box
-    if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
-    {
-        this->sheet.setTextureRect(
-            sf::IntRect(0, 0, this->sheet.getGlobalBounds().width, this->bounds.getGlobalBounds().height));
-    }
-
-    // Mouse selector
-    this->selector.setPosition(col_editor_x, col_editor_y);
-    this->selector.setSize(sf::Vector2f(grid_size_f, grid_size_f));
-    this->selector.setFillColor(sf::Color::Transparent);
-    this->selector.setOutlineThickness(1.f);
-    this->selector.setOutlineColor(sf::Color::Green);
+    this->offsets = sf::Vector2f(0.f, 0.f);
+    this->dimensions = sf::Vector2f(grid_size_f, grid_size_f);
 
     // Texture rectangle
     this->textureRect.width = static_cast<int>(grid_size_f);
@@ -643,7 +749,7 @@ gui::CollisionEditor::CollisionEditor(
         sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 
     // Editing
-    this->editorBg.setSize(sf::Vector2f(this->gridSizeF * 2.f, this->gridSizeF * 2.f));
+    this->editorBg.setSize(sf::Vector2f(this->gridSizeF * 3.f, this->gridSizeF * 3.f));
     this->editorBg.setFillColor(sf::Color(100, 100, 100, 100));
     this->editorBg.setOutlineThickness(1.f);
     this->editorBg.setOutlineColor(sf::Color(100, 100, 100, 150));
@@ -652,67 +758,94 @@ gui::CollisionEditor::CollisionEditor(
     this->editorTile.setTexture(texture_sheet);
     this->editorTile.setTextureRect(this->textureRect);
     this->editorTile.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
-    this->editorTile.setPosition(this->editorBg.getPosition().x + this->editorTile.getSize().x / 2.f,
-                                 this->editorBg.getPosition().y + this->editorTile.getSize().y / 2.f);
+    this->editorTile.setPosition(this->editorBg.getPosition().x + this->editorBg.getSize().x / 2.f - this->editorTile.getSize().x / 2.f,
+                                 this->editorBg.getPosition().y + this->editorBg.getSize().y / 2.f - this->editorTile.getSize().y / 2.f);
 
     this->editorCollBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
     this->editorCollBox.setFillColor(sf::Color(255, 100, 100, 100));
     this->editorCollBox.setOutlineThickness(1.f);
     this->editorCollBox.setOutlineColor(sf::Color(255, 100, 100, 150));
     this->editorCollBox.setPosition(this->editorTile.getPosition());
+
+    this->incrementInputs["WIDTH"] = new gui::IncrementInput(
+        this->editorBg.getPosition().x + this->editorBg.getSize().x,
+        this->editorBg.getPosition().y,
+        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
+        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), grid_size_f);
+
+    this->incrementInputs["HEIGHT"] = new gui::IncrementInput(
+        this->editorBg.getPosition().x + this->editorBg.getSize().x,
+        this->editorBg.getPosition().y + 50.f,
+        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
+        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), grid_size_f);
+
+    this->incrementInputs["OFFSET_X"] = new gui::IncrementInput(
+        this->editorBg.getPosition().x + this->editorBg.getSize().x,
+        this->editorBg.getPosition().y + 100.f,
+        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
+        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), 0.f);
+
+    this->incrementInputs["OFFSET_Y"] = new gui::IncrementInput(
+        this->editorBg.getPosition().x + this->editorBg.getSize().x,
+        this->editorBg.getPosition().y + 150.f,
+        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
+        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), 0.f);
 }
 
 gui::CollisionEditor::~CollisionEditor()
 {
     delete this->hideBtn;
+
+    for (auto &it : this->incrementInputs)
+        delete it.second;
 }
 
-void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window)
+/* FUNCTIONS =================================================================================================== */
+
+void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window, sf::IntRect &texture_rect)
 {
     this->updateMousetime(dt);
 
     this->hideBtn->update(sf::Vector2f(mouse_pos_window));
 
-    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCicle() && !this->editing)
-        this->hidden = !this->hidden;
+    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCicle())
+        this->editing = !this->editing;
 
-    if (!this->hidden)
+    this->textureRect = texture_rect;
+
+    this->editorTile.setTextureRect(this->textureRect);
+
+    if (this->editing)
     {
-        this->active = this->bounds.getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
+        for (auto &it : this->incrementInputs)
+            it.second->update(dt, static_cast<sf::Vector2f>(mouse_pos_window));
 
-        if (this->active)
-        {
-            this->mousePosGrid.x = (mouse_pos_window.x - this->bounds.getPosition().x) / (unsigned)this->gridSizeF;
-            this->mousePosGrid.y = (mouse_pos_window.y - this->bounds.getPosition().y) / (unsigned)this->gridSizeF;
+        this->offsets.x = this->incrementInputs.at("OFFSET_X")->getValue();
+        this->offsets.y = this->incrementInputs.at("OFFSET_Y")->getValue();
 
-            this->selector.setPosition(
-                this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSizeF,
-                this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSizeF);
+        this->dimensions.x = this->incrementInputs.at("WIDTH")->getValue();
+        this->dimensions.y = this->incrementInputs.at("HEIGHT")->getValue();
 
-            this->textureRect.left = this->mousePosGrid.x * this->gridSizeF;
-            this->textureRect.top = this->mousePosGrid.y * this->gridSizeF;
-
-            this->editorTile.setTextureRect(this->textureRect);
-        }
+        this->editorCollBox.setSize(this->dimensions);
+        this->editorCollBox.setPosition(this->editorTile.getPosition().x + this->offsets.x,
+                                        this->editorTile.getPosition().y + this->offsets.y);
     }
 }
 
 void gui::CollisionEditor::render(sf::RenderTarget &target)
 {
-    if (!this->hidden)
-    {
-        target.draw(this->bounds);
-        target.draw(this->sheet);
-
-        if (this->active)
-            target.draw(this->selector);
-    }
-
     if (this->editing)
     {
         target.draw(this->editorBg);
         target.draw(this->editorTile);
         target.draw(this->editorCollBox);
+
+        for (auto &it : this->incrementInputs)
+            it.second->render(target);
     }
 
     this->hideBtn->render(target);
@@ -725,25 +858,27 @@ void gui::CollisionEditor::updateMousetime(const float &dt)
         this->mousetime += 100.f * dt;
     }
 }
+
 void gui::CollisionEditor::close()
 {
-    this->hidden = true;
+    this->editing = false;
 }
 
-void gui::CollisionEditor::openEditor()
+/* ACCESSORS =================================================================================================== */
+
+const sf::Vector2f &gui::CollisionEditor::getDimensions() const
 {
-    this->close();
-    this->editing = true;
+    return this->dimensions;
 }
 
-const bool &gui::CollisionEditor::isActive() const
+const sf::Vector2f &gui::CollisionEditor::getOffsets() const
 {
-    return this->active;
+    return this->offsets;
 }
 
 const bool gui::CollisionEditor::isVisible() const
 {
-    return !this->hidden;
+    return this->editing;
 }
 
 const bool gui::CollisionEditor::hasCompletedMousetimeCicle()
@@ -755,11 +890,6 @@ const bool gui::CollisionEditor::hasCompletedMousetimeCicle()
     }
 
     return false;
-}
-
-const sf::IntRect &gui::CollisionEditor::getTextureRect() const
-{
-    return this->textureRect;
 }
 
 /**********************************************************************************************************

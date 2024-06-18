@@ -55,7 +55,8 @@ void DefaultEditorMode::initGUI()
         this->sidebar.getSize().x + gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
         gui::p2pY(this->data->gfxSettings->resolution, 5.f),
         640.f, 640.f,
-        this->data->gridSize, this->editorData->tileMap->getTileTextureSheet());
+        this->data->gridSize, this->editorData->tileMap->getTileTextureSheet(),
+        this->editorData->font, this->data->gfxSettings->resolution);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -93,24 +94,22 @@ void DefaultEditorMode::updateInput(const float &dt)
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
             if (!this->textureSelector->isActive())
-            {
                 this->textureSelector->close();
-            }
+
             else
-            {
                 this->textureRect = this->textureSelector->getTextureRect();
+
+            if (this->collisionEditor->isVisible())
+            {
+                // Update collision box offsets and dimensions.
+                this->collBoxWidth = this->collisionEditor->getDimensions().x;
+                this->collBoxHeight = this->collisionEditor->getDimensions().y;
+
+                this->collBoxOffsetX = this->collisionEditor->getOffsets().x;
+                this->collBoxOffsetY = this->collisionEditor->getOffsets().y;
             }
 
-            if (!this->collisionEditor->isActive())
-            {
-                this->collisionEditor->close();
-            }
-            else
-            {
-                this->collisionEditor->openEditor();
-            }
-
-            if (!this->textureSelector->isActive() && !this->collisionEditor->isActive())
+            if (!this->textureSelector->isActive() && !this->collisionEditor->isVisible())
             {
                 this->editorData->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y,
                                                    0, this->textureRect,
@@ -125,10 +124,9 @@ void DefaultEditorMode::updateInput(const float &dt)
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            if (!this->textureSelector->isActive() && !this->collisionEditor->isActive())
+            if (!this->textureSelector->isActive())
             {
                 this->textureSelector->close();
-                this->collisionEditor->close();
 
                 this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
             }
@@ -156,7 +154,7 @@ void DefaultEditorMode::updateInput(const float &dt)
 void DefaultEditorMode::updateGUI(const float &dt)
 {
     this->textureSelector->update(dt, *this->editorData->mousePosWindow);
-    this->collisionEditor->update(dt, *this->editorData->mousePosWindow);
+    this->collisionEditor->update(dt, *this->editorData->mousePosWindow, this->textureRect);
 
     if (!this->textureSelector->isActive())
     {
@@ -181,7 +179,7 @@ void DefaultEditorMode::updateGUI(const float &dt)
 
 void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
 {
-    if (!this->textureSelector->isActive() && !this->collisionEditor->isActive() &&
+    if (!this->textureSelector->isActive() && !this->collisionEditor->isVisible() &&
         !this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
     {
         if (this->editorData->mousePosGrid->x >= 0 && this->editorData->mousePosGrid->y >= 0)

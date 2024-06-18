@@ -135,7 +135,7 @@ namespace gui
          *
          * @return void
          */
-        void update(sf::Vector2f mousePos);
+        void update(sf::Vector2f mouse_pos);
 
         /**
          * @brief Renders the button into a target.
@@ -232,7 +232,7 @@ namespace gui
          *
          * @return void
          */
-        void update(const sf::Vector2i &mousePosWindow, const float &dt);
+        void update(const sf::Vector2i &mouse_pos_window, const float &dt);
 
         /**
          * @brief Renders the selected element from the list and
@@ -280,7 +280,53 @@ namespace gui
     class IncrementInput
     {
     private:
+        /* VARIABLES =========================================================================================== */
+
+        float value;
+        float step;
+
+        float mousetime;
+        float mousetimeMax;
+
+        sf::RectangleShape inputBg;
+
+        gui::Button *incrementBtn;
+        sf::Texture incrementBtnIcon;
+
+        gui::Button *decrementBtn;
+        sf::Texture decrementBtnIcon;
+
+        sf::Text inputText;
+
     public:
+        /* CONSTRUCTOR AND DESTRUCTOR ========================================================================== */
+
+        IncrementInput(const float x, const float y, const float width, const float height,
+                       const float step, const sf::Color bg_color,
+                       sf::Color buttons_idle_color, sf::Color buttons_hover_color, sf::Color buttons_active_color,
+                       sf::Font *font, sf::Color text_color, const unsigned char_size, const float initial_value = 0.f);
+
+        virtual ~IncrementInput();
+
+        /* FUNCTIONS =========================================================================================== */
+
+        void update(const float &dt, sf::Vector2f mouse_pos);
+
+        void render(sf::RenderTarget &target);
+
+        void updateInput();
+
+        void updateMousetime(const float &dt);
+
+        /* ACCESSORS =========================================================================================== */
+
+        const float getValue() const;
+
+        const bool hasCompletedMousetimeCycle(sf::Mouse::Button mouse_btn);
+
+        /* MODIFIERS =========================================================================================== */
+
+        void setValue(const float new_value);
     };
 
     /**********************************************************************************************************
@@ -338,7 +384,7 @@ namespace gui
          *
          * @return void
          */
-        void update(const sf::Vector2i &mousePosWindow);
+        void update(const sf::Vector2i &mouse_pos_window);
 
         /**
          * @brief Renders the pause menu into a render target.
@@ -389,7 +435,7 @@ namespace gui
     private:
         /* VARIABLES ========================================================================================== */
 
-        float gridSize;
+        float gridSizeF;
         bool active;
         bool hidden;
 
@@ -417,7 +463,7 @@ namespace gui
                         const float btn_width, const float btn_height,
                         const float txtr_slctr_x, const float txtr_slctr_y,
                         const float txtr_slctr_width, const float txtr_slctr_height,
-                        const float gridSize, const sf::Texture *texture_sheet);
+                        const float grid_size_f, const sf::Texture *texture_sheet);
 
         /**
          * @brief Frees all buttons memory.
@@ -436,7 +482,7 @@ namespace gui
          * @note -> Changes the selector position
          * @note -> Sets the texture rect.
          */
-        void update(const float &dt, const sf::Vector2i mousePosWindow);
+        void update(const float &dt, const sf::Vector2i mouse_pos_window);
 
         /**
          * @brief Renders the texture selector into a target if
@@ -519,6 +565,9 @@ namespace gui
         bool hidden;
         bool editing;
 
+        sf::Vector2f offsets;
+        sf::Vector2f dimensions;
+
         float mousetime;
         const float mousetimeMax;
 
@@ -533,11 +582,15 @@ namespace gui
 
         sf::IntRect textureRect;
 
+        sf::VideoMode &vm;
+
         sf::RectangleShape editorBg;
         sf::RectangleShape editorTile;
         sf::RectangleShape editorCollBox;
         sf::Texture exitEditorBtnIcon;
         gui::Button *exitEditorBtn;
+
+        std::map<std::string, gui::IncrementInput *> incrementInputs;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ========================================================================== */
@@ -546,7 +599,8 @@ namespace gui
                         const float btn_width, const float btn_height,
                         const float col_editor_x, const float col_editor_y,
                         const float col_editor_width, const float col_editor_height,
-                        const float grid_size_f, const sf::Texture *texture_sheet);
+                        const float grid_size_f, const sf::Texture *texture_sheet,
+                        sf::Font *font, sf::VideoMode &vm);
 
         virtual ~CollisionEditor();
 
@@ -562,7 +616,7 @@ namespace gui
          * @note -> Changes the selector position
          * @note -> Sets the texture rect.
          */
-        void update(const float &dt, const sf::Vector2i mousePosWindow);
+        void update(const float &dt, sf::Vector2i mouse_pos_window, sf::IntRect &texture_rect);
 
         /**
          * @brief Renders the collision editor into a target if
@@ -586,23 +640,27 @@ namespace gui
         void updateMousetime(const float &dt);
 
         /**
-         * @brief Closes the collision editor by setting hidden to true.
+         * @brief Closes the collision editor by setting editing to false.
          *
          * @return void
          */
         void close();
 
-        void openEditor();
-
         /* ACCESSORS =========================================================================================== */
 
         /**
-         * @brief Returns if the collision editor is active.
-         * @note -> Active means that the mouse is inside the box.
+         * @brief Returns the collision box dimensions.
          *
-         * @return const bool&
+         * @return sf::Vector2f&
          */
-        const bool &isActive() const;
+        const sf::Vector2f &getDimensions() const;
+
+        /**
+         * @brief Returns the collision box offsets.
+         *
+         * @return sf::Vector2f&
+         */
+        const sf::Vector2f &getOffsets() const;
 
         /**
          * @brief Returns if the collision editor is visible.
@@ -620,15 +678,6 @@ namespace gui
          * @return const bool
          */
         const bool hasCompletedMousetimeCicle();
-
-        /**
-         * @brief Returns the collision editor's texture rect.
-         * The texture rect is the texture that is under
-         * the mouse posiitons.
-         *
-         * @return const sf::IntRect&
-         */
-        const sf::IntRect &getTextureRect() const;
 
         /* MODIFIERS =========================================================================================== */
     };
