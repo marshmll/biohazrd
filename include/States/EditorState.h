@@ -34,9 +34,9 @@ private:
 
     std::map<std::string, gui::Button *> buttons;
 
-    std::map<short, EditorMode *> modes;
+    std::map<EditorModes, EditorMode *> modes;
 
-    short activeEditorMode;
+    EditorModes activeEditorMode;
 
     /* INITIALIZERS ============================================================================================= */
 

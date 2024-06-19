@@ -6,7 +6,7 @@ enum TileTypes
     DEFAULT = 0,
     HARMFUL,
     DOODAD,
-    SPAWNER
+    SPAWNER // KEEP THIS AT LAST!
 };
 
 class Tile
@@ -20,7 +20,7 @@ protected:
     float collBoxOffsetY;
 
     bool collision;
-    short type;
+    TileTypes type;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR */
@@ -46,7 +46,7 @@ public:
         const bool collision = false,
         const float coll_box_width = 0.f, const float coll_box_height = 0.f,
         const float coll_box_offset_x = 0.f, const float coll_box_offset_y = 0.f,
-        const short type = TileTypes::DEFAULT);
+        const TileTypes type = TileTypes::DEFAULT);
 
     virtual ~Tile();
 
@@ -114,7 +114,7 @@ public:
      *
      * @return short (TileTypes enum);
      */
-    const short &getType() const;
+    const TileTypes &getType() const;
 
     /**
      * @brief Returns the tile properties as a std::string.

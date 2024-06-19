@@ -16,7 +16,7 @@ Tile::Tile(
     const bool collision,
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y,
-    const short type)
+    const TileTypes type)
     : collBoxOffsetX(coll_box_offset_x), collBoxOffsetY(coll_box_offset_y)
 {
     this->tile.setTexture(texture);
@@ -86,7 +86,7 @@ const sf::RectangleShape &Tile::getCollisionBox() const
     return this->collBox;
 }
 
-const short &Tile::getType() const
+const TileTypes &Tile::getType() const
 {
     return this->type;
 }

@@ -71,7 +71,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            if (this->editorData->tileMap->checkType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
+            if (this->editorData->tileMap->compareType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
                 this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
         }
     }

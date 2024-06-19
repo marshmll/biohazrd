@@ -587,8 +587,6 @@ namespace gui
         sf::RectangleShape editorBg;
         sf::RectangleShape editorTile;
         sf::RectangleShape editorCollBox;
-        sf::Texture exitEditorBtnIcon;
-        gui::Button *exitEditorBtn;
 
         std::map<std::string, gui::IncrementInput *> incrementInputs;
 

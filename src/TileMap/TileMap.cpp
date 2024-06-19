@@ -171,7 +171,7 @@ void TileMap::loadFromFile(const std::string file_path)
                 collision,
                 coll_box_width, coll_box_height,
                 coll_box_offset_x, coll_box_offset_y,
-                type));
+                static_cast<TileTypes>(type)));
     }
 
     in_file.close();
@@ -223,7 +223,7 @@ void TileMap::addTile(
     const bool &collision,
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y,
-    const short &type)
+    const TileTypes &type)
 {
     // If position is in the map bounds
     if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
@@ -461,7 +461,7 @@ void TileMap::updateMapActiveArea(const sf::Vector2i gridPosition, const int wid
 
 /* ACCESSORS =================================================================================================== */
 
-const bool TileMap::checkType(const int x, const int y, const unsigned layer, const unsigned short type) const
+const bool TileMap::compareType(const int x, const int y, const unsigned layer, const TileTypes &type) const
 {
     if (!this->isTileEmpty(x, y, layer))
         return this->tileMap[x][y][layer].back()->getType() == type;

@@ -31,13 +31,19 @@ void DefaultEditorMode::initGUI()
     this->sidebar.setOutlineThickness(1.f);
     this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
 
-    // World selector
+    // Tile world selector
     this->selectorRect.setSize(sf::Vector2f(this->data->gridSize, this->data->gridSize));
     this->selectorRect.setFillColor(sf::Color(255, 255, 255, 200));
-    this->selectorRect.setOutlineColor(sf::Color::Red);
+    this->selectorRect.setOutlineColor(sf::Color::Yellow);
     this->selectorRect.setOutlineThickness(1.f);
     this->selectorRect.setTexture(this->editorData->tileMap->getTileTextureSheet());
     this->selectorRect.setTextureRect(this->textureRect);
+
+    // Tile collision box world selector
+    this->collisionRect.setSize(sf::Vector2f(this->collBoxWidth, this->collBoxHeight));
+    this->collisionRect.setFillColor(sf::Color(255, 100, 100, 100));
+    this->collisionRect.setOutlineThickness(1.f);
+    this->collisionRect.setOutlineColor(sf::Color::Red);
 
     // Texture selector
     this->textureSelector = new gui::TextureSelector(
@@ -116,7 +122,7 @@ void DefaultEditorMode::updateInput(const float &dt)
                                                    this->collision,
                                                    this->collBoxWidth, this->collBoxHeight,
                                                    this->collBoxOffsetX, this->collBoxOffsetY,
-                                                   this->type);
+                                                   static_cast<TileTypes>(this->type));
             }
         }
     }
@@ -141,12 +147,13 @@ void DefaultEditorMode::updateInput(const float &dt)
     // Type increase
     else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("INCREASE_TYPE")) && this->hasCompletedKeytimeCicle())
     {
-        this->type++;
+        if (static_cast<TileTypes>(this->type + 1) != TileTypes::SPAWNER)
+            this->type++;
     }
     // Type decrease
     else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("DECREASE_TYPE")) && this->hasCompletedKeytimeCicle())
     {
-        if (this->type > 0)
+        if (static_cast<TileTypes>(this->type - 1) != TileTypes::SPAWNER && this->type > 0)
             this->type--;
     }
 }
@@ -163,6 +170,11 @@ void DefaultEditorMode::updateGUI(const float &dt)
             this->editorData->mousePosGrid->y * this->data->gridSize);
 
         this->selectorRect.setTextureRect(this->textureRect);
+
+        this->collisionRect.setSize(sf::Vector2f(this->collBoxWidth, this->collBoxHeight));
+        this->collisionRect.setPosition(
+            this->selectorRect.getPosition().x + this->collBoxOffsetX,
+            this->selectorRect.getPosition().y + this->collBoxOffsetY);
     }
 
     this->cursorText.setPosition(sf::Vector2f(this->editorData->mousePosView->x + 40.f, this->editorData->mousePosView->y));
@@ -187,6 +199,10 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
             // Render selector rect in the editor camera
             target.setView(*this->editorData->editorCamera);
             target.draw(this->selectorRect);
+
+            // Render collision rect if collision == true
+            if (this->collision)
+                target.draw(this->collisionRect);
         }
     }
 

@@ -133,7 +133,7 @@ public:
         const bool &collision,
         const float coll_box_width, const float coll_box_height,
         const float coll_box_offset_x, const float coll_box_offset_y,
-        const short &type);
+        const TileTypes &type);
 
     /**
      * @brief  Removes a tile from the tilemap.
@@ -210,7 +210,7 @@ public:
      *
      * @return const bool
      */
-    const bool checkType(const int x, const int y, const unsigned layer, const unsigned short type) const;
+    const bool compareType(const int x, const int y, const unsigned layer, const TileTypes &type) const;
 
     /**
      * @brief Returns the tilemap's size.
