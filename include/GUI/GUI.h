@@ -561,6 +561,8 @@ namespace gui
         /* VARIABLES =========================================================================================== */
 
         float gridSizeF;
+        float scale;
+
         bool active;
         bool hidden;
         bool editing;
@@ -600,7 +602,8 @@ namespace gui
                         const float btn_width, const float btn_height,
                         const float col_editor_x, const float col_editor_y,
                         const float col_editor_width, const float col_editor_height,
-                        const float grid_size_f, const sf::Texture *texture_sheet,
+                        const float grid_size_f, const float scale,
+                        const sf::Texture *texture_sheet,
                         sf::Font *font, sf::VideoMode &vm);
 
         virtual ~CollisionEditor();

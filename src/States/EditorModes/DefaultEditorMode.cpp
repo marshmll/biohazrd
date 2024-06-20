@@ -61,7 +61,7 @@ void DefaultEditorMode::initGUI()
         this->sidebar.getSize().x + gui::p2pY(this->data->gfxSettings->resolution, 2.5f),
         gui::p2pY(this->data->gfxSettings->resolution, 5.f),
         640.f, 640.f,
-        this->data->gridSize, this->editorData->tileMap->getTileTextureSheet(),
+        this->data->gridSize, 2.f, this->editorData->tileMap->getTileTextureSheet(),
         this->editorData->font, this->data->gfxSettings->resolution);
 }
 
