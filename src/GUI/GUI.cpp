@@ -635,7 +635,7 @@ void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_
 
     this->hideBtn->update(sf::Vector2f(mouse_pos_window));
 
-    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCicle())
+    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCycle())
         this->hidden = !this->hidden;
 
     if (!this->hidden)
@@ -695,7 +695,7 @@ const bool gui::TextureSelector::isVisible() const
     return this->hidden;
 }
 
-const bool gui::TextureSelector::hasCompletedMousetimeCicle()
+const bool gui::TextureSelector::hasCompletedMousetimeCycle()
 {
     if (this->mousetime >= this->mousetimeMax)
     {
@@ -748,52 +748,72 @@ gui::CollisionEditor::CollisionEditor(
         &this->hideBtnIcon, btn_width, btn_height,
         sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 
-    // Editing
+    // Background
     this->editorBg.setSize(sf::Vector2f(this->gridSizeF * 3.f, this->gridSizeF * 3.f));
     this->editorBg.setFillColor(sf::Color(100, 100, 100, 100));
     this->editorBg.setOutlineThickness(1.f);
     this->editorBg.setOutlineColor(sf::Color(100, 100, 100, 150));
     this->editorBg.setPosition(col_editor_x, col_editor_y);
 
+    // Tile
     this->editorTile.setTexture(texture_sheet);
     this->editorTile.setTextureRect(this->textureRect);
     this->editorTile.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
     this->editorTile.setPosition(this->editorBg.getPosition().x + this->editorBg.getSize().x / 2.f - this->editorTile.getSize().x / 2.f,
                                  this->editorBg.getPosition().y + this->editorBg.getSize().y / 2.f - this->editorTile.getSize().y / 2.f);
 
+    // Collision box
     this->editorCollBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
     this->editorCollBox.setFillColor(sf::Color(255, 100, 100, 100));
     this->editorCollBox.setOutlineThickness(1.f);
     this->editorCollBox.setOutlineColor(sf::Color(255, 100, 100, 150));
     this->editorCollBox.setPosition(this->editorTile.getPosition());
 
+    // Input labels
+    this->inputLabels.setFont(*font);
+    this->inputLabels.setCharacterSize(gui::calc_char_size(vm, 140));
+    this->inputLabels.setFillColor(sf::Color(255, 255, 255, 150));
+    this->inputLabels.setString("Width\n\nHeight\n\nOffset X\n\nOffset Y");
+    this->inputLabels.setPosition(sf::Vector2f(
+        this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
+        this->editorBg.getPosition().y));
+
+    // Inputs
     this->incrementInputs["WIDTH"] = new gui::IncrementInput(
-        this->editorBg.getPosition().x + this->editorBg.getSize().x,
+        this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
         this->editorBg.getPosition().y,
         200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), grid_size_f);
 
     this->incrementInputs["HEIGHT"] = new gui::IncrementInput(
-        this->editorBg.getPosition().x + this->editorBg.getSize().x,
-        this->editorBg.getPosition().y + 50.f,
+        this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
+        this->editorBg.getPosition().y + 35.f,
         200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), grid_size_f);
 
     this->incrementInputs["OFFSET_X"] = new gui::IncrementInput(
-        this->editorBg.getPosition().x + this->editorBg.getSize().x,
-        this->editorBg.getPosition().y + 100.f,
+        this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
+        this->editorBg.getPosition().y + 70.f,
         200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), 0.f);
 
     this->incrementInputs["OFFSET_Y"] = new gui::IncrementInput(
-        this->editorBg.getPosition().x + this->editorBg.getSize().x,
-        this->editorBg.getPosition().y + 150.f,
+        this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
+        this->editorBg.getPosition().y + 105.f,
         200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), 0.f);
+
+    // Reset button
+    this->resetBtn = new Button(
+        this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
+        this->editorBg.getPosition().y + 140.f,
+        50.f, 30.f, font, "Reset", gui::calc_char_size(vm, 140),
+        sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255),
+        sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
 }
 
 gui::CollisionEditor::~CollisionEditor()
@@ -802,6 +822,8 @@ gui::CollisionEditor::~CollisionEditor()
 
     for (auto &it : this->incrementInputs)
         delete it.second;
+
+    delete this->resetBtn;
 }
 
 /* FUNCTIONS =================================================================================================== */
@@ -811,8 +833,11 @@ void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window
     this->updateMousetime(dt);
 
     this->hideBtn->update(sf::Vector2f(mouse_pos_window));
+    this->resetBtn->update(sf::Vector2f(mouse_pos_window));
 
-    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCicle())
+    this->updateInput();
+
+    if (this->hideBtn->isPressed() && this->hasCompletedMousetimeCycle())
         this->editing = !this->editing;
 
     this->textureRect = texture_rect;
@@ -844,11 +869,21 @@ void gui::CollisionEditor::render(sf::RenderTarget &target)
         target.draw(this->editorTile);
         target.draw(this->editorCollBox);
 
+        target.draw(this->inputLabels);
+
         for (auto &it : this->incrementInputs)
             it.second->render(target);
+
+        this->resetBtn->render(target);
     }
 
     this->hideBtn->render(target);
+}
+
+void gui::CollisionEditor::updateInput()
+{
+    if (this->resetBtn->isPressed() && this->hasCompletedMousetimeCycle())
+        this->resetValues();
 }
 
 void gui::CollisionEditor::updateMousetime(const float &dt)
@@ -857,6 +892,14 @@ void gui::CollisionEditor::updateMousetime(const float &dt)
     {
         this->mousetime += 100.f * dt;
     }
+}
+
+void gui::CollisionEditor::resetValues()
+{
+    this->incrementInputs.at("WIDTH")->setValue(this->gridSizeF);
+    this->incrementInputs.at("HEIGHT")->setValue(this->gridSizeF);
+    this->incrementInputs.at("OFFSET_X")->setValue(0.f);
+    this->incrementInputs.at("OFFSET_Y")->setValue(0.f);
 }
 
 void gui::CollisionEditor::close()
@@ -881,7 +924,7 @@ const bool gui::CollisionEditor::isVisible() const
     return this->editing;
 }
 
-const bool gui::CollisionEditor::hasCompletedMousetimeCicle()
+const bool gui::CollisionEditor::hasCompletedMousetimeCycle()
 {
     if (this->mousetime >= this->mousetimeMax)
     {

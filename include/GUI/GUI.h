@@ -537,7 +537,7 @@ namespace gui
          *
          * @return const bool
          */
-        const bool hasCompletedMousetimeCicle();
+        const bool hasCompletedMousetimeCycle();
 
         /**
          * @brief Returns the texture selector's texture rect.
@@ -588,7 +588,10 @@ namespace gui
         sf::RectangleShape editorTile;
         sf::RectangleShape editorCollBox;
 
+        sf::Text inputLabels;
         std::map<std::string, gui::IncrementInput *> incrementInputs;
+
+        gui::Button *resetBtn;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ========================================================================== */
@@ -628,6 +631,8 @@ namespace gui
          */
         void render(sf::RenderTarget &target);
 
+        void updateInput();
+
         /**
          * @brief Updates the mousetime.
          * The mousetime is used for key presses filtering and
@@ -636,6 +641,13 @@ namespace gui
          * @return void
          */
         void updateMousetime(const float &dt);
+
+        /**
+         * @brief Resets the collision editor input values.
+         *
+         * @return void
+         */
+        void resetValues();
 
         /**
          * @brief Closes the collision editor by setting editing to false.
@@ -675,7 +687,7 @@ namespace gui
          *
          * @return const bool
          */
-        const bool hasCompletedMousetimeCicle();
+        const bool hasCompletedMousetimeCycle();
 
         /* MODIFIERS =========================================================================================== */
     };
