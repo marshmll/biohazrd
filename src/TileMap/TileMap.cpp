@@ -481,7 +481,9 @@ const sf::Texture *TileMap::getTileTextureSheet() const
 
 const int TileMap::getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const
 {
-    if (!this->isTileEmpty(x, y, layer))
+    if (x >= 0 && x < this->tileMapGridDimensions.x &&
+        y >= 0 && y < this->tileMapGridDimensions.y &&
+        layer >= 0 && layer < this->layers)
         return static_cast<int>(this->tileMap[x][y][layer].size());
 
     return -1;

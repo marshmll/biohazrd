@@ -52,7 +52,7 @@ const unsigned gui::calc_char_size(const sf::VideoMode &vm, unsigned constant)
 
 gui::Button::Button(
     const float x, const float y, const float width, const float height,
-    sf::Font *font, std::string text, const unsigned char_size,
+    sf::Font *font, std::string string, const unsigned char_size,
     sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
     sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
@@ -78,13 +78,13 @@ gui::Button::Button(
     this->textActiveColor = text_active_color;
 
     this->text.setFont(*font);
-    this->text.setString(text);
+    this->text.setString(string);
     this->text.setCharacterSize(char_size);
     this->text.setFillColor(text_idle_color);
 
     this->text.setPosition(
         this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-        this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f - char_size / 5.f);
+        this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f - std::floor(char_size / 5.f));
 
     this->outlineIdleColor = outline_idle_color;
     this->outlineHoverColor = outline_hover_color;
@@ -778,42 +778,42 @@ gui::CollisionEditor::CollisionEditor(
     this->inputLabels.setString("Width\n\n\nHeight\n\n\nOffset X\n\n\nOffset Y");
     this->inputLabels.setPosition(sf::Vector2f(
         this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        this->editorBg.getPosition().y - 15.f));
+        this->editorBg.getPosition().y - gui::calc_char_size(vm, 140)));
 
     // Inputs
     this->incrementInputs["WIDTH"] = new gui::IncrementInput(
         this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
         this->editorBg.getPosition().y,
-        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), grid_size_f);
 
     this->incrementInputs["HEIGHT"] = new gui::IncrementInput(
         this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        this->editorBg.getPosition().y + 51.f,
-        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        this->editorBg.getPosition().y + gui::p2pY(vm, 6.3f),
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), grid_size_f);
 
     this->incrementInputs["OFFSET_X"] = new gui::IncrementInput(
         this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        this->editorBg.getPosition().y + 102.f,
-        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        this->editorBg.getPosition().y + gui::p2pY(vm, 12.7f),
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), 0.f);
 
     this->incrementInputs["OFFSET_Y"] = new gui::IncrementInput(
         this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        this->editorBg.getPosition().y + 153.f,
-        200.f, 30.f, 1.f, sf::Color(100, 100, 100, 100),
+        this->editorBg.getPosition().y + gui::p2pY(vm, 19.1f),
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(this->vm, 140), 0.f);
 
     // Reset button
     this->resetBtn = new Button(
         this->editorBg.getPosition().x + this->editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        this->editorBg.getPosition().y + 204.f,
-        200.f, 30.f, font, "Reset", gui::calc_char_size(vm, 140),
+        this->editorBg.getPosition().y + gui::p2pY(vm, 25.5f),
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), font, "Reset", gui::calc_char_size(vm, 130),
         sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 }
