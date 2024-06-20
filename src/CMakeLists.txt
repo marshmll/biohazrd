@@ -33,7 +33,8 @@ target_sources(BIOHAZRD PRIVATE
 
     TileMap/TileMap.cpp
 
-    Tiles/EnemySpawner.cpp
+    Tiles/EnemySpawnerTile.cpp
+    Tiles/RegularTile.cpp
     Tiles/Tile.cpp
 
     Utils/ErrorHandler.cpp

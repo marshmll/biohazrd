@@ -177,7 +177,7 @@ void TileMap::loadFromFile(const std::string file_path)
 
             this->map[grid_x][grid_y][z].insert(
                 this->map[grid_x][grid_y][z].begin() + k,
-                new EnemySpawner(
+                new EnemySpawnerTile(
                     grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
                     sf::IntRect(txtr_rect_top, txtr_rect_left, this->gridSizeI, this->gridSizeI),
                     enemy_type, enemy_amount, enemy_time_to_spawn, enemy_max_distance));
@@ -190,13 +190,13 @@ void TileMap::loadFromFile(const std::string file_path)
 
             this->map[grid_x][grid_y][z].insert(
                 this->map[grid_x][grid_y][z].begin() + k,
-                new Tile(
+                new RegularTile(
+                    static_cast<TileType>(type),
                     grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
                     sf::IntRect(txtr_rect_top, txtr_rect_left, this->gridSizeI, this->gridSizeI),
                     collision,
                     coll_box_width, coll_box_height,
-                    coll_box_offset_x, coll_box_offset_y,
-                    static_cast<TileType>(type)));
+                    coll_box_offset_x, coll_box_offset_y));
         }
     }
 
@@ -260,20 +260,20 @@ void TileMap::addTile(
             // the texture of the tile already on the vector
             if (this->map[x][y][z].back()->getTextureRect() != texture_rect)
             {
-                this->map[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileTextureSheet,
-                                                      texture_rect, collision,
-                                                      coll_box_width, coll_box_height,
-                                                      coll_box_offset_x, coll_box_offset_y,
-                                                      type));
+                this->map[x][y][z].push_back(new RegularTile(type,
+                                                             x, y, this->gridSizeF, this->tileTextureSheet,
+                                                             texture_rect, collision,
+                                                             coll_box_width, coll_box_height,
+                                                             coll_box_offset_x, coll_box_offset_y));
             }
         }
         else
         {
-            this->map[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileTextureSheet,
-                                                  texture_rect, collision,
-                                                  coll_box_width, coll_box_height,
-                                                  coll_box_offset_x, coll_box_offset_y,
-                                                  type));
+            this->map[x][y][z].push_back(new RegularTile(type,
+                                                         x, y, this->gridSizeF, this->tileTextureSheet,
+                                                         texture_rect, collision,
+                                                         coll_box_width, coll_box_height,
+                                                         coll_box_offset_x, coll_box_offset_y));
         }
     }
 }
@@ -293,18 +293,18 @@ void TileMap::addSpawner(
             // the texture of the tile already on the vector
             if (this->map[x][y][z].back()->getTextureRect() != texture_rect)
             {
-                this->map[x][y][z].push_back(new EnemySpawner(x, y, this->gridSizeF, this->tileTextureSheet,
-                                                              texture_rect,
-                                                              enemy_type, enemy_amount,
-                                                              enemy_time_to_spawn, enemy_max_distance));
+                this->map[x][y][z].push_back(new EnemySpawnerTile(x, y, this->gridSizeF, this->tileTextureSheet,
+                                                                  texture_rect,
+                                                                  enemy_type, enemy_amount,
+                                                                  enemy_time_to_spawn, enemy_max_distance));
             }
         }
         else
         {
-            this->map[x][y][z].push_back(new EnemySpawner(x, y, this->gridSizeF, this->tileTextureSheet,
-                                                          texture_rect,
-                                                          enemy_type, enemy_amount,
-                                                          enemy_time_to_spawn, enemy_max_distance));
+            this->map[x][y][z].push_back(new EnemySpawnerTile(x, y, this->gridSizeF, this->tileTextureSheet,
+                                                              texture_rect,
+                                                              enemy_type, enemy_amount,
+                                                              enemy_time_to_spawn, enemy_max_distance));
         }
     }
 }

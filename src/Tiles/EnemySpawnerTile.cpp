@@ -1,14 +1,16 @@
 #include "stdafx.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
-EnemySpawner::EnemySpawner(
+EnemySpawnerTile::EnemySpawnerTile(
     const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
     const sf::Texture &texture, const sf::IntRect texture_rect,
-    const int enemy_type, const int enemy_amount, const int enemy_time_to_spawn, const int enemy_max_distance)
-    : Tile(grid_x, grid_y, grid_size_f, texture, texture_rect,
-           NOT_COLLIDEABLE, grid_size_f, grid_size_f, 0.f, 0.f, TileType::SPAWNER)
+    const int enemy_type, const int enemy_amount,
+    const int enemy_time_to_spawn, const int enemy_max_distance)
+
+    : Tile(TileType::SPAWNER, grid_x, grid_y, grid_size_f, texture, texture_rect,
+           NOT_COLLIDEABLE, grid_size_f, grid_size_f, 0.f, 0.f)
 {
     this->enemyType = enemy_type;
     this->enemyAmount = enemy_amount;
@@ -16,17 +18,17 @@ EnemySpawner::EnemySpawner(
     this->enemyMaxDistance = enemy_max_distance;
 }
 
-EnemySpawner::~EnemySpawner()
+EnemySpawnerTile::~EnemySpawnerTile()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ================================================================================================== */
 
-void EnemySpawner::update()
+void EnemySpawnerTile::update()
 {
 }
 
-void EnemySpawner::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
+void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
 {
     if (shader)
     {
@@ -41,7 +43,9 @@ void EnemySpawner::render(sf::RenderTarget &target, sf::Shader *shader, const sf
     }
 }
 
-const std::string EnemySpawner::getPropertiesAsString() const
+/* ACCESSORS ================================================================================================== */
+
+const std::string EnemySpawnerTile::getPropertiesAsString() const
 {
     std::stringstream properties;
 

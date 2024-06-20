@@ -11,12 +11,13 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 Tile::Tile(
+    const TileType type,
     const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
     const sf::Texture &texture, const sf::IntRect texture_rect,
     const bool collision,
     const float coll_box_width, const float coll_box_height,
-    const float coll_box_offset_x, const float coll_box_offset_y,
-    const TileType type)
+    const float coll_box_offset_x, const float coll_box_offset_y)
+
     : type(type), collision(collision), collBoxOffsetX(coll_box_offset_x), collBoxOffsetY(coll_box_offset_y)
 {
     this->tile.setTexture(texture);
@@ -42,17 +43,6 @@ void Tile::update()
 
 void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
 {
-    if (shader)
-    {
-        shader->setUniform("hasTexture", true);
-        shader->setUniform("lightPos", light_pos);
-
-        target.draw(this->tile, shader);
-    }
-    else
-    {
-        target.draw(this->tile);
-    }
 }
 
 const bool Tile::intersects(const sf::FloatRect &bounds) const
@@ -85,19 +75,6 @@ const sf::RectangleShape &Tile::getCollisionBox() const
 const TileType &Tile::getType() const
 {
     return this->type;
-}
-
-const std::string Tile::getPropertiesAsString() const
-{
-    std::stringstream properties;
-
-    properties << this->type << " "
-               << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-               << this->collision << " "
-               << this->collBox.getSize().x << " " << this->collBox.getSize().y << " "
-               << this->collBoxOffsetX << " " << this->collBoxOffsetY;
-
-    return properties.str();
 }
 
 const sf::FloatRect Tile::getGlobalBounds() const

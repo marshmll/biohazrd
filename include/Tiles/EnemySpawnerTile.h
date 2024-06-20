@@ -1,11 +1,11 @@
-#ifndef ENEMYSPAWNER_H_
-#define ENEMYSPAWNER_H_
+#ifndef ENEMYSPAWNERTILE_H_
+#define ENEMYSPAWNERTILE_H_
 
 #include "Tile.h"
 
 class Tile;
 
-class EnemySpawner : public Tile
+class EnemySpawnerTile : public Tile
 {
 private:
     /* VARIABLES =============================================================================================== */
@@ -18,12 +18,13 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================*/
 
-    EnemySpawner(
+    EnemySpawnerTile(
         const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
         const sf::Texture &texture, const sf::IntRect texture_rect,
-        const int enemy_type, const int enemy_amount, const int enemy_time_to_spawn, const int enemy_max_distance);
+        const int enemy_type, const int enemy_amount,
+        const int enemy_time_to_spawn, const int enemy_max_distance);
 
-    virtual ~EnemySpawner();
+    virtual ~EnemySpawnerTile();
 
     /* FUNCTIONS ================================================================================================= */
 
@@ -36,4 +37,4 @@ public:
     const std::string getPropertiesAsString() const;
 };
 
-#endif /* ENEMYSPAWNER_H_ */
+#endif /* ENEMYSPAWNERTILE_H_ */

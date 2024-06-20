@@ -2,12 +2,12 @@
 #define ENEMYEDITORMODE_H_
 
 #include "EditorMode.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 
 class EditorMode;
 class Tile;
 class TileMap;
-class EnemySpawner;
+class EnemySpawnerTile;
 
 class EnemyEditorMode : public EditorMode
 {

@@ -11,10 +11,10 @@ enum TileType
 
 class Tile
 {
-private:
 protected:
-    sf::Sprite tile;
+    /* PROTECTED VARIABLES ==================================================================================== */
 
+    sf::Sprite tile;
     TileType type;
 
     bool collision;
@@ -24,34 +24,32 @@ protected:
     float collBoxOffsetY;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
     /**
      * @brief The Tile Class Constructor.
      *
+     * @param type The tile type.
      * @param grid_x The x position relative to the grid.
      * @param grid_y The y position relative to the grid.
      * @param grid_size_f The grid size (float)
      * @param texture A sf::Texture reference.
      * @param texture_rect A sf::IntRect to crop the texture with.
-     * @param collision Is the tile collideable? (default = false)
-     * @param coll_box_width The collision box width (default = 0.f)
-     * @param coll_box_height The collision box height (default = 0.f)
-     * @param coll_box_offset_x The collision box offset x (default = 0.f)
-     * @param coll_box_offset_y The collision box offset y (default = 0.f)
-     * @param type The tile type. (default = TileTypes::DEFAULT)
+     * @param collision Is the tile collideable?
+     * @param coll_box_width The collision box width
+     * @param coll_box_height The collision box height
+     * @param coll_box_offset_x The collision box offset x
+     * @param coll_box_offset_y The collision box offset y
      */
-    Tile(
-        const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-        const sf::Texture &texture, const sf::IntRect texture_rect,
-        const bool collision = false,
-        const float coll_box_width = 0.f, const float coll_box_height = 0.f,
-        const float coll_box_offset_x = 0.f, const float coll_box_offset_y = 0.f,
-        const TileType type = TileType::DEFAULT);
+    Tile(const TileType type,
+         const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
+         const sf::Texture &texture, const sf::IntRect texture_rect, const bool collision,
+         const float coll_box_width, const float coll_box_height,
+         const float coll_box_offset_x, const float coll_box_offset_y);
 
     virtual ~Tile();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ============================================================================================== */
 
     /**
      * @brief Updates the tile.
@@ -70,7 +68,8 @@ public:
      *
      * @return void
      */
-    virtual void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
+    virtual void render(sf::RenderTarget &target,
+                        sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Returns if the tile's collision box intersects a
@@ -80,7 +79,7 @@ public:
      */
     const bool intersects(const sf::FloatRect &bounds) const;
 
-    /* ACCESSORS */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns the tile's sprite current position.
@@ -108,14 +107,14 @@ public:
      *
      * @return sf::RectangleShape&
      */
-    virtual const sf::RectangleShape &getCollisionBox() const;
+    const sf::RectangleShape &getCollisionBox() const;
 
     /**
      * @brief Returns the tyle's type
      *
      * @return short (TileTypes enum);
      */
-    virtual const TileType &getType() const;
+    const TileType &getType() const;
 
     /**
      * @brief Returns the tile properties as a std::string.
@@ -131,14 +130,14 @@ public:
      *
      * @return const TileTypes reference.
      */
-    virtual const std::string getPropertiesAsString() const;
+    virtual const std::string getPropertiesAsString() const = 0;
 
     /**
      * @brief Returns the tile collision box global bounds.
      *
      * @return const sf::FloatRect
      */
-    virtual const sf::FloatRect getGlobalBounds() const;
+    const sf::FloatRect getGlobalBounds() const;
 };
 
 #endif /* TILE_H_ */
