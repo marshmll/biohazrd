@@ -18,10 +18,10 @@ private:
     int gridSizeI;
     unsigned layers;
 
-    sf::Vector2i tileMapGridDimensions;
-    sf::Vector2f tileMapWorldDimensions;
+    sf::Vector2i mapGridDimensions;
+    sf::Vector2f mapWorldDimensions;
 
-    std::vector<std::vector<std::vector<std::vector<Tile *>>>> tileMap;
+    std::vector<std::vector<std::vector<std::vector<Tile *>>>> map;
 
     std::stack<Tile *> deferredTileRendering;
 
@@ -60,11 +60,11 @@ public:
      * ensure the vectors allocate the required amount of memory.
      *
      * @param grid_size The grid size for the tiles.
-     * @param grid_width The width of the tilemap based on the grid size.
-     * @param grid_height The height of the tilemap based on the grid size.
+     * @param map_grid_width The width of the tilemap based on the grid size.
+     * @param map_grid_height The height of the tilemap based on the grid size.
      * @param texture_file_path The relative path to the texture sheet.
      */
-    TileMap(const float grid_size, const unsigned grid_width, const unsigned grid_height,
+    TileMap(const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
             const std::string texture_file_path);
 
     /**
@@ -93,11 +93,11 @@ public:
      * @note -> Grid size.
      * @note -> Layers
      * @note -> Texture file
+     *
      * @note TILES
-     * @note -> Type.
      * @note -> Grid position x, y, and layer
-     * @note -> Texture rect x and y
-     * @note -> Collision
+     * @note -> Type
+     * @note -> Tile type's specific data.
      *
      * @return void
      */
@@ -113,10 +113,9 @@ public:
      * @note -> Texture file
      *
      * @note TILES
-     * @note -> Type.
      * @note -> Grid position x, y, and layer
-     * @note -> Texture rect x and y
-     * @note -> Collision
+     * @note -> Type
+     * @note -> Tile type's specific data.
      *
      * @return void
      */
@@ -124,7 +123,15 @@ public:
 
     /**
      * @brief Adds a tile to the tilemap.
-     * X and Y are indexes of the tilemap grid.
+     * @param x The x coordinate relative to world grid.
+     * @param y The y coordinate relative to world grid.
+     * @param texture_rect The tile's texture rect reference.
+     * @param collision A flag for enabling collision
+     * @param coll_box_width The tile's collision box width
+     * @param coll_box_height The tile's collision box height
+     * @param coll_box_offset_x The tile's collision box offset x.
+     * @param coll_box_offset_y The tile's collision box offset y.
+     * @param type The tile's type.
      *
      * @return void
      */
@@ -138,6 +145,13 @@ public:
 
     /**
      * @brief Adds a spawner in the map.
+     * @param x The x coordinate relative to world grid.
+     * @param y The y coordinate relative to world grid.
+     * @param texture_rect The tile's texture rect reference.
+     * @param enemy_type The spawner's enemy type.
+     * @param enemy_amount The spawner's enemy amount.
+     * @param enemy_time_to_spawn The spawner's time to spawn an enemy.
+     * @param enemy_max_distance The max distance that the enemies can get away from the spawner.
      *
      * @return void
      */
@@ -149,11 +163,13 @@ public:
 
     /**
      * @brief  Removes a tile from the tilemap.
-     * X and Y are indexes of the tilemap grid.
+     * @param x The x coordinate relative to the world grid.
+     * @param y The y coordinate relative to the world grid.
+     * @param layer The layer of the tile.
      *
      * @return void
      */
-    void removeTile(const unsigned x, const unsigned y, const unsigned z);
+    void removeTile(const unsigned x, const unsigned y, const unsigned layer);
 
     /**
      * @brief Updates the entire tilemap.
@@ -176,24 +192,28 @@ public:
      * @param gridPosition A culling area for rendering
      * @param show_collision_box A flag for rendering the collision boxes (default: false)
      * @param shader A pointer to a shader. (default: nullptr)
-     * @param player_positon A sf::Vector2f for the player's center position.
+     * @param player_positon A sf::Vector2f for the player's center position (default sf::Vector2f()).
      *
      * @return void
      */
     void render(
         sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
         const bool show_collision_box = false, const bool use_deferred_render = false,
-        sf::Shader *shader = nullptr, const sf::Vector2f player_position = sf::Vector2f());
+        sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
-     * @brief Deferred render for tiles that are suposed to be rendered
-     * later on.
+     * @brief Renders tiles that had its rendering delayed. Renders and
+     * pops the deferred tile from the deffered render stack.
+     *
+     * @param target A target to render in.
+     * @param shader A shader to use. (default = nullptr)
+     * @param light_pos The light position. (default = sf::Vector2f())
      *
      * @return void
      */
     void deferredRender(
         sf::RenderTarget &target, sf::Shader *shader = nullptr,
-        const sf::Vector2f playerPosition = sf::Vector2f());
+        const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @return void
@@ -207,7 +227,7 @@ public:
      *
      * @return void
      */
-    void updateMapActiveArea(const sf::Vector2i gridPosition, const int width, const int height);
+    void updateMapActiveArea(const sf::Vector2i grid_position, const int width, const int height);
 
     /* ACCESSORS ====================================================================================== */
 

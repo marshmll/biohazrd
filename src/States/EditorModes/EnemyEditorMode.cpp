@@ -5,6 +5,7 @@
 
 void EnemyEditorMode::initVariables()
 {
+    this->textureRect = sf::IntRect(0, 0, 0, 0);
     this->type = 0;
     this->amount = 1;
     this->timeToSpawn = 60;
@@ -63,7 +64,7 @@ void EnemyEditorMode::updateInput(const float &dt)
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
             this->editorData->tileMap->addSpawner(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0,
-                                                  this->textureRect,
+                                                  sf::IntRect(0, 576, (int)this->data->gridSize, (int)this->data->gridSize),
                                                   this->type, this->amount, this->timeToSpawn, this->maxDistance);
         }
     }

@@ -17,6 +17,7 @@ private:
     sf::Text cursorText;
     sf::RectangleShape sidebar;
     sf::RectangleShape selectorRect;
+    
     sf::IntRect textureRect;
 
     short type;
