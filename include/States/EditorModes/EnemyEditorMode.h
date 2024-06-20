@@ -22,7 +22,7 @@ private:
     short type;
     short amount;
     short timeToSpawn;
-    float maxDistance;
+    int maxDistance;
 
     /* INITIALIZERS ============================================================================== */
 

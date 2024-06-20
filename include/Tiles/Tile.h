@@ -1,7 +1,7 @@
 #ifndef TILE_H_
 #define TILE_H_
 
-enum TileTypes
+enum TileType
 {
     DEFAULT = 0,
     HARMFUL,
@@ -15,12 +15,13 @@ private:
 protected:
     sf::Sprite tile;
 
+    TileType type;
+
+    bool collision;
+
     sf::RectangleShape collBox;
     float collBoxOffsetX;
     float collBoxOffsetY;
-
-    bool collision;
-    TileTypes type;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR */
@@ -46,7 +47,7 @@ public:
         const bool collision = false,
         const float coll_box_width = 0.f, const float coll_box_height = 0.f,
         const float coll_box_offset_x = 0.f, const float coll_box_offset_y = 0.f,
-        const TileTypes type = TileTypes::DEFAULT);
+        const TileType type = TileType::DEFAULT);
 
     virtual ~Tile();
 
@@ -107,14 +108,14 @@ public:
      *
      * @return sf::RectangleShape&
      */
-    const sf::RectangleShape &getCollisionBox() const;
+    virtual const sf::RectangleShape &getCollisionBox() const;
 
     /**
      * @brief Returns the tyle's type
      *
      * @return short (TileTypes enum);
      */
-    const TileTypes &getType() const;
+    virtual const TileType &getType() const;
 
     /**
      * @brief Returns the tile properties as a std::string.
@@ -128,16 +129,16 @@ public:
      * @note -> Collision box offset y
      * @note -> Type
      *
-     * @return void
+     * @return const TileTypes reference.
      */
-    const std::string getPropertiesAsString() const;
+    virtual const std::string getPropertiesAsString() const;
 
     /**
      * @brief Returns the tile collision box global bounds.
      *
      * @return const sf::FloatRect
      */
-    const sf::FloatRect getGlobalBounds() const;
+    virtual const sf::FloatRect getGlobalBounds() const;
 };
 
 #endif /* TILE_H_ */

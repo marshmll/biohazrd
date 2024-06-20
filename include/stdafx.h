@@ -6,6 +6,9 @@
 #define RESET true
 #define PRIORITARY true
 
+#define COLLIDEABLE true
+#define NOT_COLLIDEABLE false
+
 #define SHOW_COL_BOX true
 #define DO_NOT_SHOW_COL_BOX false
 

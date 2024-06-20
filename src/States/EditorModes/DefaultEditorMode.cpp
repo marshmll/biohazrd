@@ -14,7 +14,7 @@ void DefaultEditorMode::initVariables()
     this->collBoxOffsetX = 0.f;
     this->collBoxOffsetY = 0.f;
 
-    this->type = TileTypes::DEFAULT;
+    this->type = TileType::DEFAULT;
 
     this->layer = 0;
 }
@@ -122,7 +122,7 @@ void DefaultEditorMode::updateInput(const float &dt)
                                                    this->collision,
                                                    this->collBoxWidth, this->collBoxHeight,
                                                    this->collBoxOffsetX, this->collBoxOffsetY,
-                                                   static_cast<TileTypes>(this->type));
+                                                   static_cast<TileType>(this->type));
             }
         }
     }
@@ -147,13 +147,13 @@ void DefaultEditorMode::updateInput(const float &dt)
     // Type increase
     else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("INCREASE_TYPE")) && this->hasCompletedKeytimeCicle())
     {
-        if (static_cast<TileTypes>(this->type + 1) != TileTypes::SPAWNER)
+        if (static_cast<TileType>(this->type + 1) != TileType::SPAWNER)
             this->type++;
     }
     // Type decrease
     else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("DECREASE_TYPE")) && this->hasCompletedKeytimeCicle())
     {
-        if (static_cast<TileTypes>(this->type - 1) != TileTypes::SPAWNER && this->type > 0)
+        if (static_cast<TileType>(this->type - 1) != TileType::SPAWNER && this->type > 0)
             this->type--;
     }
 }
@@ -251,16 +251,16 @@ const std::string DefaultEditorMode::getTypeName() const
 {
     switch (this->type)
     {
-    case TileTypes::DEFAULT:
+    case TileType::DEFAULT:
         return "DEFAULT";
         break;
-    case TileTypes::DOODAD:
+    case TileType::DOODAD:
         return "DOODAD";
         break;
-    case TileTypes::HARMFUL:
+    case TileType::HARMFUL:
         return "HARMFUL";
         break;
-    case TileTypes::SPAWNER:
+    case TileType::SPAWNER:
         return "SPAWNER";
         break;
     default:

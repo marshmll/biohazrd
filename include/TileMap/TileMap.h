@@ -3,9 +3,11 @@
 
 #include "Tile.h"
 #include "Entity.h"
+#include "EnemySpawner.h"
 
 class Tile;
 class Entity;
+class EnemySpawner;
 
 class TileMap
 {
@@ -92,10 +94,10 @@ public:
      * @note -> Layers
      * @note -> Texture file
      * @note TILES
+     * @note -> Type.
      * @note -> Grid position x, y, and layer
      * @note -> Texture rect x and y
      * @note -> Collision
-     * @note -> Type.
      *
      * @return void
      */
@@ -111,10 +113,10 @@ public:
      * @note -> Texture file
      *
      * @note TILES
+     * @note -> Type.
      * @note -> Grid position x, y, and layer
      * @note -> Texture rect x and y
      * @note -> Collision
-     * @note -> Type.
      *
      * @return void
      */
@@ -126,14 +128,24 @@ public:
      *
      * @return void
      */
-
     void addTile(
         const unsigned x, const unsigned y, const unsigned z,
         const sf::IntRect &texture_rect,
         const bool &collision,
         const float coll_box_width, const float coll_box_height,
         const float coll_box_offset_x, const float coll_box_offset_y,
-        const TileTypes &type);
+        const TileType &type);
+
+    /**
+     * @brief Adds a spawner in the map.
+     *
+     * @return void
+     */
+    void addSpawner(
+        const unsigned x, const unsigned y, const unsigned z,
+        const sf::IntRect &texture_rect,
+        const int enemy_type, const int enemy_amount,
+        const int enemy_time_to_spawn, const int enemy_max_distance);
 
     /**
      * @brief  Removes a tile from the tilemap.
@@ -210,7 +222,7 @@ public:
      *
      * @return const bool
      */
-    const bool compareType(const int x, const int y, const unsigned layer, const TileTypes &type) const;
+    const bool compareType(const int x, const int y, const unsigned layer, const TileType &type) const;
 
     /**
      * @brief Returns the tilemap's size.

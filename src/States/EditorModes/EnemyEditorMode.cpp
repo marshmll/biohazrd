@@ -8,7 +8,7 @@ void EnemyEditorMode::initVariables()
     this->type = 0;
     this->amount = 1;
     this->timeToSpawn = 60;
-    this->maxDistance = 500.f;
+    this->maxDistance = 500;
 }
 
 void EnemyEditorMode::initGUI()
@@ -62,16 +62,16 @@ void EnemyEditorMode::updateInput(const float &dt)
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            this->editorData->tileMap->addTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0,
-                                               this->textureRect, false, this->data->gridSize, this->data->gridSize,
-                                               0.f, 0.f, TileTypes::SPAWNER);
+            this->editorData->tileMap->addSpawner(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0,
+                                                  this->textureRect,
+                                                  this->type, this->amount, this->timeToSpawn, this->maxDistance);
         }
     }
     else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            if (this->editorData->tileMap->compareType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileTypes::SPAWNER))
+            if (this->editorData->tileMap->compareType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileType::SPAWNER))
                 this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
         }
     }
@@ -88,6 +88,7 @@ void EnemyEditorMode::updateGUI(const float &dt)
     std::stringstream cursor_ss;
     cursor_ss << this->editorData->mousePosWindow->x << " " << this->editorData->mousePosWindow->y << "\n"
               << this->editorData->mousePosGrid->x << " " << this->editorData->mousePosGrid->y << "\n"
+              << "stacked tiles: " << this->editorData->tileMap->getAmountOfStackedTiles(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0) << "\n"
               << "enemy type: " << this->type << "\n"
               << "enemy amount: " << this->amount << "\n"
               << "time to spawn: " << this->timeToSpawn << "\n"

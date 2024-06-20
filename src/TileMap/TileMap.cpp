@@ -102,7 +102,7 @@ void TileMap::loadFromFile(const std::string file_path)
     if (!in_file.is_open())
         ErrorHandler::throwErr("TILEMAP::LOADFROMFILE::ERR_COULD_NOT_LOAD_TILEMAP_FROM_FILE\n");
 
-    // Data to be loaded in
+    // CONFIG DATA
     unsigned grid_width = 0;
     unsigned grid_height = 0;
     int grid_size = 0;
@@ -111,13 +111,16 @@ void TileMap::loadFromFile(const std::string file_path)
 
     std::string texture_file_path;
 
+    // TILE DATA
+    short type = TileType::DEFAULT;
+
     int grid_x = 0;
     int grid_y = 0;
     unsigned z = 0;
     unsigned k = 0;
 
-    unsigned txtr_rect_x;
-    unsigned txtr_rect_y;
+    unsigned txtr_rect_top;
+    unsigned txtr_rect_left;
 
     bool collision = false;
 
@@ -126,7 +129,11 @@ void TileMap::loadFromFile(const std::string file_path)
     float coll_box_offset_x = 0.f;
     float coll_box_offset_y = 0.f;
 
-    short type = TileTypes::DEFAULT;
+    // SPAWNER SPECIFIC DATA
+    int enemy_type = 0;
+    int enemy_amount = 0;
+    int enemy_time_to_spawn = 0;
+    int enemy_max_distance = 0;
 
     // Load CONFIG
     in_file >> grid_width >> grid_height >> grid_size >> layers >> texture_file_path;
@@ -160,18 +167,37 @@ void TileMap::loadFromFile(const std::string file_path)
     this->resize();
 
     // While not in the end of file
-    while (in_file >> grid_x >> grid_y >> z >> k >> txtr_rect_x >> txtr_rect_y >> collision >>
-           coll_box_width >> coll_box_height >> coll_box_offset_x >> coll_box_offset_y >> type)
+    while (in_file >> grid_x >> grid_y >> z >> k >> type)
     {
-        this->tileMap[grid_x][grid_y][z].insert(
-            this->tileMap[grid_x][grid_y][z].begin() + k,
-            new Tile(
-                grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
-                sf::IntRect(txtr_rect_x, txtr_rect_y, this->gridSizeI, this->gridSizeI),
-                collision,
-                coll_box_width, coll_box_height,
-                coll_box_offset_x, coll_box_offset_y,
-                static_cast<TileTypes>(type)));
+        // Spanwers
+        if (static_cast<TileType>(type) == TileType::SPAWNER)
+        {
+            in_file >> txtr_rect_top >> txtr_rect_left >> enemy_type >>
+                enemy_amount >> enemy_time_to_spawn >> enemy_max_distance;
+
+            this->tileMap[grid_x][grid_y][z].insert(
+                this->tileMap[grid_x][grid_y][z].begin() + k,
+                new EnemySpawner(
+                    grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
+                    sf::IntRect(txtr_rect_top, txtr_rect_left, this->gridSizeI, this->gridSizeI),
+                    enemy_type, enemy_amount, enemy_time_to_spawn, enemy_max_distance));
+        }
+        // Common tiles
+        else
+        {
+            in_file >> txtr_rect_top >> txtr_rect_left >> collision >>
+                coll_box_width >> coll_box_height >> coll_box_offset_x >> coll_box_offset_y;
+
+            this->tileMap[grid_x][grid_y][z].insert(
+                this->tileMap[grid_x][grid_y][z].begin() + k,
+                new Tile(
+                    grid_x, grid_y, this->gridSizeF, this->tileTextureSheet,
+                    sf::IntRect(txtr_rect_top, txtr_rect_left, this->gridSizeI, this->gridSizeI),
+                    collision,
+                    coll_box_width, coll_box_height,
+                    coll_box_offset_x, coll_box_offset_y,
+                    static_cast<TileType>(type)));
+        }
     }
 
     in_file.close();
@@ -223,7 +249,7 @@ void TileMap::addTile(
     const bool &collision,
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y,
-    const TileTypes &type)
+    const TileType &type)
 {
     // If position is in the map bounds
     if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
@@ -248,6 +274,37 @@ void TileMap::addTile(
                                                       coll_box_width, coll_box_height,
                                                       coll_box_offset_x, coll_box_offset_y,
                                                       type));
+        }
+    }
+}
+
+void TileMap::addSpawner(
+    const unsigned x, const unsigned y, const unsigned z,
+    const sf::IntRect &texture_rect,
+    const int enemy_type, const int enemy_amount,
+    const int enemy_time_to_spawn, const int enemy_max_distance)
+{
+    // If position is in the map bounds
+    if (x < this->tileMapGridDimensions.x && y < this->tileMapGridDimensions.y && z < this->layers)
+    {
+        if (!this->tileMap[x][y][z].empty())
+        {
+            // If the texture of the spawner to be placed is not equal to
+            // the texture of the tile already on the vector
+            if (this->tileMap[x][y][z].back()->getTextureRect() != texture_rect)
+            {
+                this->tileMap[x][y][z].push_back(new EnemySpawner(x, y, this->gridSizeF, this->tileTextureSheet,
+                                                                  texture_rect,
+                                                                  enemy_type, enemy_amount,
+                                                                  enemy_time_to_spawn, enemy_max_distance));
+            }
+        }
+        else
+        {
+            this->tileMap[x][y][z].push_back(new EnemySpawner(x, y, this->gridSizeF, this->tileTextureSheet,
+                                                              texture_rect,
+                                                              enemy_type, enemy_amount,
+                                                              enemy_time_to_spawn, enemy_max_distance));
         }
     }
 }
@@ -359,7 +416,7 @@ void TileMap::render(
         {
             for (size_t k = 0; k < this->tileMap[x][y][this->layer].size(); k++)
             {
-                if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::DOODAD && use_deferred_render)
+                if (this->tileMap[x][y][this->layer][k]->getType() == TileType::DOODAD && use_deferred_render)
                 {
                     this->deferredTileRendering.push(this->tileMap[x][y][this->layer][k]);
                 }
@@ -379,7 +436,7 @@ void TileMap::render(
                     }
                 }
 
-                if (this->tileMap[x][y][this->layer][k]->getType() == TileTypes::SPAWNER)
+                if (this->tileMap[x][y][this->layer][k]->getType() == TileType::SPAWNER)
                 {
                     target.draw(this->tileMap[x][y][this->layer][k]->getCollisionBox());
                 }
@@ -461,7 +518,7 @@ void TileMap::updateMapActiveArea(const sf::Vector2i gridPosition, const int wid
 
 /* ACCESSORS =================================================================================================== */
 
-const bool TileMap::compareType(const int x, const int y, const unsigned layer, const TileTypes &type) const
+const bool TileMap::compareType(const int x, const int y, const unsigned layer, const TileType &type) const
 {
     if (!this->isTileEmpty(x, y, layer))
         return this->tileMap[x][y][layer].back()->getType() == type;
