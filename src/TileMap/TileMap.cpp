@@ -50,7 +50,7 @@ void TileMap::resize()
     }
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
 TileMap::TileMap(const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
                  const std::string texture_file_path)

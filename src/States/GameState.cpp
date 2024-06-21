@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "GameState.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ================================================================================================= */
 
 void GameState::initBufferedRender()
 {
@@ -93,7 +93,7 @@ void GameState::initShaders()
         ErrorHandler::throwErr("GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS\n");
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
 GameState::GameState(StateData *data) : State(data)
 {
@@ -121,7 +121,7 @@ GameState::~GameState()
         delete enemy;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void GameState::update(const float &dt)
 {
