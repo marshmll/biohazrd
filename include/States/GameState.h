@@ -16,7 +16,8 @@ class Enemy;
 class GameState : public State
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================ */
+
     sf::View playerCamera;
     sf::Vector2i playerCameraPosGrid;
 
@@ -38,7 +39,7 @@ private:
 
     std::vector<Enemy *> enemies;
 
-    /* INITIALIZERS */
+    /* INITIALIZERS ============================================================================================= */
 
     /**
      * @brief Initializes the buffered render.
@@ -122,7 +123,7 @@ private:
     void initShaders();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
     /**
      * @brief Calls the parent constructor State(window, acceptedKeys)
@@ -135,11 +136,11 @@ public:
     GameState(StateData *data);
 
     /**
-     * @brief Frees player allocated memory
+     * @brief Frees all allocated memory
      */
     virtual ~GameState();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS =============================================================================================== */
 
     /**
      * @brief Updates the GameState.
@@ -181,6 +182,13 @@ public:
     void updateInput(const float &dt);
 
     /**
+     * @brief Updates all game players.
+     *
+     * @return void
+     */
+    void updatePlayers(const float &dt);
+
+    /**
      * @brief Updates the player input.
      *
      * @note Checks for keybinds and executes its respective
@@ -196,6 +204,13 @@ public:
      * @return void
      */
     void updatePlayerGUI(const float &dt);
+
+    /**
+     * @brief Updates all game enemies.
+     *
+     * @return void
+     */
+    void updateEnemies(const float &dt);
 
     /**
      * @brief Updates tilemap and collisions.

@@ -171,7 +171,6 @@ public:
 
     /**
      * @brief Updates the entire tilemap.
-     * @note -> Updates the collision for a given entity.
      *
      * @param dt The game delta time.
      * @param entity A pointer to an entity.
@@ -212,6 +211,39 @@ public:
     void deferredRender(
         sf::RenderTarget &target, sf::Shader *shader = nullptr,
         const sf::Vector2f light_pos = sf::Vector2f());
+
+    /**
+     * @brief Updates the entity collision with the world bounds.
+     * @param dt The game delta time.
+     * @param entity A pointer to an entity.
+     *
+     * @note -> Updates only the map active area specified in this->updateMapActiveArea.
+     *
+     * @return void
+     */
+    void updateWorldBoundsCollision(const float &dt, Entity *entity);
+
+    /**
+     * @brief Updates the entity collision with the map tiles.
+     * @param dt The game delta time.
+     * @param entity A pointer to an entity.
+     *
+     * @note -> Updates only the map active area specified in this->updateMapActiveArea.
+     *
+     * @return void
+     */
+    void updateTileCollision(const float &dt, Entity *entity);
+
+    /**
+     * @brief Updates the map tiles.
+     * @param dt The game delta time.
+     * @param entity A pointer to an entity.
+     *
+     * @note -> Updates only the map active area specified in this->updateMapActiveArea.
+     *
+     * @return void
+     */
+    void updateTiles(const float &dt, Entity *entity);
 
     /**
      * @return void

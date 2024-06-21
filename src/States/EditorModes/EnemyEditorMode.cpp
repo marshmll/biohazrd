@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "EnemyEditorMode.h"
 
-/* INITIALIZERS ================================================================================= */
+/* INITIALIZERS ================================================================================================ */
 
 void EnemyEditorMode::initVariables()
 {
     this->textureRect = sf::IntRect(0, 0, 0, 0);
-    this->type = 0;
-    this->amount = 1;
-    this->timeToSpawn = 60;
-    this->maxDistance = 500;
+    this->enemyType = 0;
+    this->enemyAmount = 5;
+    this->enemyTimeToSpawn = 60;
+    this->enemyMaxDistance = 500;
 }
 
 void EnemyEditorMode::initGUI()
@@ -31,7 +31,7 @@ void EnemyEditorMode::initGUI()
     this->selectorRect.setOutlineThickness(1.f);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR =================================================================== */
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 EnemyEditorMode::EnemyEditorMode(StateData *data, EditorStateData *editor_data)
     : EditorMode(data, editor_data, "Enemy Editor Mode")
@@ -44,7 +44,7 @@ EnemyEditorMode::~EnemyEditorMode()
 {
 }
 
-/* FUNCTIONS ===================================================================================== */
+/* FUNCTIONS ================================================================================================== */
 
 void EnemyEditorMode::update(const float &dt)
 {
@@ -59,22 +59,78 @@ void EnemyEditorMode::render(sf::RenderTarget &target)
 
 void EnemyEditorMode::updateInput(const float &dt)
 {
+    // Spawner adding
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            this->editorData->tileMap->addSpawner(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0,
-                                                  sf::IntRect(0, 576, (int)this->data->gridSize, (int)this->data->gridSize),
-                                                  this->type, this->amount, this->timeToSpawn, this->maxDistance);
+            this->editorData->tileMap->addSpawner(
+                this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0,
+                sf::IntRect(0, 576, (int)this->data->gridSize, (int)this->data->gridSize),
+                this->enemyType, this->enemyAmount, this->enemyTimeToSpawn, this->enemyMaxDistance);
         }
     }
+    // Spawner removing
     else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->hasCompletedKeytimeCicle())
     {
         if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorData->mousePosWindow)))
         {
-            if (this->editorData->tileMap->compareType(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0, TileType::SPAWNER))
-                this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0);
+            if (this->editorData->tileMap->compareType(this->editorData->mousePosGrid->x,
+                                                       this->editorData->mousePosGrid->y, 0,
+                                                       TileType::SPAWNER))
+            {
+                this->editorData->tileMap->removeTile(this->editorData->mousePosGrid->x,
+                                                      this->editorData->mousePosGrid->y, 0);
+            }
         }
+    }
+
+    // Enemy type inc/dec
+    if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("ENEMY_TYPE_INC")) && this->hasCompletedKeytimeCicle())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            if (this->enemyType > 0)
+                this->enemyType--;
+        }
+        else
+            this->enemyType++;
+    }
+
+    // Enemy amount inc/dec
+    else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("ENEMY_AMOUNT_INC")) && this->hasCompletedKeytimeCicle())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            if (this->enemyAmount > 5)
+                this->enemyAmount--;
+        }
+        else
+            this->enemyAmount++;
+    }
+
+    // Enemy time to spawn inc/dec
+    else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("ENEMY_TIME_TO_SPAWN_INC")) && this->hasCompletedKeytimeCicle())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            if (this->enemyTimeToSpawn > 30)
+                this->enemyTimeToSpawn--;
+        }
+        else
+            this->enemyTimeToSpawn++;
+    }
+
+    // Enemy max distance inc/dec
+    else if (sf::Keyboard::isKeyPressed(this->editorData->keybinds->at("ENEMY_MAX_DISTANCE_INC")) && this->hasCompletedKeytimeCicle())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            if (this->enemyMaxDistance > 50)
+                this->enemyMaxDistance--;
+        }
+        else
+            this->enemyMaxDistance++;
     }
 }
 
@@ -90,10 +146,10 @@ void EnemyEditorMode::updateGUI(const float &dt)
     cursor_ss << this->editorData->mousePosWindow->x << " " << this->editorData->mousePosWindow->y << "\n"
               << this->editorData->mousePosGrid->x << " " << this->editorData->mousePosGrid->y << "\n"
               << "stacked tiles: " << this->editorData->tileMap->getAmountOfStackedTiles(this->editorData->mousePosGrid->x, this->editorData->mousePosGrid->y, 0) << "\n"
-              << "enemy type: " << this->type << "\n"
-              << "enemy amount: " << this->amount << "\n"
-              << "time to spawn: " << this->timeToSpawn << "\n"
-              << "enemy max distance: " << this->maxDistance << "\n";
+              << "enemy type: " << this->enemyType << "\n"
+              << "enemy amount: " << this->enemyAmount << "\n"
+              << "time to spawn: " << this->enemyTimeToSpawn << "\n"
+              << "enemy max distance: " << this->enemyMaxDistance << "\n";
 
     this->cursorText.setString(cursor_ss.str());
 }
@@ -120,7 +176,7 @@ void EnemyEditorMode::renderGUI(sf::RenderTarget &target)
     target.draw(this->modeIndicatorText);
 }
 
-/* ACCESSORS ====================================================================================== */
+/* ACCESSORS ================================================================================================= */
 
 const bool EnemyEditorMode::hasCompletedKeytimeCicle()
 {

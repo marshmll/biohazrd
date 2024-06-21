@@ -20,10 +20,10 @@ private:
     
     sf::IntRect textureRect;
 
-    short type;
-    short amount;
-    short timeToSpawn;
-    int maxDistance;
+    short enemyType;
+    short enemyAmount;
+    short enemyTimeToSpawn;
+    short enemyMaxDistance;
 
     /* INITIALIZERS ============================================================================== */
 

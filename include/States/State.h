@@ -33,7 +33,7 @@ class State
 {
 private:
 protected:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================ */
 
     StateData *data;
     std::stack<State *> *states;
@@ -63,11 +63,11 @@ protected:
     sf::Vector2f mousePosView;
     sf::Vector2i mousePosGrid;
 
-    /* ASSETS */
+    /* ASSETS ================================================================================================= */
 
     std::map<std::string, sf::Texture> textures;
 
-    /* FUNCTIONS */
+    /* INITIALIZERS =========================================================================================== */
 
     virtual void initKeybinds() = 0;
 
@@ -89,13 +89,13 @@ public:
 
     virtual ~State();
 
-    /* PURE VIRTUAL FUNCTIONS */
+    /* PURE VIRTUAL FUNCTIONS ================================================================================= */
 
     virtual void update(const float &dt) = 0;
     virtual void render(sf::RenderTarget &target) = 0;
     virtual void updateInput(const float &dt) = 0;
 
-    /* DEFINED VIRTUAL FUNCTIONS */
+    /* DEFINED VIRTUAL FUNCTIONS ============================================================================== */
 
     /**
      * @brief Update mouse postiions relative to:
@@ -158,7 +158,7 @@ public:
      */
     virtual void resume();
 
-    /* ACCESSORS */
+    /* ACCESSORS =============================================================================================== */
 
     /**
      * @brief Returns this->quitTheState value.

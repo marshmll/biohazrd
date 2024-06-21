@@ -325,79 +325,12 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned laye
 
 void TileMap::update(const float &dt, Entity *entity)
 {
-    /* WORLD BOUNDS */
-
-    // X axis
-    if (entity->getPosition().x < 0.f)
-    {
-        entity->setPosition(sf::Vector2f(0.f, entity->getPosition().y));
-        entity->stopVelocityX();
-    }
-    else if (entity->getPosition().x + entity->getSize().x > this->mapWorldDimensions.x)
-    {
-        entity->stopVelocityX();
-        entity->setPosition(
-            sf::Vector2f(this->mapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
-    }
-
-    // Y axis
-    if (entity->getPosition().y < 0.f)
-    {
-        entity->stopVelocityY();
-        entity->setPosition(sf::Vector2f(entity->getPosition().x, 0.f));
-    }
-    else if (entity->getPosition().y + entity->getSize().y > this->mapWorldDimensions.y)
-    {
-        entity->stopVelocityY();
-        entity->setPosition(
-            sf::Vector2f(entity->getPosition().x, this->mapWorldDimensions.y - entity->getSize().y));
-    }
-
-    /* TILES */
-
     this->updateMapActiveArea(entity, 5, 5);
 
-    for (size_t x = this->startX; x < this->endX; x++)
-    {
-        for (size_t y = this->startY; y < this->endY; y++)
-        {
-            for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
-            {
-                this->map[x][y][this->layer][k]->update();
+    this->updateTiles(dt, entity);
 
-                if (this->map[x][y][this->layer][k]->isCollideable())
-                {
-                    sf::FloatRect entity_bounds = entity->getGlobalBounds();
-                    sf::FloatRect wall_bounds = this->map[x][y][this->layer][k]->getGlobalBounds();
-                    sf::FloatRect next_position_bounds = entity->getNextPositionBounds(dt);
-
-                    if (next_position_bounds.intersects(wall_bounds))
-                    {
-                        if (entity->getDirection() == "UP")
-                        {
-                            entity->stopVelocityY();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y + dt * (entity->getMaxVelocity() / 4.f)));
-                        }
-                        if (entity->getDirection() == "DOWN")
-                        {
-                            entity->stopVelocityY();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y - dt * (entity->getMaxVelocity() / 4.f)));
-                        }
-                        if (entity->getDirection() == "LEFT")
-                        {
-                            entity->stopVelocityX();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x + dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
-                        }
-                        if (entity->getDirection() == "RIGHT")
-                        {
-                            entity->stopVelocityX();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x - dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
-                        }
-                    }
-                }
-            }
-        }
-    }
+    this->updateWorldBoundsCollision(dt, entity);
+    this->updateTileCollision(dt, entity);
 }
 
 void TileMap::render(
@@ -457,6 +390,96 @@ void TileMap::deferredRender(sf::RenderTarget &target, sf::Shader *shader, const
             this->deferredTileRendering.top()->render(target);
 
         this->deferredTileRendering.pop();
+    }
+}
+
+void TileMap::updateWorldBoundsCollision(const float &dt, Entity *entity)
+{
+    // X axis
+    if (entity->getPosition().x < 0.f)
+    {
+        entity->setPosition(sf::Vector2f(0.f, entity->getPosition().y));
+        entity->stopVelocityX();
+    }
+    else if (entity->getPosition().x + entity->getSize().x > this->mapWorldDimensions.x)
+    {
+        entity->stopVelocityX();
+        entity->setPosition(
+            sf::Vector2f(this->mapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
+    }
+
+    // Y axis
+    if (entity->getPosition().y < 0.f)
+    {
+        entity->stopVelocityY();
+        entity->setPosition(sf::Vector2f(entity->getPosition().x, 0.f));
+    }
+    else if (entity->getPosition().y + entity->getSize().y > this->mapWorldDimensions.y)
+    {
+        entity->stopVelocityY();
+        entity->setPosition(
+            sf::Vector2f(entity->getPosition().x, this->mapWorldDimensions.y - entity->getSize().y));
+    }
+}
+
+void TileMap::updateTileCollision(const float &dt, Entity *entity)
+{
+    for (int x = this->startX; x < this->endX; x++)
+    {
+        for (int y = this->startY; y < this->endY; y++)
+        {
+            for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
+            {
+                if (this->map[x][y][this->layer][k]->isCollideable())
+                {
+                    sf::FloatRect entity_bounds = entity->getGlobalBounds();
+                    sf::FloatRect wall_bounds = this->map[x][y][this->layer][k]->getGlobalBounds();
+                    sf::FloatRect next_position_bounds = entity->getNextPositionBounds(dt);
+
+                    if (next_position_bounds.intersects(wall_bounds))
+                    {
+                        if (entity->getDirection() == "UP")
+                        {
+                            entity->stopVelocityY();
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y + dt * (entity->getMaxVelocity() / 4.f)));
+                        }
+                        else if (entity->getDirection() == "DOWN")
+                        {
+                            entity->stopVelocityY();
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y - dt * (entity->getMaxVelocity() / 4.f)));
+                        }
+                        else if (entity->getDirection() == "LEFT")
+                        {
+                            entity->stopVelocityX();
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x + dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
+                        }
+                        else if (entity->getDirection() == "RIGHT")
+                        {
+                            entity->stopVelocityX();
+                            entity->setPosition(sf::Vector2f(entity->getPosition().x - dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void TileMap::updateTiles(const float &dt, Entity *entity)
+{
+    for (int x = this->startX; x < this->endX; x++)
+    {
+        for (int y = this->startY; y < this->endY; y++)
+        {
+            for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
+            {
+                this->map[x][y][this->layer][k]->update();
+
+                if (this->map[x][y][this->layer][k]->getType() == TileType::SPAWNER)
+                {
+                }
+            }
+        }
     }
 }
 

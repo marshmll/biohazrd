@@ -5,8 +5,9 @@
 
 class RegularTile : public Tile
 {
-private:
 public:
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
+
     /**
      * @brief The Regular Tile Class Constructor.
      *
@@ -31,10 +32,38 @@ public:
 
     virtual ~RegularTile();
 
+    /* FUNCTIONS ================================================================================================ */
+
     void update();
 
+    /**
+     * @brief Renders the tile into a target.
+     * @note If a shader pointer is passed in, it will be used for rendering.
+     *
+     * @param target A render target reference.
+     * @param shader A shader pointer. (optional)
+     * @param light_pos The lighting position (needed if using shaders)
+     *
+     * @return void
+     */
     void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
+    /* ACCESSORS ================================================================================================ */
+
+    /**
+     * @brief Returns the tile properties as a std::string.
+     * @note Returns:
+     * @note -> Type
+     * @note -> Texture rectangle left
+     * @note -> Texture rectangle top
+     * @note -> Collision
+     * @note -> Collsion box width
+     * @note -> Collision box height
+     * @note -> Collision box offset x
+     * @note -> Collision box offset y
+     *
+     * @return const std::string
+     */
     const std::string getPropertiesAsString() const;
 };
 

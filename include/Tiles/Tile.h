@@ -118,17 +118,8 @@ public:
 
     /**
      * @brief Returns the tile properties as a std::string.
-     * @note Returns:
-     * @note -> Texture rectangle left
-     * @note -> Texture rectangle top
-     * @note -> Collision
-     * @note -> Collsion box width
-     * @note -> Collision box height
-     * @note -> Collision box offset x
-     * @note -> Collision box offset y
-     * @note -> Type
      *
-     * @return const TileTypes reference.
+     * @return const std::string
      */
     virtual const std::string getPropertiesAsString() const = 0;
 

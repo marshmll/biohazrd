@@ -218,6 +218,10 @@ void GameState::updateInput(const float &dt)
         this->pauseToggle();
 }
 
+void GameState::updatePlayers(const float &dt)
+{
+}
+
 void GameState::updatePlayerInput(const float &dt)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && hasCompletedKeytimeCicle())
@@ -229,22 +233,18 @@ void GameState::updatePlayerInput(const float &dt)
     if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
     {
         this->player->move(0.f, -1.f, dt);
-        this->enemies[0]->move(0.f, -1.f, dt);
     }
     else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
     {
         this->player->move(0.f, 1.f, dt);
-        this->enemies[0]->move(0.f, 1.f, dt);
     }
     else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
     {
         this->player->move(-1.f, 0.f, dt);
-        this->enemies[0]->move(-1.f, 0.f, dt);
     }
     else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
     {
         this->player->move(1.f, 0.f, dt);
-        this->enemies[0]->move(1.f, 0.f, dt);
     }
 }
 
@@ -253,12 +253,22 @@ void GameState::updatePlayerGUI(const float &dt)
     this->playerGUI->update(dt);
 }
 
+void GameState::updateEnemies(const float &dt)
+{
+}
+
 void GameState::updateTileMap(const float &dt)
 {
-    this->tileMap->update(dt, this->player);
+    this->tileMap->updateTiles(dt, this->player);
+
+    this->tileMap->updateWorldBoundsCollision(dt, this->player);
+    this->tileMap->updateTileCollision(dt, this->player);
 
     for (auto enemy : this->enemies)
-        this->tileMap->update(dt, enemy);
+    {
+        this->tileMap->updateWorldBoundsCollision(dt, enemy);
+        this->tileMap->updateTileCollision(dt, enemy);
+    }
 }
 
 void GameState::updatePauseMenuButtons()
