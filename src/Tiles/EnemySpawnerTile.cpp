@@ -16,6 +16,8 @@ EnemySpawnerTile::EnemySpawnerTile(
     this->enemyAmount = enemy_amount;
     this->enemyTimeToSpawn = enemy_time_to_spawn;
     this->enemyMaxDistance = enemy_max_distance;
+
+    this->spawned = false;
 }
 
 EnemySpawnerTile::~EnemySpawnerTile()
@@ -43,6 +45,11 @@ void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, cons
     }
 }
 
+const bool &EnemySpawnerTile::hasSpawned() const
+{
+    return this->spawned;
+}
+
 /* ACCESSORS ================================================================================================== */
 
 const std::string EnemySpawnerTile::getPropertiesAsString() const
@@ -55,4 +62,11 @@ const std::string EnemySpawnerTile::getPropertiesAsString() const
                << this->enemyTimeToSpawn << " " << this->enemyMaxDistance;
 
     return properties.str();
+}
+
+/* MODIFIERS ==================================================================================================== */
+
+void EnemySpawnerTile::setSpawned(const bool spawned)
+{
+    this->spawned = spawned;
 }

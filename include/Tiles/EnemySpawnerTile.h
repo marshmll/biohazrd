@@ -15,6 +15,8 @@ private:
     int enemyTimeToSpawn;
     int enemyMaxDistance;
 
+    bool spawned;
+
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================*/
 
@@ -44,6 +46,8 @@ public:
 
     /* ACCESSORS ================================================================================================== */
 
+    const bool& hasSpawned() const;
+
     /**
      * @brief Returns the tile properties as a std::string.
      * @note Returns:
@@ -58,6 +62,10 @@ public:
      * @return const std::string
      */
     const std::string getPropertiesAsString() const;
+
+    /* MODIFIERS ================================================================================================ */
+
+    void setSpawned(const bool spawned);
 };
 
 #endif /* ENEMYSPAWNERTILE_H_ */

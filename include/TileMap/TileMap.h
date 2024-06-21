@@ -1,11 +1,12 @@
 #ifndef TILEMAP_H_
 #define TILEMAP_H_
 
-#include "Entity.h"
 #include "Tiles.h"
+#include "Enemies.h"
 
 class Entity;
 class Tile;
+class Enemy;
 
 class TileMap
 {
@@ -238,12 +239,15 @@ public:
      * @brief Updates the map tiles.
      * @param dt The game delta time.
      * @param entity A pointer to an entity.
+     * @param enemies A reference to the enemies vector
+     * @param textures A reference to the textures map.
      *
      * @note -> Updates only the map active area specified in this->updateMapActiveArea.
      *
      * @return void
      */
-    void updateTiles(const float &dt, Entity *entity);
+    void updateTiles(const float &dt, Entity *entity,
+                     std::vector<Enemy *> &enemies, std::map<std::string, sf::Texture> &textures);
 
     /**
      * @return void

@@ -108,11 +108,6 @@ GameState::GameState(StateData *data) : State(data)
     this->initPlayerGUI();
     this->initTileMap();
     this->initShaders();
-
-    this->enemies.push_back(new GreenSlime(300.f, 100.f, this->textures["SLIME_SPRITESHEET"]));
-    this->enemies.push_back(new GreenSlime(400.f, 120.f, this->textures["SLIME_SPRITESHEET"]));
-    this->enemies.push_back(new GreenSlime(430.f, 340.f, this->textures["SLIME_SPRITESHEET"]));
-    this->enemies.push_back(new GreenSlime(150.f, 500.f, this->textures["SLIME_SPRITESHEET"]));
 }
 
 GameState::~GameState()
@@ -259,7 +254,7 @@ void GameState::updateEnemies(const float &dt)
 
 void GameState::updateTileMap(const float &dt)
 {
-    this->tileMap->updateTiles(dt, this->player);
+    this->tileMap->updateTiles(dt, this->player, this->enemies, this->textures);
 
     this->tileMap->updateWorldBoundsCollision(dt, this->player);
     this->tileMap->updateTileCollision(dt, this->player);

@@ -326,11 +326,6 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned laye
 void TileMap::update(const float &dt, Entity *entity)
 {
     this->updateMapActiveArea(entity, 5, 5);
-
-    this->updateTiles(dt, entity);
-
-    this->updateWorldBoundsCollision(dt, entity);
-    this->updateTileCollision(dt, entity);
 }
 
 void TileMap::render(
@@ -465,7 +460,8 @@ void TileMap::updateTileCollision(const float &dt, Entity *entity)
     }
 }
 
-void TileMap::updateTiles(const float &dt, Entity *entity)
+void TileMap::updateTiles(const float &dt, Entity *entity,
+                          std::vector<Enemy *> &enemies, std::map<std::string, sf::Texture> &textures)
 {
     for (int x = this->startX; x < this->endX; x++)
     {
@@ -477,6 +473,14 @@ void TileMap::updateTiles(const float &dt, Entity *entity)
 
                 if (this->map[x][y][this->layer][k]->getType() == TileType::SPAWNER)
                 {
+                    EnemySpawnerTile *est = dynamic_cast<EnemySpawnerTile *>(this->map[x][y][this->layer][k]);
+
+                    if (!est->hasSpawned())
+                    {
+                        enemies.push_back(new GreenSlime(x * this->gridSizeF, y * this->gridSizeF, textures.at("SLIME_SPRITESHEET")));
+
+                        est->setSpawned(true);
+                    }
                 }
             }
         }
