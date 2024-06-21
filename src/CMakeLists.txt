@@ -8,6 +8,7 @@ target_sources(BIOHAZRD PRIVATE
     Engine/Engine.cpp
 
     Entities/Enemies/Enemy.cpp
+    Entities/Enemies/EnemySystem.cpp
     Entities/Enemies/GreenSlime.cpp
 
     Entities/Entity.cpp

@@ -460,8 +460,7 @@ void TileMap::updateTileCollision(const float &dt, Entity *entity)
     }
 }
 
-void TileMap::updateTiles(const float &dt, Entity *entity,
-                          std::vector<Enemy *> &enemies, std::map<std::string, sf::Texture> &textures)
+void TileMap::updateTiles(const float &dt, Entity *entity, EnemySystem *enemySystem)
 {
     for (int x = this->startX; x < this->endX; x++)
     {
@@ -477,7 +476,7 @@ void TileMap::updateTiles(const float &dt, Entity *entity,
 
                     if (!est->hasSpawned())
                     {
-                        enemies.push_back(new GreenSlime(x * this->gridSizeF, y * this->gridSizeF, textures.at("SLIME_SPRITESHEET")));
+                        enemySystem->createEnemy(EnemyType::GREEN_SLIME, est->getPosition().x, est->getPosition().y);
 
                         est->setSpawned(true);
                     }

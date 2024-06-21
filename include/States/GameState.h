@@ -24,6 +24,8 @@ private:
 
     sf::Text debugText; // TEMP
 
+    sf::Shader coreShader;
+
     gui::PauseMenu *pauseMenu;
 
     Player *player;
@@ -31,11 +33,10 @@ private:
 
     sf::Font font;
 
+    std::vector<Enemy *> activeEnemies;
+    EnemySystem *enemySystem;
+
     TileMap *tileMap;
-
-    sf::Shader coreShader;
-
-    std::vector<Enemy *> enemies;
 
     /* INITIALIZERS ============================================================================================= */
 
@@ -86,6 +87,13 @@ private:
     void initTextures();
 
     /**
+     * @brief Initializes the game shaders.
+     *
+     * @return void
+     */
+    void initShaders();
+
+    /**
      * @brief Initializes pause menu.
      *
      * @return void
@@ -107,18 +115,18 @@ private:
     void initPlayerGUI();
 
     /**
+     * @brief Initializes the enemy system.
+     *
+     * @return void
+     */
+    void initEnemySystem();
+
+    /**
      * @brief Initializes a tilemap for the gamestate.
      *
      * @return void
      */
     void initTileMap();
-
-    /**
-     * @brief Initializes the game shaders.
-     *
-     * @return void
-     */
-    void initShaders();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */

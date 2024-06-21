@@ -66,6 +66,12 @@ void GameState::initTextures()
         ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_SLIME_SPRITESHEEET\n");
 }
 
+void GameState::initShaders()
+{
+    if (!this->coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
+        ErrorHandler::throwErr("GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS\n");
+}
+
 void GameState::initPauseMenu()
 {
     this->pauseMenu = new gui::PauseMenu(this->vm, this->font);
@@ -82,15 +88,14 @@ void GameState::initPlayerGUI()
     this->playerGUI = new PlayerGUI(this->player, this->vm);
 }
 
+void GameState::initEnemySystem()
+{
+    this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+}
+
 void GameState::initTileMap()
 {
     this->tileMap = new TileMap("Maps/test.biomap");
-}
-
-void GameState::initShaders()
-{
-    if (!this->coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
-        ErrorHandler::throwErr("GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS\n");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
@@ -103,11 +108,12 @@ GameState::GameState(StateData *data) : State(data)
     this->initFonts();
     this->initText();
     this->initTextures();
+    this->initShaders();
     this->initPauseMenu();
     this->initPlayers();
     this->initPlayerGUI();
+    this->initEnemySystem();
     this->initTileMap();
-    this->initShaders();
 }
 
 GameState::~GameState()
@@ -115,9 +121,10 @@ GameState::~GameState()
     delete this->pauseMenu;
     delete this->player;
     delete this->playerGUI;
+    delete this->enemySystem;
     delete this->tileMap;
 
-    for (auto enemy : this->enemies)
+    for (auto enemy : this->activeEnemies)
         delete enemy;
 }
 
@@ -144,7 +151,7 @@ void GameState::update(const float &dt)
         this->player->update(dt, this->mousePosView);
         this->playerGUI->update(dt);
 
-        for (auto &enemy : this->enemies)
+        for (auto &enemy : this->activeEnemies)
             enemy->update(dt);
 
         this->updateTileMap(dt);
@@ -181,7 +188,7 @@ void GameState::renderToBuffer()
         this->vm, DO_NOT_SHOW_COL_BOX, USE_DEFERRED_RENDER,
         &this->coreShader, this->player->getCenteredPosition());
 
-    for (auto &enemy : this->enemies)
+    for (auto &enemy : this->activeEnemies)
         enemy->render(this->renderBuffer, DO_NOT_SHOW_HITBOX,
                       &this->coreShader, this->player->getCenteredPosition());
 
@@ -254,12 +261,12 @@ void GameState::updateEnemies(const float &dt)
 
 void GameState::updateTileMap(const float &dt)
 {
-    this->tileMap->updateTiles(dt, this->player, this->enemies, this->textures);
+    this->tileMap->updateTiles(dt, this->player, this->enemySystem);
 
     this->tileMap->updateWorldBoundsCollision(dt, this->player);
     this->tileMap->updateTileCollision(dt, this->player);
 
-    for (auto enemy : this->enemies)
+    for (auto enemy : this->activeEnemies)
     {
         this->tileMap->updateWorldBoundsCollision(dt, enemy);
         this->tileMap->updateTileCollision(dt, enemy);
