@@ -21,6 +21,7 @@ target_sources(BIOHAZRD PRIVATE
     Items/MeleeWeapons/Sword.cpp
     Items/RangedWeapons/RangedWeapon.cpp
     Items/RangedWeapons/Bow.cpp
+    Items/Inventory.cpp
     Items/Item.cpp
 
     States/EditorModes/DefaultEditorMode.cpp
