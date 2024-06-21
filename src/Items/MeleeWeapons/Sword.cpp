@@ -2,6 +2,7 @@
 #include "Sword.h"
 
 Sword::Sword()
+    : MeleeWeapon(0)
 {
     if (!this->weaponHorizontalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(0, 0, 64, 64)))
         ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
@@ -74,4 +75,9 @@ void Sword::render(sf::RenderTarget &target, sf::Shader *shader)
     {
         target.draw(this->weaponSprite);
     }
+}
+
+Sword *Sword::clone()
+{
+    return new Sword(*this);
 }

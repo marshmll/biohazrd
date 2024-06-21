@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "MeleeWeapon.h"
 
-MeleeWeapon::MeleeWeapon()
+MeleeWeapon::MeleeWeapon(const short unsigned value)
+    : Item(value, ItemType::MELEE_WEAPON)
 {
 }
 

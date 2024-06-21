@@ -12,8 +12,6 @@
 
 void Player::initVariables()
 {
-    this->isJumping = false;
-    this->currentJumpAnimationName = "NONE";
 }
 
 void Player::initAnimations()
@@ -39,6 +37,11 @@ void Player::initAnimations()
     this->animationComponent->addAnimation("JUMP_LEFT", 13.f, 5, 3, 8, 3, 64.f, 64.f);
 }
 
+void Player::initInventory()
+{
+    this->inventory = new Inventory(40);
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 Player::Player(const float x, const float y, sf::Texture &texture_sheet)
@@ -53,10 +56,12 @@ Player::Player(const float x, const float y, sf::Texture &texture_sheet)
     this->createSkillComponent();
 
     this->initAnimations();
+    this->initInventory();
 }
 
 Player::~Player()
 {
+    delete this->inventory;
 }
 
 /* FUNCTIONS */
@@ -112,22 +117,6 @@ void Player::updateAnimation(const float &dt)
             std::abs(this->movementComponent->getVelocity().x + this->movementComponent->getVelocity().y) * .8f,
             this->movementComponent->getMaxVelocity());
         break;
-    }
-}
-
-void Player::updateJump(const float &dt)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping)
-    {
-        this->isJumping = true;
-        this->animationComponent->play("JUMP_" + this->movementComponent->getDirection(), dt, PRIORITARY);
-        this->currentJumpAnimationName = "JUMP_" + this->movementComponent->getDirection();
-    }
-
-    if (this->currentJumpAnimationName != "NONE")
-    {
-        if (this->animationComponent->isAnimationDone(this->currentJumpAnimationName))
-            this->isJumping = false;
     }
 }
 

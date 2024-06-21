@@ -32,13 +32,13 @@ public:
 
     void clear();
 
-    void add(Item *item);
+    const bool add(Item *item);
 
-    void remove(const short unsigned index);
+    const bool remove(const short unsigned index);
 
-    void loadFromFile(const std::string file_path);
+    const bool loadFromFile(const std::string file_path);
     
-    void saveToFile(const std::string file_path);
+    const bool saveToFile(const std::string file_path);
 
     /* ACCESSORS ================================================================================================ */
 
@@ -47,6 +47,8 @@ public:
     const short unsigned &maxSize() const;
 
     const bool empty() const;
+
+    const bool full() const;
 
     /* MODIFIERS ================================================================================================ */
 };

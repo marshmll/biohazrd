@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "RangedWeapon.h"
 
-RangedWeapon::RangedWeapon()
+RangedWeapon::RangedWeapon(const short unsigned value)
+    : Item(value, ItemType::RANGED_WEAPON)
 {
 }
 

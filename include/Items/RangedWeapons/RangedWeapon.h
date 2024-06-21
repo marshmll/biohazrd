@@ -8,9 +8,13 @@ class Item;
 class RangedWeapon : public Item
 {
 private:
+
 public:
-    RangedWeapon();
+    RangedWeapon(const short unsigned value);
+
     virtual ~RangedWeapon();
+
+    virtual RangedWeapon *clone() = 0;
 };
 
 #endif

@@ -2,7 +2,8 @@
 #define PLAYER_H_
 
 #include "Entity.h"
-#include "Sword.h"
+#include "Items.h"
+#include "Inventory.h"
 
 class Entity;
 
@@ -11,8 +12,7 @@ class Player : public Entity
 private:
     /* VARIABLES ========================================================================================== */
 
-    bool isJumping;
-    std::string currentJumpAnimationName;
+    Inventory *inventory;
 
     Sword sword;
 
@@ -31,6 +31,13 @@ private:
      * @return void
      */
     void initAnimations();
+
+    /**
+     * @brief Initializes player inventory.
+     *
+     * @return void
+     */
+    void initInventory();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
@@ -74,13 +81,6 @@ public:
      * @return void
      */
     void updateAnimation(const float &dt);
-
-    /**
-     * @brief Updates the jump states and animations.
-     *
-     * @return void
-     */
-    void updateJump(const float &dt);
 
     /* ACCESSORS =================================================================================================== */
 

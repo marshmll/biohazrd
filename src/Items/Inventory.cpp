@@ -57,20 +57,42 @@ void Inventory::clear()
     this->nullify();
 }
 
-void Inventory::add(Item *item)
+const bool Inventory::add(Item *item)
 {
+    if (!this->full())
+    {
+        this->itemArray[this->numOfItems++] = item->clone();
+
+        return true;
+    }
+
+    return false;
 }
 
-void Inventory::remove(const short unsigned index)
+const bool Inventory::remove(const short unsigned index)
 {
+    if (this->size() > 0 && index >= 0 && index < this->capacity)
+    {
+        delete this->itemArray[index];
+
+        this->itemArray[index] = nullptr;
+
+        this->numOfItems--;
+
+        return true;
+    }
+
+    return false;
 }
 
-void Inventory::loadFromFile(const std::string file_path)
+const bool Inventory::loadFromFile(const std::string file_path)
 {
+    return false;
 }
 
-void Inventory::saveToFile(const std::string file_path)
+const bool Inventory::saveToFile(const std::string file_path)
 {
+    return false;
 }
 
 /* ACCESSORS ==================================================================================================== */
@@ -87,7 +109,12 @@ const short unsigned &Inventory::maxSize() const
 
 const bool Inventory::empty() const
 {
-    return this->size() == 0;
+    return this->numOfItems == 0;
+}
+
+const bool Inventory::full() const
+{
+    return this->numOfItems == this->capacity;
 }
 
 /* MODIFIERS ==================================================================================================== */

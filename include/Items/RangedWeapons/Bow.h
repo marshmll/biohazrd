@@ -11,6 +11,12 @@ private:
 public:
     Bow();
     virtual ~Bow();
+
+    virtual void update();
+
+    virtual void render();
+
+    virtual Bow *clone();
 };
 
 #endif // BOW_H_
