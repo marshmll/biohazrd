@@ -148,12 +148,10 @@ void GameState::update(const float &dt)
 
         updatePlayerCamera(dt);
         updatePlayerInput(dt);
-        player->update(dt, mousePosView);
-        playerGUI->update(dt);
-
-        for (auto &enemy : activeEnemies)
-            enemy->update(dt);
-
+        updatePlayers(dt);
+        updatePlayerGUI(dt);
+        updateEnemies(dt);
+        updateCombat(dt);
         updateTileMap(dt);
     }
 
@@ -222,6 +220,7 @@ void GameState::updateInput(const float &dt)
 
 void GameState::updatePlayers(const float &dt)
 {
+    player->update(dt, mousePosView);
 }
 
 void GameState::updatePlayerInput(const float &dt)
@@ -257,6 +256,24 @@ void GameState::updatePlayerGUI(const float &dt)
 
 void GameState::updateEnemies(const float &dt)
 {
+    for (auto &enemy : activeEnemies)
+        enemy->update(dt);
+}
+
+void GameState::updateCombat(const float &dt)
+{
+    for (auto enemy : activeEnemies)
+    {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            if (enemy->getGlobalBounds().contains(mousePosView) &&
+                std::abs(player->getCenteredPosition().x - enemy->getCenteredPosition().x) <= player->getWeapon()->getRange() &&
+                std::abs(player->getCenteredPosition().y - enemy->getCenteredPosition().y) <= player->getWeapon()->getRange())
+            {
+                enemy->move(1.f, 0.f, dt);
+            }
+        }
+    }
 }
 
 void GameState::updateTileMap(const float &dt)

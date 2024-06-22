@@ -89,6 +89,8 @@ public:
      */
     AttributeComponent *getAttributeComponent();
 
+    Weapon *getWeapon();
+
     /* MODIFIERS ================================================================================================= */
 
     /**

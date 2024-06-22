@@ -212,6 +212,8 @@ public:
      */
     void updateEnemies(const float &dt);
 
+    void updateCombat(const float &dt);
+
     /**
      * @brief Updates tilemap and collisions.
      *

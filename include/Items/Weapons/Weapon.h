@@ -38,6 +38,10 @@ public:
     virtual void render(sf::RenderTarget &target, sf::Shader *shader = nullptr) = 0;
 
     virtual Weapon *clone() = 0;
+
+    /* ACCESSORS ================================================================================================ */
+
+    virtual const short unsigned &getRange() const;
 };
 
 #endif /* WEAPON_H_ */

@@ -5,6 +5,7 @@
 
 void Weapon::initVariables()
 {
+    range = 80;
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
@@ -12,6 +13,8 @@ void Weapon::initVariables()
 Weapon::Weapon(const short unsigned value, const ItemType type, const std::string texture_path)
     : Item(value, type)
 {
+    initVariables();
+
     if (!weaponHorizontalTexture.loadFromFile(texture_path, sf::IntRect(0, 0, 64, 64)))
         ErrorHandler::throwErr("WEAPON::WEAPON::ERR_LOADING_TEXTURE::" + texture_path + "\n");
 
@@ -26,4 +29,11 @@ Weapon::Weapon(const short unsigned value, const ItemType type, const std::strin
 
 Weapon::~Weapon()
 {
+}
+
+/* ACCESSORS ================================================================================================ */
+
+const short unsigned &Weapon::getRange() const
+{
+    return range;
 }
