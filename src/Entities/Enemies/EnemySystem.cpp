@@ -27,7 +27,7 @@ void EnemySystem::createEnemy(const EnemyType type, const float x, const float y
     switch (type)
     {
     case EnemyType::GREEN_SLIME:
-        this->activeEnemies.push_back(new GreenSlime(x, y, this->textures["SLIME_SPRITESHEET"]));
+        activeEnemies.push_back(new GreenSlime(x, y, textures["SLIME_SPRITESHEET"]));
         break;
 
     default:

@@ -5,36 +5,36 @@
 
 void Engine::initVariables()
 {
-    this->currentPath = std::filesystem::current_path().string();
+    currentPath = std::filesystem::current_path().string();
 
-    this->window = nullptr;
+    window = nullptr;
 
-    this->dt = 0.f;
+    dt = 0.f;
 
-    this->gridSize = 64.f; // Tile size.
+    gridSize = 64.f; // Tile size.
 }
 
 void Engine::initGraphicsSettings()
 {
-    this->gfxSettings.loadFromFile("Config/graphics.ini");
+    gfxSettings.loadFromFile("Config/graphics.ini");
 }
 
 void Engine::initWindow()
 {
     // Create the window
-    if (this->gfxSettings.fullscreen) // If in fullscreen mode
+    if (gfxSettings.fullscreen) // If in fullscreen mode
     {
-        this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
-                                            sf::Style::Fullscreen, this->gfxSettings.contextSettings);
+        window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,
+                                      sf::Style::Fullscreen, gfxSettings.contextSettings);
     }
     else // If in window mode
     {
-        this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title,
-                                            sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
+        window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,
+                                      sf::Style::Titlebar | sf::Style::Close, gfxSettings.contextSettings);
     }
 
-    this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);
-    this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+    window->setFramerateLimit(gfxSettings.frameRateLimit);
+    window->setVerticalSyncEnabled(gfxSettings.verticalSync);
 }
 
 void Engine::initKeys()
@@ -47,7 +47,7 @@ void Engine::initKeys()
         int key_value = 0;
 
         while (ifs >> key >> key_value)
-            this->acceptedKeys[key] = sf::Keyboard::Key(key_value);
+            acceptedKeys[key] = sf::Keyboard::Key(key_value);
     }
     else
         ErrorHandler::throwErr("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI\n");
@@ -57,38 +57,38 @@ void Engine::initKeys()
 
 void Engine::initStateData()
 {
-    this->data.states = &this->states;
-    this->data.gfxSettings = &this->gfxSettings;
-    this->data.window = this->window;
-    this->data.acceptedKeys = &this->acceptedKeys;
-    this->data.gridSize = this->gridSize;
+    data.states = &states;
+    data.gfxSettings = &gfxSettings;
+    data.window = window;
+    data.acceptedKeys = &acceptedKeys;
+    data.gridSize = gridSize;
 }
 
 void Engine::initStates()
 {
-    this->states.push(new MainMenuState(&this->data));
+    states.push(new MainMenuState(&data));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 Engine::Engine()
 {
-    this->initVariables();
-    this->initGraphicsSettings();
-    this->initWindow();
-    this->initKeys();
-    this->initStateData();
-    this->initStates();
+    initVariables();
+    initGraphicsSettings();
+    initWindow();
+    initKeys();
+    initStateData();
+    initStates();
 }
 
 Engine::~Engine()
 {
-    delete this->window;
+    delete window;
 
-    while (!this->states.empty())
+    while (!states.empty())
     {
-        delete this->states.top();
-        this->states.pop();
+        delete states.top();
+        states.pop();
     }
 }
 
@@ -96,79 +96,79 @@ Engine::~Engine()
 
 void Engine::run()
 {
-    while (this->isRunning())
+    while (isRunning())
     {
         // If windows has focus
-        if (this->window->hasFocus())
+        if (window->hasFocus())
         {
-            this->update();
-            this->render();
+            update();
+            render();
         }
     }
 }
 
 void Engine::update()
 {
-    this->updateDeltaTime();
-    this->pollSFMLEvents();
+    updateDeltaTime();
+    pollSFMLEvents();
 
     // If there are still states available
-    if (!this->states.empty())
+    if (!states.empty())
     {
         // Update the top state in the states stack
-        this->states.top()->update(this->dt);
+        states.top()->update(dt);
 
         // If the state wants to end
-        if (this->states.top()->hasAskedToQuit())
+        if (states.top()->hasAskedToQuit())
         {
             // Delete the state and pop it from the stack.
-            delete this->states.top();
-            this->states.pop();
+            delete states.top();
+            states.pop();
         }
     }
     // If there are no states
     else
     {
         // Quit application.
-        this->endApplication();
+        endApplication();
     }
 }
 
 void Engine::render()
 {
     // Clear window
-    this->window->clear();
+    window->clear();
 
     // If there are states in the stack
-    if (!this->states.empty())
+    if (!states.empty())
     {
         // If the window has focus
-        if (this->window->hasFocus())
+        if (window->hasFocus())
         {
             // Render them into the window.
-            this->states.top()->render(*this->window);
+            states.top()->render(*window);
         }
     }
 
     // Display window
-    this->window->display();
+    window->display();
 }
 
 /* AUXILIARY FUNCTIONS */
 
 void Engine::updateDeltaTime()
 {
-    this->dt = this->dtClock.restart().asSeconds();
+    dt = dtClock.restart().asSeconds();
 }
 
 void Engine::pollSFMLEvents()
 {
-    while (this->window->pollEvent(this->event))
+    while (window->pollEvent(event))
     {
-        switch (this->event.type)
+        switch (event.type)
         {
         case sf::Event::Closed:
-            this->endApplication();
+            endApplication();
             break;
 
         default:
@@ -179,12 +179,12 @@ void Engine::pollSFMLEvents()
 
 void Engine::endApplication()
 {
-    this->window->close();
+    window->close();
 }
 
 /* ACESSORS */
 
 const bool Engine::isRunning() const
 {
-    return this->window->isOpen();
+    return window->isOpen();
 }

@@ -9,17 +9,18 @@
 #include "EditorState.h"
 
 /* INITIALIZERS */
+
 void EditorState::initVariables()
 {
-    this->cameraSpeed = 500.f;
-    this->activeEditorMode = EditorModes::DEFAULT_MODE;
+    cameraSpeed = 500.f;
+    activeEditorMode = EditorModes::DEFAULT_MODE;
 }
 
 void EditorState::initEditorCamera()
 {
-    this->editorCamera.setSize(sf::Vector2f(this->vm.width, this->vm.height));
+    editorCamera.setSize(sf::Vector2f(vm.width, vm.height));
 
-    this->editorCamera.setCenter(this->vm.width / 2.f, this->vm.height / 2.f);
+    editorCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
 }
 
 void EditorState::initKeybinds()
@@ -32,7 +33,7 @@ void EditorState::initKeybinds()
         std::string key = "";
 
         while (ifs >> action >> key)
-            this->keybinds[action] = this->acceptedKeys->at(key);
+            keybinds[action] = acceptedKeys->at(key);
     }
     else
         ErrorHandler::throwErr("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n");
@@ -42,21 +43,21 @@ void EditorState::initKeybinds()
 
 void EditorState::initFonts()
 {
-    if (!this->font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
         ErrorHandler::throwErr("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
 }
 
 void EditorState::initPauseMenu()
 {
-    this->pauseMenu = new gui::PauseMenu(this->vm, this->font);
-    this->pauseMenu->addButton("QUIT", gui::p2pY(this->vm, 83.7f), "Exit");
-    this->pauseMenu->addButton("SAVE", gui::p2pY(this->vm, 62.5f), "Save");
-    this->pauseMenu->addButton("LOAD", gui::p2pY(this->vm, 50.f), "Load");
+    pauseMenu = new gui::PauseMenu(vm, font);
+    pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.7f), "Exit");
+    pauseMenu->addButton("SAVE", gui::p2pY(vm, 62.5f), "Save");
+    pauseMenu->addButton("LOAD", gui::p2pY(vm, 50.f), "Load");
 }
 
 void EditorState::initTileMap()
 {
-    this->tileMap = new TileMap(this->data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
+    tileMap = new TileMap(data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
 }
 
 void EditorState::initGUI()
@@ -65,149 +66,149 @@ void EditorState::initGUI()
 
 void EditorState::initEditorStateData()
 {
-    this->editorStateData.keybinds = &this->keybinds;
-    this->editorStateData.tileMap = this->tileMap;
-    this->editorStateData.editorCamera = &this->editorCamera;
-    this->editorStateData.font = &this->font;
-    this->editorStateData.keytime = &this->keytime;
-    this->editorStateData.keytimeMax = &this->keytimeMax;
-    this->editorStateData.mousetime = &this->mousetime;
-    this->editorStateData.mousetimeMax = &this->mousetimeMax;
-    this->editorStateData.mousePosScreen = &this->mousePosScreen;
-    this->editorStateData.mousePosWindow = &this->mousePosWindow;
-    this->editorStateData.mousePosView = &this->mousePosView;
-    this->editorStateData.mousePosGrid = &this->mousePosGrid;
+    editorStateData.keybinds = &keybinds;
+    editorStateData.tileMap = tileMap;
+    editorStateData.editorCamera = &editorCamera;
+    editorStateData.font = &font;
+    editorStateData.keytime = &keytime;
+    editorStateData.keytimeMax = &keytimeMax;
+    editorStateData.mousetime = &mousetime;
+    editorStateData.mousetimeMax = &mousetimeMax;
+    editorStateData.mousePosScreen = &mousePosScreen;
+    editorStateData.mousePosWindow = &mousePosWindow;
+    editorStateData.mousePosView = &mousePosView;
+    editorStateData.mousePosGrid = &mousePosGrid;
 }
 
 void EditorState::initModes()
 {
-    this->modes[EditorModes::DEFAULT_MODE] = new DefaultEditorMode(this->data, &this->editorStateData);
-    this->modes[EditorModes::ENEMY_MODE] = new EnemyEditorMode(this->data, &this->editorStateData);
+    modes[EditorModes::DEFAULT_MODE] = new DefaultEditorMode(data, &editorStateData);
+    modes[EditorModes::ENEMY_MODE] = new EnemyEditorMode(data, &editorStateData);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR */
 EditorState::EditorState(StateData *data) : State(data)
 {
-    this->initVariables();
-    this->initEditorCamera();
-    this->initFonts();
-    this->initKeybinds();
-    this->initPauseMenu();
-    this->initTileMap();
-    this->initGUI();
-    this->initEditorStateData();
-    this->initModes();
+    initVariables();
+    initEditorCamera();
+    initFonts();
+    initKeybinds();
+    initPauseMenu();
+    initTileMap();
+    initGUI();
+    initEditorStateData();
+    initModes();
 }
 
 EditorState::~EditorState()
 {
-    for (auto &it : this->buttons)
+    for (auto &it : buttons)
         delete it.second;
 
-    delete this->pauseMenu;
+    delete pauseMenu;
 
-    delete this->tileMap;
+    delete tileMap;
 
-    for (auto &it : this->modes)
+    for (auto &it : modes)
         delete it.second;
 }
 
 /* FUNCTIONS */
 void EditorState::update(const float &dt)
 {
-    this->updateMousePositions(&this->editorCamera);
-    this->updateInput(dt);
-    this->updateKeytime(dt);
-    this->updateMousetime(dt);
+    updateMousePositions(&editorCamera);
+    updateInput(dt);
+    updateKeytime(dt);
+    updateMousetime(dt);
 
-    if (!this->isPaused)
+    if (!isPaused)
     {
-        this->updateGUI(dt);
-        this->updateEditorCamera(dt);
-        this->updateModes(dt);
+        updateGUI(dt);
+        updateEditorCamera(dt);
+        updateModes(dt);
     }
     else
     {
-        this->pauseMenu->update(this->mousePosWindow);
+        pauseMenu->update(mousePosWindow);
     }
 }
 
 void EditorState::render(sf::RenderTarget &target)
 {
     // Render tilemap in the editor camera
-    target.setView(this->editorCamera);
-    this->tileMap->render(target, this->editorCameraPosGrid, this->vm, SHOW_COL_BOX);
+    target.setView(editorCamera);
+    tileMap->render(target, editorCameraPosGrid, vm, SHOW_COL_BOX);
 
-    if (!this->isPaused)
+    if (!isPaused)
     {
         // Render GUI in the window view
-        target.setView(this->window->getDefaultView());
-        this->renderGUI(target);
-        this->renderModes(target);
+        target.setView(window->getDefaultView());
+        renderGUI(target);
+        renderModes(target);
     }
     else
     {
         // Render pause menu in the window view
-        target.setView(this->window->getDefaultView());
-        this->pauseMenu->render(target);
-        this->updatePauseMenuInteraction();
+        target.setView(window->getDefaultView());
+        pauseMenu->render(target);
+        updatePauseMenuInteraction();
     }
 }
 
 void EditorState::updateInput(const float &dt)
 {
     // Pause menu toggle
-    if (sf::Keyboard::isKeyPressed(this->keybinds["PAUSE"]) && this->hasCompletedKeytimeCicle())
-        this->pauseToggle();
+    if (sf::Keyboard::isKeyPressed(keybinds["PAUSE"]) && hasCompletedKeytimeCicle())
+        pauseToggle();
 
     // Change between modes
-    if (sf::Keyboard::isKeyPressed(this->keybinds.at("DEFAULT_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
-        this->activeEditorMode = EditorModes::DEFAULT_MODE;
+    if (sf::Keyboard::isKeyPressed(keybinds.at("DEFAULT_EDITOR_MODE")) && hasCompletedKeytimeCicle())
+        activeEditorMode = EditorModes::DEFAULT_MODE;
 
-    else if (sf::Keyboard::isKeyPressed(this->keybinds.at("ENEMY_EDITOR_MODE")) && this->hasCompletedKeytimeCicle())
-        this->activeEditorMode = EditorModes::ENEMY_MODE;
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("ENEMY_EDITOR_MODE")) && hasCompletedKeytimeCicle())
+        activeEditorMode = EditorModes::ENEMY_MODE;
 }
 
 void EditorState::updateGUI(const float &dt)
 {
     // Buttons
-    for (auto &it : this->buttons)
-        it.second->update(sf::Vector2f(this->mousePosWindow));
+    for (auto &it : buttons)
+        it.second->update(sf::Vector2f(mousePosWindow));
 }
 
 void EditorState::updateEditorCamera(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_UP"]))
-        this->editorCamera.move(0.f, std::floor(-this->cameraSpeed * dt));
+    if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_UP"]))
+        editorCamera.move(0.f, std::floor(-cameraSpeed * dt));
 
-    else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_DOWN"]))
-        this->editorCamera.move(0.f, std::floor(this->cameraSpeed * dt));
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_DOWN"]))
+        editorCamera.move(0.f, std::floor(cameraSpeed * dt));
 
-    else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_LEFT"]))
-        this->editorCamera.move(std::floor(-this->cameraSpeed * dt), 0.f);
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_LEFT"]))
+        editorCamera.move(std::floor(-cameraSpeed * dt), 0.f);
 
-    else if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_CAMERA_RIGHT"]))
-        this->editorCamera.move(std::floor(this->cameraSpeed * dt), 0.f);
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_RIGHT"]))
+        editorCamera.move(std::floor(cameraSpeed * dt), 0.f);
 
-    this->editorCameraPosGrid.x = static_cast<int>(this->editorCamera.getCenter().x) / static_cast<int>(this->data->gridSize);
-    this->editorCameraPosGrid.y = static_cast<int>(this->editorCamera.getCenter().y) / static_cast<int>(this->data->gridSize);
+    editorCameraPosGrid.x = static_cast<int>(editorCamera.getCenter().x) / static_cast<int>(data->gridSize);
+    editorCameraPosGrid.y = static_cast<int>(editorCamera.getCenter().y) / static_cast<int>(data->gridSize);
 }
 
 void EditorState::updatePauseMenuInteraction()
 {
-    if (this->pauseMenu->isButtonPressed("QUIT"))
-        this->quit();
+    if (pauseMenu->isButtonPressed("QUIT"))
+        quit();
 
-    else if (this->pauseMenu->isButtonPressed("SAVE"))
-        this->tileMap->saveToFile("Maps/test.biomap");
+    else if (pauseMenu->isButtonPressed("SAVE"))
+        tileMap->saveToFile("Maps/test.biomap");
 
-    else if (this->pauseMenu->isButtonPressed("LOAD"))
-        this->tileMap->loadFromFile("Maps/test.biomap");
+    else if (pauseMenu->isButtonPressed("LOAD"))
+        tileMap->loadFromFile("Maps/test.biomap");
 }
 
 void EditorState::updateModes(const float &dt)
 {
-    this->modes[this->activeEditorMode]->update(dt);
+    modes[activeEditorMode]->update(dt);
 }
 
 void EditorState::renderGUI(sf::RenderTarget &target)
@@ -216,5 +217,5 @@ void EditorState::renderGUI(sf::RenderTarget &target)
 
 void EditorState::renderModes(sf::RenderTarget &target)
 {
-    this->modes[this->activeEditorMode]->render(target);
+    modes[activeEditorMode]->render(target);
 }

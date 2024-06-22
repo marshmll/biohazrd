@@ -13,26 +13,26 @@ State::State(StateData *data) : vm(data->gfxSettings->resolution)
 {
     this->data = data;
 
-    this->states = data->states;
+    states = data->states;
 
-    this->gfxSettings = data->gfxSettings;
+    gfxSettings = data->gfxSettings;
 
-    this->window = data->window;
+    window = data->window;
 
-    this->acceptedKeys = data->acceptedKeys;
+    acceptedKeys = data->acceptedKeys;
 
-    this->currentPath = std::filesystem::current_path().string();
+    currentPath = std::filesystem::current_path().string();
 
-    this->quitState = false;
-    this->isPaused = false;
+    quitState = false;
+    isPaused = false;
 
-    this->keytime = 0.f;
-    this->keytimeMax = 15.f;
+    keytime = 0.f;
+    keytimeMax = 15.f;
 
-    this->mousetime = 0.f;
-    this->mousetimeMax = 5.f;
+    mousetime = 0.f;
+    mousetimeMax = 5.f;
 
-    this->gridSize = data->gridSize;
+    gridSize = data->gridSize;
 }
 
 State::~State()
@@ -43,66 +43,66 @@ State::~State()
 
 void State::updateMousePositions(sf::View *view)
 {
-    this->mousePosScreen = sf::Mouse::getPosition();
+    mousePosScreen = sf::Mouse::getPosition();
 
-    this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+    mousePosWindow = sf::Mouse::getPosition(*window);
 
     if (view)
-        this->window->setView(*view);
+        window->setView(*view);
 
-    this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
+    mousePosView = window->mapPixelToCoords(mousePosWindow);
 
-    this->mousePosGrid = sf::Vector2i(
-        static_cast<int>(this->mousePosView.x) / static_cast<int>(this->data->gridSize),
-        static_cast<int>(this->mousePosView.y) / static_cast<int>(this->data->gridSize));
+    mousePosGrid = sf::Vector2i(
+        static_cast<int>(mousePosView.x) / static_cast<int>(data->gridSize),
+        static_cast<int>(mousePosView.y) / static_cast<int>(data->gridSize));
 
-    this->window->setView(this->window->getDefaultView());
+    window->setView(window->getDefaultView());
 }
 
 void State::updateKeytime(const float &dt)
 {
-    if (this->keytime < this->keytimeMax)
-        this->keytime += 100.f * dt;
+    if (keytime < keytimeMax)
+        keytime += 100.f * dt;
 }
 
 void State::updateMousetime(const float &dt)
 {
-    if (this->mousetime < this->mousetimeMax)
-        this->mousetime += 100.f * dt;
+    if (mousetime < mousetimeMax)
+        mousetime += 100.f * dt;
 }
 
 void State::quit()
 {
-    this->quitState = true;
+    quitState = true;
 }
 
 void State::pauseToggle()
 {
-    this->isPaused = !this->isPaused;
+    isPaused = !isPaused;
 }
 
 void State::pause()
 {
-    this->isPaused = true;
+    isPaused = true;
 }
 
 void State::resume()
 {
-    this->isPaused = false;
+    isPaused = false;
 }
 
 /* ACCESSORS */
 
 const bool &State::hasAskedToQuit() const
 {
-    return this->quitState;
+    return quitState;
 }
 
 const bool State::hasCompletedKeytimeCicle()
 {
-    if (this->keytime >= this->keytimeMax)
+    if (keytime >= keytimeMax)
     {
-        this->keytime = 0.f;
+        keytime = 0.f;
         return true;
     }
 
@@ -111,10 +111,10 @@ const bool State::hasCompletedKeytimeCicle()
 
 const bool State::hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn)
 {
-    if (this->mousetime >= this->mousetimeMax)
+    if (mousetime >= mousetimeMax)
     {
         if (sf::Mouse::isButtonPressed(mouseBtn))
-            this->mousetime = 0.f;
+            mousetime = 0.f;
 
         return true;
     }

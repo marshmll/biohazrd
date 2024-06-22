@@ -7,9 +7,11 @@
 
 MovementComponent::MovementComponent(
     sf::Sprite &sprite, float maxVelocity,
-    float acceleration, float deceleration) : sprite(sprite), maxVelocity(maxVelocity),
-                                              acceleration(acceleration), deceleration(deceleration),
-                                              state(States::IDLE), direction(Directions::DOWN)
+    float acceleration, float deceleration)
+
+    : sprite(sprite), maxVelocity(maxVelocity),
+      acceleration(acceleration), deceleration(deceleration),
+      state(States::IDLE), direction(Directions::DOWN)
 {
 }
 
@@ -24,53 +26,53 @@ void MovementComponent::update(const float &dt)
     /* Deceleration */
 
     // If player is moving right
-    if (this->velocity.x >= 0.f)
+    if (velocity.x >= 0.f)
     {
         // Decrease velocity
-        this->velocity.x -= this->deceleration * dt;
+        velocity.x -= deceleration * dt;
 
         // If velocity hits 0, keep it at 0.
-        if (this->velocity.x < 0.f)
-            this->velocity.x = 0.f;
+        if (velocity.x < 0.f)
+            velocity.x = 0.f;
     }
     // If player is moving left
-    else if (this->velocity.x <= 0.f)
+    else if (velocity.x <= 0.f)
     {
         // Decrease velocity
-        this->velocity.x += this->deceleration * dt;
+        velocity.x += deceleration * dt;
 
         // If velocity hits 0, keep it at 0.
-        if (this->velocity.x > 0.f)
-            this->velocity.x = 0.f;
+        if (velocity.x > 0.f)
+            velocity.x = 0.f;
     }
 
     // If player is moving down
-    if (this->velocity.y >= 0.f)
+    if (velocity.y >= 0.f)
     {
         // Decrease velocity
-        this->velocity.y -= this->deceleration * dt;
+        velocity.y -= deceleration * dt;
 
         // If velocity hits 0, keep it at 0.
-        if (this->velocity.y < 0.f)
-            this->velocity.y = 0.f;
+        if (velocity.y < 0.f)
+            velocity.y = 0.f;
     }
     // If player is moving up
-    else if (this->velocity.y <= 0.f)
+    else if (velocity.y <= 0.f)
     {
         // Decrease velocity
-        this->velocity.y += this->deceleration * dt;
+        velocity.y += deceleration * dt;
 
         // If velocity hits 0, keep it at 0.
-        if (this->velocity.y > 0)
-            this->velocity.y = 0;
+        if (velocity.y > 0)
+            velocity.y = 0;
     }
 
     // Set state to idle
-    if (this->velocity == sf::Vector2f(0, 0))
-        this->state = IDLE;
+    if (velocity == sf::Vector2f(0, 0))
+        state = IDLE;
 
     // Final move
-    this->sprite.move(this->velocity * dt);
+    sprite.move(velocity * dt);
 }
 
 void MovementComponent::move(const float dir_x, const float dir_y, const float &dt)
@@ -78,65 +80,65 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
     /* Acceleration */
 
     // Accelerate player x
-    this->velocity.x += this->acceleration * dir_x * dt;
+    velocity.x += acceleration * dir_x * dt;
 
     // Get the x and y directions coeficients (-1.0 or +1.0)
     // +1.0 for DOWN and RIGHT.
     // -1.0 for UP and LEFT.
-    float xDirection = this->velocity.x / std::fabs(this->velocity.x);
-    float yDirection = this->velocity.y / std::fabs(this->velocity.y);
+    float xDirection = velocity.x / std::fabs(velocity.x);
+    float yDirection = velocity.y / std::fabs(velocity.y);
 
     // If player hits max velocity in x axis
-    if (std::fabs(this->velocity.x) > this->maxVelocity)
+    if (std::fabs(velocity.x) > maxVelocity)
     {
         // Keep the x velocity equal to max velocity.
-        this->velocity.x = this->maxVelocity * xDirection;
+        velocity.x = maxVelocity * xDirection;
     }
 
     // Accelerate player y
-    this->velocity.y += this->acceleration * dir_y * dt;
+    velocity.y += acceleration * dir_y * dt;
 
     // If player hits max velocity in y axis
-    if (std::fabs(this->velocity.y) > this->maxVelocity)
+    if (std::fabs(velocity.y) > maxVelocity)
     {
         // Keep the y velocity equal to max velocity.
-        this->velocity.y = this->maxVelocity * yDirection;
+        velocity.y = maxVelocity * yDirection;
     }
 
-    this->state = States::MOVING;
+    state = States::MOVING;
 
     // Update moving direction
-    if (xDirection == 1 && this->velocity.y == 0)
+    if (xDirection == 1 && velocity.y == 0)
 
-        this->direction = Directions::RIGHT;
+        direction = Directions::RIGHT;
 
-    else if (xDirection == -1 && this->velocity.y == 0)
+    else if (xDirection == -1 && velocity.y == 0)
 
-        this->direction = Directions::LEFT;
+        direction = Directions::LEFT;
 
-    else if (yDirection == 1 && this->velocity.x == 0)
+    else if (yDirection == 1 && velocity.x == 0)
 
-        this->direction = Directions::DOWN;
+        direction = Directions::DOWN;
 
-    else if (yDirection == -1 && this->velocity.x == 0)
+    else if (yDirection == -1 && velocity.x == 0)
 
-        this->direction = Directions::UP;
+        direction = Directions::UP;
 }
 
 /* ACCESSORS */
 const sf::Vector2f &MovementComponent::getVelocity() const
 {
-    return this->velocity;
+    return velocity;
 }
 
 const float &MovementComponent::getMaxVelocity() const
 {
-    return this->maxVelocity;
+    return maxVelocity;
 }
 
 const short unsigned &MovementComponent::getCurrentState() const
 {
-    return this->state;
+    return state;
 }
 
 const std::string MovementComponent::getDirection() const
@@ -180,15 +182,15 @@ const std::string MovementComponent::getKeyboardDirection() const
 
 void MovementComponent::stopVelocity()
 {
-    this->velocity = sf::Vector2f(0.f, 0.f);
+    velocity = sf::Vector2f(0.f, 0.f);
 }
 
 void MovementComponent::stopVelocityX()
 {
-    this->velocity.x = 0.f;
+    velocity.x = 0.f;
 }
 
 void MovementComponent::stopVelocityY()
 {
-    this->velocity.y = 0.f;
+    velocity.y = 0.f;
 }

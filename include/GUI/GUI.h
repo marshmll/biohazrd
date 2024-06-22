@@ -68,7 +68,6 @@ namespace gui
 
         // Text Button
         sf::Text text;
-        sf::Font *font;
 
         // Image button
         sf::RectangleShape image;
@@ -98,7 +97,7 @@ namespace gui
          * @note -> Sets text position centered in button.
          */
         Button(const float x, const float y, const float width, const float height,
-               sf::Font *font, std::string text, const unsigned character_size,
+               sf::Font &font, std::string text, const unsigned character_size,
                sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
                sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
                sf::Color outline_idle_color = sf::Color::Transparent,
@@ -166,9 +165,9 @@ namespace gui
         /**
          * @brief Returns a button's text string.
          *
-         * @return std::string&
+         * @return std::string
          */
-        const std::string getText() const;
+        const std::string getString() const;
 
         /* MODIFIERS ========================================================================================== */
 
@@ -184,7 +183,7 @@ namespace gui
          *
          * @return void
          */
-        void setText(std::string text);
+        void setString(std::string string);
     };
 
     /**********************************************************************************************************
@@ -198,7 +197,6 @@ namespace gui
     private:
         /* VARIABLES ========================================================================================== */
 
-        sf::Font &font;
         gui::Button *selectedElement;
         std::vector<gui::Button *> list;
 
@@ -304,7 +302,7 @@ namespace gui
         IncrementInput(const float x, const float y, const float width, const float height,
                        const float step, const sf::Color bg_color,
                        sf::Color buttons_idle_color, sf::Color buttons_hover_color, sf::Color buttons_active_color,
-                       sf::Font *font, sf::Color text_color, const unsigned char_size, const float initial_value = 0.f);
+                       sf::Font &font, sf::Color text_color, const unsigned char_size, const float initial_value = 0.f);
 
         virtual ~IncrementInput();
 
@@ -604,7 +602,7 @@ namespace gui
                         const float col_editor_width, const float col_editor_height,
                         const float grid_size_f, const float scale,
                         const sf::Texture *texture_sheet,
-                        sf::Font *font, sf::VideoMode &vm);
+                        sf::Font &font, sf::VideoMode &vm);
 
         virtual ~CollisionEditor();
 
@@ -708,7 +706,6 @@ namespace gui
 
         sf::RectangleShape bar;
         sf::Vector2f barMaxSize;
-        sf::Font *font;
         sf::Text barText;
 
     public:
@@ -760,7 +757,6 @@ namespace gui
         sf::RectangleShape barBg;
         sf::RectangleShape barFill;
         sf::Vector2f barMaxSize;
-        sf::Font *font;
         sf::Text barText;
 
     public:
@@ -786,7 +782,7 @@ namespace gui
             const float width, const float height,
             const float current_value, const float max_value,
             const sf::Color bg_color, const sf::Color fill_color,
-            sf::Font *font, const sf::Color text_color,
+            sf::Font &font, const sf::Color text_color,
             const unsigned char_size, const std::string string = "");
 
         /**

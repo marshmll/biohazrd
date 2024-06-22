@@ -12,7 +12,8 @@ class SettingsState;
 class MainMenuState : public State
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================== */
+
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
     sf::Font font;
@@ -114,8 +115,6 @@ public:
      * @return void
      */
     void renderGUI(sf::RenderTarget &target);
-
-    /* MODIFIERS */
 
     /**
      * @brief Resets the entire GUI.

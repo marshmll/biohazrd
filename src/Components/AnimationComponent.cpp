@@ -18,7 +18,7 @@ AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_
 
 AnimationComponent::~AnimationComponent()
 {
-    for (auto &it : this->animations)
+    for (auto &it : animations)
         delete it.second;
 }
 
@@ -31,11 +31,11 @@ void AnimationComponent::addAnimation(
     const int end_frame_x_index, const int end_frame_y_index,
     const float width, const float height)
 {
-    this->animations[key] = new Animation(this->sprite, this->textureSheet,
-                                          animation_update_timer,
-                                          start_frame_x_index, start_frame_y_index,
-                                          end_frame_x_index, end_frame_y_index,
-                                          width, height);
+    animations[key] = new Animation(sprite, textureSheet,
+                                    animation_update_timer,
+                                    start_frame_x_index, start_frame_y_index,
+                                    end_frame_x_index, end_frame_y_index,
+                                    width, height);
 }
 
 const bool AnimationComponent::play(const std::string key, const float &dt, const bool priority)
@@ -44,21 +44,21 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
     bool done = false;
 
     // If its a prioritary animation and there is no current prioritary anim.
-    if (priority && this->priorityAnimation == nullptr)
-        this->priorityAnimation = this->animations[key];
+    if (priority && priorityAnimation == nullptr)
+        priorityAnimation = animations[key];
 
-    if (this->priorityAnimation != nullptr)
+    if (priorityAnimation != nullptr)
     {
         // If the previous animation is not the prioritary animation
         // already, set it.
-        if (this->previousAnimation != this->priorityAnimation)
-            this->setNewPreviousAnimation(this->priorityAnimation);
+        if (previousAnimation != priorityAnimation)
+            setNewPreviousAnimation(priorityAnimation);
 
         // If the animation is done
-        if (this->priorityAnimation->play(dt))
+        if (priorityAnimation->play(dt))
         {
             // Reset the pointer and set done to true.
-            this->priorityAnimation = nullptr;
+            priorityAnimation = nullptr;
             done = true;
         }
     }
@@ -67,11 +67,11 @@ const bool AnimationComponent::play(const std::string key, const float &dt, cons
     {
         // If the previous animation is not the animation to be
         // player already, set it.
-        if (this->previousAnimation != this->animations[key])
-            this->setNewPreviousAnimation(key);
+        if (previousAnimation != animations[key])
+            setNewPreviousAnimation(key);
 
         // Sets done equals to if the animation is done.
-        done = this->animations[key]->play(dt);
+        done = animations[key]->play(dt);
     }
 
     return done;
@@ -85,22 +85,22 @@ const bool AnimationComponent::play(const std::string key, const float &dt,
     bool done = false;
 
     // If its a prioritary animation and there is no current prioritary anim.
-    if (priority && this->priorityAnimation == nullptr)
-        this->priorityAnimation = this->animations[key];
+    if (priority && priorityAnimation == nullptr)
+        priorityAnimation = animations[key];
 
     // If there is a prioritary animation
-    if (this->priorityAnimation != nullptr)
+    if (priorityAnimation != nullptr)
     {
         // If the previous animation is not the prioritary animation
         // already, set it.
-        if (this->previousAnimation != this->priorityAnimation)
-            this->setNewPreviousAnimation(this->priorityAnimation);
+        if (previousAnimation != priorityAnimation)
+            setNewPreviousAnimation(priorityAnimation);
 
         // If the animation is done
-        if (this->priorityAnimation->play(dt, std::abs(modifier / modifier_max)))
+        if (priorityAnimation->play(dt, std::abs(modifier / modifier_max)))
         {
             // Reset the pointer and set done to true.
-            this->priorityAnimation = nullptr;
+            priorityAnimation = nullptr;
             done = true;
         }
     }
@@ -109,11 +109,11 @@ const bool AnimationComponent::play(const std::string key, const float &dt,
     {
         // If the previous animation is not the animation to be
         // player already, set it.
-        if (this->previousAnimation != this->animations[key])
-            this->setNewPreviousAnimation(key);
+        if (previousAnimation != animations[key])
+            setNewPreviousAnimation(key);
 
         // Sets done equals to if the animation is done.
-        done = this->animations[key]->play(dt, std::abs(modifier / modifier_max));
+        done = animations[key]->play(dt, std::abs(modifier / modifier_max));
     }
 
     return done;
@@ -122,30 +122,30 @@ const bool AnimationComponent::play(const std::string key, const float &dt,
 void AnimationComponent::setNewPreviousAnimation(std::string key)
 {
     // If there is no previous animation, set it to the refered animation.
-    if (this->previousAnimation == nullptr)
-        this->previousAnimation = this->animations[key];
+    if (previousAnimation == nullptr)
+        previousAnimation = animations[key];
 
     // If there is a previous animation, reset it and
     // set the pointer to the animation to be played.
     else
     {
-        this->previousAnimation->reset();
-        this->previousAnimation = this->animations[key];
+        previousAnimation->reset();
+        previousAnimation = animations[key];
     }
 }
 
 void AnimationComponent::setNewPreviousAnimation(Animation *animation)
 {
     // If there is no previous animation, set it to the refered animation.
-    if (this->previousAnimation == nullptr)
-        this->previousAnimation = animation;
+    if (previousAnimation == nullptr)
+        previousAnimation = animation;
 
     // If there is a previous animation, reset it and
     // set the pointer to the animation to be played.
     else
     {
-        this->previousAnimation->reset();
-        this->previousAnimation = animation;
+        previousAnimation->reset();
+        previousAnimation = animation;
     }
 }
 
@@ -153,5 +153,5 @@ void AnimationComponent::setNewPreviousAnimation(Animation *animation)
 
 const bool &AnimationComponent::isAnimationDone(std::string key)
 {
-    return this->animations[key]->isDone();
+    return animations[key]->isDone();
 }

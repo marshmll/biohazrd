@@ -30,11 +30,11 @@ void RegularTile::render(sf::RenderTarget &target, sf::Shader *shader, const sf:
         shader->setUniform("hasTexture", true);
         shader->setUniform("lightPos", light_pos);
 
-        target.draw(this->tile, shader);
+        target.draw(tile, shader);
     }
     else
     {
-        target.draw(this->tile);
+        target.draw(tile);
     }
 }
 
@@ -42,11 +42,11 @@ const std::string RegularTile::getPropertiesAsString() const
 {
     std::stringstream properties;
 
-    properties << this->type << " "
-               << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-               << this->collision << " "
-               << this->collBox.getSize().x << " " << this->collBox.getSize().y << " "
-               << this->collBoxOffsetX << " " << this->collBoxOffsetY;
+    properties << type << " "
+               << tile.getTextureRect().left << " " << tile.getTextureRect().top << " "
+               << collision << " "
+               << collBox.getSize().x << " " << collBox.getSize().y << " "
+               << collBoxOffsetX << " " << collBoxOffsetY;
 
     return properties.str();
 }

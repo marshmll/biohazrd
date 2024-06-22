@@ -14,7 +14,7 @@ Item::Item(const short unsigned value, const ItemType type)
     this->value = value;
     this->type = type;
 
-    this->initVariables();
+    initVariables();
 }
 
 Item::~Item()

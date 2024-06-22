@@ -18,17 +18,18 @@ Tile::Tile(
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y)
 
-    : type(type), collision(collision), collBoxOffsetX(coll_box_offset_x), collBoxOffsetY(coll_box_offset_y)
+    : type(type), collision(collision),
+      collBoxOffsetX(coll_box_offset_x), collBoxOffsetY(coll_box_offset_y)
 {
-    this->tile.setTexture(texture);
-    this->tile.setPosition(grid_x * grid_size_f, grid_y * grid_size_f);
-    this->tile.setTextureRect(texture_rect);
+    tile.setTexture(texture);
+    tile.setPosition(grid_x * grid_size_f, grid_y * grid_size_f);
+    tile.setTextureRect(texture_rect);
 
-    this->collBox.setSize(sf::Vector2f(coll_box_width, coll_box_height));
-    this->collBox.setPosition((grid_x * grid_size_f) + coll_box_offset_x, (grid_y * grid_size_f) + coll_box_offset_y);
-    this->collBox.setFillColor(sf::Color(255, 0, 0, 100));
-    this->collBox.setOutlineThickness(1.f);
-    this->collBox.setOutlineColor(sf::Color(255, 0, 0, 150));
+    collBox.setSize(sf::Vector2f(coll_box_width, coll_box_height));
+    collBox.setPosition((grid_x * grid_size_f) + coll_box_offset_x, (grid_y * grid_size_f) + coll_box_offset_y);
+    collBox.setFillColor(sf::Color(255, 0, 0, 100));
+    collBox.setOutlineThickness(1.f);
+    collBox.setOutlineColor(sf::Color(255, 0, 0, 150));
 }
 
 Tile::~Tile()
@@ -47,37 +48,37 @@ void Tile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector
 
 const bool Tile::intersects(const sf::FloatRect &bounds) const
 {
-    return this->collBox.getGlobalBounds().intersects(bounds);
+    return collBox.getGlobalBounds().intersects(bounds);
 }
 
 /* ACCESSORS */
 
 const sf::Vector2f &Tile::getPosition() const
 {
-    return this->tile.getPosition();
+    return tile.getPosition();
 }
 
 const sf::IntRect &Tile::getTextureRect() const
 {
-    return this->tile.getTextureRect();
+    return tile.getTextureRect();
 }
 
 const bool &Tile::isCollideable() const
 {
-    return this->collision;
+    return collision;
 }
 
 const sf::RectangleShape &Tile::getCollisionBox() const
 {
-    return this->collBox;
+    return collBox;
 }
 
 const TileType &Tile::getType() const
 {
-    return this->type;
+    return type;
 }
 
 const sf::FloatRect Tile::getGlobalBounds() const
 {
-    return this->collBox.getGlobalBounds();
+    return collBox.getGlobalBounds();
 }

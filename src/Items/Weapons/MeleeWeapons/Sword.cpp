@@ -4,9 +4,9 @@
 Sword::Sword()
     : MeleeWeapon(0, "Assets/Images/Sprites/Player/pickaxe_spritesheet.png")
 {
-    this->weaponSprite.setOrigin(
-        this->weaponSprite.getGlobalBounds().width / 2.f,
-        this->weaponSprite.getGlobalBounds().height - 5.f);
+    weaponSprite.setOrigin(
+        weaponSprite.getGlobalBounds().width / 2.f,
+        weaponSprite.getGlobalBounds().height - 5.f);
 }
 
 Sword::~Sword()
@@ -21,35 +21,35 @@ void Sword::update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity
 
     if (entity_direction == "LEFT")
     {
-        this->weaponSprite.setTexture(this->weaponHorizontalTexture);
+        weaponSprite.setTexture(weaponHorizontalTexture);
         angle = -90.f;
         position.x = entity_center.x;
         position.y = entity_center.y - 10.f;
     }
     else if (entity_direction == "RIGHT")
     {
-        this->weaponSprite.setTexture(this->weaponHorizontalTexture);
+        weaponSprite.setTexture(weaponHorizontalTexture);
         angle = 90.f;
         position.x = entity_center.x - 15.f;
         position.y = entity_center.y - 10.f;
     }
     else if (entity_direction == "UP")
     {
-        this->weaponSprite.setTexture(this->weaponUpTexture);
+        weaponSprite.setTexture(weaponUpTexture);
         position.x = entity_center.x + entity_size.x / 2.f - 5.f;
         position.y = entity_center.y;
         angle = 0.f;
     }
     else if (entity_direction == "DOWN")
     {
-        this->weaponSprite.setTexture(this->weaponDownTexture);
+        weaponSprite.setTexture(weaponDownTexture);
         position.x = entity_center.x - entity_size.x / 2.f + 10.f;
         position.y = entity_center.y + 15.f;
         angle = 0.f;
     }
 
-    this->weaponSprite.setPosition(position);
-    this->weaponSprite.setRotation(angle);
+    weaponSprite.setPosition(position);
+    weaponSprite.setRotation(angle);
 }
 
 void Sword::render(sf::RenderTarget &target, sf::Shader *shader)
@@ -57,12 +57,12 @@ void Sword::render(sf::RenderTarget &target, sf::Shader *shader)
     if (shader)
     {
         shader->setUniform("hasTexture", true);
-        shader->setUniform("lightPos", this->weaponSprite.getPosition());
-        target.draw(this->weaponSprite, shader);
+        shader->setUniform("lightPos", weaponSprite.getPosition());
+        target.draw(weaponSprite, shader);
     }
     else
     {
-        target.draw(this->weaponSprite);
+        target.draw(weaponSprite);
     }
 }
 

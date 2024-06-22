@@ -24,7 +24,7 @@ private:
 
     std::stack<Tile *> deferredTileRendering;
 
-    std::string texture_file_path;
+    std::string textureFilePath;
     sf::Texture tileTextureSheet;
 
     int startX;
@@ -47,7 +47,7 @@ private:
      *
      * @return void
      */
-    void resize();
+    void resize(const int size_x, const int size_y, const int layers);
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */

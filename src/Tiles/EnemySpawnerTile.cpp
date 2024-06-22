@@ -12,12 +12,12 @@ EnemySpawnerTile::EnemySpawnerTile(
     : Tile(TileType::SPAWNER, grid_x, grid_y, grid_size_f, texture, texture_rect,
            NOT_COLLIDEABLE, grid_size_f, grid_size_f, 0.f, 0.f)
 {
-    this->enemyType = enemy_type;
-    this->enemyAmount = enemy_amount;
-    this->enemyTimeToSpawn = enemy_time_to_spawn;
-    this->enemyMaxDistance = enemy_max_distance;
+    enemyType = enemy_type;
+    enemyAmount = enemy_amount;
+    enemyTimeToSpawn = enemy_time_to_spawn;
+    enemyMaxDistance = enemy_max_distance;
 
-    this->spawned = false;
+    spawned = false;
 }
 
 EnemySpawnerTile::~EnemySpawnerTile()
@@ -37,17 +37,17 @@ void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, cons
         shader->setUniform("hasTexture", true);
         shader->setUniform("lightPos", light_pos);
 
-        target.draw(this->tile, shader);
+        target.draw(tile, shader);
     }
     else
     {
-        target.draw(this->tile);
+        target.draw(tile);
     }
 }
 
 const bool &EnemySpawnerTile::hasSpawned() const
 {
-    return this->spawned;
+    return spawned;
 }
 
 /* ACCESSORS ================================================================================================== */
@@ -56,10 +56,10 @@ const std::string EnemySpawnerTile::getPropertiesAsString() const
 {
     std::stringstream properties;
 
-    properties << this->type << " "
-               << this->tile.getTextureRect().left << " " << this->tile.getTextureRect().top << " "
-               << this->enemyType << " " << this->enemyAmount << " "
-               << this->enemyTimeToSpawn << " " << this->enemyMaxDistance;
+    properties << type << " "
+               << tile.getTextureRect().left << " " << tile.getTextureRect().top << " "
+               << enemyType << " " << enemyAmount << " "
+               << enemyTimeToSpawn << " " << enemyMaxDistance;
 
     return properties.str();
 }
