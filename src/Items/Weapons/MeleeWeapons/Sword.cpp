@@ -2,19 +2,8 @@
 #include "Sword.h"
 
 Sword::Sword()
-    : MeleeWeapon(0)
+    : MeleeWeapon(0, "Assets/Images/Sprites/Player/pickaxe_spritesheet.png")
 {
-    if (!this->weaponHorizontalTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(0, 0, 64, 64)))
-        ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
-
-    if (!this->weaponUpTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(64, 0, 64, 64)))
-        ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
-
-    if (!this->weaponDownTexture.loadFromFile("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", sf::IntRect(128, 0, 64, 64)))
-        ErrorHandler::throwErr("PLAYER::PLAYER::ERR_LOADING_WEAPON_TEXTURE\n");
-
-    this->weaponSprite.setTexture(this->weaponDownTexture);
-
     this->weaponSprite.setOrigin(
         this->weaponSprite.getGlobalBounds().width / 2.f,
         this->weaponSprite.getGlobalBounds().height - 5.f);

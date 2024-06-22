@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "Player.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ================================================================================================ */
 
 void Player::initVariables()
 {
@@ -42,7 +42,7 @@ void Player::initInventory()
     this->inventory = new Inventory(40);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
 Player::Player(const float x, const float y, sf::Texture &texture_sheet)
 {
@@ -64,7 +64,7 @@ Player::~Player()
     delete this->inventory;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {
@@ -125,7 +125,7 @@ AttributeComponent *Player::getAttributeComponent()
     return this->attributeComponent;
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void Player::earnHp(const int hp_amount)
 {

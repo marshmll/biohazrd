@@ -17,10 +17,11 @@ target_sources(BIOHAZRD PRIVATE
     GUI/GUI.cpp
     GUI/PlayerGUI.cpp
 
-    Items/MeleeWeapons/MeleeWeapon.cpp
-    Items/MeleeWeapons/Sword.cpp
-    Items/RangedWeapons/RangedWeapon.cpp
-    Items/RangedWeapons/Bow.cpp
+    Items/Weapons/MeleeWeapons/MeleeWeapon.cpp
+    Items/Weapons/MeleeWeapons/Sword.cpp
+    Items/Weapons/RangedWeapons/RangedWeapon.cpp
+    Items/Weapons/RangedWeapons/Bow.cpp
+    Items/Weapons/Weapon.cpp
     Items/Inventory.cpp
     Items/Item.cpp
 

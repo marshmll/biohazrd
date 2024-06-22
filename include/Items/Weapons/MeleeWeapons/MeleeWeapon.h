@@ -1,26 +1,20 @@
 #ifndef MELEEWEAPON_H
 #define MELEEWEAPON_H
 
-#include "Item.h"
+#include "Weapon.h"
 
-class Item;
-
-class MeleeWeapon : public Item
+class MeleeWeapon : public Weapon
 {
 private:
 protected:
-    sf::Texture weaponUpTexture;
-    sf::Texture weaponDownTexture;
-    sf::Texture weaponHorizontalTexture;
-    sf::Sprite weaponSprite;
-
-    int damageMin;
-    int damageMax;
-
 public:
-    MeleeWeapon(const short unsigned value);
+    /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
+
+    MeleeWeapon(const short unsigned value, const std::string texture_path);
 
     virtual ~MeleeWeapon();
+
+    /* FUNCTIONS ============================================================================================== */
 
     virtual void update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity_size,
                         const sf::Vector2f entity_center, std::string entity_direction) = 0;
