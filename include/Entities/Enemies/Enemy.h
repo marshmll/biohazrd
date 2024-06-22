@@ -64,6 +64,26 @@ public:
      * @return void
      */
     virtual void updateAnimation(const float &dt) = 0;
+
+    /**
+     * @brief Increases hp by a given amount.
+     * @note -> Limits hp to hpMax
+     *
+     * @return void
+     */
+    virtual void earnHp(const short unsigned hp_amount);
+
+    /**
+     * @brief Decreases hp by a given amount.
+     * @note -> Limits hp to 0
+     *
+     * @return void
+     */
+    virtual void loseHp(const short unsigned hp_amount);
+
+    /* ACCESSORS ================================================================================================= */
+
+    virtual AttributeComponent *getAttributeComponent();
 };
 
 #endif /* ENEMY_H_ */

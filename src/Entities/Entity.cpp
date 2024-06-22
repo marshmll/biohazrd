@@ -167,6 +167,27 @@ const std::string Entity::getDirection()
         return "NONE";
 }
 
+const sf::Vector2f Entity::getDistanceFrom(const sf::Vector2f &point)
+{
+    sf::Vector2f distance;
+
+    distance.x = std::abs(this->getCenteredPosition().x - point.x);
+    distance.y = std::abs(this->getCenteredPosition().y - point.y);
+
+    return distance;
+}
+
+const float Entity::getRangeDistanceFrom(Entity &entity)
+{
+    sf::Vector2f this_center = this->getCenteredPosition();
+    sf::Vector2f entity_center = entity.getCenteredPosition();
+
+    // D = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+    float distance = static_cast<float>(sqrt(pow(entity_center.x - this_center.x, 2.f) + pow(entity_center.y - this_center.y, 2.f)));
+
+    return distance;
+}
+
 const bool Entity::hasCollided(sf::FloatRect &frect)
 {
     if (hitboxComponent)

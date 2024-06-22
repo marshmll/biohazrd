@@ -130,8 +130,6 @@ Weapon *Player::getWeapon()
     return &sword;
 }
 
-/* MODIFIERS ==================================================================================================== */
-
 void Player::earnHp(const int hp_amount)
 {
     attributeComponent->earnHp(hp_amount);

@@ -202,6 +202,23 @@ public:
     virtual const std::string getDirection();
 
     /**
+     * @brief Returns the x and y absolute distance between both entities.
+     * @param point An sf::Vector2f representing a single point.
+     *
+     * @return const sf::Vector2f;
+     */
+    virtual const sf::Vector2f getDistanceFrom(const sf::Vector2f& point);
+
+     /**
+     * @brief Returns a single float value representing the absolute distance
+     * between the centers of both entities. 
+     * @param entity An entity reference for calculating the distance.
+     *
+     * @return const float;
+     */
+    virtual const float getRangeDistanceFrom(Entity &entity);
+
+    /**
      * @brief Returns if the entity's hitbox has intersected a FloatRect.
      * @note -> Returns false if the entity does not have a hitbox component.
      *

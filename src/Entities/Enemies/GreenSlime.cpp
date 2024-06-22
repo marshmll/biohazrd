@@ -27,6 +27,7 @@ GreenSlime::GreenSlime(const float x, const float y, sf::Texture &texture_sheet)
     createHitboxComponent(35.f, 70.f, 25.f, 25.f);
     createMovementComponent(100.f, 1000.f, 700.f);
     createAnimationComponent(texture_sheet);
+    createAttributeComponent(1);
 
     initAnimations();
 }

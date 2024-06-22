@@ -91,8 +91,6 @@ public:
 
     Weapon *getWeapon();
 
-    /* MODIFIERS ================================================================================================= */
-
     /**
      * @brief Increases hp by a given amount.
      * @note -> Limits hp to hpMax
