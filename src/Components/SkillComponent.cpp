@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "SkillComponent.h"
 
+/* PRIVATE FUNCTIONS ============================================================================================= */
+
 void SkillComponent::check_skill_existence(const short unsigned skill)
 {
     if (skill < 0 || skill >= skills.size())
@@ -9,6 +11,8 @@ void SkillComponent::check_skill_existence(const short unsigned skill)
     else if (skills.empty())
         ErrorHandler::throwErr("SKILLCOMPONENT::CHECKSKILLEXISTENCE::ERR_EMPTY_SKILL_VECTOR\n");
 }
+
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 SkillComponent::SkillComponent()
 {
@@ -22,7 +26,7 @@ SkillComponent::~SkillComponent()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void SkillComponent::gainExp(const short unsigned skill, const int exp_amount)
 {
@@ -31,7 +35,7 @@ void SkillComponent::gainExp(const short unsigned skill, const int exp_amount)
     skills[skill].gainExp(exp_amount);
 }
 
-/* ACCESSORS */
+/* ACCESSORS ===================================================================================================== */
 
 const int SkillComponent::getSkillLevel(const short unsigned skill)
 {

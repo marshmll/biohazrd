@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
 Enemy::Enemy()
 {

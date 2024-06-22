@@ -5,10 +5,7 @@
 #include "GUI.h"
 #include "GraphicsSettings.h"
 
-class State;
-class Player;
-class GUI;
-class GraphicsSettings;
+class State; // Needed to typedef StateData.
 
 /**
  * @brief This struct packs all important data from a state.

@@ -3,8 +3,6 @@
 
 #include "Tile.h"
 
-class Tile;
-
 class EnemySpawnerTile : public Tile
 {
 private:

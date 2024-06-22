@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "Entity.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ================================================================================================== */
 
 void Entity::initVariables()
 {
@@ -20,7 +20,7 @@ void Entity::initVariables()
     skillComponent = nullptr;
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 Entity::Entity()
 {
@@ -35,7 +35,7 @@ Entity::~Entity()
     delete attributeComponent;
     delete skillComponent;
 }
-/* COMPONENT FUNCTIONS */
+/* COMPONENT FUNCTIONS ========================================================================================== */
 
 void Entity::setTexture(sf::Texture &texture)
 {
@@ -69,7 +69,7 @@ void Entity::createSkillComponent()
     skillComponent = new SkillComponent();
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void Entity::move(const float dir_x, const float dir_y, const float &dt)
 {
@@ -84,7 +84,7 @@ void Entity::move(const float dir_x, const float dir_y, const float &dt)
     }
 }
 
-/* ACCESSORS */
+/* ACCESSORS ===================================================================================================== */
 
 const sf::Vector2f &Entity::getPosition()
 {
@@ -175,7 +175,7 @@ const bool Entity::hasCollided(sf::FloatRect &frect)
         return false;
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void Entity::setPosition(const sf::Vector2f &position)
 {

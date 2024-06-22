@@ -3,12 +3,10 @@
 
 #include "Enemy.h"
 
-class Enemy;
-
 class GreenSlime : public Enemy
 {
 private:
-    /* INITIALIZERS ====================================================================== */
+    /* INITIALIZERS ============================================================================================== */
 
     /**
      * @brief Initializes all variables for the green Slime entity.
@@ -25,13 +23,13 @@ private:
     void initAnimations();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ========================================================= */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     GreenSlime(const float x, const float y, sf::Texture &texture_sheet);
 
     virtual ~GreenSlime();
 
-    /* FUNCTIONS ========================================================================== */
+    /* FUNCTIONS ================================================================================================== */
 
     /**
      * @brief Updates the green slime entity.

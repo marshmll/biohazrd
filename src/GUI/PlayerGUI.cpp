@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PlayerGUI.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS =================================================================================================== */
 
 void PlayerGUI::initFont()
 {
@@ -38,7 +38,7 @@ void PlayerGUI::initExpBar()
         font, sf::Color::White, gui::calc_char_size(vm, 140));
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 PlayerGUI::PlayerGUI(Player *player, sf::VideoMode &vm) : vm(vm)
 {
@@ -57,7 +57,7 @@ PlayerGUI::~PlayerGUI()
     delete expBar;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void PlayerGUI::update(const float &dt)
 {

@@ -167,6 +167,8 @@ private:
 
     std::vector<Skill> skills;
 
+    /* PRIVATE FUNCTIONS ========================================================================================= */
+
     /**
      * @brief Checks if a skill exists in SKILLS enum.
      *
@@ -181,13 +183,13 @@ private:
     void check_skill_existence(const short unsigned skill);
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     SkillComponent();
 
     virtual ~SkillComponent();
 
-    /* FUNCTIONS ========================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Increases the exp of a skill with the exp_amount argument.
@@ -199,7 +201,7 @@ public:
      */
     void gainExp(const short unsigned skill, const int exp_amount);
 
-    /* ACCESSORS ========================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns the skill's level.

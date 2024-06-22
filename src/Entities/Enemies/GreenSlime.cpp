@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GreenSlime.h"
 
-/* INITIALIZERS ====================================================================== */
+/* INITIALIZERS =================================================================================================== */
 
 void GreenSlime::initVariables()
 {
@@ -16,7 +16,7 @@ void GreenSlime::initAnimations()
     animationComponent->addAnimation("DEATH", 9.f, 0, 4, 9, 4, 32.f, 32.f);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR ========================================================= */
+/* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
 
 GreenSlime::GreenSlime(const float x, const float y, sf::Texture &texture_sheet)
     : Enemy()
@@ -35,7 +35,7 @@ GreenSlime::~GreenSlime()
 {
 }
 
-/* FUNCTIONS ========================================================================== */
+/* FUNCTIONS ======================================================================================================= */
 
 void GreenSlime::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {

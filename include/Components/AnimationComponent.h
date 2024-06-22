@@ -213,7 +213,7 @@ private:
         }
     };
 
-    /* VARIABLES ============================================================================== */
+    /* VARIABLES ================================================================================================== */
 
     sf::Sprite &sprite;
     sf::Texture &textureSheet;
@@ -223,7 +223,7 @@ private:
     Animation *priorityAnimation;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ============================================================ */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet);
 
@@ -232,7 +232,7 @@ public:
      */
     virtual ~AnimationComponent();
 
-    /* FUNCTIONS ============================================================================ */
+    /* FUNCTIONS ================================================================================================== */
 
     /**
      * @brief Adds a new animation to the animations map.
@@ -310,7 +310,7 @@ public:
      */
     void setNewPreviousAnimation(Animation *animation);
 
-    /* ACCESSORS ================================================================================= */
+    /* ACCESSORS =============================================================================================== */
 
     /**
      * @brief Returns is a animation is done playing.

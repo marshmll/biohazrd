@@ -5,12 +5,6 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 
-class State;
-class TileMap;
-class Player;
-class PlayerGUI;
-class Enemy;
-
 class GameState : public State
 {
 private:

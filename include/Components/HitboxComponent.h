@@ -4,7 +4,7 @@
 class HitboxComponent
 {
 private:
-    /* VARIABLES ========================================================================================== */
+    /* VARIABLES =================================================================================================== */
 
     sf::Sprite &sprite;
     sf::RectangleShape hitbox;
@@ -14,7 +14,7 @@ private:
     float offsetY;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ========================================================================= */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
     /**
      * @brief Creates a hitbox component for a entity.
@@ -28,7 +28,7 @@ public:
 
     virtual ~HitboxComponent();
 
-    /* FUNCTIONS ========================================================================================== */
+    /* FUNCTIONS =================================================================================================== */
 
     /**
      * @brief Updates the hitbox positions based on the sprite position.
@@ -44,7 +44,7 @@ public:
      */
     void render(sf::RenderTarget &target);
 
-    /* ACCESSORS ========================================================================================== */
+    /* ACCESSORS =================================================================================================== */
 
     /**
      * @brief Returns the hitbox position
@@ -92,7 +92,7 @@ public:
      */
     const bool intersects(sf::FloatRect &frect) const;
 
-    /* MODIFIERS ========================================================================================== */
+    /* MODIFIERS =================================================================================================== */
 
     /**
      * @brief Sets the hitbox position, and sets the sprite position

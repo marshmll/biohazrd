@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AttributeComponent.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 const int AttributeComponent::calc_next_exp()
 {
@@ -30,7 +30,7 @@ AttributeComponent::~AttributeComponent()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void AttributeComponent::update()
 {
@@ -62,7 +62,7 @@ void AttributeComponent::updateLevel()
     }
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void AttributeComponent::earnHp(const int hpAmount)
 {

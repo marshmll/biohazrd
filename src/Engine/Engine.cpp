@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Engine.h"
 
-/* INITIALIZERS FUNCTIONS */
+/* INITIALIZERS FUNCTIONS ======================================================================================== */
 
 void Engine::initVariables()
 {
@@ -69,7 +69,7 @@ void Engine::initStates()
     states.push(new MainMenuState(&data));
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
 Engine::Engine()
 {
@@ -92,7 +92,7 @@ Engine::~Engine()
     }
 }
 
-/* MAIN FUNCTIONS */
+/* MAIN FUNCTIONS ================================================================================================= */
 
 void Engine::run()
 {
@@ -154,7 +154,7 @@ void Engine::render()
     window->display();
 }
 
-/* AUXILIARY FUNCTIONS */
+/* AUXILIARY FUNCTIONS =========================================================================================== */
 
 void Engine::updateDeltaTime()
 {
@@ -182,7 +182,7 @@ void Engine::endApplication()
     window->close();
 }
 
-/* ACESSORS */
+/* ACCESSORS ===================================================================================================== */
 
 const bool Engine::isRunning() const
 {

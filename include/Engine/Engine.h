@@ -10,12 +10,10 @@
 
 #include "MainMenuState.h"
 
-class MainMenuState;
-
 class Engine
 {
 private:
-    /* VARIABLES ==================================================================================== */
+    /* VARIABLES ============================================================================================= */
 
     std::string currentPath;
 
@@ -36,7 +34,7 @@ private:
 
     std::map<std::string, sf::Keyboard::Key> acceptedKeys; // The keys accepted by the engine.
 
-    /* INITIALIZERS FUNCTIONS ======================================================================== */
+    /* INITIALIZERS FUNCTIONS ================================================================================= */
 
     /**
      * @brief Initializes game variables
@@ -83,7 +81,7 @@ private:
     void initStates();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================= */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief Engine Class Constructor
@@ -100,7 +98,7 @@ public:
      */
     virtual ~Engine();
 
-    /* MAIN FUNCTIONS ==================================================================================== */
+    /* MAIN FUNCTIONS ============================================================================================= */
 
     /**
      * @brief Keeps updating and rendering the game while
@@ -129,7 +127,7 @@ public:
      */
     void render();
 
-    /* AUXILIARY FUNCTIONS ============================================================================ */
+    /* AUXILIARY FUNCTIONS ===================================================================================== */
 
     /**
      * @brief Updates the delta time which is the time taken to
@@ -153,7 +151,7 @@ public:
      */
     void endApplication();
 
-    /* ACCESSORS ======================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns if the game is currently running

@@ -4,10 +4,6 @@
 #include "Tiles.h"
 #include "EnemySystem.h"
 
-class Entity;
-class Tile;
-class Enemy;
-
 class TileMap
 {
 private:

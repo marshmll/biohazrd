@@ -5,10 +5,6 @@
 #include "TileMap.h"
 #include "GUI.h"
 
-class State;
-class Tile;
-class TileMap;
-
 typedef struct EditorStateData
 {
     std::map<std::string, sf::Keyboard::Key> *keybinds;

@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "AnimationComponent.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR ===================================================================== */
+/* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
 AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet)
     : sprite(sprite), textureSheet(texture_sheet),
@@ -22,7 +22,7 @@ AnimationComponent::~AnimationComponent()
         delete it.second;
 }
 
-/* FUNCTIONS =========================================================================================== */
+/* FUNCTIONS ==================================================================================================== */
 
 void AnimationComponent::addAnimation(
     const std::string key,
@@ -149,7 +149,7 @@ void AnimationComponent::setNewPreviousAnimation(Animation *animation)
     }
 }
 
-/* ACCESSORS ===================================================================================== */
+/* ACCESSORS =================================================================================================== */
 
 const bool &AnimationComponent::isAnimationDone(std::string key)
 {

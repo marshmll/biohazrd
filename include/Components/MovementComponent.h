@@ -18,7 +18,7 @@ enum Directions
 class MovementComponent
 {
 private:
-    /* VARIABLES ========================================================================================== */
+    /* VARIABLES ================================================================================================= */
 
     sf::Sprite &sprite;
 
@@ -32,13 +32,13 @@ private:
     short unsigned direction;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
     MovementComponent(sf::Sprite &sprite, float maxVelocity, float acceleration, float deceleration);
 
     virtual ~MovementComponent();
 
-    /* FUNCTIONS ========================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Decelerates entity until it reaches 0 velocity.
@@ -57,7 +57,7 @@ public:
      */
     void move(const float dir_x, const float dir_y, const float &dt);
 
-    /* ACCESSORS ========================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @return const sf::Vectorf&
@@ -99,7 +99,7 @@ public:
      */
     const std::string getKeyboardDirection() const;
 
-    /* MODIFIERS ========================================================================================== */
+    /* MODIFIERS ================================================================================================= */
 
     /**
      * @brief Resets the velocity to zero.

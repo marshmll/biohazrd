@@ -5,10 +5,6 @@
 #include "EditorState.h"
 #include "SettingsState.h"
 
-class GameState;
-class EditorState;
-class SettingsState;
-
 class MainMenuState : public State
 {
 private:

@@ -4,13 +4,11 @@
 #include "Player.h"
 #include "GUI.h"
 
-class Player;
-class GUI;
-
 class PlayerGUI
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================= */
+
     Player *player;
 
     sf::VideoMode &vm;
@@ -22,7 +20,7 @@ private:
 
     gui::SolidBar *levelBar;
 
-    /* INITIALIZERS */
+    /* INITIALIZERS =============================================================================================== */
 
     /**
      * @brief Initializes the font.
@@ -53,7 +51,7 @@ private:
     void initExpBar();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief Creates a instance for the player GUI.
@@ -65,7 +63,7 @@ public:
      */
     virtual ~PlayerGUI();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ================================================================================================== */
 
     /**
      * @brief Updates the Player's GUI

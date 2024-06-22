@@ -3,12 +3,6 @@
 
 #include "EditorModes.h"
 
-class State;
-class TileMap;
-class EditorMode;
-class DefaultEditorMode;
-class EnemyEditorMode;
-
 enum EditorModes
 {
     DEFAULT_MODE = 0,

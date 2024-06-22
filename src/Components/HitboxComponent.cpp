@@ -4,10 +4,11 @@
  *  Created on: 22 de abr. de 2024
  *      Author: renan
  */
+
 #include "stdafx.h"
 #include "HitboxComponent.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 HitboxComponent::HitboxComponent(
     sf::Sprite &sprite,
@@ -33,7 +34,7 @@ HitboxComponent::~HitboxComponent()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ==================================================================================================== */
 
 void HitboxComponent::update()
 {
@@ -47,7 +48,7 @@ void HitboxComponent::render(sf::RenderTarget &target)
     target.draw(hitbox);
 }
 
-/* ACCESSORS */
+/* ACCESSORS ==================================================================================================== */
 
 const sf::Vector2f &HitboxComponent::getPosition() const
 {
@@ -84,7 +85,7 @@ const bool HitboxComponent::intersects(sf::FloatRect &frect) const
     return hitbox.getGlobalBounds().intersects(frect);
 }
 
-/* MODIFIERS */
+/* MODIFIERS ==================================================================================================== */
 
 void HitboxComponent::setPosition(const sf::Vector2f &position)
 {

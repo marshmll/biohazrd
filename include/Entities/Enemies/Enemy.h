@@ -4,13 +4,10 @@
 #include "Entity.h"
 #include "EnemySpawnerTile.h"
 
-class Entity;
-class EnemySpawnerTile;
-
 class Enemy : public Entity
 {
 private:
-    /* VARIABLES ==================================================================================== */
+    /* VARIABLES ================================================================================================= */
 
     // EnemySpawner &enemySpawner;
 
@@ -22,7 +19,7 @@ private:
     virtual void initAnimations() = 0;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ==================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     /**
      * @brief Enemy entity class constructor.
@@ -35,7 +32,7 @@ public:
 
     virtual ~Enemy();
 
-    /* FUNCTIONS ==================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Updates the enemy.

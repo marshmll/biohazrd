@@ -7,16 +7,10 @@
 #include "AttributeComponent.h"
 #include "SkillComponent.h"
 
-class HitboxComponent;
-class MovementComponent;
-class AnimationComponent;
-class AttributeComponent;
-class SkillComponent;
-
 class Entity
 {
 private:
-    /* INITIALIZERS ======================================================================== */
+    /* INITIALIZERS ============================================================================================== */
 
     /**
      * @brief Initializes entity components.
@@ -37,7 +31,8 @@ protected:
     SkillComponent *skillComponent;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
+
     /**
      * @brief Creates a entity instance.
      * @note -> Initializes variables
@@ -50,7 +45,7 @@ public:
      */
     virtual ~Entity();
 
-    /* COMPONENT FUNCTIONS ================================================================================= */
+    /* COMPONENT FUNCTIONS ======================================================================================== */
 
     /**
      * @brief Sets texture for the entity sprite.
@@ -104,7 +99,7 @@ public:
      */
     void createSkillComponent();
 
-    /* FUNCTIONS ========================================================================================== */
+    /* FUNCTIONS ================================================================================================== */
 
     /**
      * @brief Updates the entity.
@@ -136,7 +131,7 @@ public:
      */
     virtual void move(const float dir_x, const float dir_y, const float &dt);
 
-    /* ACCESSORS ========================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns the position of the hitbox or the position
@@ -214,7 +209,7 @@ public:
      */
     virtual const bool hasCollided(sf::FloatRect &frect);
 
-    /* MODIFIERS ========================================================================================== */
+    /* MODIFIERS ================================================================================================ */
 
     /**
      * @brief Sets a position to the entity's hitbox, or to

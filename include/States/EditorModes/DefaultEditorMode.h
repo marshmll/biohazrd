@@ -4,11 +4,6 @@
 #include "State.h"
 #include "EditorMode.h"
 
-class State;
-class EditorMode;
-class Tile;
-class TileMap;
-
 class DefaultEditorMode : public EditorMode
 {
 private:

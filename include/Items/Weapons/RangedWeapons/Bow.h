@@ -3,14 +3,18 @@
 
 #include "RangedWeapon.h"
 
-class RangedWeapon;
-
 class Bow : public RangedWeapon
 {
 private:
+protected:
 public:
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
+
     Bow();
+
     virtual ~Bow();
+
+    /* FUNCTIONS ================================================================================================= */
 
     void update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity_size,
                 const sf::Vector2f entity_center, std::string entity_direction);

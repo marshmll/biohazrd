@@ -4,7 +4,6 @@
 #include "State.h"
 #include "MainMenuState.h"
 
-class State;
 class MainMenuState;
 
 class SettingsState : public State

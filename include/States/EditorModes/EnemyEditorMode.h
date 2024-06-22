@@ -4,11 +4,6 @@
 #include "EditorMode.h"
 #include "EnemySpawnerTile.h"
 
-class EditorMode;
-class Tile;
-class TileMap;
-class EnemySpawnerTile;
-
 class EnemyEditorMode : public EditorMode
 {
 private:
