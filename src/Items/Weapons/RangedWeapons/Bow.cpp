@@ -3,8 +3,7 @@
 
 Bow::Bow()
     : RangedWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
-                   200, 5, 50,
-                   10.f, 1.f)
+                   200, 5, 50)
 {
 }
 

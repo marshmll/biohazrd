@@ -93,6 +93,11 @@ void GameState::initEnemySystem()
     enemySystem = new EnemySystem(activeEnemies, textures);
 }
 
+void GameState::initTextTagSystem()
+{
+    textTagSystem = new TextTagSystem("Fonts/JetBrainsMono-Regular.ttf", vm);
+}
+
 void GameState::initTileMap()
 {
     tileMap = new TileMap("Maps/test.biomap");
@@ -113,7 +118,10 @@ GameState::GameState(StateData *data) : State(data)
     initPlayers();
     initPlayerGUI();
     initEnemySystem();
+    initTextTagSystem();
     initTileMap();
+
+    textTagSystem->addTag(TextTagType::DEFAULT_TAG, 200.f, 500.f, "Hello, world!");
 }
 
 GameState::~GameState()
@@ -122,6 +130,7 @@ GameState::~GameState()
     delete player;
     delete playerGUI;
     delete enemySystem;
+    delete textTagSystem;
     delete tileMap;
 
     for (auto enemy : activeEnemies)
@@ -151,6 +160,8 @@ void GameState::update(const float &dt)
         updatePlayerGUI(dt);
         updateEnemiesAndCombat(dt);
         updateTileMap(dt);
+
+        textTagSystem->update(dt);
     }
 
     // Paused update
@@ -185,15 +196,16 @@ void GameState::renderToBuffer()
         &coreShader, player->getCenteredPosition());
 
     for (auto &enemy : activeEnemies)
-        enemy->render(renderBuffer, DO_NOT_SHOW_HITBOX,
-                      &coreShader, player->getCenteredPosition());
+        enemy->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
-    player->render(renderBuffer, DO_NOT_SHOW_HITBOX,
-                   &coreShader, player->getCenteredPosition());
+    player->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
     tileMap->deferredRender(
         renderBuffer,
         &coreShader, player->getCenteredPosition());
+
+    renderBuffer.setView(playerCamera);
+    textTagSystem->render(renderBuffer);
 
     renderBuffer.setView(renderBuffer.getDefaultView());
     playerGUI->render(renderBuffer);
@@ -264,7 +276,7 @@ void GameState::updateEnemiesAndCombat(const float &dt)
 
         updateCombat(dt, enemy, index);
 
-        // Very safe code LOL (change later)
+        // Very safe code LOL (TODO: change later)
         if (enemy->isDead())
         {
             // Earn exp
@@ -284,9 +296,15 @@ void GameState::updateCombat(const float &dt, Enemy *enemy, const short unsigned
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if (enemy->getGlobalBounds().contains(mousePosView) &&
-            player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange())
+            player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
+            player->getWeapon()->didCooldown())
         {
-            enemy->loseHp(player->getWeapon()->getDamageMax());
+            enemy->loseHp(player->getWeapon()->getDamageMin());
+
+            textTagSystem->addTag(TextTagType::DEFAULT_TAG,
+                                  enemy->getCenteredPosition().x,
+                                  enemy->getCenteredPosition().y,
+                                  "-" + std::to_string(player->getWeapon()->getDamageMin()) + "hp");
         }
     }
 }

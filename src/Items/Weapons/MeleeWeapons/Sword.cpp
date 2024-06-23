@@ -3,8 +3,7 @@
 
 Sword::Sword()
     : MeleeWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
-                  80, 5, 15,
-                  10.f, 1.f)
+                  80, 5, 15)
 {
     weaponSprite.setOrigin(
         weaponSprite.getGlobalBounds().width / 2.f,

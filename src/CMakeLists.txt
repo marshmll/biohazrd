@@ -16,6 +16,7 @@ target_sources(BIOHAZRD PRIVATE
 
     GUI/GUI.cpp
     GUI/PlayerGUI.cpp
+    GUI/TextTagSystem.cpp
 
     Items/Weapons/MeleeWeapons/MeleeWeapon.cpp
     Items/Weapons/MeleeWeapons/Sword.cpp

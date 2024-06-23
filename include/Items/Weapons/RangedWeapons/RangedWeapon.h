@@ -11,8 +11,7 @@ public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
     RangedWeapon(const std::string texture_path, const short unsigned value,
-                 const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
-                 const short unsigned attack_cooldown_max, const short unsigned attack_cooldown_incrementer);
+                 const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
 
     virtual ~RangedWeapon();
 

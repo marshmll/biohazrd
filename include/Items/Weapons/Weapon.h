@@ -22,17 +22,14 @@ protected:
     short unsigned damageMin;
     short unsigned damageMax;
 
-    float attackCooldown;
-    float attackCooldownMax;
-    float attackCooldownIncrementer;
-    ;
+    sf::Clock cooldownTimer;
+    sf::Int32 cooldownTimerMax;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
     Weapon(const ItemType type, const std::string texture_path, const short unsigned value,
-           const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
-           const short unsigned attack_cooldown_max, const short unsigned attack_cooldown_incrementer);
+           const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
 
     virtual ~Weapon();
 
@@ -47,11 +44,17 @@ public:
 
     /* ACCESSORS ================================================================================================ */
 
-    virtual const short unsigned &getRange() const;
+    const short unsigned &getRange() const;
 
-    virtual const short unsigned &getDamageMin() const;
+    const short unsigned &getDamageMin() const;
 
-    virtual const short unsigned &getDamageMax() const;
+    const short unsigned &getDamageMax() const;
+
+    const bool didCooldown();
+
+    /* MODIFIERS ================================================================================================ */
+
+    void setCooldownTimerMax(const sf::Int32 new_timer_max);
 };
 
 #endif /* WEAPON_H_ */

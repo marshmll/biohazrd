@@ -5,23 +5,20 @@
 
 void Weapon::initVariables()
 {
+    cooldownTimer.restart();
+    cooldownTimerMax = sf::Int32(500);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
 Weapon::Weapon(const ItemType type, const std::string texture_path, const short unsigned value,
-               const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
-               const short unsigned attack_cooldown_max, const short unsigned attack_cooldown_incrementer)
+               const short unsigned range, const short unsigned damage_min, const short unsigned damage_max)
 
     : Item(value, type)
 {
     this->range = range;
     damageMin = damage_min;
     damageMax = damage_max;
-    
-    attackCooldown = 0.f;
-    attackCooldownMax = attack_cooldown_max;
-    attackCooldownIncrementer = attack_cooldown_incrementer;
 
     initVariables();
 
@@ -56,4 +53,22 @@ const short unsigned &Weapon::getDamageMin() const
 const short unsigned &Weapon::getDamageMax() const
 {
     return damageMax;
+}
+
+const bool Weapon::didCooldown()
+{
+    if (cooldownTimer.getElapsedTime().asMilliseconds() >= cooldownTimerMax)
+    {
+        cooldownTimer.restart();
+        return true;
+    }
+
+    return false;
+}
+
+/* MODIFIERS ===================================================================================================== */
+
+void Weapon::setCooldownTimerMax(const sf::Int32 new_timer_max)
+{
+    cooldownTimerMax = new_timer_max;
 }

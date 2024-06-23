@@ -4,6 +4,7 @@
 #include "State.h"
 #include "TileMap.h"
 #include "PlayerGUI.h"
+#include "TextTagSystem.h"
 
 class GameState : public State
 {
@@ -29,6 +30,8 @@ private:
 
     std::vector<Enemy *> activeEnemies;
     EnemySystem *enemySystem;
+
+    TextTagSystem *textTagSystem;
 
     TileMap *tileMap;
 
@@ -114,6 +117,13 @@ private:
      * @return void
      */
     void initEnemySystem();
+
+    /**
+     * @brief Initializes the enemy system.
+     *
+     * @return void
+     */
+    void initTextTagSystem();
 
     /**
      * @brief Initializes a tilemap for the gamestate.
