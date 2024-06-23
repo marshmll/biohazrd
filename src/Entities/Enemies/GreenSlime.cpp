@@ -19,7 +19,7 @@ void GreenSlime::initAnimations()
 /* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
 
 GreenSlime::GreenSlime(const float x, const float y, sf::Texture &texture_sheet)
-    : Enemy(15)
+    : Enemy(100)
 {
     initVariables();
     setPosition(sf::Vector2f(x, y));
@@ -68,13 +68,15 @@ void GreenSlime::updateAnimation(const float &dt)
     switch (movementComponent->getCurrentState())
     {
     case IDLE:
-        animationComponent->play("IDLE", dt);
+        animationComponent->play(
+            "IDLE", dt);
         break;
 
     case MOVING:
-        animationComponent->play("WALK", dt,
-                                 std::abs(movementComponent->getVelocity().x) + std::abs(movementComponent->getVelocity().y),
-                                 movementComponent->getMaxVelocity(), PRIORITARY);
+        animationComponent->play(
+            "WALK", dt,
+            std::abs(movementComponent->getVelocity().x) + std::abs(movementComponent->getVelocity().y),
+            movementComponent->getMaxVelocity(), PRIORITARY);
         break;
     }
 }

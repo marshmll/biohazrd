@@ -2,7 +2,9 @@
 #include "Sword.h"
 
 Sword::Sword()
-    : MeleeWeapon(0, "Assets/Images/Sprites/Player/pickaxe_spritesheet.png")
+    : MeleeWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
+                  80, 5, 15,
+                  10.f, 1.f)
 {
     weaponSprite.setOrigin(
         weaponSprite.getGlobalBounds().width / 2.f,

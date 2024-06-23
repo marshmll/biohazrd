@@ -14,31 +14,31 @@ private:
 public:
     /* LEVELING ================================================================================================= */
 
-    short unsigned level;
-    short unsigned exp;
-    short unsigned expNext;
-    short unsigned attributePoints;
+    short level;
+    short exp;
+    short expNext;
+    short attributePoints;
 
     /* ATTRIBUTES ================================================================================================ */
 
-    short unsigned vitality;
-    short unsigned strength;
-    short unsigned dexterity;
-    short unsigned agillity;
-    short unsigned intelligence;
+    short vitality;
+    short strength;
+    short dexterity;
+    short agillity;
+    short intelligence;
 
     /* STATS ====================================================================================================== */
 
-    short unsigned hp;
-    short unsigned hpMax;
+    short hp;
+    short hpMax;
 
-    short unsigned damageMin;
-    short unsigned damageMax;
+    short damageMin;
+    short damageMax;
 
-    short unsigned accuracy;
-    short unsigned defense;
+    short accuracy;
+    short defense;
 
-    short unsigned luck;
+    short luck;
 
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
@@ -93,7 +93,7 @@ public:
      *
      * @return void
      */
-    void earnHp(const short unsigned hpAmount);
+    void earnHp(const short unsigned hp_amount);
 
     /**
      * @brief Decreases hp by a given amount.
@@ -101,7 +101,7 @@ public:
      *
      * @return void
      */
-    void loseHp(const short unsigned hpAmount);
+    void loseHp(const short unsigned hp_amount);
 
     /**
      * @brief Increases exp by a given amount.
@@ -109,7 +109,7 @@ public:
      *
      * @return void
      */
-    void earnExp(const short unsigned expAmount);
+    void earnExp(const short unsigned exp_amount);
 
     /**
      * @brief Decreases exp by a given amount.
@@ -117,7 +117,7 @@ public:
      *
      * @return void
      */
-    void loseExp(const short unsigned expAmount);
+    void loseExp(const short unsigned exp_amount);
 
     /**
      * @brief Print data for debuggin purposes.

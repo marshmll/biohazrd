@@ -286,7 +286,7 @@ void GameState::updateCombat(const float &dt, Enemy *enemy, const short unsigned
         if (enemy->getGlobalBounds().contains(mousePosView) &&
             player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange())
         {
-            enemy->loseHp(1);
+            enemy->loseHp(player->getWeapon()->getDamageMax());
         }
     }
 }

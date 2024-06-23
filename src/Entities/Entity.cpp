@@ -228,12 +228,14 @@ void Entity::stopVelocityX()
 {
     if (movementComponent)
         movementComponent->stopVelocityX();
-    ErrorHandler::printErr("ENTITY::STOPVELOCITYX::WARNING_NULLPTR_MOVEMENTCOMPONENT");
+    else
+        ErrorHandler::printErr("ENTITY::STOPVELOCITYX::WARNING_NULLPTR_MOVEMENTCOMPONENT");
 }
 
 void Entity::stopVelocityY()
 {
     if (movementComponent)
         movementComponent->stopVelocityY();
-    ErrorHandler::printErr("ENTITY::STOPVELOCITYY::WARNING_NULLPTR_MOVEMENTCOMPONENT");
+    else
+        ErrorHandler::printErr("ENTITY::STOPVELOCITYY::WARNING_NULLPTR_MOVEMENTCOMPONENT");
 }

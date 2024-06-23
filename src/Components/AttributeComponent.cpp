@@ -38,12 +38,12 @@ void AttributeComponent::update()
 
 void AttributeComponent::updateStats(const bool reset)
 {
-    hpMax = vitality * 5 + vitality + strength / 2 + intelligence / 5;
-    damageMax = strength * 2 + strength / 2 + intelligence / 5;
-    damageMin = strength * 2 + strength / 4 + intelligence / 5;
-    accuracy = dexterity * 5 + dexterity / 3 + intelligence / 5;
-    defense = agillity * 2 + agillity / 3 + intelligence / 5;
-    luck = intelligence * 2 + intelligence / 5;
+    hpMax       = vitality * 5 + vitality + strength / 2 + intelligence / 5;
+    damageMax   = strength * 2 + strength / 2 + intelligence / 5;
+    damageMin   = strength * 2 + strength / 4 + intelligence / 5;
+    accuracy    = dexterity * 5 + dexterity / 3 + intelligence / 5;
+    defense     = agillity * 2 + agillity / 3 + intelligence / 5;
+    luck        = intelligence * 2 + intelligence / 5;
 
     if (reset)
     {
@@ -69,32 +69,32 @@ const bool AttributeComponent::isDead() const
 
 /* MODIFIERS ==================================================================================================== */
 
-void AttributeComponent::earnHp(const short unsigned hpAmount)
+void AttributeComponent::earnHp(const short unsigned hp_amount)
 {
-    hp += hpAmount;
+    hp += hp_amount;
 
     if (hp >= hpMax)
         hp = hpMax;
 }
 
-void AttributeComponent::loseHp(const short unsigned hpAmount)
+void AttributeComponent::loseHp(const short unsigned hp_amount)
 {
-    hp -= hpAmount;
+    hp -= hp_amount;
 
     if (hp <= 0)
         hp = 0;
 }
 
-void AttributeComponent::earnExp(const short unsigned expAmount)
+void AttributeComponent::earnExp(const short unsigned exp_amount)
 {
-    exp += expAmount;
+    exp += exp_amount;
 
     updateLevel();
 }
 
-void AttributeComponent::loseExp(const short unsigned expAmount)
+void AttributeComponent::loseExp(const short unsigned exp_amount)
 {
-    exp -= expAmount;
+    exp -= exp_amount;
 
     if (exp <= 0)
         exp = 0;

@@ -10,7 +10,9 @@ protected:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
-    MeleeWeapon(const short unsigned value, const std::string texture_path);
+    MeleeWeapon(const std::string texture_path, const short unsigned value,
+                const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
+                const short unsigned attack_cooldown_max, const short unsigned attack_cooldown_incrementer);
 
     virtual ~MeleeWeapon();
 

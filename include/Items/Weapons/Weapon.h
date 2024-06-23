@@ -19,14 +19,20 @@ protected:
     sf::Sprite weaponSprite;
 
     short unsigned range;
-
     short unsigned damageMin;
     short unsigned damageMax;
+
+    float attackCooldown;
+    float attackCooldownMax;
+    float attackCooldownIncrementer;
+    ;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
-    Weapon(const short unsigned value, const ItemType type, const std::string texture_path);
+    Weapon(const ItemType type, const std::string texture_path, const short unsigned value,
+           const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
+           const short unsigned attack_cooldown_max, const short unsigned attack_cooldown_incrementer);
 
     virtual ~Weapon();
 
@@ -42,6 +48,10 @@ public:
     /* ACCESSORS ================================================================================================ */
 
     virtual const short unsigned &getRange() const;
+
+    virtual const short unsigned &getDamageMin() const;
+
+    virtual const short unsigned &getDamageMax() const;
 };
 
 #endif /* WEAPON_H_ */
