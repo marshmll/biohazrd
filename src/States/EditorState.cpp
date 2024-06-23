@@ -50,9 +50,10 @@ void EditorState::initFonts()
 void EditorState::initPauseMenu()
 {
     pauseMenu = new gui::PauseMenu(vm, font);
-    pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.7f), "Exit");
-    pauseMenu->addButton("SAVE", gui::p2pY(vm, 62.5f), "Save");
-    pauseMenu->addButton("LOAD", gui::p2pY(vm, 50.f), "Load");
+    pauseMenu->addButton("LOAD", gui::p2pY(vm, 59.5f), "Load Map");
+    pauseMenu->addButton("SAVE", gui::p2pY(vm, 67.5f), "Save Map");
+    pauseMenu->addButton("RESUME", gui::p2pY(vm, 75.5f), "Resume");
+    pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.5f), "Quit");
 }
 
 void EditorState::initTileMap()
@@ -196,14 +197,17 @@ void EditorState::updateEditorCamera(const float &dt)
 
 void EditorState::updatePauseMenuInteraction()
 {
-    if (pauseMenu->isButtonPressed("QUIT"))
-        quit();
+    if (pauseMenu->isButtonPressed("LOAD"))
+        tileMap->loadFromFile("Maps/test.biomap");
 
     else if (pauseMenu->isButtonPressed("SAVE"))
         tileMap->saveToFile("Maps/test.biomap");
 
-    else if (pauseMenu->isButtonPressed("LOAD"))
-        tileMap->loadFromFile("Maps/test.biomap");
+    else if (pauseMenu->isButtonPressed("RESUME"))
+        pauseToggle();
+
+    else if (pauseMenu->isButtonPressed("QUIT"))
+        quit();
 }
 
 void EditorState::updateModes(const float &dt)

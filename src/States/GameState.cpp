@@ -75,7 +75,9 @@ void GameState::initShaders()
 void GameState::initPauseMenu()
 {
     pauseMenu = new gui::PauseMenu(vm, font);
-    pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.7f), "Exit");
+
+    pauseMenu->addButton("RESUME", gui::p2pY(vm, 75.5f), "Resume");
+    pauseMenu->addButton("QUIT", gui::p2pY(vm, 83.5f), "Quit");
 }
 
 void GameState::initPlayers()
@@ -96,7 +98,6 @@ void GameState::initEnemySystem()
 void GameState::initTextTagSystem()
 {
     textTagSystem = new TextTagSystem("Fonts/VCR_OSD_MONO_1.001.ttf", vm);
-    // textTagSystem = new TextTagSystem("Fonts/JetBrainsMono-Regular.ttf", vm);
 }
 
 void GameState::initTileMap()
@@ -327,6 +328,8 @@ void GameState::updatePauseMenuButtons()
 {
     if (pauseMenu->isButtonPressed("QUIT"))
         quit();
+    else if (pauseMenu->isButtonPressed("RESUME"))
+        pauseToggle();
 }
 
 void GameState::updatePlayerCamera(const float &dt)

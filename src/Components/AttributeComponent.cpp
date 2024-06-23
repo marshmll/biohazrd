@@ -1,18 +1,20 @@
 #include "stdafx.h"
 #include "AttributeComponent.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+/* PRIVATE FUNCTIONS ============================================================================================ */
 
-const int AttributeComponent::calc_next_exp()
+const int AttributeComponent::calcNextExp()
 {
     return static_cast<int>(std::pow(level, 4) + std::pow(level + 6, 3));
 }
+
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 AttributeComponent::AttributeComponent(const short unsigned level)
 {
     this->level = level;
     exp = 0;
-    expNext = calc_next_exp();
+    expNext = calcNextExp();
     attributePoints = 1;
 
     vitality = 1;
@@ -22,7 +24,6 @@ AttributeComponent::AttributeComponent(const short unsigned level)
     intelligence = 1;
 
     updateLevel();
-
     updateStats(RESET);
 }
 
@@ -38,17 +39,15 @@ void AttributeComponent::update()
 
 void AttributeComponent::updateStats(const bool reset)
 {
-    hpMax       = vitality * 5 + vitality + strength / 2 + intelligence / 5;
-    damageMax   = strength * 2 + strength / 2 + intelligence / 5;
-    damageMin   = strength * 2 + strength / 4 + intelligence / 5;
-    accuracy    = dexterity * 5 + dexterity / 3 + intelligence / 5;
-    defense     = agillity * 2 + agillity / 3 + intelligence / 5;
-    luck        = intelligence * 2 + intelligence / 5;
+    hpMax = vitality * 5 + vitality + strength / 2 + intelligence / 5;
+    damageMax = strength * 2 + strength / 2 + intelligence / 5;
+    damageMin = strength * 2 + strength / 4 + intelligence / 5;
+    accuracy = dexterity * 5 + dexterity / 3 + intelligence / 5;
+    defense = agillity * 2 + agillity / 3 + intelligence / 5;
+    luck = intelligence * 2 + intelligence / 5;
 
     if (reset)
-    {
         hp = hpMax;
-    }
 }
 
 void AttributeComponent::updateLevel()
@@ -58,7 +57,7 @@ void AttributeComponent::updateLevel()
         level++;
         attributePoints++;
         exp -= expNext;
-        expNext = calc_next_exp();
+        expNext = calcNextExp();
     }
 }
 

@@ -7,7 +7,7 @@
 #include "stdafx.h"
 #include "State.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 State::State(StateData *data) : vm(data->gfxSettings->resolution)
 {
@@ -39,7 +39,7 @@ State::~State()
 {
 }
 
-/* DEFINED VIRTUAL FUNCTIONS */
+/* DEFINED VIRTUAL FUNCTIONS ===================================================================================== */
 
 void State::updateMousePositions(sf::View *view)
 {
@@ -91,7 +91,7 @@ void State::resume()
     isPaused = false;
 }
 
-/* ACCESSORS */
+/* ACCESSORS ===================================================================================================== */
 
 const bool &State::hasAskedToQuit() const
 {

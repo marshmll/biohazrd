@@ -529,14 +529,14 @@ void gui::PauseMenu::render(sf::RenderTarget &target)
 
 void gui::PauseMenu::addButton(const std::string key, const float y, const std::string text)
 {
-    float width = gui::p2pX(vm, 19.5f);
+    float width = gui::p2pX(vm, 9.f);
     float height = gui::p2pY(vm, 6.2f);
 
     float x = container.getPosition().x + container.getSize().x / 2 - width / 2;
 
     buttons[key] = new Button(
         x, y, width, height,
-        font, text, gui::calc_char_size(vm, 70),
+        font, text, gui::calc_char_size(vm, 90),
         sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
         sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }

@@ -4,12 +4,14 @@
 class AttributeComponent
 {
 private:
+    /* PRIVATE FUNCTIONS ======================================================================================= */
+
     /**
      * @brief Calculates the next exp level to level up.
      *
      * @return void
      */
-    const int calc_next_exp();
+    const int calcNextExp();
 
 public:
     /* LEVELING ================================================================================================= */

@@ -27,7 +27,7 @@ void TextTagSystem::initTagTemplates()
                                            1, -1,
                                            5.f, 50.f,
                                            300.f,
-                                           sf::Color::Red,
+                                           sf::Color(255, 50, 50, 255),
                                            gui::calc_char_size(vm, 140),
                                            "DAMAGE_TAG", font);
 
@@ -35,7 +35,7 @@ void TextTagSystem::initTagTemplates()
                                                1, -1,
                                                5.f, 50.f,
                                                300.f,
-                                               sf::Color::Green,
+                                               sf::Color(50, 255, 50, 255),
                                                gui::calc_char_size(vm, 140),
                                                "EXPERIENCE_TAG", font);
 }

@@ -24,7 +24,7 @@ void PlayerGUI::initHpBar()
         gui::p2pX(vm, 1.5f), gui::p2pY(vm, 7.5f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 3.7f),
         player->getAttributeComponent()->hp, player->getAttributeComponent()->hpMax,
-        sf::Color(50, 50, 50, 200), sf::Color(250, 20, 20, 200),
+        sf::Color(50, 50, 50, 200), sf::Color(230, 20, 20, 200),
         font, sf::Color::White, gui::calc_char_size(vm, 140));
 }
 
@@ -34,7 +34,7 @@ void PlayerGUI::initExpBar()
         gui::p2pX(vm, 1.5f), gui::p2pY(vm, 12.5f),
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 2.5f),
         player->getAttributeComponent()->exp, player->getAttributeComponent()->expNext,
-        sf::Color(50, 50, 50, 200), sf::Color(20, 250, 20, 200),
+        sf::Color(50, 50, 50, 200), sf::Color(20, 230, 20, 200),
         font, sf::Color::White, gui::calc_char_size(vm, 140));
 }
 

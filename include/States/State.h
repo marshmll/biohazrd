@@ -125,7 +125,7 @@ public:
     /**
      * @brief Sets quit current state to true.
      * The quit states triggers the state to exit
-     * in Game.cpp [Game::update()]
+     * in Engine.cpp [Engine::update()]
      *
      * @return void
      */
