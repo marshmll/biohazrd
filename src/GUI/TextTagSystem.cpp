@@ -16,12 +16,12 @@ void TextTagSystem::initVariables()
 void TextTagSystem::initTagTemplates()
 {
     tagTemplates[DEFAULT_TAG] = new TextTag(0.f, 0.f,
-                                            0, -1,
-                                            0.f, 10.f,
-                                            500.f,
+                                            1, -1,
+                                            10.f, 50.f,
+                                            300.f,
                                             sf::Color::White,
-                                            gui::calc_char_size(vm, 150),
-                                            "", font);
+                                            gui::calc_char_size(vm, 140),
+                                            "DEFAULT", font);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
