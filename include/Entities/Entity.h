@@ -207,11 +207,11 @@ public:
      *
      * @return const sf::Vector2f;
      */
-    virtual const sf::Vector2f getDistanceFrom(const sf::Vector2f& point);
+    virtual const sf::Vector2f getDistanceFrom(const sf::Vector2f &point);
 
-     /**
+    /**
      * @brief Returns a single float value representing the absolute distance
-     * between the centers of both entities. 
+     * between the centers of both entities.
      * @param entity An entity reference for calculating the distance.
      *
      * @return const float;
@@ -225,6 +225,15 @@ public:
      * @return const bool
      */
     virtual const bool hasCollided(sf::FloatRect &frect);
+
+    /**
+     * @brief Returns if the entity is dead.
+     * @note -> Returns false and prints a warning if there
+     * is no attribute component initialized for the entity.
+     *
+     * @return const bool
+     */
+    virtual const bool isDead();
 
     /* MODIFIERS ================================================================================================ */
 

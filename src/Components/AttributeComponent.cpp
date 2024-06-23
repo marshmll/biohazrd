@@ -8,7 +8,7 @@ const int AttributeComponent::calc_next_exp()
     return static_cast<int>(std::pow(level, 4) + std::pow(level + 6, 3));
 }
 
-AttributeComponent::AttributeComponent(const int level)
+AttributeComponent::AttributeComponent(const short unsigned level)
 {
     this->level = level;
     exp = 0;
@@ -62,9 +62,14 @@ void AttributeComponent::updateLevel()
     }
 }
 
+const bool AttributeComponent::isDead() const
+{
+    return hp == 0;
+}
+
 /* MODIFIERS ==================================================================================================== */
 
-void AttributeComponent::earnHp(const int hpAmount)
+void AttributeComponent::earnHp(const short unsigned hpAmount)
 {
     hp += hpAmount;
 
@@ -72,7 +77,7 @@ void AttributeComponent::earnHp(const int hpAmount)
         hp = hpMax;
 }
 
-void AttributeComponent::loseHp(const int hpAmount)
+void AttributeComponent::loseHp(const short unsigned hpAmount)
 {
     hp -= hpAmount;
 
@@ -80,14 +85,14 @@ void AttributeComponent::loseHp(const int hpAmount)
         hp = 0;
 }
 
-void AttributeComponent::earnExp(const int expAmount)
+void AttributeComponent::earnExp(const short unsigned expAmount)
 {
     exp += expAmount;
 
     updateLevel();
 }
 
-void AttributeComponent::loseExp(const int expAmount)
+void AttributeComponent::loseExp(const short unsigned expAmount)
 {
     exp -= expAmount;
 

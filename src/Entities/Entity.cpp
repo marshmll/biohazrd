@@ -182,7 +182,7 @@ const float Entity::getRangeDistanceFrom(Entity &entity)
     sf::Vector2f this_center = this->getCenteredPosition();
     sf::Vector2f entity_center = entity.getCenteredPosition();
 
-    // D = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+    // Dxy = sqrt((x2 - x1)^2 + (y2 - y1)^2)
     float distance = static_cast<float>(sqrt(pow(entity_center.x - this_center.x, 2.f) + pow(entity_center.y - this_center.y, 2.f)));
 
     return distance;
@@ -194,6 +194,16 @@ const bool Entity::hasCollided(sf::FloatRect &frect)
         return hitboxComponent->intersects(frect);
     else
         return false;
+}
+
+const bool Entity::isDead()
+{
+    if (attributeComponent)
+        return attributeComponent->isDead();
+    else
+        ErrorHandler::printErr("ENTITY::ISDEAD::WARNING_NULLPTR_ATTRIBUTECOMPONENT");
+
+    return false;
 }
 
 /* MODIFIERS ==================================================================================================== */
@@ -210,16 +220,20 @@ void Entity::stopVelocity()
 {
     if (movementComponent)
         movementComponent->stopVelocity();
+    else
+        ErrorHandler::printErr("ENTITY::STOPVELOCITY::WARNING_NULLPTR_MOVEMENTCOMPONENT");
 }
 
 void Entity::stopVelocityX()
 {
     if (movementComponent)
         movementComponent->stopVelocityX();
+    ErrorHandler::printErr("ENTITY::STOPVELOCITYX::WARNING_NULLPTR_MOVEMENTCOMPONENT");
 }
 
 void Entity::stopVelocityY()
 {
     if (movementComponent)
         movementComponent->stopVelocityY();
+    ErrorHandler::printErr("ENTITY::STOPVELOCITYY::WARNING_NULLPTR_MOVEMENTCOMPONENT");
 }

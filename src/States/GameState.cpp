@@ -132,7 +132,6 @@ GameState::~GameState()
 
 void GameState::update(const float &dt)
 {
-
     updateMousePositions(&playerCamera);
     updateKeytime(dt);
     updateInput(dt);
@@ -150,7 +149,7 @@ void GameState::update(const float &dt)
         updatePlayerInput(dt);
         updatePlayers(dt);
         updatePlayerGUI(dt);
-        updateEnemies(dt);
+        updateEnemiesAndCombat(dt);
         updateTileMap(dt);
     }
 
@@ -253,16 +252,34 @@ void GameState::updatePlayerGUI(const float &dt)
     playerGUI->update(dt);
 }
 
-void GameState::updateEnemies(const float &dt)
+void GameState::updateEnemiesAndCombat(const float &dt)
 {
+    short unsigned index = 0;
     for (auto enemy : activeEnemies)
     {
         enemy->update(dt);
-        updateCombat(dt, enemy);
+
+        tileMap->updateWorldBoundsCollision(dt, enemy);
+        tileMap->updateTileCollision(dt, enemy);
+
+        updateCombat(dt, enemy, index);
+
+        // Very safe code LOL (change later)
+        if (enemy->isDead())
+        {
+            // Earn exp
+            player->earnExp(enemy->getExpDrop());
+
+            // Delete entity
+            activeEnemies.erase(activeEnemies.begin() + index);
+            --index;
+        }
+
+        ++index;
     }
 }
 
-void GameState::updateCombat(const float &dt, Enemy *enemy)
+void GameState::updateCombat(const float &dt, Enemy *enemy, const short unsigned index)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -280,12 +297,6 @@ void GameState::updateTileMap(const float &dt)
 
     tileMap->updateWorldBoundsCollision(dt, player);
     tileMap->updateTileCollision(dt, player);
-
-    for (auto enemy : activeEnemies)
-    {
-        tileMap->updateWorldBoundsCollision(dt, enemy);
-        tileMap->updateTileCollision(dt, enemy);
-    }
 }
 
 void GameState::updatePauseMenuButtons()

@@ -21,6 +21,18 @@ namespace ErrorHandler
      * @return void.
      */
     void throwErr(std::string msg);
+
+    /**
+     * @brief Displays a error message on the console. Does
+     * not exit the program.
+     *
+     * @note -> Does not exit program. Just prints a std::cerr.
+     *
+     * @param msg The message to be shown on the console.
+     *
+     * @return void.
+     */
+    void printErr(std::string msg);
 };
 
 #endif /* ERRORHANDLER_H */

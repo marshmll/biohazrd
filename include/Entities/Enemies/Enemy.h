@@ -9,7 +9,7 @@ class Enemy : public Entity
 private:
     /* VARIABLES ================================================================================================= */
 
-    // EnemySpawner &enemySpawner;
+    short unsigned expDrop; // The amount of exp the enemy drops after death.
 
     /**
      * @brief Initializes enemy animations.
@@ -23,12 +23,9 @@ public:
 
     /**
      * @brief Enemy entity class constructor.
-     * @note -> Initializes variables
-     * @note -> Sets the enemy position with x and y arguments.
-     * @note -> Initializes components
-     * @note -> Initializes animations
+     * @param exp_drop  The amount of exp the enemy drops after death
      */
-    Enemy();
+    Enemy(const short unsigned exp_drop);
 
     virtual ~Enemy();
 
@@ -83,7 +80,22 @@ public:
 
     /* ACCESSORS ================================================================================================= */
 
-    virtual AttributeComponent *getAttributeComponent();
+    /**
+     * @brief Returns the amount of exp the enemy drops after death.
+     *
+     * @return const short unsigned
+     */
+    virtual const short unsigned getExpDrop() const;
+
+    /**
+     * @brief Returns the enemy's attribute component, or nullptr
+     * if not initialized.
+     *
+     * @note -> Prints a warning if the attribute component is nullptr.
+     *
+     * @return AttributeComponent*
+     */
+    virtual const AttributeComponent *getAttributeComponent() const;
 };
 
 #endif /* ENEMY_H_ */

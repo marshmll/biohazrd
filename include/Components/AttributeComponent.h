@@ -14,38 +14,38 @@ private:
 public:
     /* LEVELING ================================================================================================= */
 
-    int level;
-    int exp;
-    int expNext;
-    int attributePoints;
+    short unsigned level;
+    short unsigned exp;
+    short unsigned expNext;
+    short unsigned attributePoints;
 
     /* ATTRIBUTES ================================================================================================ */
 
-    int vitality;
-    int strength;
-    int dexterity;
-    int agillity;
-    int intelligence;
+    short unsigned vitality;
+    short unsigned strength;
+    short unsigned dexterity;
+    short unsigned agillity;
+    short unsigned intelligence;
 
     /* STATS ====================================================================================================== */
 
-    int hp;
-    int hpMax;
+    short unsigned hp;
+    short unsigned hpMax;
 
-    int damageMin;
-    int damageMax;
+    short unsigned damageMin;
+    short unsigned damageMax;
 
-    int accuracy;
-    int defense;
+    short unsigned accuracy;
+    short unsigned defense;
 
-    int luck;
+    short unsigned luck;
 
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     /**
      * @brief Creates an attribute component given a level.
      */
-    AttributeComponent(const int level);
+    AttributeComponent(const short unsigned level);
 
     /**
      * @brief Attribute component class destructor
@@ -76,6 +76,15 @@ public:
      */
     void updateLevel();
 
+    /* ACCESSORS ================================================================================================= */
+
+    /**
+     * @brief Returns if the hp is equal to 0.
+     *
+     * @return const bool
+     */
+    const bool isDead() const;
+
     /* MODIFIERS ================================================================================================= */
 
     /**
@@ -84,7 +93,7 @@ public:
      *
      * @return void
      */
-    void earnHp(const int hpAmount);
+    void earnHp(const short unsigned hpAmount);
 
     /**
      * @brief Decreases hp by a given amount.
@@ -92,7 +101,7 @@ public:
      *
      * @return void
      */
-    void loseHp(const int hpAmount);
+    void loseHp(const short unsigned hpAmount);
 
     /**
      * @brief Increases exp by a given amount.
@@ -100,7 +109,7 @@ public:
      *
      * @return void
      */
-    void earnExp(const int expAmount);
+    void earnExp(const short unsigned expAmount);
 
     /**
      * @brief Decreases exp by a given amount.
@@ -108,7 +117,7 @@ public:
      *
      * @return void
      */
-    void loseExp(const int expAmount);
+    void loseExp(const short unsigned expAmount);
 
     /**
      * @brief Print data for debuggin purposes.

@@ -130,22 +130,22 @@ Weapon *Player::getWeapon()
     return &sword;
 }
 
-void Player::earnHp(const int hp_amount)
+void Player::earnHp(const short unsigned hp_amount)
 {
     attributeComponent->earnHp(hp_amount);
 }
 
-void Player::loseHp(const int hp_amount)
+void Player::loseHp(const short unsigned hp_amount)
 {
     attributeComponent->loseHp(hp_amount);
 }
 
-void Player::earnExp(const int exp_amount)
+void Player::earnExp(const short unsigned exp_amount)
 {
     attributeComponent->earnExp(exp_amount);
 }
 
-void Player::loseExp(const int exp_amount)
+void Player::loseExp(const short unsigned exp_amount)
 {
     attributeComponent->loseExp(exp_amount);
 }

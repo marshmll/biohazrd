@@ -210,9 +210,9 @@ public:
      *
      * @return void
      */
-    void updateEnemies(const float &dt);
+    void updateEnemiesAndCombat(const float &dt);
 
-    void updateCombat(const float &dt, Enemy *enemy);
+    void updateCombat(const float &dt, Enemy *enemy, const short unsigned index);
 
     /**
      * @brief Updates tilemap and collisions.
