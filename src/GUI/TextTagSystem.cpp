@@ -17,11 +17,27 @@ void TextTagSystem::initTagTemplates()
 {
     tagTemplates[DEFAULT_TAG] = new TextTag(0.f, 0.f,
                                             1, -1,
-                                            10.f, 50.f,
+                                            5.f, 50.f,
                                             300.f,
                                             sf::Color::White,
                                             gui::calc_char_size(vm, 140),
-                                            "DEFAULT", font);
+                                            "DEFAULT_TAG", font);
+
+    tagTemplates[DAMAGE_TAG] = new TextTag(0.f, 0.f,
+                                           1, -1,
+                                           5.f, 50.f,
+                                           300.f,
+                                           sf::Color::Red,
+                                           gui::calc_char_size(vm, 140),
+                                           "DAMAGE_TAG", font);
+
+    tagTemplates[EXPERIENCE_TAG] = new TextTag(0.f, 0.f,
+                                               1, -1,
+                                               5.f, 50.f,
+                                               300.f,
+                                               sf::Color::Green,
+                                               gui::calc_char_size(vm, 140),
+                                               "EXPERIENCE_TAG", font);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */

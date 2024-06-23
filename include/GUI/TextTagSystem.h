@@ -8,6 +8,7 @@ enum TextTagType
     DEFAULT_TAG = 0,
     NEGATIVE_TAG,
     POSITIVE_TAG,
+    DAMAGE_TAG,
     EXPERIENCE_TAG,
     ENVIROMENTAL_TAG,
 };

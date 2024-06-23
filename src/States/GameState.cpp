@@ -95,7 +95,8 @@ void GameState::initEnemySystem()
 
 void GameState::initTextTagSystem()
 {
-    textTagSystem = new TextTagSystem("Fonts/JetBrainsMono-Regular.ttf", vm);
+    textTagSystem = new TextTagSystem("Fonts/VCR_OSD_MONO_1.001.ttf", vm);
+    // textTagSystem = new TextTagSystem("Fonts/JetBrainsMono-Regular.ttf", vm);
 }
 
 void GameState::initTileMap()
@@ -282,6 +283,11 @@ void GameState::updateEnemiesAndCombat(const float &dt)
             // Earn exp
             player->earnExp(enemy->getExpDrop());
 
+            textTagSystem->addTag(TextTagType::EXPERIENCE_TAG,
+                                  player->getPosition().x,
+                                  player->getPosition().y,
+                                  "+" + std::to_string(enemy->getExpDrop()) + "exp");
+
             // Delete entity
             activeEnemies.erase(activeEnemies.begin() + index);
             --index;
@@ -301,9 +307,9 @@ void GameState::updateCombat(const float &dt, Enemy *enemy, const short unsigned
         {
             enemy->loseHp(player->getWeapon()->getDamageMin());
 
-            textTagSystem->addTag(TextTagType::DEFAULT_TAG,
-                                  enemy->getCenteredPosition().x,
-                                  enemy->getCenteredPosition().y,
+            textTagSystem->addTag(TextTagType::DAMAGE_TAG,
+                                  enemy->getPosition().x,
+                                  enemy->getPosition().y,
                                   "-" + std::to_string(player->getWeapon()->getDamageMin()) + "hp");
         }
     }
