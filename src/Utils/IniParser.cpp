@@ -21,12 +21,12 @@ std::string IniParser::search(const std::string identifier, const std::string se
 		if (string_buff.empty())
 			continue;
 
-		// If its a section declaration syntax (ex "[Section]")
-		else if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
-		{
-			// Remove all white spaces
-			string_buff.erase(remove_if(string_buff.begin(), string_buff.end(), isspace), string_buff.end());
+		// Remove all white spaces
+		string_buff.erase(remove_if(string_buff.begin(), string_buff.end(), isspace), string_buff.end());
 
+		// If its a section declaration syntax (ex "[Section]")
+		if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
+		{
 			// Compare if it ts the desired section. If not, jump to next line.
 			if (string_buff.substr(1, string_buff.size() - 2) != section)
 				continue;
@@ -138,12 +138,12 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
 		if (string_buff.empty())
 			continue;
 
-		// If its a section declaration syntax (ex "[Section]")
-		else if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
-		{
-			// Remove all white spaces
-			string_buff.erase(remove_if(string_buff.begin(), string_buff.end(), isspace), string_buff.end());
+		// Remove all white spaces
+		string_buff.erase(remove_if(string_buff.begin(), string_buff.end(), isspace), string_buff.end());
 
+		// If its a section declaration syntax (ex "[Section]")
+		if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
+		{
 			// Compare if it ts the desired section. If not, jump to next line.
 			if (string_buff.substr(1, string_buff.size() - 2) != section)
 				continue;
@@ -187,9 +187,9 @@ const std::string IniParser::getString(const std::string identifier, const std::
 {
 	std::string value_as_string;
 
-	if (section.size() == 0)
+	if (section.empty())
 	{
-		if (preSettedSearchSection.size() == 0)
+		if (preSettedSearchSection.empty())
 			ErrorHandler::throwErr("INIPARSER::GETSTRING::ERR_DID_NOT_PRE_SET_SECTION");
 
 		value_as_string = search(identifier, preSettedSearchSection);
@@ -205,9 +205,9 @@ const int IniParser::getInt(const std::string identifier, const std::string sect
 	std::string value_as_string;
 	int parsed_int;
 
-	if (section.size() == 0)
+	if (section.empty())
 	{
-		if (preSettedSearchSection.size() == 0)
+		if (preSettedSearchSection.empty())
 			ErrorHandler::throwErr("INIPARSER::GETINT::ERR_DID_NOT_PRE_SET_SECTION");
 
 		value_as_string = search(identifier, preSettedSearchSection);
@@ -228,9 +228,9 @@ const bool IniParser::getBool(const std::string identifier, const std::string se
 	std::string value_as_string;
 	bool parsed_bool;
 
-	if (section.size() == 0)
+	if (section.empty())
 	{
-		if (preSettedSearchSection.size() == 0)
+		if (preSettedSearchSection.empty())
 			ErrorHandler::throwErr("INIPARSER::GETBOOL::ERR_DID_NOT_PRE_SET_SECTION");
 
 		value_as_string = search(identifier, preSettedSearchSection);
