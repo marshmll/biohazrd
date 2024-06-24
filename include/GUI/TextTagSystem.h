@@ -44,7 +44,7 @@ private:
                 const sf::Color color,
                 const unsigned char_size,
                 const std::string string, sf::Font &font,
-                const bool use_fade_fx = true)
+                const bool use_fade_fx = USE_FADE_FX)
         {
             dirX = dir_x;
             dirY = dir_y;
@@ -101,7 +101,7 @@ private:
                 currentLifetime -= 100.f * dt;
             else
                 currentLifetime = 0.f;
-                }
+        }
 
         /* ACCESSORS ============================================================= */
 

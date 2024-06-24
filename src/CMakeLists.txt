@@ -43,6 +43,7 @@ target_sources(BIOHAZRD PRIVATE
 
     Utils/ErrorHandler.cpp
     Utils/GraphicsSettings.cpp
+    Utils/IniParser.cpp
 
     main.cpp
 )

@@ -9,7 +9,7 @@
 class GameState : public State
 {
 private:
-    /* VARIABLES ================================================================================================ */
+    /* VARIABLES ================================================================================================= */
 
     sf::View playerCamera;
     sf::Vector2i playerCameraPosGrid;
@@ -35,7 +35,7 @@ private:
 
     TileMap *tileMap;
 
-    /* INITIALIZERS ============================================================================================= */
+    /* INITIALIZERS ============================================================================================== */
 
     /**
      * @brief Initializes the buffered render.
@@ -133,7 +133,7 @@ private:
     void initTileMap();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief Calls the parent constructor State(window, acceptedKeys)
@@ -150,7 +150,7 @@ public:
      */
     virtual ~GameState();
 
-    /* FUNCTIONS =============================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Updates the GameState.
@@ -222,6 +222,14 @@ public:
      */
     void updateEnemiesAndCombat(const float &dt);
 
+    /** 
+     * @brief Updates the combat between player and an enemy.
+     * @param dt The game delta time
+     * @param enemy A pointer to an enemy
+     * @param index The enemy's index in the activeEnemies vector.
+     *
+     * @return void 
+     */
     void updateCombat(const float &dt, Enemy *enemy, const short unsigned index);
 
     /**

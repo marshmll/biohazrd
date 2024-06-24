@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "EditorState.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ================================================================================================== */
 
 void EditorState::initVariables()
 {
@@ -87,7 +87,8 @@ void EditorState::initModes()
     modes[EditorModes::ENEMY_MODE] = new EnemyEditorMode(data, &editorStateData);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+
 EditorState::EditorState(StateData *data) : State(data)
 {
     initVariables();
@@ -114,7 +115,8 @@ EditorState::~EditorState()
         delete it.second;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
+
 void EditorState::update(const float &dt)
 {
     updateMousePositions(&editorCamera);
@@ -204,7 +206,7 @@ void EditorState::updatePauseMenuInteraction()
         tileMap->saveToFile("Maps/test.biomap");
 
     else if (pauseMenu->isButtonPressed("RESUME"))
-        pauseToggle();
+        resume();
 
     else if (pauseMenu->isButtonPressed("QUIT"))
         quit();

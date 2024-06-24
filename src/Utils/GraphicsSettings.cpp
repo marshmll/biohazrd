@@ -2,7 +2,7 @@
  * GraphicsSettings.cpp
  *
  *  Created on: 1 de mai. de 2024
- *      Author: renan
+ *      Author: Renan Andrade
  */
 
 #include "stdafx.h"
@@ -50,24 +50,15 @@ void GraphicsSettings::saveToFile(const std::string path)
 
 void GraphicsSettings::loadFromFile(const std::string path)
 {
-    std::ifstream ifs(path);
+    iniParser.loadFile(path);
 
-    videoModes = sf::VideoMode::getFullscreenModes();
+    iniParser.setSearchSection("Graphics");
 
-    if (ifs.is_open())
-    {
-        // Read from window.ini to variables
-        ifs >>
-            title >>
-            resolution.width >>
-            resolution.height >>
-            fullscreen >>
-            frameRateLimit >>
-            verticalSync >>
-            contextSettings.antialiasingLevel;
-    }
-    else
-        ErrorHandler::throwErr("GRAPHICSSETTINGS::LOADFROMFILE::ERROR_COULD_NOT_LOAD_GRAPHICS_INI\n");
-
-    ifs.close();
+    title = iniParser.getString("Title");
+    resolution.width = iniParser.getInt("ResolutionWidth");
+    resolution.height = iniParser.getInt("ResolutionHeight");
+    fullscreen = iniParser.getBool("Fullscreen");
+    frameRateLimit = iniParser.getInt("FramerateLimit");
+    verticalSync = iniParser.getBool("VSync");
+    contextSettings.antialiasingLevel = iniParser.getInt("AntialiasingLevel");
 }

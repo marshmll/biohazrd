@@ -8,7 +8,7 @@
 class MainMenuState : public State
 {
 private:
-    /* VARIABLES ================================================================================================== */
+    /* VARIABLES ================================================================================================= */
 
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
@@ -16,7 +16,7 @@ private:
 
     std::map<std::string, gui::Button *> buttons;
 
-    /* INITIALIZERS */
+    /* INITIALIZERS ============================================================================================== */
 
     /**
      * @brief Initializes MainMenuState variables
@@ -49,7 +49,7 @@ private:
     void initGUI();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief Calls the parent constructor for State.

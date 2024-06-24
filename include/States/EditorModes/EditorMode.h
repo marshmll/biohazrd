@@ -19,12 +19,13 @@ typedef struct EditorStateData
     sf::Vector2i *mousePosWindow;
     sf::Vector2f *mousePosView;
     sf::Vector2i *mousePosGrid;
-} EditorStateData;
+}
+EditorStateData;
 
 class EditorMode
 {
 protected:
-    /* VARIABLES =============================================================================================== */
+    /* VARIABLES ================================================================================================= */
 
     StateData *data;
 
@@ -33,13 +34,13 @@ protected:
     sf::Text modeIndicatorText;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     EditorMode(StateData *data, EditorStateData *editor_data, std::string mode_name);
 
     virtual ~EditorMode();
 
-    /* FUNCTIONS =============================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Updates the EditorMode.

@@ -4,12 +4,12 @@
 #include "State.h"
 #include "MainMenuState.h"
 
-class MainMenuState;
+class MainMenuState; // DO NOT REMOVE!
 
 class SettingsState : public State
 {
 private:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================= */
 
     MainMenuState *mainMenuState;
 
@@ -25,7 +25,7 @@ private:
 
     std::vector<sf::VideoMode> videoModes;
 
-    /* INITIALIZERS */
+    /* INITIALIZERS ============================================================================================== */
 
     /**
      * @brief Initializes SettingsState variables
@@ -67,7 +67,7 @@ private:
     void resetGUI();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief Calls the parent constructor for State.
@@ -85,7 +85,7 @@ public:
      */
     virtual ~SettingsState();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Updates the Settings State.
@@ -126,8 +126,6 @@ public:
      * @return void
      */
     void renderGUI(sf::RenderTarget &target);
-
-    /* ACCESSORS */
 };
 
 #endif /* SETTINGSSTATE_H_ */

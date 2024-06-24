@@ -1,8 +1,8 @@
-/* header.h */
 #ifndef HEADER_H
 #define HEADER_H
 
-/* DEFINITIONS */
+/* DEFINITIONS =================================================================================================== */
+
 #define RESET true
 #define PRIORITARY true
 
@@ -18,7 +18,11 @@
 #define USE_DEFERRED_RENDER true
 #define DO_NOT_USE_DEFERRED_RENDER false
 
-/* CORE */
+#define USE_FADE_FX true
+#define DO_NOT_USE_FADE_FX false
+
+/* CORE ========================================================================================================== */
+
 #include <algorithm>
 #include <deque>
 #include <iostream>
@@ -36,10 +40,12 @@
 #include <filesystem>
 #include <cmath>
 
-/* CUSTOM */
+/* UTILS ========================================================================================================= */
+
 #include "ErrorHandler.h"
 
-/* SFML */
+/* SFML ========================================================================================================== */
+
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

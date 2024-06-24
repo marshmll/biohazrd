@@ -7,7 +7,7 @@
 class TileMap
 {
 private:
-    /* VARIABLES ====================================================================================== */
+    /* VARIABLES ================================================================================================= */
 
     float gridSizeF;
     int gridSizeI;
@@ -29,7 +29,7 @@ private:
     int endY;
     int layer;
 
-    /* PRIVATE FUNCTIONS ====================================================================================== */
+    /* PRIVATE FUNCTIONS ========================================================================================= */
 
     /**
      * @brief Frees all alocated memory for the tiles and texture.
@@ -46,7 +46,7 @@ private:
     void resize(const int size_x, const int size_y, const int layers);
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief This constructor initializes a tilemap.
@@ -78,7 +78,7 @@ public:
      */
     virtual ~TileMap();
 
-    /* FUNCTIONS ====================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Loads a tilemap from a file in the Maps folder.\n
@@ -257,7 +257,7 @@ public:
      */
     void updateMapActiveArea(const sf::Vector2i grid_position, const int width, const int height);
 
-    /* ACCESSORS ====================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Checks if a tile in a x, y and z coordinate are from a given type.

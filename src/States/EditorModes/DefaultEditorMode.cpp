@@ -17,6 +17,7 @@ void DefaultEditorMode::initVariables()
     type = TileType::DEFAULT;
 
     layer = 0;
+
 }
 
 void DefaultEditorMode::initGUI()

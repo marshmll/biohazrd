@@ -1,10 +1,14 @@
 #ifndef GRAPHICSSETTINGS_H_
 #define GRAPHICSSETTINGS_H_
 
+#include "IniParser.h"
+
 class GraphicsSettings
 {
 public:
-    /* VARIABLES */
+    /* VARIABLES ================================================================================================= */
+
+    IniParser iniParser;
 
     std::string title;
     sf::VideoMode resolution;
@@ -14,7 +18,7 @@ public:
     sf::ContextSettings contextSettings;
     std::vector<sf::VideoMode> videoModes;
 
-    /* CONSTRUCTOR AND DESTRUCTOR */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     /**
      * @brief Graphics Settings constructor.
@@ -26,7 +30,7 @@ public:
      */
     ~GraphicsSettings();
 
-    /* FUNCTIONS */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Saves the graphics settings into a graphics.ini

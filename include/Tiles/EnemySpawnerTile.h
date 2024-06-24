@@ -6,7 +6,7 @@
 class EnemySpawnerTile : public Tile
 {
 private:
-    /* VARIABLES =============================================================================================== */
+    /* VARIABLES ================================================================================================= */
 
     int enemyType;
     int enemyAmount;
@@ -16,7 +16,7 @@ private:
     bool spawned;
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================*/
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     EnemySpawnerTile(
         const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
@@ -42,7 +42,7 @@ public:
      */
     void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
-    /* ACCESSORS ================================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     const bool& hasSpawned() const;
 
@@ -61,7 +61,7 @@ public:
      */
     const std::string getPropertiesAsString() const;
 
-    /* MODIFIERS ================================================================================================ */
+    /* MODIFIERS ================================================================================================= */
 
     void setSpawned(const bool spawned);
 };

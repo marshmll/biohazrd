@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "GameState.h"
 
-/* INITIALIZERS ================================================================================================= */
+/* INITIALIZERS ================================================================================================== */
 
 void GameState::initBufferedRender()
 {
@@ -105,7 +105,7 @@ void GameState::initTileMap()
     tileMap = new TileMap("Maps/test.biomap");
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 GameState::GameState(StateData *data) : State(data)
 {
@@ -139,7 +139,7 @@ GameState::~GameState()
         delete enemy;
 }
 
-/* FUNCTIONS ==================================================================================================== */
+/* FUNCTIONS ===================================================================================================== */
 
 void GameState::update(const float &dt)
 {
@@ -237,12 +237,6 @@ void GameState::updatePlayers(const float &dt)
 
 void GameState::updatePlayerInput(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && hasCompletedKeytimeCicle())
-        player->earnExp(100);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && hasCompletedKeytimeCicle())
-        player->loseExp(100);
-
     if (sf::Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
     {
         player->move(0.f, -1.f, dt);
@@ -329,7 +323,7 @@ void GameState::updatePauseMenuButtons()
     if (pauseMenu->isButtonPressed("QUIT"))
         quit();
     else if (pauseMenu->isButtonPressed("RESUME"))
-        pauseToggle();
+        resume();
 }
 
 void GameState::updatePlayerCamera(const float &dt)

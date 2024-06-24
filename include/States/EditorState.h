@@ -12,7 +12,7 @@ enum EditorModes
 class EditorState : public State
 {
 private:
-    /* VARIABLES ================================================================================================ */
+    /* VARIABLES ================================================================================================= */
 
     EditorStateData editorStateData;
 
@@ -32,7 +32,7 @@ private:
 
     EditorModes activeEditorMode;
 
-    /* INITIALIZERS ============================================================================================= */
+    /* INITIALIZERS ============================================================================================== */
 
     /**
      * @brief Initializes MainMenuState variables
@@ -85,8 +85,18 @@ private:
      */
     void initGUI();
 
+    /**
+     * @brief Initializes the Editor State Data.
+     *
+     * @return void
+     */
     void initEditorStateData();
 
+    /**
+     * @brief Initializes the editor modes.
+     *
+     * @return void
+     */
     void initModes();
 
 public:
@@ -126,6 +136,11 @@ public:
      */
     void render(sf::RenderTarget &target);
 
+    /**
+     * @brief Updates the user input.
+     *
+     * @return void
+     */
     void updateInput(const float &dt);
 
     /**
@@ -154,6 +169,11 @@ public:
      */
     void updatePauseMenuInteraction();
 
+    /**
+     * @brief Updates the active editor mode.
+     *
+     * @return void
+     */
     void updateModes(const float &dt);
 
     /**
@@ -163,6 +183,11 @@ public:
      */
     void renderGUI(sf::RenderTarget &target);
 
+     /**
+     * @brief Renders the active editor mode.
+     *
+     * @return void
+     */
     void renderModes(sf::RenderTarget &target);
 };
 

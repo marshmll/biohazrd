@@ -2,7 +2,7 @@
  * AnimationComponent.cpp
  *
  *  Created on: 20 de abr. de 2024
- *      Author: renan
+ *      Author: Renan Andrade
  */
 
 #include "stdafx.h"

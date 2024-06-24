@@ -5,7 +5,7 @@
  * used Graphical User Interface resources.
  *
  *  Created on: 28 de abr. de 2024
- *      Author: renan
+ *      Author: Renan Andrade
  */
 
 #include "stdafx.h"
@@ -70,8 +70,6 @@ gui::Button::Button(
     shape.setFillColor(idle_color);
     shape.setOutlineThickness(1.f);
     shape.setOutlineColor(outline_idle_color);
-
-    font = font;
 
     textIdleColor = text_idle_color;
     textHoverColor = text_hover_color;

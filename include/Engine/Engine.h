@@ -8,6 +8,7 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
 
+#include "IniParser.h"
 #include "MainMenuState.h"
 
 class Engine

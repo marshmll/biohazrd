@@ -7,7 +7,7 @@
 class EnemyEditorMode : public EditorMode
 {
 private:
-    /* VARIABLES ================================================================================= */
+    /* VARIABLES ================================================================================================= */
     
     sf::Text cursorText;
     sf::RectangleShape sidebar;
@@ -20,20 +20,20 @@ private:
     short enemyTimeToSpawn;
     short enemyMaxDistance;
 
-    /* INITIALIZERS ============================================================================== */
+    /* INITIALIZERS ============================================================================================== */
 
     void initVariables();
 
     void initGUI();
 
 public:
-    /* CONSTRUCTOR AND DESTRUCTOR ================================================================ */
+    /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     EnemyEditorMode(StateData *data, EditorStateData *editor_data);
 
     virtual ~EnemyEditorMode();
 
-    /* FUNCTIONS ================================================================================== */
+    /* FUNCTIONS ================================================================================================= */
 
     /**
      * @brief Updates the EditorMode.
@@ -74,13 +74,12 @@ public:
      */
     void renderGUI(sf::RenderTarget &target);
 
-    /* ACCESSORS ===================================================================================== */
+    /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns if an determined amount of time has passed
      * after the last key press.
      * @note -> Resets times back to 0.f
-     *
      *
      * @return const bool
      */
@@ -92,7 +91,6 @@ public:
      * @param mouse_btn The mouse button to be checked.
      *
      *  @note -> Resets times back to 0.f
-     *
      *
      * @return const bool
      */

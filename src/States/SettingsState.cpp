@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "SettingsState.h"
 
-/* INITIALIZERS */
+/* INITIALIZERS ================================================================================================== */
 
 void SettingsState::initVariables()
 {
@@ -111,7 +111,7 @@ void SettingsState::resetGUI()
     initGUI();
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 SettingsState::SettingsState(StateData *data, MainMenuState *main_menu_state) : State(data)
 {
@@ -137,7 +137,7 @@ SettingsState::~SettingsState()
         delete it.second;
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void SettingsState::update(const float &dt)
 {
