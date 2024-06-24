@@ -7,41 +7,41 @@ std::string IniParser::search(const std::string identifier, const std::string se
 {
 	std::string parsed_string; // Value to be returned.
 
-	std::string line_buffer; // Buffer to read lines.
+	std::string string_buff; // Buffer to read lines.
 	unsigned line_num = 0;	 // Line counter.
 
 	// Reset stream reading position to beginning.
 	fsstream.seekg(0);
 
-	while (std::getline(fsstream, line_buffer))
+	while (std::getline(fsstream, string_buff))
 	{
 		line_num++;
 
 		// Ignore blank lines.
-		if (line_buffer.empty())
+		if (string_buff.empty())
 			continue;
 
 		// If its a section declaration syntax (ex "[Section]")
-		else if (line_buffer.at(0) == '[' && line_buffer.at(line_buffer.size() - 1) == ']')
+		else if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
 		{
 			// Remove all white spaces
-			line_buffer.erase(remove_if(line_buffer.begin(), line_buffer.end(), isspace), line_buffer.end());
+			string_buff.erase(remove_if(string_buff.begin(), string_buff.end(), isspace), string_buff.end());
 
 			// Compare if it ts the desired section. If not, jump to next line.
-			if (line_buffer.substr(1, line_buffer.size() - 2) != section)
+			if (string_buff.substr(1, string_buff.size() - 2) != section)
 				continue;
 
 			// If it is, start searching the identifier.
-			while (fsstream >> line_buffer)
+			while (fsstream >> string_buff)
 			{
 				// If found the identifier
-				if (line_buffer == identifier)
+				if (string_buff == identifier)
 				{
 					// Read next
-					fsstream >> line_buffer;
+					fsstream >> string_buff;
 
 					// If has an assingment operator
-					if (line_buffer == "=")
+					if (string_buff == "=")
 					{
 						// Get the assigned value
 						fsstream >> parsed_string;
@@ -57,8 +57,8 @@ std::string IniParser::search(const std::string identifier, const std::string se
 		}
 	}
 
-	// If did not find the matching search parameters, print a warning.
-	ErrorHandler::printErr("INIPARSER::SEARCH::WARN_SECTION_OR_IDENTIFIER_NOT_FOUND");
+	// If did not find the matching search parameters, throw a error.
+	ErrorHandler::throwErr("INIPARSER::SEARCH::ERR_DID_NOT_FIND_MATCH: " + identifier + " NOT PRESENT IN SECTION " + section);
 
 	// Return a blank string.
 	return std::string();
@@ -86,9 +86,11 @@ void IniParser::throwConversionError(const std::string value, const std::string 
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-IniParser::IniParser()
+IniParser::IniParser(const std::string file_path)
 {
 	preSettedSearchSection = "";
+
+	loadFile(file_path);
 }
 
 IniParser::~IniParser() {}
@@ -110,6 +112,62 @@ void IniParser::loadFile(const std::string file_path)
 		fsstream << c;
 
 	ifs.close();
+}
+
+const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValuePairs(const std::string section)
+{
+	std::vector<std::pair<std::string, std::string>> pairs;
+
+	std::string string_buff; // Buffer to read lines.
+	unsigned line_num = 0;	 // Line counter.
+
+	// Reset stream reading position to beginning.
+	fsstream.seekg(0);
+
+	while (std::getline(fsstream, string_buff))
+	{
+		line_num++;
+
+		// Ignore blank lines.
+		if (string_buff.empty())
+			continue;
+
+		// If its a section declaration syntax (ex "[Section]")
+		else if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
+		{
+			// Remove all white spaces
+			string_buff.erase(remove_if(string_buff.begin(), string_buff.end(), isspace), string_buff.end());
+
+			// Compare if it ts the desired section. If not, jump to next line.
+			if (string_buff.substr(1, string_buff.size() - 2) != section)
+				continue;
+
+			std::string key;
+			std::string value;
+
+			// If it is, start searching the identifier.
+			while (fsstream >> string_buff)
+			{
+				if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
+					return pairs;
+
+				key = string_buff;
+
+				fsstream >> string_buff;
+
+				if (string_buff == "=")
+				{
+					fsstream >> string_buff;
+
+					value = string_buff;
+
+					pairs.push_back(std::pair<std::string, std::string>(key, value));
+				}
+			}
+		}
+	}
+
+	return pairs;
 }
 
 const std::string IniParser::getString(const std::string identifier, const std::string section)

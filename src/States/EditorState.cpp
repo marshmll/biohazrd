@@ -25,20 +25,10 @@ void EditorState::initEditorCamera()
 
 void EditorState::initKeybinds()
 {
-    std::ifstream ifs("Config/editorstate_keybinds.ini");
+    IniParser parser("Config/keybinds.ini");
 
-    if (ifs.is_open())
-    {
-        std::string action = "";
-        std::string key = "";
-
-        while (ifs >> action >> key)
-            keybinds[action] = acceptedKeys->at(key);
-    }
-    else
-        ErrorHandler::throwErr("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n");
-
-    ifs.close();
+    for (auto it : parser.getAllKeyValuePairs("EditorState"))
+        keybinds[it.first] = acceptedKeys->at(it.second);
 }
 
 void EditorState::initFonts()

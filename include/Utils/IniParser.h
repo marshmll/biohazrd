@@ -22,7 +22,7 @@ private:
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-	IniParser();
+	IniParser(const std::string file_path);
 
 	virtual ~IniParser();
 
@@ -37,6 +37,8 @@ public:
 	 * @return void
 	 */
 	void loadFile(const std::string file_path);
+
+	const std::vector<std::pair<std::string, std::string>> getAllKeyValuePairs(const std::string section);
 
 	/**
 	 * @brief Returns an identifier's value as a std::string.

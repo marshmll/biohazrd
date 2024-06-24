@@ -39,20 +39,10 @@ void Engine::initWindow()
 
 void Engine::initKeys()
 {
-    std::ifstream ifs("Config/accepted_keys.ini");
+    IniParser parser("Config/accepted_keys.ini");
 
-    if (ifs.is_open())
-    {
-        std::string key = "";
-        int key_value = 0;
-
-        while (ifs >> key >> key_value)
-            acceptedKeys[key] = sf::Keyboard::Key(key_value);
-    }
-    else
-        ErrorHandler::throwErr("GAME::INITKEYS::ERROR_COULD_NOT_LOAD_ACCEPTED_KEYS_INI\n");
-
-    ifs.close();
+    for (auto it : parser.getAllKeyValuePairs("AcceptedKeys"))
+        acceptedKeys[it.first] = static_cast<sf::Keyboard::Key>(std::stoi(it.second));
 }
 
 void Engine::initStateData()

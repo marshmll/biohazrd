@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "GUI.h"
+#include "IniParser.h"
 #include "GraphicsSettings.h"
 
 class State; // Needed to typedef StateData.

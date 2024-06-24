@@ -6,9 +6,7 @@
 class GraphicsSettings
 {
 public:
-    /* VARIABLES ================================================================================================= */
-
-    IniParser iniParser;
+    /* VARIABLES ================================================================================================= */ 
 
     std::string title;
     sf::VideoMode resolution;

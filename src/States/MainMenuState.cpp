@@ -22,22 +22,10 @@ void MainMenuState::initFonts()
 
 void MainMenuState::initKeybinds()
 {
-    std::ifstream ifs("Config/mainmenustate_keybinds.ini");
+    IniParser parser("Config/keybinds.ini");
 
-    if (ifs.is_open())
-    {
-        std::string action = "";
-        std::string key = "";
-
-        while (ifs >> action >> key)
-        {
-            keybinds[action] = acceptedKeys->at(key);
-        }
-    }
-    else
-        ErrorHandler::throwErr("MAINMENUSTATE::INITKEYBINDS::ERROR_COULD_NOT_LOAD_KEYBINDS\n");
-
-    ifs.close();
+    for (auto it : parser.getAllKeyValuePairs("MainMenuState"))
+        keybinds[it.first] = acceptedKeys->at(it.second);
 }
 
 void MainMenuState::initGUI()
