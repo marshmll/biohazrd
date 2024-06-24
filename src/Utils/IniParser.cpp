@@ -53,6 +53,9 @@ std::string IniParser::search(const std::string identifier, const std::string se
 					else
 						throwSyntaxError(identifier, section, line_num);
 				}
+				// If it is the beginning of another section
+				else if (string_buff.at(0) == '[')
+					break;
 			}
 		}
 	}
