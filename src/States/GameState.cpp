@@ -250,36 +250,33 @@ void GameState::updatePlayerGUI(const float &dt)
 
 void GameState::updateEnemiesAndCombat(const float &dt)
 {
-    short unsigned index = 0;
-    for (auto enemy : activeEnemies)
+    Enemy *enemy;
+
+    for (size_t i = 0; i < activeEnemies.size(); ++i)
     {
+        enemy = activeEnemies[i]; 
         enemy->update(dt);
 
         tileMap->updateWorldBoundsCollision(dt, enemy);
         tileMap->updateTileCollision(dt, enemy);
 
-        updateCombat(dt, enemy, index);
+        updateCombat(dt, enemy);
 
-        // Very safe code LOL (TODO: change later)
         if (enemy->isDead())
         {
-            // Earn exp
             player->earnExp(enemy->getExpDrop());
 
-            textTagSystem->displayTag(TextTagType::EXPERIENCE_TAG,
+            textTagSystem->displayTag(EXPERIENCE_TAG,
                                       player->getPosition(),
                                       "+" + std::to_string(enemy->getExpDrop()) + "exp");
 
-            // Delete entity
-            activeEnemies.erase(activeEnemies.begin() + index);
-            --index;
+            delete enemy;
+            activeEnemies.erase(activeEnemies.begin() + i);
         }
-
-        ++index;
     }
 }
 
-void GameState::updateCombat(const float &dt, Enemy *enemy, const short unsigned index)
+void GameState::updateCombat(const float &dt, Enemy *enemy)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {

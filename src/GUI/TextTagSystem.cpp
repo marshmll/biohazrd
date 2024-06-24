@@ -23,6 +23,23 @@ void TextTagSystem::initTagTemplates()
                                             gui::calc_char_size(vm, 140),
                                             "DEFAULT_TAG", font);
 
+    tagTemplates[NEGATIVE_TAG] = new TextTag(0.f, 0.f,
+                                             0, -1,
+                                             0.f, 70.f,
+                                             300.f,
+                                             sf::Color::Red,
+                                             gui::calc_char_size(vm, 135),
+                                             "NEGATIVE_TAG", font, false);
+
+     tagTemplates[POSITIVE_TAG] = new TextTag(0.f, 0.f,
+                                             0, -1,
+                                             0.f, 70.f,
+                                             300.f,
+                                             sf::Color::Green,
+                                             gui::calc_char_size(vm, 135),
+                                             "POSITIVE_TAG", font, false);
+
+
     tagTemplates[DAMAGE_TAG] = new TextTag(0.f, 0.f,
                                            1, -1,
                                            5.f, 50.f,
