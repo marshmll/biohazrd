@@ -10,6 +10,8 @@ std::string IniParser::search(const std::string identifier, const std::string se
 	std::string string_buff; // Buffer to read lines.
 	unsigned line_num = 0;	 // Line counter.
 
+	bool existent_section = false; // Flag to mark if the section exists.
+
 	// Reset stream reading position to beginning.
 	fsstream.seekg(0);
 
@@ -31,6 +33,9 @@ std::string IniParser::search(const std::string identifier, const std::string se
 			if (string_buff.substr(1, string_buff.size() - 2) != section)
 				continue;
 
+			// Set the flag to mark that the section exists in the file.
+			existent_section = true;
+
 			// If it is, start searching the identifier.
 			while (fsstream >> string_buff)
 			{
@@ -40,36 +45,37 @@ std::string IniParser::search(const std::string identifier, const std::string se
 					// Read next
 					fsstream >> string_buff;
 
-					// If has an assingment operator
-					if (string_buff == "=")
-					{
-						// Get the assigned value
-						fsstream >> parsed_string;
-
-						// Return the value
-						return parsed_string;
-					}
-					// If not, throw a syntax error.
-					else
+					// If it is not an assignment operator, throw syntax error
+					if (string_buff != "=")
 						throwSyntaxError(identifier, section, line_num);
+					
+					// Get the assigned value
+					fsstream >> parsed_string;
+
+					// Return the value
+					return parsed_string;
+						
 				}
-				// If it is the beginning of another section
+				// If it is the beginning of another section, break.
 				else if (string_buff.at(0) == '[')
 					break;
 			}
 		}
 	}
 
-	// If did not find the matching search parameters, throw a error.
-	ErrorHandler::throwErr("INIPARSER::SEARCH::ERR_DID_NOT_FIND_MATCH: " + identifier + " NOT PRESENT IN SECTION " + section);
+	// Print the correct error message
+	if (existent_section)
+		ErrorHandler::throwErr("INIPARSER::SEARCH::ERR_DID_NOT_FIND_MATCH: " + identifier + " NOT EXISTENT IN SECTION " + section + "\n	> At file: " + filePath);
+	
+	else
+		ErrorHandler::throwErr("INIPARSER::SEARCH::INEXISTEXT_SECTION: " + section + "\n	> At file: " + filePath);
 
-	// Return a blank string.
 	return std::string();
 }
 
 void IniParser::throwSyntaxError(const std::string identifier, const std::string section, const unsigned line_num)
 {
-	std::cerr << "[IniParser] (Syntax Error): Expected token \"=\"" << "\n"
+	std::cerr << "[IniParser] (Syntax Error): Expected operator \"=\"" << "\n"
 			  << "	> At identifier \"" << identifier << "\"" << "\n"
 			  << "	> At section \"" << section << "\" (line " << line_num << ")" << "\n"
 			  << "	> At file \"" << filePath << "\"\n";
@@ -81,7 +87,7 @@ void IniParser::throwConversionError(const std::string value, const std::string 
 									 const std::string identifier, const std::string section)
 {
 	std::cerr << "[IniParser] (Type Error): Invalid conversion" << "\n"
-			  << "	> value " << value << " to " << type << "\n"
+			  << "	> value \"" << value << "\" to " << type << "\n"
 			  << "	> At identifier \"" << identifier << "\"" << "\n"
 			  << "	> At section \"" << section << "\"\n"
 			  << "	> At file \"" << filePath << "\"\n";
@@ -127,6 +133,8 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
 	std::string string_buff; // Buffer to read lines.
 	unsigned line_num = 0;	 // Line counter.
 
+	bool existent_section = false; // Flag to mark if the section exists.
+
 	// Reset stream reading position to beginning.
 	fsstream.seekg(0);
 
@@ -147,6 +155,9 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
 			// Compare if it ts the desired section. If not, jump to next line.
 			if (string_buff.substr(1, string_buff.size() - 2) != section)
 				continue;
+
+			// Set the flag to mark that the section exists in the file.
+			existent_section = true;
 
 			std::string key;
 			std::string value;
@@ -179,6 +190,10 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
 			}
 		}
 	}
+
+	// If there is no pairs, check if the section exists. If not, throw and error.
+	if (pairs.empty() && !existent_section)
+		ErrorHandler::throwErr("INIPARSER::GETALLKEYVALUEPAIRS::INEXISTEXT_SECTION: " + section + "\n	> At file: " + filePath);
 
 	return pairs;
 }

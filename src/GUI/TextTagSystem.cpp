@@ -63,16 +63,12 @@ TextTagSystem::~TextTagSystem()
 
 void TextTagSystem::update(const float &dt)
 {
-    for (auto tag : tags)
+    for (size_t i = 0; i < tags.size(); ++i)
     {
-        tag->update(dt);
+        tags[i]->update(dt);
 
-        // TODO: find and optimal solution.
-        if (tag->hasExceededLifetime())
-        {
-            removeTag(tag);
-            break;
-        }
+        if (tags[i]->hasExceededLifetime())
+            removeTag(i);
     }
 }
 
@@ -82,19 +78,34 @@ void TextTagSystem::render(sf::RenderTarget &target)
         tag->render(target);
 }
 
-void TextTagSystem::addTag(const TextTagType type, const float x, const float y, const std::string string)
+void TextTagSystem::displayTag(const TextTagType type, const float x, const float y, const std::string string)
 {
-    tags.push_back(new TextTag(*tagTemplates[type]));
-    tags.back()->setString(string);
-    tags.back()->setPosition(x, y);
+    tags.push_back(new TextTag(tagTemplates[type], x, y, string));
+}
+
+void TextTagSystem::displayTag(const TextTagType type, const sf::Vector2f &position, const std::string string)
+{
+    tags.push_back(new TextTag(tagTemplates[type], position.x, position.y, string));
 }
 
 void TextTagSystem::removeTag(TextTag *tag)
 {
-    auto tagIt = std::find(tags.begin(), tags.end(), tag);
+    auto tag_it = std::find(tags.begin(), tags.end(), tag);
 
-    if (tagIt != tags.end())
-        tags.erase(tagIt);
+    if (tag_it != tags.end())
+    {
+        delete tag;
+        tags.erase(tag_it);
+    }
     else
-        ErrorHandler::throwErr("TEXTTAGSYSTEM::REMOVETAG::ERR_TAG_NOT_FOUND");
+        ErrorHandler::throwErr("TEXTTAGSYSTEM::REMOVETAG::ERR_TAG_NOT_FOUND_IN_VECTOR");
+}
+
+void TextTagSystem::removeTag(const size_t index)
+{
+    if (index >= tags.size())
+        ErrorHandler::throwErr("TEXTTAGSYSTEM::REMOVETAG::INDEX_OUT_OF_BOUNDS");
+
+    delete tags[index];
+    tags.erase(tags.begin() + index);
 }

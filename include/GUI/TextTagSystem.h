@@ -64,6 +64,24 @@ private:
             fadeFx = use_fade_fx;
         }
 
+        TextTag(TextTag *tag, const float x, const float y, const std::string string)
+        {
+            dirX = tag->dirX;
+            dirY = tag->dirY;
+
+            speedX = tag->speedX;
+            speedY = tag->speedY;
+
+            initialLifetime = tag->initialLifetime;
+            currentLifetime = tag->currentLifetime;
+
+            text = tag->text;
+            text.setString(string);
+            text.setPosition(x, y);
+
+            fadeFx = tag->fadeFx;
+        }
+
         ~TextTag() {}
 
         /* FUNCTIONS ============================================================= */
@@ -169,9 +187,13 @@ public:
 
     void render(sf::RenderTarget &target);
 
-    void addTag(const TextTagType type, const float x, const float y, const std::string string);
+    void displayTag(const TextTagType type, const float x, const float y, const std::string string);
+
+    void displayTag(const TextTagType type, const sf::Vector2f &position, const std::string string);
 
     void removeTag(TextTag *tag);
+
+    void removeTag(const size_t index);
 
     /* ACCESSORS =================================================================================================== */
 
