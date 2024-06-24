@@ -22,10 +22,6 @@ void MainMenuState::initFonts()
 
 void MainMenuState::initKeybinds()
 {
-    IniParser parser("Config/keybinds.ini");
-
-    for (auto it : parser.getAllKeyValuePairs("MainMenuState"))
-        keybinds[it.first] = acceptedKeys->at(it.second);
 }
 
 void MainMenuState::initGUI()

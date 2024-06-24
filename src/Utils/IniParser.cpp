@@ -68,7 +68,8 @@ void IniParser::throwSyntaxError(const std::string identifier, const std::string
 {
 	std::cerr << "[IniParser] (Syntax Error): Expected token \"=\"" << "\n"
 			  << "	> At identifier \"" << identifier << "\"" << "\n"
-			  << "	> At section \"" << section << "\" (line " << line_num << ")" << "\n";
+			  << "	> At section \"" << section << "\" (line " << line_num << ")" << "\n"
+			  << "	> At file \"" << filePath << "\"\n";
 
 	exit(EXIT_FAILURE);
 }
@@ -79,7 +80,8 @@ void IniParser::throwConversionError(const std::string value, const std::string 
 	std::cerr << "[IniParser] (Type Error): Invalid conversion" << "\n"
 			  << "	> value " << value << " to " << type << "\n"
 			  << "	> At identifier \"" << identifier << "\"" << "\n"
-			  << "	> At section \"" << section << "\n";
+			  << "	> At section \"" << section << "\"\n"
+			  << "	> At file \"" << filePath << "\"\n";
 
 	exit(EXIT_FAILURE);
 }
@@ -88,6 +90,7 @@ void IniParser::throwConversionError(const std::string value, const std::string 
 
 IniParser::IniParser(const std::string file_path)
 {
+	filePath = file_path;
 	preSettedSearchSection = "";
 
 	loadFile(file_path);
@@ -145,24 +148,31 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
 			std::string key;
 			std::string value;
 
-			// If it is, start searching the identifier.
+			// If it is, start loading keys and values.
 			while (fsstream >> string_buff)
 			{
-				if (string_buff.at(0) == '[' && string_buff.at(string_buff.size() - 1) == ']')
+				// If at the beginning of another section, return the pairs.
+				if (string_buff.at(0) == '[')
 					return pairs;
 
+				// Save the key.
 				key = string_buff;
 
+				// Read next
 				fsstream >> string_buff;
 
-				if (string_buff == "=")
-				{
-					fsstream >> string_buff;
+				// If the assignment operator is not correctly used, throw error
+				if (string_buff != "=")
+					throwSyntaxError(key, section, line_num);
 
-					value = string_buff;
+				// Read the value
+				fsstream >> string_buff;
 
-					pairs.push_back(std::pair<std::string, std::string>(key, value));
-				}
+				// Save the value
+				value = string_buff;
+
+				// Insert a new pair into the vector.
+				pairs.push_back(std::pair<std::string, std::string>(key, value));
 			}
 		}
 	}

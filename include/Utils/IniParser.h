@@ -6,6 +6,8 @@ class IniParser
 private:
 	/* VARIABLES ================================================================================================= */
 
+	std::string filePath;
+
 	std::stringstream fsstream;
 
 	std::string preSettedSearchSection;
@@ -38,6 +40,13 @@ public:
 	 */
 	void loadFile(const std::string file_path);
 
+	/**
+	 * @brief Returns all pairs of (key, value) of a given section.
+	 * @param section The section to extract all the identifiers and
+	 * their values.
+	 *
+	 * @return const std::vector<std::pair<std::string, std::string>>
+	 */
 	const std::vector<std::pair<std::string, std::string>> getAllKeyValuePairs(const std::string section);
 
 	/**
@@ -53,7 +62,7 @@ public:
 	/**
 	 * @brief Returns an identifier's value as an int.
 	 * @param identifier The identifier's name
-	 * @param section The section the identifiers is contained in.
+	 * @param section The section the identifier is contained in.
 	 * May leave empty if already pre-setted a section.
 	 *
 	 * @return const int
@@ -63,7 +72,7 @@ public:
 	/**
 	 * @brief Returns an identifier's value as an bool.
 	 * @param identifier The identifier's name
-	 * @param section The section the identifiers is contained in.
+	 * @param section The section the identifier is contained in.
 	 * May leave empty if already pre-setted a section.
 	 *
 	 * @return const bool
