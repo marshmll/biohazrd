@@ -219,29 +219,47 @@ void gui::Button::setString(std::string string)
 gui::DropDownList::DropDownList(
     const float x, const float y,
     const float width, const float height,
-    sf::Font &font, const std::string elements_name[],
-    const unsigned num_of_elements, const unsigned char_size,
+    sf::Font &font, const std::vector<std::string> labels,
+    const unsigned char_size,
+    const int max_size,
     const short unsigned default_index)
     : showList(false),
       keytime(0.f), keytimeMax(20.f)
 {
     selectedElement = new gui::Button(
         x, y, width, height,
-        font, elements_name[default_index], char_size,
+        font, labels[default_index], char_size,
         sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
         sf::Color(120, 120, 120, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
         sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50));
 
-    for (unsigned i = 0; i < num_of_elements; i++)
+    for (size_t i = 0; i < labels.size(); i++)
     {
-        list.push_back(
-            new gui::Button(
-                x, y + ((i + 1) * height), width, height,
-                font, elements_name[i], char_size,
-                sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-                sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
-                sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
-                i));
+        if (max_size != -1)
+        {
+            if (i < max_size)
+            {
+                list.push_back(
+                    new gui::Button(
+                        x, y + ((i + 1) * height), width, height,
+                        font, labels[i], char_size,
+                        sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
+                        sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+                        sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
+                        i));
+            }
+        }
+        else
+        {
+            list.push_back(
+                new gui::Button(
+                    x, y + ((i + 1) * height), width, height,
+                    font, labels[i], char_size,
+                    sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
+                    sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+                    sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
+                    i));
+        }
     }
 }
 

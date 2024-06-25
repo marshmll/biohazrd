@@ -210,11 +210,21 @@ namespace gui
 
         /**
          * @brief Initializes the drop down list.
+         * @param x The x coordinate
+         * @param y The y coordinate
+         * @param width The buttons width
+         * @param height The buttons height
+         * @param font A font reference
+         * @param labels A vector of strings containing the buttons labels.
+         * @param char_size The character size for the labels.
+         * @param max_size The max amount of elements in the list. (default = none [-1])
+         * @param default_index The index of the element that is selected by default (default = 0).
          */
         DropDownList(const float x, const float y,
                      const float width, const float height,
-                     sf::Font &font, const std::string elements_name[],
-                     const unsigned num_of_elements, const unsigned char_size,
+                     sf::Font &font, const std::vector<std::string> labels,
+                     const unsigned char_size,
+                     const int max_size = -1,
                      const short unsigned default_index = 0);
 
         /**

@@ -53,28 +53,39 @@ void SettingsState::initGUI()
         sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
     // Drop down lists
-    std::vector<std::string> modes_str;
+    std::vector<std::string> mode_labels;
 
     // Get the video modes strings
     for (auto &mode : videoModes)
-        modes_str.push_back(std::to_string(mode.width) + "x" + std::to_string(mode.height));
-
-    // Find the index of the current videomode in videomodes
-    unsigned i;
-    auto it = std::find(videoModes.begin(), videoModes.end(), vm);
-    if (it != videoModes.end())
     {
-        auto index = std::distance(videoModes.begin(), it);
+        std::stringstream ss;
+        ss << mode.width << "x" << mode.height;
 
-        i = static_cast<unsigned>(index);
+        if (std::find(mode_labels.begin(), mode_labels.end(), ss.str()) == mode_labels.end())
+            mode_labels.push_back(ss.str());
+    }
+
+    // Find the index of the current mode label in mode labels
+    short unsigned selected_index = 0;
+    std::stringstream current_mode_label;
+
+    current_mode_label << vm.width << "x" << vm.height;
+
+    auto it = std::find(mode_labels.begin(), mode_labels.end(), current_mode_label.str());
+    if (it != mode_labels.end())
+    {
+        auto index = std::distance(mode_labels.begin(), it);
+
+        selected_index = static_cast<short unsigned>(index);
     }
 
     // Create the drop down list.
     dropDownLists["RESOLUTIONS"] = new gui::DropDownList(
         gui::p2pX(vm, 25.f), gui::p2pY(vm, 40.f),
-        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 6.2f),
-        font, modes_str.data(), modes_str.size(),
-        gui::calc_char_size(vm, 120), i);
+        gui::p2pX(vm, 16.f), gui::p2pY(vm, 3.f),
+        font, mode_labels,
+        gui::calc_char_size(vm, 135),
+        10, selected_index);
 
     // Create options text
     optionsText.setFont(font);

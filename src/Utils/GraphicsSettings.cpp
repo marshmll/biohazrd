@@ -52,7 +52,7 @@ void GraphicsSettings::loadFromFile(const std::string path)
 {
     IniParser parser(path);
 
-    parser.setSearchSection("Graphics");
+    parser.setSectionPreset("Graphics");
 
     title = parser.getString("Title");
     resolution.width = parser.getInt("ResolutionWidth");

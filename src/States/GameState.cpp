@@ -254,7 +254,7 @@ void GameState::updateEnemiesAndCombat(const float &dt)
 
     for (size_t i = 0; i < activeEnemies.size(); ++i)
     {
-        enemy = activeEnemies[i]; 
+        enemy = activeEnemies[i];
         enemy->update(dt);
 
         tileMap->updateWorldBoundsCollision(dt, enemy);

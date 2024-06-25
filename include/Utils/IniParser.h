@@ -1,6 +1,20 @@
 #ifndef INIPARSER_H_
 #define INIPARSER_H_
 
+/**
+ * @brief A class that is used to parse data from a .ini file.
+ * Note that a .ini file can be divided in sections, each section
+ * containing multiple identifiers and its values. Ex:
+ * @attention [Section1]
+ * @attention
+ * @attention Identifier1 = value 1
+ * @attention Identifier2 = value 2
+ * @attention [Section2]
+ * @attention Identifier1 = value 1
+ * @attention Identifier2 = value 2
+ * 
+ * @note This parser handles inconsistent spacing.
+ */
 class IniParser
 {
 private:
@@ -10,7 +24,7 @@ private:
 
 	std::stringstream fsstream;
 
-	std::string preSettedSearchSection;
+	std::string sectionPreset;
 
 	/* PRIVATE FUNCTIONS ======================================================================================== */
 
@@ -86,7 +100,7 @@ public:
 	 *
 	 * @return const std::string&
 	 */
-	const std::string &getSearchSection() const;
+	const std::string &getSectionPreset() const;
 
 	/* MODIFIERS ================================================================================================= */
 
@@ -97,7 +111,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void setSearchSection(const std::string section);
+	void setSectionPreset(const std::string section);
 };
 
 #endif /* INIPARSER_H_ */
