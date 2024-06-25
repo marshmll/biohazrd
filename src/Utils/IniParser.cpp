@@ -26,6 +26,15 @@ std::string IniParser::search(const std::string identifier, const std::string se
         // Remove all white spaces
         str_buff.erase(remove_if(str_buff.begin(), str_buff.end(), isspace), str_buff.end());
 
+        // If it is a comment, skip.
+        if (str_buff.at(0) == ';')
+            continue;
+
+        // If the size of the buffer is at least at the size of the section + 2 (the two [])
+        if (str_buff.size() >= section.size() + 2)
+            // Crop the string to containt just the section and the brackets.
+            str_buff = str_buff.substr(0, section.size() + 2);
+
         // If its a section declaration syntax (ex "[Section]")
         if (str_buff.at(0) == '[' && str_buff.at(str_buff.size() - 1) == ']')
         {
@@ -39,6 +48,13 @@ std::string IniParser::search(const std::string identifier, const std::string se
             // If it is, start searching the identifier.
             while (fsstream >> str_buff)
             {
+                // If it is a comment, skip to next line.
+                if (str_buff.at(0) == ';')
+                {
+                    std::getline(fsstream, str_buff);
+                    continue;
+                }
+
                 // If found the identifier
                 if (str_buff == identifier)
                 {
@@ -129,6 +145,9 @@ void IniParser::loadFile(const std::string file_path)
 
 const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValuePairs(const std::string section)
 {
+    std::string key;
+    std::string value;
+
     std::vector<std::pair<std::string, std::string>> pairs;
 
     std::string str_buff;  // Buffer to read lines.
@@ -150,6 +169,15 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
         // Remove all white spaces
         str_buff.erase(remove_if(str_buff.begin(), str_buff.end(), isspace), str_buff.end());
 
+        // If it is a comment, skip.
+        if (str_buff.at(0) == ';')
+            continue;
+
+        // If the size of the buffer is at least at the size of the section + 2 (the two [])
+        if (str_buff.size() >= section.size() + 2)
+            // Crop the string to containt just the section and the brackets.
+            str_buff = str_buff.substr(0, section.size() + 2);
+
         // If its a section declaration syntax (ex "[Section]")
         if (str_buff.at(0) == '[' && str_buff.at(str_buff.size() - 1) == ']')
         {
@@ -160,12 +188,16 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
             // Set the flag to mark that the section exists in the file.
             existent_section = true;
 
-            std::string key;
-            std::string value;
-
             // If it is, start loading keys and values.
             while (fsstream >> str_buff)
             {
+                // If it is a comment, skip to next line.
+                if (str_buff.at(0) == ';')
+                {
+                    std::getline(fsstream, str_buff);
+                    continue;
+                }
+
                 // If at the beginning of another section, return the pairs.
                 if (str_buff.at(0) == '[')
                     return pairs;
