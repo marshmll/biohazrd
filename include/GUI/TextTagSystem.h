@@ -88,7 +88,7 @@ private:
 
         void update(const float &dt)
         {
-            if (!hasExceededLifetime())
+            if (!isExpired())
             {
                 if (fadeFx)
                 {
@@ -123,7 +123,7 @@ private:
 
         /* ACCESSORS ============================================================= */
 
-        inline const bool hasExceededLifetime() const { return currentLifetime <= 0.f; }
+        inline const bool isExpired() const { return currentLifetime <= 0.f; }
 
         /* MODIFIERS ============================================================= */
 
@@ -183,17 +183,79 @@ public:
 
     /* FUNCTIONS =================================================================================================== */
 
+    /**
+     * @brief Iterates through all active tags and update them.
+     * Deletes any expired tag.
+     *
+     * @return void
+     */
     void update(const float &dt);
 
+    /**
+     * @brief Renders all active tags into a target.
+     *
+     * @return void
+     */
     void render(sf::RenderTarget &target);
 
-    void displayTag(const TextTagType type, const float x, const float y, const std::string string);
+    /**
+     * @brief Creates a new tag into the system. The tag will be
+     * shown and updated until it ends the lifetime.
+     * @param type The tag type (TextTagType enum)
+     * @param x The x position.
+     * @param y The y position.
+     * @param content The content of the tag.
+     * @param prefix A prefix to the tag. Default none.
+     * @param postfix a postfix to the tag. Default none.
+     *
+     * @return void.
+     */
+    template <typename T>
+    void displayTag(const TextTagType type, const float x, const float y, const T content,
+                    const std::string prefix = "", const std::string postfix = "")
+    {
+        std::stringstream ss;
+        ss << prefix << content << postfix;
 
-    void displayTag(const TextTagType type, const sf::Vector2f &position, const std::string string);
+        tags.push_back(new TextTag(tagTemplates[type], x, y, ss.str()));
+    }
 
-    void removeTag(TextTag *tag);
+    /**
+     * @brief Creates a new tag into the system. The tag will be
+     * shown and updated until it ends the lifetime.
+     * @param type The tag type (TextTagType enum)
+     * @param position A sf::Vector2f of the position.
+     * @param content The content of the tag.
+     * @param prefix A prefix to the tag. Default none.
+     * @param postfix a postfix to the tag. Default none.
+     *
+     * @return void.
+     */
+    template <typename T>
+    void displayTag(const TextTagType type, const sf::Vector2f &position, const T content,
+                    const std::string prefix = "", const std::string postfix = "")
+    {
+        std::stringstream ss;
+        ss << prefix << content << postfix;
 
-    void removeTag(const size_t index);
+        tags.push_back(new TextTag(tagTemplates[type], position.x, position.y, ss.str()));
+    }
+
+    /**
+     * @brief Deletes a tag by its pointer.
+     * @attention Deletes the data AND the pointer from the vector.
+     * 
+     * @return void
+     */
+    void deleteTag(TextTag *tag);
+
+    /**
+     * @brief Deletes a tag by its index.
+     * @attention Deletes the data AND the pointer from the vector.
+     *
+     * @return void
+     */
+    void deleteTag(const size_t index);
 
     /* ACCESSORS =================================================================================================== */
 

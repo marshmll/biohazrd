@@ -268,10 +268,10 @@ void GameState::updateEnemiesAndCombat(const float &dt)
 
             textTagSystem->displayTag(EXPERIENCE_TAG,
                                       player->getPosition(),
-                                      "+" + std::to_string(enemy->getExpDrop()) + "exp");
+                                      enemy->getExpDrop(),
+                                      "+", "exp");
 
-            delete enemy;
-            activeEnemies.erase(activeEnemies.begin() + i);
+            enemySystem->deleteEnemy(i);
         }
     }
 }
@@ -288,7 +288,8 @@ void GameState::updateCombat(const float &dt, Enemy *enemy)
 
             textTagSystem->displayTag(TextTagType::DAMAGE_TAG,
                                       enemy->getPosition(),
-                                      "-" + std::to_string(player->getWeapon()->getDamageMin()) + "hp");
+                                      player->getWeapon()->getDamageMin(),
+                                      "-", "hp");
         }
     }
 }

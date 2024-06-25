@@ -31,14 +31,13 @@ void TextTagSystem::initTagTemplates()
                                              gui::calc_char_size(vm, 135),
                                              "NEGATIVE_TAG", font, false);
 
-     tagTemplates[POSITIVE_TAG] = new TextTag(0.f, 0.f,
+    tagTemplates[POSITIVE_TAG] = new TextTag(0.f, 0.f,
                                              0, -1,
                                              0.f, 70.f,
                                              300.f,
                                              sf::Color::Green,
                                              gui::calc_char_size(vm, 135),
                                              "POSITIVE_TAG", font, false);
-
 
     tagTemplates[DAMAGE_TAG] = new TextTag(0.f, 0.f,
                                            1, -1,
@@ -80,12 +79,16 @@ TextTagSystem::~TextTagSystem()
 
 void TextTagSystem::update(const float &dt)
 {
+    TextTag *tag;
+
     for (size_t i = 0; i < tags.size(); ++i)
     {
-        tags[i]->update(dt);
+        tag = tags[i];
 
-        if (tags[i]->hasExceededLifetime())
-            removeTag(i);
+        tag->update(dt);
+
+        if (tag->isExpired())
+            deleteTag(i);
     }
 }
 
@@ -95,30 +98,18 @@ void TextTagSystem::render(sf::RenderTarget &target)
         tag->render(target);
 }
 
-void TextTagSystem::displayTag(const TextTagType type, const float x, const float y, const std::string string)
-{
-    tags.push_back(new TextTag(tagTemplates[type], x, y, string));
-}
-
-void TextTagSystem::displayTag(const TextTagType type, const sf::Vector2f &position, const std::string string)
-{
-    tags.push_back(new TextTag(tagTemplates[type], position.x, position.y, string));
-}
-
-void TextTagSystem::removeTag(TextTag *tag)
+void TextTagSystem::deleteTag(TextTag *tag)
 {
     auto tag_it = std::find(tags.begin(), tags.end(), tag);
 
-    if (tag_it != tags.end())
-    {
-        delete tag;
-        tags.erase(tag_it);
-    }
-    else
+    if (tag_it == tags.end())
         ErrorHandler::throwErr("TEXTTAGSYSTEM::REMOVETAG::ERR_TAG_NOT_FOUND_IN_VECTOR");
+
+    delete tag;
+    tags.erase(tag_it);
 }
 
-void TextTagSystem::removeTag(const size_t index)
+void TextTagSystem::deleteTag(const size_t index)
 {
     if (index >= tags.size())
         ErrorHandler::throwErr("TEXTTAGSYSTEM::REMOVETAG::INDEX_OUT_OF_BOUNDS");

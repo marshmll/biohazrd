@@ -30,7 +30,35 @@ public:
 
     void render(sf::RenderTarget &target);
 
+    /**
+     * @brief Creates an enemy of a given type on x and y coordinates.
+     *
+     * @return void
+     */
     void createEnemy(const EnemyType type, const float x, const float y);
+
+    /**
+     * @brief Creates an enemy of a given type on a position.
+     *
+     * @return void
+     */
+    void createEnemy(const EnemyType type, const sf::Vector2f position);
+
+    /**
+     * @brief Deletes an enemy by its index.
+     * @attention Deletes the data AND erases the pointer from the vector.
+     *
+     * @return void
+     */
+    void deleteEnemy(const size_t index);
+
+    /**
+     * @brief Deletes an enemy by its pointer.
+     * @attention Deletes the data AND erases the pointer from the vector.
+     *
+     * @return void
+     */
+    void deleteEnemy(Enemy *enemy);
 
     /* ACCESSORS ================================================================================================ */
 
