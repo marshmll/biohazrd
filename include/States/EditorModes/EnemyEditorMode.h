@@ -19,6 +19,7 @@ private:
     short enemyAmount;
     short enemyTimeToSpawn;
     short enemyMaxDistance;
+    short enemySpawnAreaSize;
 
     /* INITIALIZERS ============================================================================================== */
 

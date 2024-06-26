@@ -6,16 +6,21 @@
 EnemySpawnerTile::EnemySpawnerTile(
     const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
     const sf::Texture &texture, const sf::IntRect texture_rect,
-    const int enemy_type, const int enemy_amount,
-    const int enemy_time_to_spawn, const int enemy_max_distance)
+    const short enemy_type, const short enemy_amount,
+    const short enemy_time_to_spawn, const short enemy_max_distance,
+    const short enemy_spawn_area_size)
 
-    : Tile(TileType::SPAWNER, grid_x, grid_y, grid_size_f, texture, texture_rect,
+    : Tile(SPAWNER, grid_x, grid_y, grid_size_f,
+           texture, texture_rect,
            NOT_COLLIDEABLE, grid_size_f, grid_size_f, 0.f, 0.f)
 {
+    spawnTimer.restart();
+
     enemyType = enemy_type;
     enemyAmount = enemy_amount;
     enemyTimeToSpawn = enemy_time_to_spawn;
     enemyMaxDistance = enemy_max_distance;
+    enemySpawnAreaSize = enemy_spawn_area_size;
 
     spawned = false;
 }
@@ -45,9 +50,32 @@ void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, cons
     }
 }
 
-const bool &EnemySpawnerTile::hasSpawned() const
+const bool EnemySpawnerTile::canSpawn(const sf::Vector2f &player_pos)
 {
-    return spawned;
+    if (hasElapsedSpawnTime())
+        return isPlayerInsideSpawnArea(player_pos);
+
+    return false;
+}
+
+const bool EnemySpawnerTile::hasElapsedSpawnTime()
+{
+    if (static_cast<short>(spawnTimer.getElapsedTime().asSeconds()) >= enemyTimeToSpawn)
+    {
+        spawnTimer.restart();
+        return true;
+    }
+
+    return false;
+}
+
+const bool EnemySpawnerTile::isPlayerInsideSpawnArea(const sf::Vector2f &player_pos)
+{
+    sf::Vector2f center = getCenteredPosition();
+
+    short distance = static_cast<short>(sqrt(pow(player_pos.x - center.x, 2) + pow(player_pos.y - center.y, 2)));
+
+    return distance <= enemySpawnAreaSize * gridSizeF;
 }
 
 /* ACCESSORS ================================================================================================== */
@@ -59,14 +87,10 @@ const std::string EnemySpawnerTile::getPropertiesAsString() const
     properties << type << " "
                << tile.getTextureRect().left << " " << tile.getTextureRect().top << " "
                << enemyType << " " << enemyAmount << " "
-               << enemyTimeToSpawn << " " << enemyMaxDistance;
+               << enemyTimeToSpawn << " " << enemyMaxDistance << " "
+               << enemySpawnAreaSize;
 
     return properties.str();
 }
 
 /* MODIFIERS ==================================================================================================== */
-
-void EnemySpawnerTile::setSpawned(const bool spawned)
-{
-    this->spawned = spawned;
-}

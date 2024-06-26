@@ -153,8 +153,9 @@ public:
     void addSpawner(
         const unsigned x, const unsigned y, const unsigned z,
         const sf::IntRect &texture_rect,
-        const int enemy_type, const int enemy_amount,
-        const int enemy_time_to_spawn, const int enemy_max_distance);
+        const short enemy_type, const short enemy_amount,
+        const short enemy_time_to_spawn, const short enemy_max_distance,
+        const short enemy_spawn_area_size);
 
     /**
      * @brief  Removes a tile from the tilemap.

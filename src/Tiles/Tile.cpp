@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "Tile.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 Tile::Tile(
     const TileType type,
@@ -18,7 +18,7 @@ Tile::Tile(
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y)
 
-    : type(type), collision(collision),
+    : type(type), gridSizeF(grid_size_f), collision(collision),
       collBoxOffsetX(coll_box_offset_x), collBoxOffsetY(coll_box_offset_y)
 {
     tile.setTexture(texture);
@@ -36,7 +36,7 @@ Tile::~Tile()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void Tile::update()
 {
@@ -62,11 +62,21 @@ const bool Tile::intersects(const sf::FloatRect &bounds) const
     return collBox.getGlobalBounds().intersects(bounds);
 }
 
-/* ACCESSORS */
+/* ACCESSORS ===================================================================================================== */
 
 const sf::Vector2f &Tile::getPosition() const
 {
     return tile.getPosition();
+}
+
+const sf::Vector2f Tile::getCenteredPosition() const
+{
+    sf::Vector2f center;
+
+    center.x = tile.getPosition().x + gridSizeF / 2.f;
+    center.x = tile.getPosition().y + gridSizeF / 2.f;
+
+    return center;
 }
 
 const sf::IntRect &Tile::getTextureRect() const

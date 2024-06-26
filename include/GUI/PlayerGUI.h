@@ -15,10 +15,10 @@ private:
 
     sf::Font font;
 
-    gui::ProgressBar *hpBar;
     gui::ProgressBar *expBar;
-
     gui::SolidBar *levelBar;
+    gui::ProgressBar *hpBar;
+    gui::ProgressBar *cooldownBar;
 
     /* INITIALIZERS =============================================================================================== */
 
@@ -28,6 +28,13 @@ private:
      * @return void
      */
     void initFont();
+
+    /**
+     * @brief Initializes the exp bar.
+     *
+     * @return void
+     */
+    void initExpBar();
 
     /**
      * @brief
@@ -43,12 +50,7 @@ private:
      */
     void initHpBar();
 
-    /**
-     * @brief Initializes the exp bar.
-     *
-     * @return void
-     */
-    void initExpBar();
+    void initCooldownBar();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -99,6 +101,8 @@ public:
      * @return void
      */
     void updateExpBar();
+
+    void updateCooldownBar();
 };
 
-#endif
+#endif /* PLAYERGUI_H_ */

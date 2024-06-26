@@ -9,11 +9,21 @@ void PlayerGUI::initFont()
         ErrorHandler::throwErr("PLAYERGUI::INITFONT::ERR::COULD_NOT_LOAD_FONT\n");
 }
 
+void PlayerGUI::initExpBar()
+{
+    expBar = new gui::ProgressBar(
+        (vm.width / 2.f) - gui::p2pX(vm, 70.f) / 2.f, gui::p2pY(vm, 95.f),
+        gui::p2pX(vm, 70.f), gui::p2pY(vm, 2.f),
+        player->getAttributeComponent()->exp, player->getAttributeComponent()->expNext,
+        sf::Color(50, 50, 50, 200), sf::Color(20, 230, 20, 200),
+        font, sf::Color::White, gui::calc_char_size(vm, 140));
+}
+
 void PlayerGUI::initLevelBar()
 {
     levelBar = new gui::SolidBar(
-        gui::p2pX(vm, 1.5f), gui::p2pY(vm, 2.5f),
-        gui::p2pX(vm, 2.3f), gui::p2pY(vm, 3.7f),
+        expBar->getPosition().x, expBar->getPosition().y - gui::p2pY(vm, 3.5f),
+        gui::p2pX(vm, 2.3f), gui::p2pY(vm, 3.2f),
         sf::Color(20, 20, 250, 200), sf::Color::White,
         font, gui::calc_char_size(vm, 140));
 }
@@ -21,21 +31,20 @@ void PlayerGUI::initLevelBar()
 void PlayerGUI::initHpBar()
 {
     hpBar = new gui::ProgressBar(
-        gui::p2pX(vm, 1.5f), gui::p2pY(vm, 7.5f),
-        gui::p2pX(vm, 19.5f), gui::p2pY(vm, 3.7f),
+        expBar->getPosition().x + gui::p2pX(vm, 2.6f), expBar->getPosition().y - gui::p2pY(vm, 3.5f),
+        gui::p2pX(vm, 19.5f), gui::p2pY(vm, 3.2f),
         player->getAttributeComponent()->hp, player->getAttributeComponent()->hpMax,
         sf::Color(50, 50, 50, 200), sf::Color(230, 20, 20, 200),
         font, sf::Color::White, gui::calc_char_size(vm, 140));
 }
 
-void PlayerGUI::initExpBar()
+void PlayerGUI::initCooldownBar()
 {
-    expBar = new gui::ProgressBar(
-        gui::p2pX(vm, 1.5f), gui::p2pY(vm, 12.5f),
-        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 2.5f),
-        player->getAttributeComponent()->exp, player->getAttributeComponent()->expNext,
-        sf::Color(50, 50, 50, 200), sf::Color(20, 230, 20, 200),
-        font, sf::Color::White, gui::calc_char_size(vm, 140));
+    cooldownBar = new gui::ProgressBar(
+        vm.width - gui::p2pX(vm, 10.f), expBar->getPosition().y,
+        gui::p2pX(vm, 6.5f), gui::p2pY(vm, 1.2f),
+        player->getWeapon()->getCooldownTimerMax(), player->getWeapon()->getCooldownTimerMax(),
+        sf::Color(50, 50, 50, 200), sf::Color(230, 230, 230, 200));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -45,9 +54,10 @@ PlayerGUI::PlayerGUI(Player *player, sf::VideoMode &vm) : vm(vm)
     this->player = player;
 
     initFont();
+    initExpBar();
     initLevelBar();
     initHpBar();
-    initExpBar();
+    initCooldownBar();
 }
 
 PlayerGUI::~PlayerGUI()
@@ -55,6 +65,7 @@ PlayerGUI::~PlayerGUI()
     delete levelBar;
     delete hpBar;
     delete expBar;
+    delete cooldownBar;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -64,6 +75,7 @@ void PlayerGUI::update(const float &dt)
     updateLevelBar();
     updateHpBar();
     updateExpBar();
+    updateCooldownBar();
 }
 
 void PlayerGUI::render(sf::RenderTarget &target)
@@ -71,6 +83,9 @@ void PlayerGUI::render(sf::RenderTarget &target)
     levelBar->render(target);
     hpBar->render(target);
     expBar->render(target);
+
+    if (!player->getWeapon()->didCooldown(false))
+        cooldownBar->render(target);
 }
 
 void PlayerGUI::updateLevelBar()
@@ -103,4 +118,19 @@ void PlayerGUI::updateExpBar()
                     static_cast<float>(player->getAttributeComponent()->expNext);
 
     expBar->setProgress(percent);
+}
+
+void PlayerGUI::updateCooldownBar()
+{
+    if (!player->getWeapon()->didCooldown(false))
+    {
+        float percent = static_cast<float>(player->getWeapon()->getCurrentCooldownTimerValue()) /
+                        static_cast<float>(player->getWeapon()->getCooldownTimerMax());
+
+        cooldownBar->setProgress(percent);
+    }
+    else
+    {
+        cooldownBar->setProgress(0.f);
+    }
 }

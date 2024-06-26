@@ -165,20 +165,23 @@ void TileMap::loadFromFile(const std::string file_path)
         if (static_cast<TileType>(type) == TileType::SPAWNER)
         {
             // SPAWNER SPECIFIC DATA
-            int enemy_type = 0;
-            int enemy_amount = 0;
-            int enemy_time_to_spawn = 0;
-            int enemy_max_distance = 0;
+            short enemy_type = 0;
+            short enemy_amount = 0;
+            short enemy_time_to_spawn = 0;
+            short enemy_max_distance = 0;
+            short enemy_spawn_area_size = 0;
 
             in_file >> txtr_rect_top >> txtr_rect_left >> enemy_type >>
-                enemy_amount >> enemy_time_to_spawn >> enemy_max_distance;
+                enemy_amount >> enemy_time_to_spawn >> enemy_max_distance >>
+                enemy_spawn_area_size;
 
             map[grid_x][grid_y][z].insert(
                 map[grid_x][grid_y][z].begin() + k,
                 new EnemySpawnerTile(
                     grid_x, grid_y, gridSizeF, tileTextureSheet,
                     sf::IntRect(txtr_rect_top, txtr_rect_left, gridSizeI, gridSizeI),
-                    enemy_type, enemy_amount, enemy_time_to_spawn, enemy_max_distance));
+                    enemy_type, enemy_amount, enemy_time_to_spawn,
+                    enemy_max_distance, enemy_spawn_area_size));
         }
         // Common tiles
         else
@@ -279,8 +282,9 @@ void TileMap::addTile(
 void TileMap::addSpawner(
     const unsigned x, const unsigned y, const unsigned z,
     const sf::IntRect &texture_rect,
-    const int enemy_type, const int enemy_amount,
-    const int enemy_time_to_spawn, const int enemy_max_distance)
+    const short enemy_type, const short enemy_amount,
+    const short enemy_time_to_spawn, const short enemy_max_distance,
+    const short enemy_spawn_area_size)
 {
     // If position is in the map bounds
     if (x < mapGridDimensions.x && y < mapGridDimensions.y && z < layers)
@@ -294,7 +298,8 @@ void TileMap::addSpawner(
                 map[x][y][z].push_back(new EnemySpawnerTile(x, y, gridSizeF, tileTextureSheet,
                                                             texture_rect,
                                                             enemy_type, enemy_amount,
-                                                            enemy_time_to_spawn, enemy_max_distance));
+                                                            enemy_time_to_spawn, enemy_max_distance,
+                                                            enemy_spawn_area_size));
             }
         }
         else
@@ -302,7 +307,8 @@ void TileMap::addSpawner(
             map[x][y][z].push_back(new EnemySpawnerTile(x, y, gridSizeF, tileTextureSheet,
                                                         texture_rect,
                                                         enemy_type, enemy_amount,
-                                                        enemy_time_to_spawn, enemy_max_distance));
+                                                        enemy_time_to_spawn, enemy_max_distance,
+                                                        enemy_spawn_area_size));
         }
     }
 }
@@ -472,11 +478,9 @@ void TileMap::updateTiles(const float &dt, Entity *entity, EnemySystem *enemySys
                 {
                     EnemySpawnerTile *est = dynamic_cast<EnemySpawnerTile *>(map[x][y][layer][k]);
 
-                    if (!est->hasSpawned())
+                    if (est->canSpawn(entity->getCenteredPosition()))
                     {
-                        enemySystem->createEnemy(EnemyType::GREEN_SLIME, est->getPosition().x, est->getPosition().y);
-
-                        est->setSpawned(true);
+                        enemySystem->createEnemy(EnemyType::GREEN_SLIME, est->getPosition().x + rand() % 50, est->getPosition().y + rand() % 50);
                     }
                 }
             }

@@ -17,6 +17,8 @@ protected:
     sf::Sprite tile;
     TileType type;
 
+    float gridSizeF;
+
     bool collision;
 
     sf::RectangleShape collBox;
@@ -82,11 +84,18 @@ public:
     /* ACCESSORS ================================================================================================= */
 
     /**
-     * @brief Returns the tile's sprite current position.
+     * @brief Returns the tile's sprite position.
      *
      * @return const sf::Vector2f&
      */
     const sf::Vector2f &getPosition() const;
+
+    /**
+     * @brief Returns the tile's sprite center position.
+     *
+     * @return const sf::Vector2f
+     */
+    const sf::Vector2f getCenteredPosition() const;
 
     /**
      * @brief Returns the tile's texture rect.

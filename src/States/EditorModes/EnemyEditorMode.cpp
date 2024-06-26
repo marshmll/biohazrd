@@ -8,8 +8,9 @@ void EnemyEditorMode::initVariables()
     textureRect = sf::IntRect(0, 0, 0, 0);
     enemyType = 0;
     enemyAmount = 5;
-    enemyTimeToSpawn = 60;
-    enemyMaxDistance = 500;
+    enemyTimeToSpawn = 30;
+    enemyMaxDistance = 50;
+    enemySpawnAreaSize = 20;
 }
 
 void EnemyEditorMode::initGUI()
@@ -67,7 +68,8 @@ void EnemyEditorMode::updateInput(const float &dt)
             editorData->tileMap->addSpawner(
                 editorData->mousePosGrid->x, editorData->mousePosGrid->y, 0,
                 sf::IntRect(0, 576, (int)data->gridSize, (int)data->gridSize),
-                enemyType, enemyAmount, enemyTimeToSpawn, enemyMaxDistance);
+                enemyType, enemyAmount, enemyTimeToSpawn,
+                enemyMaxDistance, enemySpawnAreaSize);
         }
     }
     // Spawner removing
@@ -114,7 +116,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
-            if (enemyTimeToSpawn > 30)
+            if (enemyTimeToSpawn > 5)
                 enemyTimeToSpawn--;
         }
         else
@@ -126,11 +128,23 @@ void EnemyEditorMode::updateInput(const float &dt)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
-            if (enemyMaxDistance > 50)
+            if (enemyMaxDistance > 10)
                 enemyMaxDistance--;
         }
         else
             enemyMaxDistance++;
+    }
+
+    // Enemy spawn area size.
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_SPAWN_AREA_SIZE_INC")) && hasCompletedKeytimeCicle())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            if (enemySpawnAreaSize > 5)
+                enemySpawnAreaSize--;
+        }
+        else
+            enemySpawnAreaSize++;
     }
 }
 
@@ -149,7 +163,8 @@ void EnemyEditorMode::updateGUI(const float &dt)
               << "enemy type: " << enemyType << "\n"
               << "enemy amount: " << enemyAmount << "\n"
               << "time to spawn: " << enemyTimeToSpawn << "\n"
-              << "enemy max distance: " << enemyMaxDistance << "\n";
+              << "enemy max distance: " << enemyMaxDistance << "\n"
+              << "enemy spawn area diam.: " << enemySpawnAreaSize << "\n";
 
     cursorText.setString(cursor_ss.str());
 }

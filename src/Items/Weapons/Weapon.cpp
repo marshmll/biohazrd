@@ -6,7 +6,7 @@
 void Weapon::initVariables()
 {
     cooldownTimer.restart();
-    cooldownTimerMax = sf::Int32(500);
+    cooldownTimerMax = sf::Int32(700);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
@@ -55,15 +55,27 @@ const short unsigned &Weapon::getDamageMax() const
     return damageMax;
 }
 
-const bool Weapon::didCooldown()
+const bool Weapon::didCooldown(const bool reset_timer)
 {
     if (cooldownTimer.getElapsedTime().asMilliseconds() >= cooldownTimerMax)
     {
-        cooldownTimer.restart();
+        if (reset_timer)
+            cooldownTimer.restart();
+
         return true;
     }
 
     return false;
+}
+
+const sf::Int32 Weapon::getCurrentCooldownTimerValue() const
+{
+    return cooldownTimer.getElapsedTime().asMilliseconds();
+}
+
+const sf::Int32 &Weapon::getCooldownTimerMax() const
+{
+    return cooldownTimerMax;
 }
 
 /* MODIFIERS ===================================================================================================== */

@@ -50,7 +50,11 @@ public:
 
     const short unsigned &getDamageMax() const;
 
-    const bool didCooldown();
+    const bool didCooldown(const bool reset_timer = true);
+
+    const sf::Int32 getCurrentCooldownTimerValue() const;
+
+    const sf::Int32& getCooldownTimerMax() const;
 
     /* MODIFIERS ================================================================================================ */
 

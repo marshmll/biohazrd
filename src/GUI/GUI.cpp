@@ -1092,6 +1092,11 @@ void gui::ProgressBar::render(sf::RenderTarget &target)
         target.draw(barText);
 }
 
+const sf::Vector2f &gui::ProgressBar::getPosition() const
+{
+    return barBg.getPosition();
+}
+
 /* MODIFIERS ==================================================================================================== */
 
 void gui::ProgressBar::setString(const std::string string)

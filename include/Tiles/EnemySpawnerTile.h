@@ -8,10 +8,13 @@ class EnemySpawnerTile : public Tile
 private:
     /* VARIABLES ================================================================================================= */
 
-    int enemyType;
-    int enemyAmount;
-    int enemyTimeToSpawn;
-    int enemyMaxDistance;
+    sf::Clock spawnTimer;
+
+    short enemyType;
+    short enemyAmount;
+    short enemyTimeToSpawn; // As seconds
+    short enemyMaxDistance;
+    short enemySpawnAreaSize;
 
     bool spawned;
 
@@ -21,8 +24,9 @@ public:
     EnemySpawnerTile(
         const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
         const sf::Texture &texture, const sf::IntRect texture_rect,
-        const int enemy_type, const int enemy_amount,
-        const int enemy_time_to_spawn, const int enemy_max_distance);
+        const short enemy_type, const short enemy_amount,
+        const short enemy_time_to_spawn, const short enemy_max_distance,
+        const short enemy_spawn_area_size);
 
     virtual ~EnemySpawnerTile();
 
@@ -44,7 +48,11 @@ public:
 
     /* ACCESSORS ================================================================================================= */
 
-    const bool& hasSpawned() const;
+    const bool canSpawn(const sf::Vector2f &player_pos);
+
+    const bool hasElapsedSpawnTime();
+
+    const bool isPlayerInsideSpawnArea(const sf::Vector2f &player_pos);
 
     /**
      * @brief Returns the tile properties as a std::string.
@@ -62,8 +70,6 @@ public:
     const std::string getPropertiesAsString() const;
 
     /* MODIFIERS ================================================================================================= */
-
-    void setSpawned(const bool spawned);
 };
 
 #endif /* ENEMYSPAWNERTILE_H_ */
