@@ -2,10 +2,10 @@
 
 if [ ! -d "Release/" ]
 then
-  mkdir Release
-  cd Release/
-  cmake -DCMAKE_BUILD_TYPE=Release ..
-  cd ../
+    mkdir Release
+    cd Release/
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    cd ../
 fi
 
 rm -rf Release/bin/Assets/ Release/bin/Config/ Release/bin/Fonts/ Release/bin/Maps

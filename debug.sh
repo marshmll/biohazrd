@@ -2,10 +2,10 @@
 
 if [ ! -d "Debug/" ]
 then
-  mkdir Debug
-  cd Debug/
-  cmake -DCMAKE_BUILD_TYPE=Debug ..
-  cd ../
+    mkdir Debug
+    cd Debug/
+    cmake -DCMAKE_BUILD_TYPE=Debug ..
+    cd ../
 fi
 
 rm -rf Debug/bin/Assets/ Debug/bin/Config/ Debug/bin/Fonts/ Debug/bin/Maps
