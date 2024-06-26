@@ -32,12 +32,20 @@ void GameState::initKeybinds()
 
     for (auto it : parser.getAllKeyValuePairs("GameState"))
         keybinds[it.first] = acceptedKeys->at(it.second);
+
+    data->logger->log("GameState::initKeybinds", INFO,
+                      "Successfully loaded " + std::to_string(keybinds.size()) + " keybinds from file Config/keybinds.ini");
 }
 
 void GameState::initFonts()
 {
     if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    {
+        data->logger->log("GameState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
+    }
+
+    data->logger->log("GameState::initFonts", DEBUG, "Successfully loaded fonts.");
 }
 
 void GameState::initText()
@@ -50,16 +58,29 @@ void GameState::initText()
 void GameState::initTextures()
 {
     if (!textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
+    {
+        data->logger->log("GameState::initTextures", ERROR, "Could not player spritesheet.");
         ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_PLAYER_SPRITESHEET\n");
+    }
 
     if (!textures["SLIME_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Slime/slime.png"))
+    {
+        data->logger->log("GameState::initTextures", ERROR, "Could not slime spritesheet.");
         ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_SLIME_SPRITESHEEET\n");
+    }
+
+    data->logger->log("GameState::initTextures", DEBUG, "Successfully loaded textures.");
 }
 
 void GameState::initShaders()
 {
     if (!coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
+    {
+        data->logger->log("GameState::initShaders", ERROR, "Could not load shaders.");
         ErrorHandler::throwErr("GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS\n");
+    }
+
+    data->logger->log("GameState::initShaders", DEBUG, "Successfully loaded shaders.");
 }
 
 void GameState::initPauseMenu()
@@ -305,9 +326,15 @@ void GameState::updateTileMap(const float &dt)
 void GameState::updatePauseMenuButtons()
 {
     if (pauseMenu->isButtonPressed("QUIT"))
+    {
+        data->logger->log("GameState::updatePauseMenuButtons", DEBUG, "Quitting state.");
         quit();
+    }
     else if (pauseMenu->isButtonPressed("RESUME"))
+    {
+        data->logger->log("GameState::updatePauseMenuButtons", DEBUG, "Resuming state.");
         resume();
+    }
 }
 
 void GameState::updatePlayerCamera(const float &dt)

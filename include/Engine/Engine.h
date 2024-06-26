@@ -8,6 +8,7 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
 
+#include "Logger.h"
 #include "IniParser.h"
 #include "MainMenuState.h"
 
@@ -17,6 +18,8 @@ private:
     /* VARIABLES ============================================================================================= */
 
     std::string currentPath;
+
+    Logger logger;
 
     StateData data;
 
@@ -36,6 +39,8 @@ private:
     std::map<std::string, sf::Keyboard::Key> acceptedKeys; // The keys accepted by the engine.
 
     /* INITIALIZERS FUNCTIONS ================================================================================= */
+
+    void initLogger();
 
     /**
      * @brief Initializes game variables

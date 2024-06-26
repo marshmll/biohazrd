@@ -1,10 +1,11 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "Player.h"
-#include "GUI.h"
+#include "Logger.h"
 #include "IniParser.h"
 #include "GraphicsSettings.h"
+#include "Player.h"
+#include "GUI.h"
 
 class State; // Needed to typedef StateData.
 
@@ -19,6 +20,7 @@ class State; // Needed to typedef StateData.
  */
 typedef struct
 {
+    Logger* logger;
     std::stack<State *> *states;
     GraphicsSettings *gfxSettings;
     sf::RenderWindow *window;

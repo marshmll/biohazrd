@@ -17,7 +17,12 @@ void MainMenuState::initVariables()
 void MainMenuState::initFonts()
 {
     if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    {
+        data->logger->log("MainMenuState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
+    }
+
+    data->logger->log("MainMenuState::initFonts", DEBUG, "Successfully loaded fonts.");
 }
 
 void MainMenuState::initKeybinds()
@@ -30,7 +35,12 @@ void MainMenuState::initGUI()
     background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
     if (!backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
+    {
+        data->logger->log("MainMenuState::initGUI", ERROR, "Could not load background image.");
         ErrorHandler::throwErr("ERROR::MAINMENUSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n");
+    }
+
+    data->logger->log("MainMenuState::initGUI", DEBUG, "Successfully loaded background image.");
 
     background.setTexture(&backgroundTexture);
 
@@ -125,19 +135,31 @@ void MainMenuState::updateGUI()
     {
         // New game
         if (buttons["GAME_STATE"]->isPressed())
+        {
+            data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new GameState.");
             states->push(new GameState(data));
+        }
 
         // Editor state
         else if (buttons["EDITOR_STATE"]->isPressed())
+        {
+            data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new EditorState.");
             states->push(new EditorState(data));
+        }
 
         // Settings
         else if (buttons["SETTINGS_STATE"]->isPressed())
+        {
+            data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new SettingsState.");
             states->push(new SettingsState(data, this));
+        }
 
         // Exit
         else if (buttons["EXIT_STATE"]->isPressed())
+        {
+            data->logger->log("MainMenuState::updateGUI", DEBUG, "Quitting state.");
             quit();
+        }
     }
 }
 
@@ -149,6 +171,8 @@ void MainMenuState::renderGUI(sf::RenderTarget &target)
 
 void MainMenuState::resetGUI()
 {
+    data->logger->log("MainMenuState::resetGUI", DEBUG, "Resetting GUI. initGUI will be called.");
+
     for (auto &it : buttons)
         delete it.second;
 

@@ -3,6 +3,11 @@
 
 /* INITIALIZERS FUNCTIONS ======================================================================================== */
 
+void Engine::initLogger()
+{
+    logger.begin();
+}
+
 void Engine::initVariables()
 {
     currentPath = std::filesystem::current_path().string();
@@ -17,10 +22,13 @@ void Engine::initVariables()
 void Engine::initGraphicsSettings()
 {
     gfxSettings.loadFromFile("Config/graphics.ini");
+
+    logger.log("Engine::initGraphicsSettings", DEBUG, "Successfully loaded graphics settings.");
 }
 
 void Engine::initWindow()
 {
+
     // Create the window
     if (gfxSettings.fullscreen) // If in fullscreen mode
     {
@@ -43,10 +51,13 @@ void Engine::initKeys()
 
     for (auto it : parser.getAllKeyValuePairs("AcceptedKeys"))
         acceptedKeys[it.first] = static_cast<sf::Keyboard::Key>(std::stoi(it.second));
+
+    logger.log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys");
 }
 
 void Engine::initStateData()
 {
+    data.logger = &logger;
     data.states = &states;
     data.gfxSettings = &gfxSettings;
     data.window = window;
@@ -63,6 +74,7 @@ void Engine::initStates()
 
 Engine::Engine()
 {
+    initLogger();
     initVariables();
     initGraphicsSettings();
     initWindow();
@@ -95,6 +107,8 @@ void Engine::run()
             render();
         }
     }
+
+    logger.end();
 }
 
 void Engine::update()
@@ -169,6 +183,7 @@ void Engine::pollSFMLEvents()
 
 void Engine::endApplication()
 {
+    logger.log("Engine::endApplication", DEBUG, "Closing the window.");
     window->close();
 }
 

@@ -8,12 +8,13 @@ then
     cd ../
 fi
 
-rm -rf Debug/bin/Assets/ Debug/bin/Config/ Debug/bin/Fonts/ Debug/bin/Maps
+rm -rf Debug/bin/Assets/ Debug/bin/Config/ Debug/bin/Fonts/ Debug/bin/Maps Debug/bin/Shaders Debug/bin/Logs
 cp -r src/Assets/ Debug/bin/
 cp -r src/Config/ Debug/bin/
 cp -r src/Fonts/ Debug/bin/
 cp -r src/Maps/ Debug/bin/
 cp -r src/Shaders/ Debug/bin/
+cp -r src/Logs/ Debug/bin/
 
 clear
 cd Debug/ &&
@@ -22,9 +23,10 @@ cd bin/ &&
 ./BIOHAZRD &&
 cd ../../
 
-rm -rf src/Assets/ src/Config/ src/Fonts/ src/Maps/
+rm -rf src/Assets/ src/Config/ src/Fonts/ src/Maps/ src/Shaders src/Logs
 cp -r Debug/bin/Assets src/
 cp -r Debug/bin/Config src/
 cp -r Debug/bin/Fonts src/
 cp -r Debug/bin/Maps src/
 cp -r Debug/bin/Shaders src/
+cp -r Debug/bin/Logs src/

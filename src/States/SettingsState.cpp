@@ -18,7 +18,12 @@ void SettingsState::initVariables()
 void SettingsState::initFonts()
 {
     if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    {
+        data->logger->log("SettingsState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
+    }
+
+    data->logger->log("SettingsState::initFonts", DEBUG, "Successfully loaded fonts.");
 }
 
 void SettingsState::initKeybinds()
@@ -33,7 +38,12 @@ void SettingsState::initGUI()
     background.setSize(sf::Vector2f(vm.width, vm.height));
 
     if (!backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
+    {
+        data->logger->log("SettingsState::initGUI", ERROR, "Could not load background image.");
         ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n");
+    }
+
+    data->logger->log("SettingsState::initGUI", DEBUG, "Successfully loaded background image.");
 
     background.setTexture(&backgroundTexture);
 
@@ -97,6 +107,8 @@ void SettingsState::initGUI()
 
 void SettingsState::resetGUI()
 {
+    data->logger->log("SettingsState::resetGUI", DEBUG, "Resetting GUI. initGUI will be called.");
+
     for (auto &it : buttons)
         delete it.second;
     buttons.clear();
@@ -179,11 +191,16 @@ void SettingsState::updateGUI(const float &dt)
 
     // Checks for returning
     if (buttons["BACK"]->isPressed())
+    {
+        data->logger->log("SettingsState::updateGUI", DEBUG, "Quitting state.");
         quit();
+    }
 
     // Apply settings
     else if (buttons["APPLY"]->isPressed())
     {
+        data->logger->log("SettingsState::updateGUI", DEBUG, "Applying new graphics settings.");
+
         gfxSettings->resolution = videoModes[dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
         window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);

@@ -29,12 +29,20 @@ void EditorState::initKeybinds()
 
     for (auto it : parser.getAllKeyValuePairs("EditorState"))
         keybinds[it.first] = acceptedKeys->at(it.second);
+
+    data->logger->log("EditorState::initKeybinds", INFO,
+                      "Successfully loaded " + std::to_string(keybinds.size()) + " keybinds from file Config/keybinds.ini");
 }
 
 void EditorState::initFonts()
 {
     if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    {
+        data->logger->log("EditorState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
+    }
+
+    data->logger->log("EditorState::initFonts", DEBUG, "Successfully loaded fonts");
 }
 
 void EditorState::initPauseMenu()
@@ -189,17 +197,29 @@ void EditorState::updateEditorCamera(const float &dt)
 
 void EditorState::updatePauseMenuInteraction()
 {
-    if (pauseMenu->isButtonPressed("LOAD"))
+    if (pauseMenu->isButtonPressed("LOAD") && hasCompletedMousetimeCicle(sf::Mouse::Left))
+    {
         tileMap->loadFromFile("Maps/test.biomap");
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Loaded map to Maps/test.biomap");
+    }
 
-    else if (pauseMenu->isButtonPressed("SAVE"))
+    else if (pauseMenu->isButtonPressed("SAVE") && hasCompletedMousetimeCicle(sf::Mouse::Left))
+    {
         tileMap->saveToFile("Maps/test.biomap");
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Saved map to Maps/test.biomap");
+    }
 
     else if (pauseMenu->isButtonPressed("RESUME"))
+    {
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Resuming state.");
         resume();
+    }
 
     else if (pauseMenu->isButtonPressed("QUIT"))
+    {
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Quitting state.");
         quit();
+    }
 }
 
 void EditorState::updateModes(const float &dt)
