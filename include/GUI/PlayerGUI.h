@@ -3,13 +3,14 @@
 
 #include "Player.h"
 #include "GUI.h"
+#include "TabMenu.h"
 
 class PlayerGUI
 {
 private:
     /* VARIABLES ================================================================================================= */
 
-    Player *player;
+    Player &player;
 
     sf::VideoMode &vm;
 
@@ -20,8 +21,7 @@ private:
     gui::ProgressBar *hpBar;
     gui::ProgressBar *cooldownBar;
 
-    sf::RectangleShape characterBg;
-    sf::Text characterInfoText;
+    TabMenu *playerMenu;
 
 
     /* INITIALIZERS =============================================================================================== */
@@ -61,9 +61,13 @@ private:
      */
     void initCooldownBar();
 
-    void initTabMenu();
+    /**
+     * @brief Initializes the player tab menu.
+     *
+     * @return void
+     */
 
-    void initCharacterTab();
+    void initPlayerMenu();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -71,7 +75,7 @@ public:
     /**
      * @brief Creates a instance for the player GUI.
      */
-    PlayerGUI(Player *player, sf::VideoMode &vm);
+    PlayerGUI(Player &player, sf::VideoMode &vm);
 
     /**
      * @brief Player GUI class destructor.
@@ -117,7 +121,7 @@ public:
 
     void updateCooldownBar();
 
-    void updateCharacterTab();
+    void updatePlayerMenu(const float &dt);
 };
 
 #endif /* PLAYERGUI_H_ */

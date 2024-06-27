@@ -31,7 +31,7 @@ void EditorState::initKeybinds()
         keybinds[it.first] = acceptedKeys->at(it.second);
 
     data->logger->log("EditorState::initKeybinds", INFO,
-                      "Successfully loaded " + std::to_string(keybinds.size()) + " keybinds from file Config/keybinds.ini");
+                      "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
 }
 
 void EditorState::initFonts()

@@ -1,2 +1,0 @@
-2024-06-26.22:19:40 [Engine::initKeys] > (INFO) Initialized 20 keys
-2024-06-26.22:19:41 [EditorState::initKeybinds] > (INFO) Successfully loaded 15 keybinds from file Config/keybinds.ini

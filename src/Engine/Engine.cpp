@@ -54,7 +54,7 @@ void Engine::initKeys()
     for (auto it : parser.getAllKeyValuePairs("AcceptedKeys"))
         acceptedKeys[it.first] = static_cast<sf::Keyboard::Key>(std::stoi(it.second));
 
-    logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys");
+    logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys.");
 }
 
 void Engine::initStateData()

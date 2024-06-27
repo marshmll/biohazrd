@@ -34,7 +34,7 @@ void GameState::initKeybinds()
         keybinds[it.first] = acceptedKeys->at(it.second);
 
     data->logger->log("GameState::initKeybinds", INFO,
-                      "Successfully loaded " + std::to_string(keybinds.size()) + " keybinds from file Config/keybinds.ini");
+                      "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
 }
 
 void GameState::initFonts()
@@ -98,7 +98,7 @@ void GameState::initPlayers()
 
 void GameState::initPlayerGUI()
 {
-    playerGUI = new PlayerGUI(player, vm);
+    playerGUI = new PlayerGUI(*player, vm);
 }
 
 void GameState::initEnemySystem()

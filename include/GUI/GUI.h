@@ -854,7 +854,7 @@ namespace gui
          * @return void
          */
         void setMaxValue(const float value);
-    };
+    };    
 }
 
 #endif /* GUI_H_ */

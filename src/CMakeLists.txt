@@ -14,6 +14,9 @@ target_sources(BIOHAZRD PRIVATE
     Entities/Entity.cpp
     Entities/Player.cpp
 
+    GUI/TabMenu/TabMenu.cpp
+    GUI/TabMenu/Tabs/CharacterTab.cpp
+    GUI/TabMenu/Tabs/Tab.cpp
     GUI/GUI.cpp
     GUI/PlayerGUI.cpp
     GUI/TextTagSystem.cpp
