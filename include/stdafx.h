@@ -4,6 +4,7 @@
 /* DEFINITIONS =================================================================================================== */
 
 #define RESET true
+#define DEBUG_MODE true
 #define PRIORITARY true
 
 #define COLLIDEABLE true

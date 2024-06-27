@@ -8,6 +8,8 @@
 #include "stdafx.h"
 #include "GraphicsSettings.h"
 
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+
 GraphicsSettings::GraphicsSettings()
 {
     title = "BIOHAZRD";
@@ -23,7 +25,7 @@ GraphicsSettings::~GraphicsSettings()
 {
 }
 
-/* FUNCTIONS */
+/* FUNCTIONS ===================================================================================================== */
 
 void GraphicsSettings::saveToFile(const std::string path)
 {

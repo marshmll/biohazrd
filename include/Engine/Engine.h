@@ -19,7 +19,7 @@ private:
 
     std::string currentPath;
 
-    Logger logger;
+    Logger *logger;
 
     StateData data;
 

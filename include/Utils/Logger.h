@@ -15,6 +15,8 @@ enum LOGTYPE
 class Logger
 {
 private:
+    bool debugMode;
+
     std::stringstream logstream;
     std::string filename;
 
@@ -25,7 +27,7 @@ private:
     void initLogTypeTemplates();
 
 public:
-    Logger();
+    Logger(const bool debug = false);
 
     ~Logger();
 

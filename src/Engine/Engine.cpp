@@ -5,7 +5,9 @@
 
 void Engine::initLogger()
 {
-    logger.begin();
+    logger = new Logger();
+
+    logger->begin();
 }
 
 void Engine::initVariables()
@@ -23,7 +25,7 @@ void Engine::initGraphicsSettings()
 {
     gfxSettings.loadFromFile("Config/graphics.ini");
 
-    logger.log("Engine::initGraphicsSettings", DEBUG, "Successfully loaded graphics settings.");
+    logger->log("Engine::initGraphicsSettings", DEBUG, "Successfully loaded graphics settings.");
 }
 
 void Engine::initWindow()
@@ -52,12 +54,12 @@ void Engine::initKeys()
     for (auto it : parser.getAllKeyValuePairs("AcceptedKeys"))
         acceptedKeys[it.first] = static_cast<sf::Keyboard::Key>(std::stoi(it.second));
 
-    logger.log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys");
+    logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys");
 }
 
 void Engine::initStateData()
 {
-    data.logger = &logger;
+    data.logger = logger;
     data.states = &states;
     data.gfxSettings = &gfxSettings;
     data.window = window;
@@ -92,6 +94,8 @@ Engine::~Engine()
         delete states.top();
         states.pop();
     }
+    
+    delete logger;
 }
 
 /* MAIN FUNCTIONS ================================================================================================= */
@@ -108,7 +112,7 @@ void Engine::run()
         }
     }
 
-    logger.end();
+    logger->end();
 }
 
 void Engine::update()
@@ -183,7 +187,7 @@ void Engine::pollSFMLEvents()
 
 void Engine::endApplication()
 {
-    logger.log("Engine::endApplication", DEBUG, "Closing the window.");
+    logger->log("Engine::endApplication", DEBUG, "Closing the window.");
     window->close();
 }
 
