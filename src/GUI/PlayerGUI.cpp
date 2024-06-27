@@ -47,6 +47,26 @@ void PlayerGUI::initCooldownBar()
         sf::Color(50, 50, 50, 200), sf::Color(230, 230, 230, 200));
 }
 
+void PlayerGUI::initTabMenu()
+{
+
+}
+
+void PlayerGUI::initCharacterTab()
+{
+    characterBg.setFillColor(sf::Color(50, 50, 50, 180));
+    characterBg.setSize(sf::Vector2f(gui::p2pX(vm, 50.f), vm.height));
+
+    characterInfoText.setFont(font);
+    characterInfoText.setCharacterSize(gui::calc_char_size(vm, 120));
+    characterInfoText.setFillColor(sf::Color::White);
+    characterInfoText.setPosition(characterBg.getPosition().x + gui::p2pX(vm, 2.f),
+                                  characterBg.getPosition().y + gui::p2pY(vm, 2.f));
+
+
+
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 PlayerGUI::PlayerGUI(Player *player, sf::VideoMode &vm) : vm(vm)
@@ -58,6 +78,9 @@ PlayerGUI::PlayerGUI(Player *player, sf::VideoMode &vm) : vm(vm)
     initLevelBar();
     initHpBar();
     initCooldownBar();
+
+    initTabMenu();
+    initCharacterTab();
 }
 
 PlayerGUI::~PlayerGUI()
@@ -76,6 +99,8 @@ void PlayerGUI::update(const float &dt)
     updateHpBar();
     updateExpBar();
     updateCooldownBar();
+
+    updateCharacterTab();
 }
 
 void PlayerGUI::render(sf::RenderTarget &target)
@@ -86,6 +111,10 @@ void PlayerGUI::render(sf::RenderTarget &target)
 
     if (!player->getWeapon()->didCooldown(false))
         cooldownBar->render(target);
+
+    // Character tab
+    target.draw(characterBg);
+    target.draw(characterInfoText);
 }
 
 void PlayerGUI::updateLevelBar()
@@ -133,4 +162,9 @@ void PlayerGUI::updateCooldownBar()
     {
         cooldownBar->setProgress(0.f);
     }
+}
+
+void PlayerGUI::updateCharacterTab()
+{
+    characterInfoText.setString("TEST");
 }

@@ -20,6 +20,10 @@ private:
     gui::ProgressBar *hpBar;
     gui::ProgressBar *cooldownBar;
 
+    sf::RectangleShape characterBg;
+    sf::Text characterInfoText;
+
+
     /* INITIALIZERS =============================================================================================== */
 
     /**
@@ -50,7 +54,16 @@ private:
      */
     void initHpBar();
 
+    /**
+     * @brief Initializes the cooldown bar.
+     *
+     * @return void
+     */
     void initCooldownBar();
+
+    void initTabMenu();
+
+    void initCharacterTab();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -103,6 +116,8 @@ public:
     void updateExpBar();
 
     void updateCooldownBar();
+
+    void updateCharacterTab();
 };
 
 #endif /* PLAYERGUI_H_ */
