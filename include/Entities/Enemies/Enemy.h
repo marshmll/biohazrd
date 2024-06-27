@@ -9,6 +9,7 @@ class Enemy : public Entity
 private:
     /* VARIABLES ================================================================================================= */
 
+    EnemySpawnerTile &enemySpawnerTile;
     short unsigned expDrop; // The amount of exp the enemy drops after death.
 
     /**
@@ -25,7 +26,7 @@ public:
      * @brief Enemy entity class constructor.
      * @param exp_drop  The amount of exp the enemy drops after death
      */
-    Enemy(const short unsigned exp_drop);
+    Enemy(EnemySpawnerTile &enemy_spawner_tile, const short unsigned exp_drop);
 
     virtual ~Enemy();
 
@@ -68,7 +69,7 @@ public:
      *
      * @return void
      */
-    virtual void earnHp(const short unsigned hp_amount);
+    void earnHp(const short unsigned hp_amount);
 
     /**
      * @brief Decreases hp by a given amount.
@@ -76,16 +77,23 @@ public:
      *
      * @return void
      */
-    virtual void loseHp(const short unsigned hp_amount);
+    void loseHp(const short unsigned hp_amount);
 
     /* ACCESSORS ================================================================================================= */
+
+    /**
+     * @brief Returns the enemy's linked spawner tile.
+     *
+     * @return EnemySpawnerTile&
+     */
+    EnemySpawnerTile &getEnemySpawnerTile();
 
     /**
      * @brief Returns the amount of exp the enemy drops after death.
      *
      * @return const short unsigned
      */
-    virtual const short unsigned getExpDrop() const;
+    const short unsigned getExpDrop() const;
 
     /**
      * @brief Returns the enemy's attribute component, or nullptr
@@ -95,7 +103,7 @@ public:
      *
      * @return AttributeComponent*
      */
-    virtual const AttributeComponent *getAttributeComponent() const;
+    const AttributeComponent *getAttributeComponent() const;
 };
 
 #endif /* ENEMY_H_ */

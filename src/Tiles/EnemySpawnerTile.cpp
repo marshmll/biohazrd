@@ -18,6 +18,7 @@ EnemySpawnerTile::EnemySpawnerTile(
 
     enemyType = enemy_type;
     enemyAmount = enemy_amount;
+    enemyCounter = 0;
     enemyTimeToSpawn = enemy_time_to_spawn;
     enemyMaxDistance = enemy_max_distance;
     enemySpawnAreaSize = enemy_spawn_area_size;
@@ -52,7 +53,7 @@ void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, cons
 
 const bool EnemySpawnerTile::canSpawn(const sf::Vector2f &player_pos)
 {
-    if (hasElapsedSpawnTime())
+    if (hasElapsedSpawnTime() && !hasSpawnedAllEnemies())
         return isPlayerInsideSpawnArea(player_pos);
 
     return false;
@@ -78,7 +79,29 @@ const bool EnemySpawnerTile::isPlayerInsideSpawnArea(const sf::Vector2f &player_
     return distance <= enemySpawnAreaSize * gridSizeF;
 }
 
+const bool EnemySpawnerTile::hasSpawnedAllEnemies() const
+{
+    return enemyCounter >= enemyAmount;
+}
+
+void EnemySpawnerTile::increaseEnemyCounter()
+{
+    if (enemyCounter < enemyAmount)
+        ++enemyCounter;
+}
+
+void EnemySpawnerTile::decreaseEnemyCounter()
+{
+    if (enemyCounter > 0)   
+        --enemyCounter;
+}
+
 /* ACCESSORS ================================================================================================== */
+
+const short &EnemySpawnerTile::getEnemyCounter() const
+{
+    return enemyCounter;
+}
 
 const std::string EnemySpawnerTile::getPropertiesAsString() const
 {

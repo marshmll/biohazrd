@@ -12,6 +12,7 @@ private:
 
     short enemyType;
     short enemyAmount;
+    short enemyCounter;
     short enemyTimeToSpawn; // As seconds
     short enemyMaxDistance;
     short enemySpawnAreaSize;
@@ -46,13 +47,21 @@ public:
      */
     void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
-    /* ACCESSORS ================================================================================================= */
-
     const bool canSpawn(const sf::Vector2f &player_pos);
 
     const bool hasElapsedSpawnTime();
 
     const bool isPlayerInsideSpawnArea(const sf::Vector2f &player_pos);
+
+    const bool hasSpawnedAllEnemies() const;
+
+    void increaseEnemyCounter();
+
+    void decreaseEnemyCounter();
+
+    /* ACCESSORS ================================================================================================= */
+
+    const short &getEnemyCounter() const;
 
     /**
      * @brief Returns the tile properties as a std::string.

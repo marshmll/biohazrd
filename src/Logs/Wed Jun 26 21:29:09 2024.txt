@@ -1,0 +1,18 @@
+2024-06-26.21:29:09 [Engine::initGraphicsSettings] > (DEBUG) Successfully loaded graphics settings.
+2024-06-26.21:29:11 [Engine::initKeys] > (INFO) Initialized 20 keys
+2024-06-26.21:29:11 [MainMenuState::initFonts] > (DEBUG) Successfully loaded fonts.
+2024-06-26.21:29:11 [MainMenuState::initGUI] > (DEBUG) Successfully loaded background image.
+2024-06-26.21:29:11 [MainMenuState::resetGUI] > (DEBUG) Resetting GUI. initGUI will be called.
+2024-06-26.21:29:11 [MainMenuState::initGUI] > (DEBUG) Successfully loaded background image.
+2024-06-26.21:29:13 [MainMenuState::updateGUI] > (DEBUG) Pushing a new GameState.
+2024-06-26.21:29:13 [GameState::initKeybinds] > (INFO) Successfully loaded 5 keybinds from file Config/keybinds.ini
+2024-06-26.21:29:13 [GameState::initFonts] > (DEBUG) Successfully loaded fonts.
+2024-06-26.21:29:13 [GameState::initTextures] > (DEBUG) Successfully loaded textures.
+2024-06-26.21:29:13 [GameState::initShaders] > (DEBUG) Successfully loaded shaders.
+2024-06-26.21:30:46 [GameState::updatePauseMenuButtons] > (DEBUG) Quitting state.
+2024-06-26.21:30:46 [MainMenuState::updateGUI] > (DEBUG) Pushing a new SettingsState.
+2024-06-26.21:30:46 [SettingsState::initFonts] > (DEBUG) Successfully loaded fonts.
+2024-06-26.21:30:46 [SettingsState::initGUI] > (DEBUG) Successfully loaded background image.
+2024-06-26.21:30:47 [SettingsState::updateGUI] > (DEBUG) Quitting state.
+2024-06-26.21:30:48 [MainMenuState::updateGUI] > (DEBUG) Quitting state.
+2024-06-26.21:30:48 [Engine::endApplication] > (DEBUG) Closing the window.

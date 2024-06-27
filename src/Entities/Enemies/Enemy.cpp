@@ -3,7 +3,8 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
-Enemy::Enemy(const short unsigned exp_drop)
+Enemy::Enemy(EnemySpawnerTile &enemy_spawner_tile, const short unsigned exp_drop)
+    : enemySpawnerTile(enemy_spawner_tile)
 {
     expDrop = exp_drop;
 }
@@ -30,12 +31,17 @@ void Enemy::loseHp(const short unsigned hp_amount)
         ErrorHandler::printErr("ENEMY::LOSEHP::WARNING_NULLPTR_ATTRIBUTECOMPONENT");
 }
 
+/* ACCESSORS ==================================================================================================== */
+
+EnemySpawnerTile &Enemy::getEnemySpawnerTile()
+{
+    return enemySpawnerTile;
+}
+
 const short unsigned Enemy::getExpDrop() const
 {
     return expDrop;
 }
-
-/* FUNCTIONS ==================================================================================================== */
 
 const AttributeComponent *Enemy::getAttributeComponent() const
 {

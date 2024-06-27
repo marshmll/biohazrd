@@ -480,7 +480,10 @@ void TileMap::updateTiles(const float &dt, Entity *entity, EnemySystem *enemySys
 
                     if (est->canSpawn(entity->getCenteredPosition()))
                     {
-                        enemySystem->createEnemy(EnemyType::GREEN_SLIME, est->getPosition().x + rand() % 50, est->getPosition().y + rand() % 50);
+                        enemySystem->createEnemy(GREEN_SLIME,
+                                                 est->getPosition().x + rand() % 50,
+                                                 est->getPosition().y + rand() % 50,
+                                                 *est);
                     }
                 }
             }

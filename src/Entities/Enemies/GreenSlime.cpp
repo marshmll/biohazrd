@@ -18,8 +18,8 @@ void GreenSlime::initAnimations()
 
 /* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
 
-GreenSlime::GreenSlime(const float x, const float y, sf::Texture &texture_sheet)
-    : Enemy(20)
+GreenSlime::GreenSlime(EnemySpawnerTile& enemy_spawner_tile, const float x, const float y, sf::Texture &texture_sheet)
+    : Enemy(enemy_spawner_tile, 20)
 {
     initVariables();
     setPosition(sf::Vector2f(x, y));

@@ -35,14 +35,14 @@ public:
      *
      * @return void
      */
-    void createEnemy(const EnemyType type, const float x, const float y);
+    void createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile& enemy_spawner_tile);
 
     /**
      * @brief Creates an enemy of a given type on a position.
      *
      * @return void
      */
-    void createEnemy(const EnemyType type, const sf::Vector2f position);
+    void createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile& enemy_spawner_tile);
 
     /**
      * @brief Deletes an enemy by its index.
