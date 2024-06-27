@@ -18,6 +18,7 @@ void Entity::initVariables()
     animationComponent = nullptr;
     attributeComponent = nullptr;
     skillComponent = nullptr;
+    aiComponent = nullptr;
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -34,6 +35,7 @@ Entity::~Entity()
     delete animationComponent;
     delete attributeComponent;
     delete skillComponent;
+    delete aiComponent;
 }
 /* COMPONENT FUNCTIONS ========================================================================================== */
 
@@ -67,6 +69,11 @@ void Entity::createAttributeComponent(const unsigned level)
 void Entity::createSkillComponent()
 {
     skillComponent = new SkillComponent();
+}
+
+void Entity::createAIComponent()
+{
+    aiComponent = new AIComponent();
 }
 
 /* FUNCTIONS ===================================================================================================== */

@@ -130,6 +130,19 @@ Weapon *Player::getWeapon()
     return &sword;
 }
 
+const std::string Player::formatStringToCharTab()
+{
+    AttributeComponent *ac = attributeComponent;
+
+    std::stringstream sstream;
+
+    sstream << "Level: " << ac->level << "\n"
+            << "Experience: " << ac->exp << "\n"
+            << "Accuracy: " << ac->accuracy << "\n";
+
+    return sstream.str();
+}
+
 void Player::earnHp(const short unsigned hp_amount)
 {
     attributeComponent->earnHp(hp_amount);

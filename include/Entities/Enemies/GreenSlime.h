@@ -25,7 +25,8 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
-    GreenSlime(EnemySpawnerTile& enemy_spawner_tile, const float x, const float y, sf::Texture &texture_sheet);
+    GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
+               const float x, const float y, sf::Texture &texture_sheet);
 
     virtual ~GreenSlime();
 

@@ -1,39 +1,31 @@
-#ifndef CHARACTERTAB_H
-#define CHARACTERTAB_H
+#ifndef AIBEHAVIOR_H_
+#define AIBEHAVIOR_H_
 
-#include "Tab.h"
-#include "Player.h"
+#include "Entity.h"
 
-class CharacterTab : public Tab
+class AIBehavior
 {
-private:
-    /* VARIABLES ================================================================================================= */
+protected:
+    /* PROTECTED VARIABLES ======================================================================================= */
 
-    Player &player;
-
-    sf::Text text;
+    Entity &self;
 
     /* INITIALIZERS ============================================================================================== */
-
-    void initText();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    CharacterTab(const float width, const float height,
-                 sf::VideoMode &vm, sf::Font &font, Player &player);
+    AIBehavior(Entity &self);
 
-    virtual ~CharacterTab();
+    virtual ~AIBehavior();
 
     /* FUNCTIONS ================================================================================================= */
 
-    void update(const float &dt);
-
-    void render(sf::RenderTarget &target);
+    virtual void update(const float &dt) = 0;
 
     /* ACCESSORS ================================================================================================= */
 
     /* MODIFIERS ================================================================================================= */
 };
 
-#endif /* CHARACTERTAB_H */
+#endif /* AIBEHAVIOR_H_ */

@@ -132,6 +132,12 @@ public:
     void renderCooldownBar(sf::RenderTarget &target);
 
     void renderPlayerMenu(sf::RenderTarget &target);
+
+    void toggleTab(TabType tab_type);
+
+    /* ACCESSORS ================================================================================================= */
+
+    const bool hasTabsOpen() const;
 };
 
 #endif /* PLAYERGUI_H_ */

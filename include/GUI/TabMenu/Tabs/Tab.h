@@ -35,6 +35,8 @@ public:
 
     const bool &isHidden() const;
 
+    const bool isOpen() const;
+
     /* MODIFIERS ================================================================================================= */
 
     void hideToggle();

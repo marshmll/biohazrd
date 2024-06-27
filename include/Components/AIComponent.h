@@ -1,50 +1,33 @@
-#ifndef TABMENU_H_
-#define TABMENU_H_
+#ifndef AICOMPONENT_H_
+#define AICOMPONENT_H_
 
-#include "Tabs.h"
+#include "AIBehaviors.h"
+#include "Entity.h"
 
-class PlayerTabMenu
+class AIComponent
 {
 private:
     /* VARIABLES ================================================================================================= */
 
-    sf::VideoMode &vm;
-    sf::Font &font;
-    Player &player;
-
-    sf::Clock keyTimer;
-    sf::Int32 keyTimerMax;
-
-    /* TABS */
-
-    std::map<TabType, Tab *> tabs;
+    Entity &self;
+    Entity *targetEntity;
 
     /* INITIALIZERS ============================================================================================== */
-
-    void initVariables();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    PlayerTabMenu(sf::VideoMode &vm, sf::Font &font, Player &player);
+    AIComponent(Entity &self, Entity *target_entity = nullptr);
 
-    virtual ~PlayerTabMenu();
+    virtual ~AIComponent();
 
     /* FUNCTIONS ================================================================================================= */
 
     void update(const float &dt);
 
-    void render(sf::RenderTarget &target);
-
-    const bool hasElapsedKeyTimeMax();
-
     /* ACCESSORS ================================================================================================= */
 
-    const bool hasTabsOpen();
-
     /* MODIFIERS ================================================================================================= */
-
-    void toggleTab(TabType tab_type);
 };
 
-#endif /* TABMENU_H_ */
+#endif /* AICOMPONENT_H_ */

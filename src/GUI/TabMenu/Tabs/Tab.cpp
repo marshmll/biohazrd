@@ -24,6 +24,11 @@ const bool &Tab::isHidden() const
     return hidden;
 }
 
+const bool Tab::isOpen() const
+{
+    return !hidden;
+}
+
 /* MODIFIERS ===================================================================================================== */
 
 void Tab::hideToggle()

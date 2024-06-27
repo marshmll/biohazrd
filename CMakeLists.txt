@@ -22,6 +22,8 @@ target_link_libraries(BIOHAZRD PRIVATE sfml-graphics)
 target_compile_features(BIOHAZRD PRIVATE cxx_std_17)
 
 target_include_directories(BIOHAZRD PRIVATE include)
+target_include_directories(BIOHAZRD PRIVATE include/AI)
+target_include_directories(BIOHAZRD PRIVATE include/AI/Behaviors)
 target_include_directories(BIOHAZRD PRIVATE include/Components)
 target_include_directories(BIOHAZRD PRIVATE include/Engine)
 target_include_directories(BIOHAZRD PRIVATE include/Entities)

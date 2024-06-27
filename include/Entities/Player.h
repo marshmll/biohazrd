@@ -91,6 +91,8 @@ public:
 
     Weapon *getWeapon();
 
+    const std::string formatStringToCharTab();
+
     /**
      * @brief Increases hp by a given amount.
      * @note -> Limits hp to hpMax

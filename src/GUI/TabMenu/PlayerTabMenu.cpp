@@ -16,29 +16,28 @@ PlayerTabMenu::PlayerTabMenu(sf::VideoMode &vm, sf::Font &font, Player &player)
 {
     initVariables();
 
-    charTab = new CharacterTab(gui::p2pX(vm, 40.f), vm.height,
-                               sf::Color(20, 20, 20, 200), sf::Color::White,
-                               vm, font, player);
+    tabs[CHARACTER_TAB] = new CharacterTab(gui::p2pX(vm, 40.f), vm.height,
+                                      vm, font, player);
 }
 
 PlayerTabMenu::~PlayerTabMenu()
 {
-    delete charTab;
+    for (auto &it : tabs)
+        delete it.second;
 }
 
 /* FUNCTIONS ===================================================================================================== */
 
 void PlayerTabMenu::update(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && hasElapsedKeyTimeMax())
-        charTab->hideToggle();
-
-    charTab->update(dt);
+    for (auto &it : tabs)
+        it.second->update(dt);
 }
 
 void PlayerTabMenu::render(sf::RenderTarget &target)
 {
-    charTab->render(target);
+    for (auto &it : tabs)
+        it.second->render(target);
 }
 
 const bool PlayerTabMenu::hasElapsedKeyTimeMax()
@@ -54,4 +53,20 @@ const bool PlayerTabMenu::hasElapsedKeyTimeMax()
 
 /* ACCESSORS ===================================================================================================== */
 
+const bool PlayerTabMenu::hasTabsOpen()
+{
+    for (auto &it : tabs)
+    {
+        if (it.second->isOpen())
+            return true;
+    }
+
+    return false;
+}
+
 /* MODIFIERS ===================================================================================================== */
+
+void PlayerTabMenu::toggleTab(TabType tab_type)
+{
+    tabs[tab_type]->hideToggle();
+}

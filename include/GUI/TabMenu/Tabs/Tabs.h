@@ -5,4 +5,10 @@
  *      Author: Renan Andrade
  */
 
+enum TabType
+{
+    CHARACTER_TAB = 0,
+    INVENTORY_TAB
+};
+
 #include "CharacterTab.h"

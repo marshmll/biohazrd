@@ -6,6 +6,7 @@
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
 #include "SkillComponent.h"
+#include "AIComponent.h"
 
 class Entity
 {
@@ -29,6 +30,7 @@ protected:
     AnimationComponent *animationComponent;
     AttributeComponent *attributeComponent;
     SkillComponent *skillComponent;
+    AIComponent *aiComponent;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -98,6 +100,14 @@ public:
      * @return void
      */
     void createSkillComponent();
+
+    /**
+     * @brief Creates an Artificial Intelligence component for the
+     * entity.
+     *
+     * @return void
+     */
+    void createAIComponent();
 
     /* FUNCTIONS ================================================================================================== */
 

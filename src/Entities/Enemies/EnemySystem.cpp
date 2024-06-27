@@ -3,8 +3,10 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
-EnemySystem::EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures)
-    : activeEnemies(active_enemies), textures(textures)
+EnemySystem::EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures,
+                         Entity &player)
+
+    : activeEnemies(active_enemies), textures(textures), player(player)
 {
 }
 
@@ -22,12 +24,12 @@ void EnemySystem::render(sf::RenderTarget &target)
 {
 }
 
-void EnemySystem::createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile& enemy_spawner_tile)
+void EnemySystem::createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile &enemy_spawner_tile)
 {
     switch (type)
     {
     case EnemyType::GREEN_SLIME:
-        activeEnemies.push_back(new GreenSlime(enemy_spawner_tile, x, y, textures["SLIME_SPRITESHEET"]));
+        activeEnemies.push_back(new GreenSlime(enemy_spawner_tile, player, x, y, textures["SLIME_SPRITESHEET"]));
         enemy_spawner_tile.increaseEnemyCounter();
         break;
 
@@ -36,12 +38,12 @@ void EnemySystem::createEnemy(const EnemyType type, const float x, const float y
     }
 }
 
-void EnemySystem::createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile& enemy_spawner_tile)
+void EnemySystem::createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile &enemy_spawner_tile)
 {
     switch (type)
     {
     case EnemyType::GREEN_SLIME:
-        activeEnemies.push_back(new GreenSlime(enemy_spawner_tile, position.x, position.y, textures["SLIME_SPRITESHEET"]));
+        activeEnemies.push_back(new GreenSlime(enemy_spawner_tile, player, position.x, position.y, textures["SLIME_SPRITESHEET"]));
         enemy_spawner_tile.increaseEnemyCounter();
         break;
 

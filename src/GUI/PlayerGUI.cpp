@@ -171,3 +171,15 @@ void PlayerGUI::renderPlayerMenu(sf::RenderTarget &target)
 {
     playerMenu->render(target);
 }
+
+void PlayerGUI::toggleTab(TabType tab_type)
+{
+    playerMenu->toggleTab(tab_type);
+}
+
+/* ACCESSORS ===================================================================================================== */
+
+const bool PlayerGUI::hasTabsOpen() const
+{
+    return playerMenu->hasTabsOpen();
+}

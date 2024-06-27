@@ -16,11 +16,12 @@ private:
 
     std::vector<Enemy *> &activeEnemies;
     std::map<std::string, sf::Texture> &textures;
+    Entity &player;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
-    EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures);
+    EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures, Entity &player);
 
     virtual ~EnemySystem();
 

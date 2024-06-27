@@ -18,7 +18,9 @@ void GreenSlime::initAnimations()
 
 /* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
 
-GreenSlime::GreenSlime(EnemySpawnerTile& enemy_spawner_tile, const float x, const float y, sf::Texture &texture_sheet)
+GreenSlime::GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
+                       const float x, const float y, sf::Texture &texture_sheet)
+
     : Enemy(enemy_spawner_tile, 20)
 {
     initVariables();
@@ -28,6 +30,7 @@ GreenSlime::GreenSlime(EnemySpawnerTile& enemy_spawner_tile, const float x, cons
     createMovementComponent(100.f, 1000.f, 700.f);
     createAnimationComponent(texture_sheet);
     createAttributeComponent(1);
+    createAIComponent();
 
     initAnimations();
 }
