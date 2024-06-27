@@ -11,6 +11,32 @@ Tab::Tab(const float width, const float height,
 {
     bg.setFillColor(bg_color);
     bg.setSize(sf::Vector2f(width, height));
+
+    hidden = true;
 }
 
 Tab::~Tab() {}
+
+/* ACCESSORS ===================================================================================================== */
+
+const bool &Tab::isHidden() const
+{
+    return hidden;
+}
+
+/* MODIFIERS ===================================================================================================== */
+
+void Tab::hideToggle()
+{
+    hidden = !hidden;
+}
+
+void Tab::show()
+{
+    hidden = false;
+}
+
+void Tab::hide()
+{
+    hidden = true;
+}

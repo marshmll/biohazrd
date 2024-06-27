@@ -153,7 +153,6 @@ GameState::~GameState()
 void GameState::update(const float &dt)
 {
     updateMousePositions(&playerCamera);
-    updateKeytime(dt);
     updateInput(dt);
 
     // Not-paused update
@@ -235,7 +234,7 @@ void GameState::renderToBuffer()
 
 void GameState::updateInput(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(keybinds["PAUSE"]) && hasCompletedKeytimeCicle())
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["PAUSE"])))
         pauseToggle();
 }
 

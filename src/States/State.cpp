@@ -26,11 +26,11 @@ State::State(StateData *data) : vm(data->gfxSettings->resolution)
     quitState = false;
     isPaused = false;
 
-    keytime = 0.f;
-    keytimeMax = 15.f;
+    keyTimer.restart();
+    keyTimerMax = sf::Int32(200);
 
-    mousetime = 0.f;
-    mousetimeMax = 5.f;
+    mouseTimer.restart();
+    mouseTimerMax = sf::Int32(50);
 
     gridSize = data->gridSize;
 }
@@ -57,18 +57,6 @@ void State::updateMousePositions(sf::View *view)
         static_cast<int>(mousePosView.y) / static_cast<int>(data->gridSize));
 
     window->setView(window->getDefaultView());
-}
-
-void State::updateKeytime(const float &dt)
-{
-    if (keytime < keytimeMax)
-        keytime += 100.f * dt;
-}
-
-void State::updateMousetime(const float &dt)
-{
-    if (mousetime < mousetimeMax)
-        mousetime += 100.f * dt;
 }
 
 void State::quit()
@@ -98,23 +86,29 @@ const bool &State::hasAskedToQuit() const
     return quitState;
 }
 
-const bool State::hasCompletedKeytimeCicle()
+const bool State::hasElapsedKeyTimeMax(const bool is_key_pressed)
 {
-    if (keytime >= keytimeMax)
+    if (keyTimer.getElapsedTime().asMilliseconds() >= keyTimerMax)
     {
-        keytime = 0.f;
+        if (!is_key_pressed)
+            return false;
+
+        keyTimer.restart();
+
         return true;
     }
 
     return false;
 }
 
-const bool State::hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn)
+const bool State::hasElapsedMouseTimeMax(const bool is_mouse_pressed)
 {
-    if (mousetime >= mousetimeMax)
+    if (mouseTimer.getElapsedTime().asMilliseconds() >= mouseTimerMax)
     {
-        if (sf::Mouse::isButtonPressed(mouseBtn))
-            mousetime = 0.f;
+        if (!is_mouse_pressed)
+            return false;
+
+        mouseTimer.restart();
 
         return true;
     }

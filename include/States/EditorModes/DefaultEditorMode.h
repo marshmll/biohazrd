@@ -85,28 +85,6 @@ public:
     /* ACCESSORS =============================================================================================== */
 
     /**
-     * @brief Returns if an determined amount of time has passed
-     * after the last key press.
-     * @note -> Resets times back to 0.f
-     *
-     *
-     * @return const bool
-     */
-    const bool hasCompletedKeytimeCicle();
-
-    /**
-     * @brief Returns if an determined amount of time has passed
-     * after the last mouse button press of a specified button.
-     * @param mouse_btn The mouse button to be checked.
-     *
-     *  @note -> Resets times back to 0.f
-     *
-     *
-     * @return const bool
-     */
-    const bool hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn);
-
-    /**
      * @brief Returns the type name of a tile as a string.
      *
      * @return std::string

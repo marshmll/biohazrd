@@ -20,14 +20,13 @@ class State; // Needed to typedef StateData.
  */
 typedef struct
 {
-    Logger* logger;
+    Logger *logger;
     std::stack<State *> *states;
     GraphicsSettings *gfxSettings;
     sf::RenderWindow *window;
     std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
     float gridSize;
-}
-StateData;
+} StateData;
 
 class State
 {
@@ -52,11 +51,11 @@ protected:
     bool isPaused;
     bool quitState;
 
-    float keytime;
-    float keytimeMax;
+    sf::Clock keyTimer;
+    sf::Int32 keyTimerMax;
 
-    float mousetime;
-    float mousetimeMax;
+    sf::Clock mouseTimer;
+    sf::Int32 mouseTimerMax;
 
     sf::Vector2i mousePosScreen;
     sf::Vector2i mousePosWindow;
@@ -108,24 +107,6 @@ public:
     virtual void updateMousePositions(sf::View *view = nullptr);
 
     /**
-     * @brief Updates the keytime.
-     * The keytime is used for debounce key presses
-     * at a single press.
-     *
-     * @return void
-     */
-    virtual void updateKeytime(const float &dt);
-
-    /**
-     * @brief Updates the mousetime.
-     * The mousetime is used for debounce mouse clicks
-     * at a single click.
-     *
-     * @return void
-     */
-    virtual void updateMousetime(const float &dt);
-
-    /**
      * @brief Sets quit current state to true.
      * The quit states triggers the state to exit
      * in Engine.cpp [Engine::update()]
@@ -171,24 +152,28 @@ public:
     const bool &hasAskedToQuit() const;
 
     /**
-     * @brief Returns if a keytime cicle has completed.
-     * A keytime cicle means that a defined amount of
-     * time has passed after a key was pressed.
-     * @note-> Restarts keytime after verification.
+     * @brief Checks if the elapsed time by the timer is greater
+     * or equal to the timer max. If so, checks if the key is pressed.
+     * If the key is not pressed, return false. Otherwise, resets the
+     * timer and returns true.
+     * @param is_key_pressed The return value of an sf::Keyboard::isKeyPressed
+     * call.
      *
      * @return const bool
      */
-    const bool hasCompletedKeytimeCicle();
+    const bool hasElapsedKeyTimeMax(const bool is_key_pressed);
 
     /**
-     * @brief Returns if a mousetime cicle has completed.
-     * A mousetime cicle means that a defined amount of
-     * time has passed after a mouse button was pressed.
-     * @note -> Restarts mousetime after verification.
+     * @brief Checks if the elapsed time by the timer is greater
+     * or equal to the timer max. If so, checks if the mouse button is
+     * pressed. If the mouse button is not pressed, return false. Otherwise,
+     * resets the timer and returns true.
+     * @param is_mouse_pressed The return value of an sf::Mouse::isButtonPressed
+     * call.
      *
      * @return const bool
      */
-    const bool hasCompletedMousetimeCicle(sf::Mouse::Button mouseBtn);
+    const bool hasElapsedMouseTimeMax(const bool is_mouse_pressed);
 };
 
 #endif /* STATE_H_ */

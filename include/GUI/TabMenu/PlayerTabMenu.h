@@ -3,22 +3,32 @@
 
 #include "Tabs.h"
 
-class TabMenu
+class PlayerTabMenu
 {
 private:
     /* VARIABLES ================================================================================================= */
 
     sf::VideoMode &vm;
     sf::Font &font;
+    Player &player;
 
-    std::vector<Tab *> tabs;
+    sf::Clock keyTimer;
+    sf::Int32 keyTimerMax;
+
+    /* TABS */
+
+    CharacterTab *charTab;
+
+    /* INITIALIZERS ============================================================================================== */
+
+    void initVariables();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    TabMenu(sf::VideoMode &vm, sf::Font &font);
+    PlayerTabMenu(sf::VideoMode &vm, sf::Font &font, Player &player);
 
-    virtual ~TabMenu();
+    virtual ~PlayerTabMenu();
 
     /* FUNCTIONS ================================================================================================= */
 
@@ -26,7 +36,7 @@ public:
 
     void render(sf::RenderTarget &target);
 
-    void addTab(Tab *tab);
+    const bool hasElapsedKeyTimeMax();
 
     /* ACCESSORS ================================================================================================= */
 

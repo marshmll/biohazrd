@@ -69,10 +69,10 @@ void EditorState::initEditorStateData()
     editorStateData.tileMap = tileMap;
     editorStateData.editorCamera = &editorCamera;
     editorStateData.font = &font;
-    editorStateData.keytime = &keytime;
-    editorStateData.keytimeMax = &keytimeMax;
-    editorStateData.mousetime = &mousetime;
-    editorStateData.mousetimeMax = &mousetimeMax;
+    editorStateData.keyTimer = &keyTimer;
+    editorStateData.keyTimerMax = &keyTimerMax;
+    editorStateData.mouseTimer = &mouseTimer;
+    editorStateData.mouseTimerMax = &mouseTimerMax;
     editorStateData.mousePosScreen = &mousePosScreen;
     editorStateData.mousePosWindow = &mousePosWindow;
     editorStateData.mousePosView = &mousePosView;
@@ -119,8 +119,6 @@ void EditorState::update(const float &dt)
 {
     updateMousePositions(&editorCamera);
     updateInput(dt);
-    updateKeytime(dt);
-    updateMousetime(dt);
 
     if (!isPaused)
     {
@@ -158,15 +156,17 @@ void EditorState::render(sf::RenderTarget &target)
 
 void EditorState::updateInput(const float &dt)
 {
+
     // Pause menu toggle
-    if (sf::Keyboard::isKeyPressed(keybinds["PAUSE"]) && hasCompletedKeytimeCicle())
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["PAUSE"])))
         pauseToggle();
 
-    // Change between modes
-    if (sf::Keyboard::isKeyPressed(keybinds.at("DEFAULT_EDITOR_MODE")) && hasCompletedKeytimeCicle())
+    // Default editor mode
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("DEFAULT_EDITOR_MODE"))))
         activeEditorMode = EditorModes::DEFAULT_MODE;
 
-    else if (sf::Keyboard::isKeyPressed(keybinds.at("ENEMY_EDITOR_MODE")) && hasCompletedKeytimeCicle())
+    // Enemy editor mode
+    else if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("ENEMY_EDITOR_MODE"))))
         activeEditorMode = EditorModes::ENEMY_MODE;
 }
 
@@ -197,25 +197,25 @@ void EditorState::updateEditorCamera(const float &dt)
 
 void EditorState::updatePauseMenuInteraction()
 {
-    if (pauseMenu->isButtonPressed("LOAD") && hasCompletedMousetimeCicle(sf::Mouse::Left))
+    if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("LOAD")))
     {
         tileMap->loadFromFile("Maps/test.biomap");
         data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Loaded map to Maps/test.biomap");
     }
 
-    else if (pauseMenu->isButtonPressed("SAVE") && hasCompletedMousetimeCicle(sf::Mouse::Left))
+    else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("SAVE")))
     {
         tileMap->saveToFile("Maps/test.biomap");
         data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Saved map to Maps/test.biomap");
     }
 
-    else if (pauseMenu->isButtonPressed("RESUME"))
+    else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("RESUME")))
     {
         data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Resuming state.");
         resume();
     }
 
-    else if (pauseMenu->isButtonPressed("QUIT"))
+    else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("QUIT")))
     {
         data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Quitting state.");
         quit();

@@ -95,7 +95,6 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::update(const float &dt)
 {
-    updateMousetime(dt);
     updateInput(dt);
     updateGUI();
 }
@@ -131,35 +130,32 @@ void MainMenuState::updateGUI()
     for (auto &it : buttons)
         it.second->update(mousePosView);
 
-    if (hasCompletedMousetimeCicle(sf::Mouse::Left))
+    // New game
+    if (buttons["GAME_STATE"]->isPressed())
     {
-        // New game
-        if (buttons["GAME_STATE"]->isPressed())
-        {
-            data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new GameState.");
-            states->push(new GameState(data));
-        }
+        data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new GameState.");
+        states->push(new GameState(data));
+    }
 
-        // Editor state
-        else if (buttons["EDITOR_STATE"]->isPressed())
-        {
-            data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new EditorState.");
-            states->push(new EditorState(data));
-        }
+    // Editor state
+    else if (buttons["EDITOR_STATE"]->isPressed())
+    {
+        data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new EditorState.");
+        states->push(new EditorState(data));
+    }
 
-        // Settings
-        else if (buttons["SETTINGS_STATE"]->isPressed())
-        {
-            data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new SettingsState.");
-            states->push(new SettingsState(data, this));
-        }
+    // Settings
+    else if (buttons["SETTINGS_STATE"]->isPressed())
+    {
+        data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new SettingsState.");
+        states->push(new SettingsState(data, this));
+    }
 
-        // Exit
-        else if (buttons["EXIT_STATE"]->isPressed())
-        {
-            data->logger->log("MainMenuState::updateGUI", DEBUG, "Quitting state.");
-            quit();
-        }
+    // Exit
+    else if (buttons["EXIT_STATE"]->isPressed())
+    {
+        data->logger->log("MainMenuState::updateGUI", DEBUG, "Quitting state.");
+        quit();
     }
 }
 

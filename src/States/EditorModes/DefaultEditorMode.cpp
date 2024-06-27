@@ -17,7 +17,6 @@ void DefaultEditorMode::initVariables()
     type = TileType::DEFAULT;
 
     layer = 0;
-
 }
 
 void DefaultEditorMode::initGUI()
@@ -127,7 +126,7 @@ void DefaultEditorMode::updateInput(const float &dt)
             }
         }
     }
-    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && hasCompletedKeytimeCicle())
+    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && hasElapsedKeyTimeMax())
     {
         if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
         {
@@ -141,18 +140,18 @@ void DefaultEditorMode::updateInput(const float &dt)
     }
 
     // Toggle collision
-    if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("TOGGLE_COLLISION")) && hasCompletedKeytimeCicle())
+    if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("TOGGLE_COLLISION")) && hasElapsedKeyTimeMax())
     {
         collision = !collision;
     }
     // Type increase
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("INCREASE_TYPE")) && hasCompletedKeytimeCicle())
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("INCREASE_TYPE")) && hasElapsedKeyTimeMax())
     {
         if (static_cast<TileType>(type + 1) != TileType::SPAWNER)
             type++;
     }
     // Type decrease
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("DECREASE_TYPE")) && hasCompletedKeytimeCicle())
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("DECREASE_TYPE")) && hasElapsedKeyTimeMax())
     {
         if (static_cast<TileType>(type - 1) != TileType::SPAWNER && type > 0)
             type--;
@@ -223,30 +222,6 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
 }
 
 /* ACCESSORS ===================================================================================================== */
-
-const bool DefaultEditorMode::hasCompletedKeytimeCicle()
-{
-    if (*editorData->keytime >= *editorData->keytimeMax)
-    {
-        *editorData->keytime = 0.f;
-        return true;
-    }
-
-    return false;
-}
-
-const bool DefaultEditorMode::hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn)
-{
-    if (*editorData->keytime >= *editorData->keytimeMax)
-    {
-        if (sf::Mouse::isButtonPressed(mouse_btn))
-            *editorData->keytime = 0.f;
-
-        return true;
-    }
-
-    return false;
-}
 
 const std::string DefaultEditorMode::getTypeName() const
 {

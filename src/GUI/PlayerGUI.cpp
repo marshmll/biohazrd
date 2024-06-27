@@ -49,11 +49,7 @@ void PlayerGUI::initCooldownBar()
 
 void PlayerGUI::initPlayerMenu()
 {
-    playerMenu = new TabMenu(vm, font);
-
-    playerMenu->addTab(new CharacterTab(gui::p2pX(vm, 50.f), vm.height,
-                                        sf::Color(20, 20, 20, 200), sf::Color::White,
-                                        vm, font, player));
+    playerMenu = new PlayerTabMenu(vm, font, player);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -91,14 +87,11 @@ void PlayerGUI::update(const float &dt)
 
 void PlayerGUI::render(sf::RenderTarget &target)
 {
-    levelBar->render(target);
-    hpBar->render(target);
-    expBar->render(target);
-
-    if (!player.getWeapon()->didCooldown(false))
-        cooldownBar->render(target);
-
-    playerMenu->render(target);
+    renderLevelBar(target);
+    renderHpBar(target);
+    renderExpBar(target);
+    renderCooldownBar(target);
+    renderPlayerMenu(target);
 }
 
 void PlayerGUI::updateLevelBar()
@@ -151,4 +144,30 @@ void PlayerGUI::updateCooldownBar()
 void PlayerGUI::updatePlayerMenu(const float &dt)
 {
     playerMenu->update(dt);
+}
+
+void PlayerGUI::renderLevelBar(sf::RenderTarget &target)
+{
+    levelBar->render(target);
+}
+
+void PlayerGUI::renderHpBar(sf::RenderTarget &target)
+{
+    hpBar->render(target);
+}
+
+void PlayerGUI::renderExpBar(sf::RenderTarget &target)
+{
+    expBar->render(target);
+}
+
+void PlayerGUI::renderCooldownBar(sf::RenderTarget &target)
+{
+    if (!player.getWeapon()->didCooldown(false))
+        cooldownBar->render(target);
+}
+
+void PlayerGUI::renderPlayerMenu(sf::RenderTarget &target)
+{
+    playerMenu->render(target);
 }

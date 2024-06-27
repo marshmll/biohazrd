@@ -11,16 +11,15 @@ typedef struct EditorStateData
     TileMap *tileMap;
     sf::View *editorCamera;
     sf::Font *font;
-    float *keytime;
-    float *keytimeMax;
-    float *mousetime;
-    float *mousetimeMax;
+    sf::Clock *keyTimer;
+    sf::Int32 *keyTimerMax;
+    sf::Clock *mouseTimer;
+    sf::Int32 *mouseTimerMax;
     sf::Vector2i *mousePosScreen;
     sf::Vector2i *mousePosWindow;
     sf::Vector2f *mousePosView;
     sf::Vector2i *mousePosGrid;
-}
-EditorStateData;
+} EditorStateData;
 
 class EditorMode
 {
@@ -80,6 +79,10 @@ public:
      * @return void
      */
     virtual void renderGUI(sf::RenderTarget &target) = 0;
+
+    const bool hasElapsedKeyTimeMax();
+    
+    const bool hasElapsedMouseTimeMax();
 };
 
 #endif /* EDITORMODE_H_ */

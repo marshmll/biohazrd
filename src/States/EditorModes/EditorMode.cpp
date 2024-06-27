@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EditorMode.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 EditorMode::EditorMode(StateData *data, EditorStateData *editor_data, std::string mode_name)
     : data(data), editorData(editor_data)
@@ -15,4 +15,30 @@ EditorMode::EditorMode(StateData *data, EditorStateData *editor_data, std::strin
 
 EditorMode::~EditorMode()
 {
+}
+
+/* FUNCTIONS ===================================================================================================== */
+
+const bool EditorMode::hasElapsedKeyTimeMax()
+{
+    if (editorData->keyTimer->getElapsedTime().asMilliseconds() >= *editorData->keyTimerMax)
+    {
+        editorData->keyTimer->restart();
+
+        return true;
+    }
+
+    return false;
+}
+
+const bool EditorMode::hasElapsedMouseTimeMax()
+{
+    if (editorData->mouseTimer->getElapsedTime().asMilliseconds() >= *editorData->mouseTimerMax)
+    {
+        editorData->mouseTimer->restart();
+
+        return true;
+    }
+
+    return false;
 }

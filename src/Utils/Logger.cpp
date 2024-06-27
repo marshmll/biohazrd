@@ -48,17 +48,17 @@ void Logger::begin()
 
 void Logger::end()
 {
-    std::ofstream ofs;
-    ofs.open(filename, std::ios::out);
+    // std::ofstream ofs;
+    // ofs.open(filename, std::ios::out);
 
-    if (!ofs.is_open())
-        ErrorHandler::throwErr("LOGGER::END::ERR_COULD_NOT_OPEN_FILE: " + filename);
+    // if (!ofs.is_open())
+    //     ErrorHandler::throwErr("LOGGER::END::ERR_COULD_NOT_OPEN_FILE: " + filename);
 
-    ofs << logstream.str();
+    // ofs << logstream.str();
 
-    ofs.close();
+    // ofs.close();
 
-    std::cout << "wrote logs to file: " << filename << "\n";
+    // std::cout << "wrote logs to file: " << filename << "\n";
 }
 
 void Logger::log(const std::string caller, const LOGTYPE log_type, const std::string log)

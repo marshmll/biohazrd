@@ -73,7 +73,7 @@ void EnemyEditorMode::updateInput(const float &dt)
         }
     }
     // Spawner removing
-    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && hasCompletedKeytimeCicle())
+    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && hasElapsedMouseTimeMax())
     {
         if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
         {
@@ -88,7 +88,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy type inc/dec
-    if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TYPE_INC")) && hasCompletedKeytimeCicle())
+    if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TYPE_INC")) && hasElapsedKeyTimeMax())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
@@ -100,7 +100,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy amount inc/dec
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_AMOUNT_INC")) && hasCompletedKeytimeCicle())
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_AMOUNT_INC")) && hasElapsedKeyTimeMax())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
@@ -112,7 +112,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy time to spawn inc/dec
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TIME_TO_SPAWN_INC")) && hasCompletedKeytimeCicle())
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TIME_TO_SPAWN_INC")) && hasElapsedKeyTimeMax())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
@@ -124,7 +124,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy max distance inc/dec
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_MAX_DISTANCE_INC")) && hasCompletedKeytimeCicle())
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_MAX_DISTANCE_INC")) && hasElapsedKeyTimeMax())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
@@ -136,7 +136,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy spawn area size.
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_SPAWN_AREA_SIZE_INC")) && hasCompletedKeytimeCicle())
+    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_SPAWN_AREA_SIZE_INC")) && hasElapsedKeyTimeMax())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
@@ -189,30 +189,4 @@ void EnemyEditorMode::renderGUI(sf::RenderTarget &target)
     // Render mode indicator text in the window view
     target.setView(data->window->getDefaultView());
     target.draw(modeIndicatorText);
-}
-
-/* ACCESSORS ================================================================================================= */
-
-const bool EnemyEditorMode::hasCompletedKeytimeCicle()
-{
-    if (*editorData->keytime >= *editorData->keytimeMax)
-    {
-        *editorData->keytime = 0.f;
-        return true;
-    }
-
-    return false;
-}
-
-const bool EnemyEditorMode::hasCompletedMousetimeCicle(const sf::Mouse::Button mouse_btn)
-{
-    if (*editorData->keytime >= *editorData->keytimeMax)
-    {
-        if (sf::Mouse::isButtonPressed(mouse_btn))
-            *editorData->keytime = 0.f;
-
-        return true;
-    }
-
-    return false;
 }

@@ -3,7 +3,7 @@
 
 #include "Player.h"
 #include "GUI.h"
-#include "TabMenu.h"
+#include "PlayerTabMenu.h"
 
 class PlayerGUI
 {
@@ -21,7 +21,7 @@ private:
     gui::ProgressBar *hpBar;
     gui::ProgressBar *cooldownBar;
 
-    TabMenu *playerMenu;
+    PlayerTabMenu *playerMenu;
 
 
     /* INITIALIZERS =============================================================================================== */
@@ -122,6 +122,16 @@ public:
     void updateCooldownBar();
 
     void updatePlayerMenu(const float &dt);
+
+    void renderLevelBar(sf::RenderTarget &target);
+
+    void renderHpBar(sf::RenderTarget &target);
+
+    void renderExpBar(sf::RenderTarget &target);
+
+    void renderCooldownBar(sf::RenderTarget &target);
+
+    void renderPlayerMenu(sf::RenderTarget &target);
 };
 
 #endif /* PLAYERGUI_H_ */

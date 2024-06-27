@@ -21,9 +21,15 @@ CharacterTab::~CharacterTab()
 
 void CharacterTab::update(const float &dt)
 {
+    if (!hidden)
+    {
+    }
 }
 
 void CharacterTab::render(sf::RenderTarget &target)
 {
-    target.draw(bg);
+    if (!hidden)
+    {
+        target.draw(bg);
+    }
 }
