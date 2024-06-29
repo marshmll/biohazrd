@@ -6,19 +6,21 @@
 void Weapon::initVariables()
 {
     cooldownTimer.restart();
-    cooldownTimerMax = Int32(700);
+    cooldownTimerMax = Int32(1000);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
 Weapon::Weapon(const ItemType type, const string texture_path, const short unsigned value,
-               const short unsigned range, const short unsigned damage_min, const short unsigned damage_max)
+               const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
+               const float knockback)
 
     : Item(value, type)
 {
     this->range = range;
     damageMin = damage_min;
     damageMax = damage_max;
+    this->knockback = knockback;
 
     initVariables();
 
@@ -45,6 +47,12 @@ const short unsigned &Weapon::getRange() const
     return range;
 }
 
+const short unsigned Weapon::getDamage()
+{
+    // Random between min and max;
+    return (rand() % damageMax - damageMin) + damageMin;
+}
+
 const short unsigned &Weapon::getDamageMin() const
 {
     return damageMin;
@@ -53,6 +61,11 @@ const short unsigned &Weapon::getDamageMin() const
 const short unsigned &Weapon::getDamageMax() const
 {
     return damageMax;
+}
+
+const float &Weapon::getKnockback() const
+{
+    return knockback;
 }
 
 const bool Weapon::didCooldown(const bool reset_timer)

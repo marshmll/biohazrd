@@ -3,7 +3,7 @@
 
 Bow::Bow()
     : RangedWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
-                   200, 5, 50)
+                   200, 5, 50, 80.f)
 {
 }
 
@@ -11,7 +11,8 @@ Bow::~Bow()
 {
 }
 
-void Bow::update(const Vector2f &mouse_pos_view, const Vector2f entity_size, const Vector2f entity_center, std::string entity_direction)
+void Bow::update(const Vector2f &mouse_pos_view, const Vector2f entity_size,
+                 const Vector2f entity_center, std::string entity_direction)
 {
 }
 

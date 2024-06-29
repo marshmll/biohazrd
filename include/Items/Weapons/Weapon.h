@@ -21,6 +21,7 @@ protected:
     short unsigned range;
     short unsigned damageMin;
     short unsigned damageMax;
+    float knockback;
 
     Clock cooldownTimer;
     Int32 cooldownTimerMax;
@@ -29,7 +30,8 @@ public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
     Weapon(const ItemType type, const string texture_path, const short unsigned value,
-           const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
+           const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
+           const float knockback);
 
     virtual ~Weapon();
 
@@ -46,9 +48,13 @@ public:
 
     const short unsigned &getRange() const;
 
+    const short unsigned getDamage();
+
     const short unsigned &getDamageMin() const;
 
     const short unsigned &getDamageMax() const;
+
+    const float &getKnockback() const;
 
     const bool didCooldown(const bool reset_timer = true);
 

@@ -62,5 +62,6 @@
     "typeinfo": "cpp"
   },
   "editor.guides.highlightActiveIndentation": true,
-  "editor.guides.indentation": false
+  "editor.guides.indentation": false,
+  "cmake.configureOnOpen": false
 }

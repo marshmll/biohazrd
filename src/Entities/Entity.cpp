@@ -91,6 +91,22 @@ void Entity::move(const float dir_x, const float dir_y, const float &dt)
     }
 }
 
+void Entity::knockback(const float dir_x, const float dir_y, const float strength)
+{
+    if (movementComponent)
+    {
+        movementComponent->knockback(dir_x, dir_y, strength);
+    }
+}
+
+void Entity::knockback(const Vector2f norm_vec, const float strength)
+{
+    if (movementComponent)
+    {
+        movementComponent->knockback(norm_vec.x, norm_vec.y, strength);
+    }
+}
+
 /* ACCESSORS ===================================================================================================== */
 
 const Vector2f &Entity::getPosition()

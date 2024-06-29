@@ -57,6 +57,8 @@ public:
      */
     void move(const float dir_x, const float dir_y, const float &dt);
 
+    void knockback(const float dir_x, const float dir_y, const float strength);
+
     /* ACCESSORS ================================================================================================= */
 
     /**

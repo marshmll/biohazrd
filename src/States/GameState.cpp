@@ -285,37 +285,47 @@ void GameState::updateEnemiesAndCombat(const float &dt)
         tileMap->updateWorldBoundsCollision(dt, enemy);
         tileMap->updateTileCollision(dt, enemy);
 
-        updateCombat(dt, enemy);
-
-        if (enemy->isDead())
+        if (Mouse::isButtonPressed(Mouse::Left))
         {
-            player->earnExp(enemy->getExpDrop());
+            updateCombat(dt, enemy);
 
-            textTagSystem->displayTag(EXPERIENCE_TAG,
-                                      player->getPosition(),
-                                      enemy->getExpDrop(),
-                                      "+", "exp");
+            if (enemy->isDead())
+            {
+                player->earnExp(enemy->getExpDrop());
 
-            enemySystem->deleteEnemy(i);
+                textTagSystem->displayTag(EXPERIENCE_TAG,
+                                          player->getPosition(),
+                                          enemy->getExpDrop(),
+                                          "+", "exp");
+
+                enemySystem->deleteEnemy(i);
+            }
         }
     }
 }
 
 void GameState::updateCombat(const float &dt, Enemy *enemy)
 {
-    if (Mouse::isButtonPressed(Mouse::Left))
+    if (enemy->getGlobalBounds().contains(mousePosView) &&
+        player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
+        player->getWeapon()->didCooldown())
     {
-        if (enemy->getGlobalBounds().contains(mousePosView) &&
-            player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
-            player->getWeapon()->didCooldown())
-        {
-            enemy->loseHp(player->getWeapon()->getDamageMin());
+        unsigned short damage = player->getWeapon()->getDamage();
 
-            textTagSystem->displayTag(TextTagType::DAMAGE_TAG,
-                                      enemy->getPosition(),
-                                      player->getWeapon()->getDamageMin(),
-                                      "-", "hp");
-        }
+        enemy->loseHp(damage);
+
+        Vector2f knockback_vec(enemy->getPosition().x - player->getPosition().x,
+                               enemy->getPosition().y - player->getPosition().y);
+
+        float vec_len = sqrt(pow(knockback_vec.x, 2) + pow(knockback_vec.y, 2));
+
+        knockback_vec /= vec_len;
+
+        enemy->knockback(knockback_vec, player->getWeapon()->getKnockback());
+
+        textTagSystem->displayTag(DAMAGE_TAG, enemy->getPosition(),
+                                  damage,
+                                  "-", "hp");
     }
 }
 

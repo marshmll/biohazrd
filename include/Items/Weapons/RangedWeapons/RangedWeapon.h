@@ -11,7 +11,8 @@ public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
     RangedWeapon(const string texture_path, const short unsigned value,
-                 const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
+                 const short unsigned range, const short unsigned damage_min, const short unsigned damage_max,
+                 const float knockback);
 
     virtual ~RangedWeapon();
 

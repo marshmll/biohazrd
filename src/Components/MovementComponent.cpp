@@ -125,6 +125,12 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
         direction = Directions::UP;
 }
 
+void MovementComponent::knockback(const float dir_x, const float dir_y, const float strength)
+{
+    velocity.x = strength * dir_x;
+    velocity.y = strength * dir_y;
+}
+
 /* ACCESSORS */
 const Vector2f &MovementComponent::getVelocity() const
 {
