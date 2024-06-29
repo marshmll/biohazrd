@@ -1,31 +1,32 @@
-#ifndef AIFOLLOW_H_
-#define AIFOLLOW_H_
+#ifndef AICOMPONENT_H_
+#define AICOMPONENT_H_
 
-#include "AIBehavior.h"
+#include "Entity.h"
 
-class Entity;
-
-class AIFollow : public AIBehavior
+class AIComponent
 {
 private:
     /* VARIABLES ================================================================================================= */
 
-    Entity &player;
+    Entity &self;
+    Entity *targetEntity;
+
+    AIFollowBehavior *follow;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    AIFollow(Entity &self, Entity &player);
+    AIComponent(Entity &self, Entity *target_entity = nullptr);
 
-    virtual ~AIFollow();
+    virtual ~AIComponent();
 
     /* FUNCTIONS ================================================================================================= */
 
-    void update(const float &dt);
+    void addFollowBehavior();
 
     /* ACCESSORS ================================================================================================= */
 
     /* MODIFIERS ================================================================================================= */
 };
 
-#endif /* AIFOLLOW_H_ */
+#endif /* AICOMPONENT_H_ */

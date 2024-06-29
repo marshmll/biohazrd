@@ -31,6 +31,8 @@ GreenSlime::GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
     createAnimationComponent(texture_sheet);
     createAttributeComponent(1);
 
+    enableFollowBehavior(player);
+
     initAnimations();
 }
 
@@ -45,6 +47,7 @@ void GreenSlime::update(const float &dt, const Vector2f &mouse_pos_view)
     movementComponent->update(dt);
     hitboxComponent->update();
     updateAnimation(dt);
+    updateAIBehaviors(dt);
 }
 
 void GreenSlime::render(RenderTarget &target, const bool show_hitbox, Shader *shader, Vector2f light_pos)
@@ -81,4 +84,10 @@ void GreenSlime::updateAnimation(const float &dt)
             movementComponent->getMaxVelocity(), PRIORITARY);
         break;
     }
+}
+
+void GreenSlime::updateAIBehaviors(const float &dt)
+{
+    for (auto behavor : aiBehaviors)
+        behavor->update(dt);
 }

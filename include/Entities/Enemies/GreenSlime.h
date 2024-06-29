@@ -61,6 +61,8 @@ public:
      * @return void
      */
     void updateAnimation(const float &dt);
+
+    void updateAIBehaviors(const float &dt);
 };
 
 #endif /* GREENSLIME_H_ */
