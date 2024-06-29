@@ -12,9 +12,9 @@ private:
 
     Player &player;
 
-    sf::VideoMode &vm;
+    VideoMode &vm;
 
-    sf::Font font;
+    Font font;
 
     gui::ProgressBar *expBar;
     gui::SolidBar *levelBar;
@@ -75,7 +75,7 @@ public:
     /**
      * @brief Creates a instance for the player GUI.
      */
-    PlayerGUI(Player &player, sf::VideoMode &vm);
+    PlayerGUI(Player &player, VideoMode &vm);
 
     /**
      * @brief Player GUI class destructor.
@@ -96,7 +96,7 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target);
+    void render(RenderTarget &target);
 
     /**
      * @brief Updates the player's level bar.
@@ -123,15 +123,15 @@ public:
 
     void updatePlayerMenu(const float &dt);
 
-    void renderLevelBar(sf::RenderTarget &target);
+    void renderLevelBar(RenderTarget &target);
 
-    void renderHpBar(sf::RenderTarget &target);
+    void renderHpBar(RenderTarget &target);
 
-    void renderExpBar(sf::RenderTarget &target);
+    void renderExpBar(RenderTarget &target);
 
-    void renderCooldownBar(sf::RenderTarget &target);
+    void renderCooldownBar(RenderTarget &target);
 
-    void renderPlayerMenu(sf::RenderTarget &target);
+    void renderPlayerMenu(RenderTarget &target);
 
     void toggleTab(TabType tab_type);
 

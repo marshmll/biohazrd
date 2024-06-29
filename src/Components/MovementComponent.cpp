@@ -6,7 +6,7 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 MovementComponent::MovementComponent(
-    sf::Sprite &sprite, float maxVelocity,
+    Sprite &sprite, float maxVelocity,
     float acceleration, float deceleration)
 
     : sprite(sprite), maxVelocity(maxVelocity),
@@ -68,7 +68,7 @@ void MovementComponent::update(const float &dt)
     }
 
     // Set state to idle
-    if (velocity == sf::Vector2f(0, 0))
+    if (velocity == Vector2f(0, 0))
         state = IDLE;
 
     // Final move
@@ -85,11 +85,11 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
     // Get the x and y directions coeficients (-1.0 or +1.0)
     // +1.0 for DOWN and RIGHT.
     // -1.0 for UP and LEFT.
-    float xDirection = velocity.x / std::fabs(velocity.x);
-    float yDirection = velocity.y / std::fabs(velocity.y);
+    float xDirection = velocity.x / fabs(velocity.x);
+    float yDirection = velocity.y / fabs(velocity.y);
 
     // If player hits max velocity in x axis
-    if (std::fabs(velocity.x) > maxVelocity)
+    if (fabs(velocity.x) > maxVelocity)
     {
         // Keep the x velocity equal to max velocity.
         velocity.x = maxVelocity * xDirection;
@@ -99,7 +99,7 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
     velocity.y += acceleration * dir_y * dt;
 
     // If player hits max velocity in y axis
-    if (std::fabs(velocity.y) > maxVelocity)
+    if (fabs(velocity.y) > maxVelocity)
     {
         // Keep the y velocity equal to max velocity.
         velocity.y = maxVelocity * yDirection;
@@ -126,7 +126,7 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 }
 
 /* ACCESSORS */
-const sf::Vector2f &MovementComponent::getVelocity() const
+const Vector2f &MovementComponent::getVelocity() const
 {
     return velocity;
 }
@@ -141,9 +141,9 @@ const short unsigned &MovementComponent::getCurrentState() const
     return state;
 }
 
-const std::string MovementComponent::getDirection() const
+const string MovementComponent::getDirection() const
 {
-    std::string direction;
+    string direction;
 
     switch (this->direction)
     {
@@ -164,15 +164,15 @@ const std::string MovementComponent::getDirection() const
     return direction;
 }
 
-const std::string MovementComponent::getKeyboardDirection() const
+const string MovementComponent::getKeyboardDirection() const
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    if (Keyboard::isKeyPressed(Keyboard::W))
         return "UP";
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    else if (Keyboard::isKeyPressed(Keyboard::S))
         return "DOWN";
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    else if (Keyboard::isKeyPressed(Keyboard::A))
         return "LEFT";
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    else if (Keyboard::isKeyPressed(Keyboard::S))
         return "RIGHT";
     else
         return "NONE";
@@ -182,7 +182,7 @@ const std::string MovementComponent::getKeyboardDirection() const
 
 void MovementComponent::stopVelocity()
 {
-    velocity = sf::Vector2f(0.f, 0.f);
+    velocity = Vector2f(0.f, 0.f);
 }
 
 void MovementComponent::stopVelocityX()

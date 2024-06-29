@@ -7,18 +7,18 @@
 
 typedef struct EditorStateData
 {
-    std::map<std::string, sf::Keyboard::Key> *keybinds;
+    map<string, Keyboard::Key> *keybinds;
     TileMap *tileMap;
-    sf::View *editorCamera;
-    sf::Font *font;
-    sf::Clock *keyTimer;
-    sf::Int32 *keyTimerMax;
-    sf::Clock *mouseTimer;
-    sf::Int32 *mouseTimerMax;
-    sf::Vector2i *mousePosScreen;
-    sf::Vector2i *mousePosWindow;
-    sf::Vector2f *mousePosView;
-    sf::Vector2i *mousePosGrid;
+    View *editorCamera;
+    Font *font;
+    Clock *keyTimer;
+    Int32 *keyTimerMax;
+    Clock *mouseTimer;
+    Int32 *mouseTimerMax;
+    Vector2i *mousePosScreen;
+    Vector2i *mousePosWindow;
+    Vector2f *mousePosView;
+    Vector2i *mousePosGrid;
 } EditorStateData;
 
 class EditorMode
@@ -30,12 +30,12 @@ protected:
 
     EditorStateData *editorData;
 
-    sf::Text modeIndicatorText;
+    Text modeIndicatorText;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    EditorMode(StateData *data, EditorStateData *editor_data, std::string mode_name);
+    EditorMode(StateData *data, EditorStateData *editor_data, string mode_name);
 
     virtual ~EditorMode();
 
@@ -57,7 +57,7 @@ public:
      *
      * @return void
      */
-    virtual void render(sf::RenderTarget &target) = 0;
+    virtual void render(RenderTarget &target) = 0;
 
     /**
      * @brief Updates the user input.
@@ -78,10 +78,10 @@ public:
      *
      * @return void
      */
-    virtual void renderGUI(sf::RenderTarget &target) = 0;
+    virtual void renderGUI(RenderTarget &target) = 0;
 
     const bool hasElapsedKeyTimeMax();
-    
+
     const bool hasElapsedMouseTimeMax();
 };
 

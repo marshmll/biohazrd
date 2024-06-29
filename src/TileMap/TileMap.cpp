@@ -35,15 +35,15 @@ void TileMap::clear()
 
 void TileMap::resize(const int size_x, const int size_y, const int layers)
 {
-    map.resize(size_x, std::vector<std::vector<std::vector<Tile *>>>());
+    map.resize(size_x, vector<vector<vector<Tile *>>>());
 
     for (size_t x = 0; x < map.size(); x++)
     {
-        map[x].resize(size_y, std::vector<std::vector<Tile *>>());
+        map[x].resize(size_y, vector<vector<Tile *>>());
 
         for (size_t y = 0; y < map[x].size(); y++)
         {
-            map[x][y].resize(layers, std::vector<Tile *>());
+            map[x][y].resize(layers, vector<Tile *>());
         }
     }
 }
@@ -51,7 +51,7 @@ void TileMap::resize(const int size_x, const int size_y, const int layers)
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
 TileMap::TileMap(const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
-                 const std::string texture_file_path)
+                 const string texture_file_path)
 {
     gridSizeF = grid_size;
     gridSizeI = (int)gridSizeF;
@@ -77,7 +77,7 @@ TileMap::TileMap(const float grid_size, const unsigned map_grid_width, const uns
     layer = 0;
 }
 
-TileMap::TileMap(const std::string map_file_path)
+TileMap::TileMap(const string map_file_path)
 {
     loadFromFile(map_file_path);
 }
@@ -89,9 +89,9 @@ TileMap::~TileMap()
 
 /* FUNCTIONS ===================================================================================================== */
 
-void TileMap::loadFromFile(const std::string file_path)
+void TileMap::loadFromFile(const string file_path)
 {
-    std::ifstream in_file;
+    ifstream in_file;
 
     // Try to open a file.
     in_file.open(file_path);
@@ -107,7 +107,7 @@ void TileMap::loadFromFile(const std::string file_path)
 
     unsigned layers = 0;
 
-    std::string texture_file_path;
+    string texture_file_path;
 
     // TILE DATA
     short type = TileType::DEFAULT;
@@ -179,7 +179,7 @@ void TileMap::loadFromFile(const std::string file_path)
                 map[grid_x][grid_y][z].begin() + k,
                 new EnemySpawnerTile(
                     grid_x, grid_y, gridSizeF, tileTextureSheet,
-                    sf::IntRect(txtr_rect_top, txtr_rect_left, gridSizeI, gridSizeI),
+                    IntRect(txtr_rect_top, txtr_rect_left, gridSizeI, gridSizeI),
                     enemy_type, enemy_amount, enemy_time_to_spawn,
                     enemy_max_distance, enemy_spawn_area_size));
         }
@@ -194,7 +194,7 @@ void TileMap::loadFromFile(const std::string file_path)
                 new RegularTile(
                     static_cast<TileType>(type),
                     grid_x, grid_y, gridSizeF, tileTextureSheet,
-                    sf::IntRect(txtr_rect_top, txtr_rect_left, gridSizeI, gridSizeI),
+                    IntRect(txtr_rect_top, txtr_rect_left, gridSizeI, gridSizeI),
                     collision,
                     coll_box_width, coll_box_height,
                     coll_box_offset_x, coll_box_offset_y));
@@ -204,9 +204,9 @@ void TileMap::loadFromFile(const std::string file_path)
     in_file.close();
 }
 
-void TileMap::saveToFile(const std::string file_path)
+void TileMap::saveToFile(const string file_path)
 {
-    std::ofstream out_file;
+    ofstream out_file;
 
     // Try to open a file.
     out_file.open(file_path);
@@ -246,7 +246,7 @@ void TileMap::saveToFile(const std::string file_path)
 
 void TileMap::addTile(
     const unsigned x, const unsigned y, const unsigned z,
-    const sf::IntRect &texture_rect,
+    const IntRect &texture_rect,
     const bool &collision,
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y,
@@ -281,7 +281,7 @@ void TileMap::addTile(
 
 void TileMap::addSpawner(
     const unsigned x, const unsigned y, const unsigned z,
-    const sf::IntRect &texture_rect,
+    const IntRect &texture_rect,
     const short enemy_type, const short enemy_amount,
     const short enemy_time_to_spawn, const short enemy_max_distance,
     const short enemy_spawn_area_size)
@@ -333,12 +333,12 @@ void TileMap::update(const float &dt, Entity *entity)
 }
 
 void TileMap::render(
-    sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
-    const bool show_collision_box, const bool use_deferred_render, sf::Shader *shader,
-    const sf::Vector2f light_pos)
+    RenderTarget &target, const Vector2i &grid_position, VideoMode &vm,
+    const bool show_collision_box, const bool use_deferred_render, Shader *shader,
+    const Vector2f light_pos)
 {
-    int active_area_width = static_cast<int>(std::ceil(static_cast<float>(vm.width) / gridSizeF)) + 2;
-    int active_area_height = static_cast<int>(std::ceil(static_cast<float>(vm.height) / gridSizeF) + 2);
+    int active_area_width = static_cast<int>(ceil(static_cast<float>(vm.width) / gridSizeF)) + 2;
+    int active_area_height = static_cast<int>(ceil(static_cast<float>(vm.height) / gridSizeF) + 2);
 
     updateMapActiveArea(grid_position, active_area_width, active_area_height);
 
@@ -379,7 +379,7 @@ void TileMap::render(
     }
 }
 
-void TileMap::deferredRender(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
+void TileMap::deferredRender(RenderTarget &target, Shader *shader, const Vector2f light_pos)
 {
     while (!deferredTileRendering.empty())
     {
@@ -397,27 +397,27 @@ void TileMap::updateWorldBoundsCollision(const float &dt, Entity *entity)
     // X axis
     if (entity->getPosition().x < 0.f)
     {
-        entity->setPosition(sf::Vector2f(0.f, entity->getPosition().y));
+        entity->setPosition(Vector2f(0.f, entity->getPosition().y));
         entity->stopVelocityX();
     }
     else if (entity->getPosition().x + entity->getSize().x > mapWorldDimensions.x)
     {
         entity->stopVelocityX();
         entity->setPosition(
-            sf::Vector2f(mapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
+            Vector2f(mapWorldDimensions.x - entity->getSize().x, entity->getPosition().y));
     }
 
     // Y axis
     if (entity->getPosition().y < 0.f)
     {
         entity->stopVelocityY();
-        entity->setPosition(sf::Vector2f(entity->getPosition().x, 0.f));
+        entity->setPosition(Vector2f(entity->getPosition().x, 0.f));
     }
     else if (entity->getPosition().y + entity->getSize().y > mapWorldDimensions.y)
     {
         entity->stopVelocityY();
         entity->setPosition(
-            sf::Vector2f(entity->getPosition().x, mapWorldDimensions.y - entity->getSize().y));
+            Vector2f(entity->getPosition().x, mapWorldDimensions.y - entity->getSize().y));
     }
 }
 
@@ -431,31 +431,31 @@ void TileMap::updateTileCollision(const float &dt, Entity *entity)
             {
                 if (map[x][y][layer][k]->isCollideable())
                 {
-                    sf::FloatRect entity_bounds = entity->getGlobalBounds();
-                    sf::FloatRect wall_bounds = map[x][y][layer][k]->getGlobalBounds();
-                    sf::FloatRect next_position_bounds = entity->getNextPositionBounds(dt);
+                    FloatRect entity_bounds = entity->getGlobalBounds();
+                    FloatRect wall_bounds = map[x][y][layer][k]->getGlobalBounds();
+                    FloatRect next_position_bounds = entity->getNextPositionBounds(dt);
 
                     if (next_position_bounds.intersects(wall_bounds))
                     {
                         if (entity->getDirection() == "UP")
                         {
                             entity->stopVelocityY();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y + dt * (entity->getMaxVelocity() / 4.f)));
+                            entity->setPosition(Vector2f(entity->getPosition().x, entity->getPosition().y + dt * (entity->getMaxVelocity() / 4.f)));
                         }
                         else if (entity->getDirection() == "DOWN")
                         {
                             entity->stopVelocityY();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x, entity->getPosition().y - dt * (entity->getMaxVelocity() / 4.f)));
+                            entity->setPosition(Vector2f(entity->getPosition().x, entity->getPosition().y - dt * (entity->getMaxVelocity() / 4.f)));
                         }
                         else if (entity->getDirection() == "LEFT")
                         {
                             entity->stopVelocityX();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x + dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
+                            entity->setPosition(Vector2f(entity->getPosition().x + dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
                         }
                         else if (entity->getDirection() == "RIGHT")
                         {
                             entity->stopVelocityX();
-                            entity->setPosition(sf::Vector2f(entity->getPosition().x - dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
+                            entity->setPosition(Vector2f(entity->getPosition().x - dt * (entity->getMaxVelocity() / 4.f), entity->getPosition().y));
                         }
                     }
                 }
@@ -520,7 +520,7 @@ void TileMap::updateMapActiveArea(Entity *entity, const int width, const int hei
         endY = mapGridDimensions.y;
 }
 
-void TileMap::updateMapActiveArea(const sf::Vector2i grid_position, const int width, const int height)
+void TileMap::updateMapActiveArea(const Vector2i grid_position, const int width, const int height)
 {
     layer = 0;
 
@@ -559,12 +559,12 @@ const bool TileMap::compareType(const int x, const int y, const unsigned layer, 
     return false;
 }
 
-const sf::Vector2f &TileMap::getSize() const
+const Vector2f &TileMap::getSize() const
 {
     return mapWorldDimensions;
 }
 
-const sf::Texture *TileMap::getTileTextureSheet() const
+const Texture *TileMap::getTileTextureSheet() const
 {
     return &tileTextureSheet;
 }

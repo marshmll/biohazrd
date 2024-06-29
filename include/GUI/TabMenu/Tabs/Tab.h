@@ -9,10 +9,10 @@ private:
 protected:
     /* VARIABLES ================================================================================================= */
 
-    sf::VideoMode &vm;
-    sf::Font &font;
+    VideoMode &vm;
+    Font &font;
 
-    sf::RectangleShape bg;
+    RectangleShape bg;
 
     bool hidden;
 
@@ -20,8 +20,8 @@ public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     Tab(const float width, const float height,
-        const sf::Color bg_color, const sf::Color text_color,
-        sf::VideoMode &vm, sf::Font &font);
+        const Color bg_color, const Color text_color,
+        VideoMode &vm, Font &font);
 
     virtual ~Tab();
 
@@ -29,7 +29,7 @@ public:
 
     virtual void update(const float &dt) = 0;
 
-    virtual void render(sf::RenderTarget &target) = 0;
+    virtual void render(RenderTarget &target) = 0;
 
     /* ACCESSORS ================================================================================================= */
 

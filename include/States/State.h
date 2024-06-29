@@ -21,10 +21,10 @@ class State; // Needed to typedef StateData.
 typedef struct
 {
     Logger *logger;
-    std::stack<State *> *states;
+    stack<State *> *states;
     GraphicsSettings *gfxSettings;
-    sf::RenderWindow *window;
-    std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
+    RenderWindow *window;
+    map<string, Keyboard::Key> *acceptedKeys;
     float gridSize;
 } StateData;
 
@@ -35,36 +35,36 @@ protected:
     /* VARIABLES ================================================================================================= */
 
     StateData *data;
-    std::stack<State *> *states;
+    stack<State *> *states;
 
     GraphicsSettings *gfxSettings;
-    sf::RenderWindow *window;
-    sf::VideoMode &vm;
+    RenderWindow *window;
+    VideoMode &vm;
 
-    std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
-    std::map<std::string, sf::Keyboard::Key> keybinds;
+    map<string, Keyboard::Key> *acceptedKeys;
+    map<string, Keyboard::Key> keybinds;
 
     float gridSize;
 
-    std::string currentPath;
+    string currentPath;
 
     bool isPaused;
     bool quitState;
 
-    sf::Clock keyTimer;
-    sf::Int32 keyTimerMax;
+    Clock keyTimer;
+    Int32 keyTimerMax;
 
-    sf::Clock mouseTimer;
-    sf::Int32 mouseTimerMax;
+    Clock mouseTimer;
+    Int32 mouseTimerMax;
 
-    sf::Vector2i mousePosScreen;
-    sf::Vector2i mousePosWindow;
-    sf::Vector2f mousePosView;
-    sf::Vector2i mousePosGrid;
+    Vector2i mousePosScreen;
+    Vector2i mousePosWindow;
+    Vector2f mousePosView;
+    Vector2i mousePosGrid;
 
     /* ASSETS ==================================================================================================== */
 
-    std::map<std::string, sf::Texture> textures;
+    map<string, Texture> textures;
 
     /* INITIALIZERS ============================================================================================== */
 
@@ -91,7 +91,7 @@ public:
     /* PURE VIRTUAL FUNCTIONS ==================================================================================== */
 
     virtual void update(const float &dt) = 0;
-    virtual void render(sf::RenderTarget &target) = 0;
+    virtual void render(RenderTarget &target) = 0;
     virtual void updateInput(const float &dt) = 0;
 
     /* DEFINED VIRTUAL FUNCTIONS ================================================================================= */
@@ -104,7 +104,7 @@ public:
      *
      * @return void
      */
-    virtual void updateMousePositions(sf::View *view = nullptr);
+    virtual void updateMousePositions(View *view = nullptr);
 
     /**
      * @brief Sets quit current state to true.
@@ -156,7 +156,7 @@ public:
      * or equal to the timer max. If so, checks if the key is pressed.
      * If the key is not pressed, return false. Otherwise, resets the
      * timer and returns true.
-     * @param is_key_pressed The return value of an sf::Keyboard::isKeyPressed
+     * @param is_key_pressed The return value of an Keyboard::isKeyPressed
      * call.
      *
      * @return const bool
@@ -168,7 +168,7 @@ public:
      * or equal to the timer max. If so, checks if the mouse button is
      * pressed. If the mouse button is not pressed, return false. Otherwise,
      * resets the timer and returns true.
-     * @param is_mouse_pressed The return value of an sf::Mouse::isButtonPressed
+     * @param is_mouse_pressed The return value of an Mouse::isButtonPressed
      * call.
      *
      * @return const bool

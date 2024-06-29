@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+using namespace std;
 
 /**
  * @brief Namespace for custom error handling.
@@ -20,19 +21,19 @@ namespace ErrorHandler
      *
      * @return void.
      */
-    void throwErr(std::string msg);
+    void throwErr(string msg);
 
     /**
      * @brief Displays a error message on the console. Does
      * not exit the program.
      *
-     * @note -> Does not exit program. Just prints a std::cerr.
+     * @note -> Does not exit program. Just prints a cerr.
      *
      * @param msg The message to be shown on the console.
      *
      * @return void.
      */
-    void printErr(std::string msg);
+    void printErr(string msg);
 };
 
 #endif /* ERRORHANDLER_H */

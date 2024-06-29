@@ -20,29 +20,29 @@ namespace gui
      * @brief Converts a window width percent to a pixel
      * coordinate dynamically.
      *
-     * @param vm sf::VideoMode&
+     * @param vm VideoMode&
      * @param percent percent relative to window width
      *
      * @return const float;
      */
-    const float p2pX(const sf::VideoMode &vm, const float percent);
+    const float p2pX(const VideoMode &vm, const float percent);
 
     /**
      * @brief Converts a window height percent to a pixel
      * coordinate dynamically.
      *
-     * @param vm sf::VideoMode&
+     * @param vm VideoMode&
      * @param percent percent relative to window height
      *
      * @return const float;
      */
-    const float p2pY(const sf::VideoMode &vm, const float percent);
+    const float p2pY(const VideoMode &vm, const float percent);
 
     /**
      * @brief Calculates the adequate character size based
      * on the window resolution
      *
-     * @param vm sf::VideoMode&
+     * @param vm VideoMode&
      * @param constant A constant parameter for calculating the
      * char size (default = 60)
      *
@@ -50,7 +50,7 @@ namespace gui
      *
      * @return const unsigned
      */
-    const unsigned calc_char_size(const sf::VideoMode &vm, unsigned constant = 60);
+    const unsigned calc_char_size(const VideoMode &vm, unsigned constant = 60);
 
     /**********************************************************************************************************
      *
@@ -64,25 +64,25 @@ namespace gui
         short unsigned id;
         short unsigned btn_state;
 
-        sf::RectangleShape shape;
+        RectangleShape shape;
 
         // Text Button
-        sf::Text text;
+        Text text;
 
         // Image button
-        sf::RectangleShape image;
+        RectangleShape image;
 
-        sf::Color textIdleColor;
-        sf::Color textHoverColor;
-        sf::Color textActiveColor;
+        Color textIdleColor;
+        Color textHoverColor;
+        Color textActiveColor;
 
-        sf::Color idleColor;
-        sf::Color hoverColor;
-        sf::Color activeColor;
+        Color idleColor;
+        Color hoverColor;
+        Color activeColor;
 
-        sf::Color outlineIdleColor;
-        sf::Color outlineHoverColor;
-        sf::Color outlineActiveColor;
+        Color outlineIdleColor;
+        Color outlineHoverColor;
+        Color outlineActiveColor;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
@@ -97,12 +97,12 @@ namespace gui
          * @note -> Sets text position centered in button.
          */
         Button(const float x, const float y, const float width, const float height,
-               sf::Font &font, std::string text, const unsigned character_size,
-               sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-               sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-               sf::Color outline_idle_color = sf::Color::Transparent,
-               sf::Color outline_hover_color = sf::Color::Transparent,
-               sf::Color outline_active_color = sf::Color::Transparent,
+               Font &font, string text, const unsigned character_size,
+               Color text_idle_color, Color text_hover_color, Color text_active_color,
+               Color idle_color, Color hover_color, Color active_color,
+               Color outline_idle_color = Color::Transparent,
+               Color outline_hover_color = Color::Transparent,
+               Color outline_active_color = Color::Transparent,
                const short unsigned id = 0);
 
         /**
@@ -115,11 +115,11 @@ namespace gui
          * @note -> Sets image position centered in button.
          */
         Button(const float x, const float y, const float width, const float height,
-               sf::Texture *texture, const float img_w, const float img_h,
-               sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-               sf::Color outline_idle_color = sf::Color::Transparent,
-               sf::Color outline_hover_color = sf::Color::Transparent,
-               sf::Color outline_active_color = sf::Color::Transparent,
+               Texture *texture, const float img_w, const float img_h,
+               Color idle_color, Color hover_color, Color active_color,
+               Color outline_idle_color = Color::Transparent,
+               Color outline_hover_color = Color::Transparent,
+               Color outline_active_color = Color::Transparent,
                const short unsigned id = 0);
 
         virtual ~Button();
@@ -134,7 +134,7 @@ namespace gui
          *
          * @return void
          */
-        void update(sf::Vector2f mouse_pos);
+        void update(Vector2f mouse_pos);
 
         /**
          * @brief Renders the button into a target.
@@ -143,7 +143,7 @@ namespace gui
          *
          * @return void
          */
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         /* ACCESSORS ========================================================================================== */
 
@@ -165,9 +165,9 @@ namespace gui
         /**
          * @brief Returns a button's text string.
          *
-         * @return std::string
+         * @return string
          */
-        const std::string getString() const;
+        const string getString() const;
 
         /* MODIFIERS ========================================================================================== */
 
@@ -183,7 +183,7 @@ namespace gui
          *
          * @return void
          */
-        void setString(std::string string);
+        void setString(string string);
     };
 
     /**********************************************************************************************************
@@ -198,7 +198,7 @@ namespace gui
         /* VARIABLES ========================================================================================== */
 
         gui::Button *selectedElement;
-        std::vector<gui::Button *> list;
+        vector<gui::Button *> list;
 
         bool showList;
 
@@ -222,7 +222,7 @@ namespace gui
          */
         DropDownList(const float x, const float y,
                      const float width, const float height,
-                     sf::Font &font, const std::vector<std::string> labels,
+                     Font &font, const vector<string> labels,
                      const unsigned char_size,
                      const int max_size = -1,
                      const short unsigned default_index = 0);
@@ -240,7 +240,7 @@ namespace gui
          *
          * @return void
          */
-        void update(const sf::Vector2i &mouse_pos_window, const float &dt);
+        void update(const Vector2i &mouse_pos_window, const float &dt);
 
         /**
          * @brief Renders the selected element from the list and
@@ -248,7 +248,7 @@ namespace gui
          *
          * @return void
          */
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         /**
          * @brief Updates the keytime.
@@ -296,31 +296,31 @@ namespace gui
         float mousetime;
         float mousetimeMax;
 
-        sf::RectangleShape inputBg;
+        RectangleShape inputBg;
 
         gui::Button *incrementBtn;
-        sf::Texture incrementBtnIcon;
+        Texture incrementBtnIcon;
 
         gui::Button *decrementBtn;
-        sf::Texture decrementBtnIcon;
+        Texture decrementBtnIcon;
 
-        sf::Text inputText;
+        Text inputText;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ========================================================================== */
 
         IncrementInput(const float x, const float y, const float width, const float height,
-                       const float step, const sf::Color bg_color,
-                       sf::Color buttons_idle_color, sf::Color buttons_hover_color, sf::Color buttons_active_color,
-                       sf::Font &font, sf::Color text_color, const unsigned char_size, const float initial_value = 0.f);
+                       const float step, const Color bg_color,
+                       Color buttons_idle_color, Color buttons_hover_color, Color buttons_active_color,
+                       Font &font, Color text_color, const unsigned char_size, const float initial_value = 0.f);
 
         virtual ~IncrementInput();
 
         /* FUNCTIONS =========================================================================================== */
 
-        void update(const float &dt, sf::Vector2f mouse_pos);
+        void update(const float &dt, Vector2f mouse_pos);
 
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         void updateInput();
 
@@ -330,7 +330,7 @@ namespace gui
 
         const float getValue() const;
 
-        const bool hasCompletedMousetimeCycle(sf::Mouse::Button mouse_btn);
+        const bool hasCompletedMousetimeCycle(Mouse::Button mouse_btn);
 
         /* MODIFIERS =========================================================================================== */
 
@@ -348,13 +348,13 @@ namespace gui
     private:
         /* VARIABLES ========================================================================================== */
 
-        sf::VideoMode &vm;
-        sf::Font &font;
-        sf::Text pmenuText;
+        VideoMode &vm;
+        Font &font;
+        Text pmenuText;
 
-        sf::RectangleShape background;
-        sf::RectangleShape container;
-        std::map<std::string, gui::Button *> buttons;
+        RectangleShape background;
+        RectangleShape container;
+        map<string, gui::Button *> buttons;
 
         /* INITIALIZERS ======================================================================================= */
 
@@ -375,7 +375,7 @@ namespace gui
          * @note -> Sets the text
          * @note -> Initialize buttons.
          */
-        PauseMenu(sf::VideoMode &vm, sf::Font &font);
+        PauseMenu(VideoMode &vm, Font &font);
 
         /**
          * @brief Free allocated memory from the pause menu
@@ -392,7 +392,7 @@ namespace gui
          *
          * @return void
          */
-        void update(const sf::Vector2i &mouse_pos_window);
+        void update(const Vector2i &mouse_pos_window);
 
         /**
          * @brief Renders the pause menu into a render target.
@@ -403,7 +403,7 @@ namespace gui
          *
          * @return void
          */
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         /**
          * @brief Adds a button to the pause menu
@@ -413,23 +413,23 @@ namespace gui
          *
          * @return void
          */
-        void addButton(const std::string key, const float y, const std::string text);
+        void addButton(const string key, const float y, const string text);
 
         /**
          * @brief Returns if a button is pressed based on its key.
          *
          * @return const bool&
          */
-        const bool isButtonPressed(const std::string key);
+        const bool isButtonPressed(const string key);
 
         /* ACCESSORS ========================================================================================== */
 
         /**
          * @brief Returns the buttons map reference.
          *
-         * @return std::map<std::string, Button*>&
+         * @return map<string, Button*>&
          */
-        std::map<std::string, gui::Button *> &getButtons();
+        map<string, gui::Button *> &getButtons();
     };
 
     /**********************************************************************************************************
@@ -450,16 +450,16 @@ namespace gui
         float mousetime;
         const float mousetimeMax;
 
-        sf::Texture hideBtnIcon;
+        Texture hideBtnIcon;
         gui::Button *hideBtn;
 
-        sf::RectangleShape bounds;
-        sf::Sprite sheet;
+        RectangleShape bounds;
+        Sprite sheet;
 
-        sf::RectangleShape selector;
-        sf::Vector2u mousePosGrid;
+        RectangleShape selector;
+        Vector2u mousePosGrid;
 
-        sf::IntRect textureRect;
+        IntRect textureRect;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
@@ -471,7 +471,7 @@ namespace gui
                         const float btn_width, const float btn_height,
                         const float txtr_slctr_x, const float txtr_slctr_y,
                         const float txtr_slctr_width, const float txtr_slctr_height,
-                        const float grid_size_f, const sf::Texture *texture_sheet);
+                        const float grid_size_f, const Texture *texture_sheet);
 
         /**
          * @brief Frees all buttons memory.
@@ -490,7 +490,7 @@ namespace gui
          * @note -> Changes the selector position
          * @note -> Sets the texture rect.
          */
-        void update(const float &dt, const sf::Vector2i mouse_pos_window);
+        void update(const float &dt, const Vector2i mouse_pos_window);
 
         /**
          * @brief Renders the texture selector into a target if
@@ -502,7 +502,7 @@ namespace gui
          *
          * @return void
          */
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         /**
          * @brief Updates the mousetime.
@@ -552,9 +552,9 @@ namespace gui
          * The texture rect is the texture that is under
          * the mouse posiitons.
          *
-         * @return const sf::IntRect&
+         * @return const IntRect&
          */
-        const sf::IntRect &getTextureRect() const;
+        const IntRect &getTextureRect() const;
     };
 
     /**********************************************************************************************************
@@ -575,31 +575,31 @@ namespace gui
         bool hidden;
         bool editing;
 
-        sf::Vector2f offsets;
-        sf::Vector2f dimensions;
+        Vector2f offsets;
+        Vector2f dimensions;
 
         float mousetime;
         const float mousetimeMax;
 
-        sf::Texture hideBtnIcon;
+        Texture hideBtnIcon;
         gui::Button *hideBtn;
 
-        sf::RectangleShape bounds;
-        sf::Sprite sheet;
+        RectangleShape bounds;
+        Sprite sheet;
 
-        sf::RectangleShape selector;
-        sf::Vector2u mousePosGrid;
+        RectangleShape selector;
+        Vector2u mousePosGrid;
 
-        sf::IntRect textureRect;
+        IntRect textureRect;
 
-        sf::VideoMode &vm;
+        VideoMode &vm;
 
-        sf::RectangleShape editorBg;
-        sf::RectangleShape editorTile;
-        sf::RectangleShape editorCollBox;
+        RectangleShape editorBg;
+        RectangleShape editorTile;
+        RectangleShape editorCollBox;
 
-        sf::Text inputLabels;
-        std::map<std::string, gui::IncrementInput *> incrementInputs;
+        Text inputLabels;
+        map<string, gui::IncrementInput *> incrementInputs;
 
         gui::Button *resetBtn;
 
@@ -611,8 +611,8 @@ namespace gui
                         const float col_editor_x, const float col_editor_y,
                         const float col_editor_width, const float col_editor_height,
                         const float grid_size_f, const float scale,
-                        const sf::Texture *texture_sheet,
-                        sf::Font &font, sf::VideoMode &vm);
+                        const Texture *texture_sheet,
+                        Font &font, VideoMode &vm);
 
         virtual ~CollisionEditor();
 
@@ -628,7 +628,7 @@ namespace gui
          * @note -> Changes the selector position
          * @note -> Sets the texture rect.
          */
-        void update(const float &dt, sf::Vector2i mouse_pos_window, sf::IntRect &texture_rect);
+        void update(const float &dt, Vector2i mouse_pos_window, IntRect &texture_rect);
 
         /**
          * @brief Renders the collision editor into a target if
@@ -640,7 +640,7 @@ namespace gui
          *
          * @return void
          */
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         void updateInput();
 
@@ -672,16 +672,16 @@ namespace gui
         /**
          * @brief Returns the collision box dimensions.
          *
-         * @return sf::Vector2f&
+         * @return Vector2f&
          */
-        const sf::Vector2f &getDimensions() const;
+        const Vector2f &getDimensions() const;
 
         /**
          * @brief Returns the collision box offsets.
          *
-         * @return sf::Vector2f&
+         * @return Vector2f&
          */
-        const sf::Vector2f &getOffsets() const;
+        const Vector2f &getOffsets() const;
 
         /**
          * @brief Returns if the collision editor is visible.
@@ -714,18 +714,18 @@ namespace gui
     private:
         /* VARIABLES ========================================================================================== */
 
-        sf::RectangleShape bar;
-        sf::Vector2f barMaxSize;
-        sf::Text barText;
+        RectangleShape bar;
+        Vector2f barMaxSize;
+        Text barText;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
         SolidBar(const float x, const float y,
                  const float width, const float height,
-                 const sf::Color bg_color, const sf::Color text_color,
-                 const sf::Font &font, const unsigned char_size,
-                 const std::string string = "");
+                 const Color bg_color, const Color text_color,
+                 const Font &font, const unsigned char_size,
+                 const string string = "");
 
         virtual ~SolidBar();
 
@@ -738,7 +738,7 @@ namespace gui
          *
          * @return void
          */
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         /* MODIFIERS ========================================================================================== */
 
@@ -747,7 +747,7 @@ namespace gui
          *
          * @return void
          */
-        void setString(const std::string string);
+        void setString(const string string);
     };
 
     /**********************************************************************************************************
@@ -764,10 +764,10 @@ namespace gui
         float currentValue;
         float maxValue;
 
-        sf::RectangleShape barBg;
-        sf::RectangleShape barFill;
-        sf::Vector2f barMaxSize;
-        sf::Text barText;
+        RectangleShape barBg;
+        RectangleShape barFill;
+        Vector2f barMaxSize;
+        Text barText;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
@@ -791,9 +791,9 @@ namespace gui
             const float x, const float y,
             const float width, const float height,
             const float current_value, const float max_value,
-            const sf::Color bg_color, const sf::Color fill_color,
-            sf::Font &font, const sf::Color text_color,
-            const unsigned char_size, const std::string string = "");
+            const Color bg_color, const Color fill_color,
+            Font &font, const Color text_color,
+            const unsigned char_size, const string string = "");
 
         /**
          * @brief Progress bar constructor WITHOUT text.
@@ -810,7 +810,7 @@ namespace gui
             const float x, const float y,
             const float width, const float height,
             const float current_value, const float max_value,
-            const sf::Color bg_color, const sf::Color fill_color);
+            const Color bg_color, const Color fill_color);
 
         virtual ~ProgressBar();
 
@@ -818,11 +818,11 @@ namespace gui
 
         void update();
 
-        void render(sf::RenderTarget &target);
+        void render(RenderTarget &target);
 
         /* ACCESSORS ========================================================================================== */
 
-        const sf::Vector2f &getPosition() const;
+        const Vector2f &getPosition() const;
 
         /* MODIFIERS ========================================================================================== */
 
@@ -831,7 +831,7 @@ namespace gui
          *
          * @return void
          */
-        void setString(const std::string string);
+        void setString(const string string);
 
         /**
          * @brief Sets the bar's percent. Resizes the bar fill relative

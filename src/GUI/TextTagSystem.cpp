@@ -3,7 +3,7 @@
 
 /* PRIVATE FUNCTIONS ============================================================================================ */
 
-void TextTagSystem::initFonts(const std::string font_path)
+void TextTagSystem::initFonts(const string font_path)
 {
     if (!font.loadFromFile(font_path))
         ErrorHandler::throwErr("TEXTTAGSYSTEM::TEXTTAGSYSTEM::ERR_LOADING_FONT: " + font_path);
@@ -19,7 +19,7 @@ void TextTagSystem::initTagTemplates()
                                             1, -1,
                                             5.f, 50.f,
                                             300.f,
-                                            sf::Color::White,
+                                            Color::White,
                                             gui::calc_char_size(vm, 140),
                                             "DEFAULT_TAG", font);
 
@@ -27,7 +27,7 @@ void TextTagSystem::initTagTemplates()
                                              0, -1,
                                              0.f, 70.f,
                                              300.f,
-                                             sf::Color::Red,
+                                             Color::Red,
                                              gui::calc_char_size(vm, 135),
                                              "NEGATIVE_TAG", font, false);
 
@@ -35,7 +35,7 @@ void TextTagSystem::initTagTemplates()
                                              0, -1,
                                              0.f, 70.f,
                                              300.f,
-                                             sf::Color::Green,
+                                             Color::Green,
                                              gui::calc_char_size(vm, 135),
                                              "POSITIVE_TAG", font, false);
 
@@ -43,7 +43,7 @@ void TextTagSystem::initTagTemplates()
                                            1, -1,
                                            5.f, 50.f,
                                            300.f,
-                                           sf::Color(255, 50, 50, 255),
+                                           Color(255, 50, 50, 255),
                                            gui::calc_char_size(vm, 140),
                                            "DAMAGE_TAG", font);
 
@@ -51,14 +51,14 @@ void TextTagSystem::initTagTemplates()
                                                1, -1,
                                                5.f, 50.f,
                                                300.f,
-                                               sf::Color(50, 255, 50, 255),
+                                               Color(50, 255, 50, 255),
                                                gui::calc_char_size(vm, 140),
                                                "EXPERIENCE_TAG", font);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-TextTagSystem::TextTagSystem(const std::string font_path, sf::VideoMode &vm)
+TextTagSystem::TextTagSystem(const string font_path, VideoMode &vm)
     : vm(vm)
 {
     initFonts(font_path);
@@ -92,7 +92,7 @@ void TextTagSystem::update(const float &dt)
     }
 }
 
-void TextTagSystem::render(sf::RenderTarget &target)
+void TextTagSystem::render(RenderTarget &target)
 {
     for (auto tag : tags)
         tag->render(target);
@@ -100,7 +100,7 @@ void TextTagSystem::render(sf::RenderTarget &target)
 
 void TextTagSystem::deleteTag(TextTag *tag)
 {
-    auto tag_it = std::find(tags.begin(), tags.end(), tag);
+    auto tag_it = find(tags.begin(), tags.end(), tag);
 
     if (tag_it == tags.end())
         ErrorHandler::throwErr("TEXTTAGSYSTEM::REMOVETAG::ERR_TAG_NOT_FOUND_IN_VECTOR");

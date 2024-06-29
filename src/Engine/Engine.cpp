@@ -12,7 +12,7 @@ void Engine::initLogger()
 
 void Engine::initVariables()
 {
-    currentPath = std::filesystem::current_path().string();
+    currentPath = filesystem::current_path().string();
 
     window = nullptr;
 
@@ -34,13 +34,13 @@ void Engine::initWindow()
     // Create the window
     if (gfxSettings.fullscreen) // If in fullscreen mode
     {
-        window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,
-                                      sf::Style::Fullscreen, gfxSettings.contextSettings);
+        window = new RenderWindow(gfxSettings.resolution, gfxSettings.title,
+                                  Style::Fullscreen, gfxSettings.contextSettings);
     }
     else // If in window mode
     {
-        window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,
-                                      sf::Style::Titlebar | sf::Style::Close, gfxSettings.contextSettings);
+        window = new RenderWindow(gfxSettings.resolution, gfxSettings.title,
+                                  Style::Titlebar | Style::Close, gfxSettings.contextSettings);
     }
 
     window->setFramerateLimit(gfxSettings.frameRateLimit);
@@ -52,9 +52,9 @@ void Engine::initKeys()
     IniParser parser("Config/accepted_keys.ini");
 
     for (auto it : parser.getAllKeyValuePairs("AcceptedKeys"))
-        acceptedKeys[it.first] = static_cast<sf::Keyboard::Key>(std::stoi(it.second));
+        acceptedKeys[it.first] = static_cast<Keyboard::Key>(stoi(it.second));
 
-    logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys.");
+    logger->log("Engine::initKeys", INFO, "Initialized " + to_string(acceptedKeys.size()) + " keys.");
 }
 
 void Engine::initStateData()
@@ -94,7 +94,7 @@ Engine::~Engine()
         delete states.top();
         states.pop();
     }
-    
+
     delete logger;
 }
 
@@ -175,7 +175,7 @@ void Engine::pollSFMLEvents()
     {
         switch (event.type)
         {
-        case sf::Event::Closed:
+        case Event::Closed:
             endApplication();
             break;
 

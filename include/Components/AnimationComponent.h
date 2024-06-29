@@ -11,8 +11,8 @@ private:
     public:
         /* VARIABLES ======================================================= */
 
-        sf::Sprite &sprite;
-        sf::Texture &textureSheet;
+        Sprite &sprite;
+        Texture &textureSheet;
 
         float animationTimer;
         float timer;
@@ -21,9 +21,9 @@ private:
         int height;
         bool done;
 
-        sf::IntRect startCropRect;
-        sf::IntRect currentCropRect;
-        sf::IntRect endCropRect;
+        IntRect startCropRect;
+        IntRect currentCropRect;
+        IntRect endCropRect;
 
         /* CONSTRUCTOR AND DESTRUCTOR ========================================= */
 
@@ -40,16 +40,16 @@ private:
          * @note -> Frame width
          * @note -> Frame height
          */
-        Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
+        Animation(Sprite &sprite, Texture &texture_sheet,
                   float animation_timer,
                   int start_frame_x_index, int start_frame_y_index,
                   int end_frame_x_index, int end_frame_y_index,
                   int width, int height) : sprite(sprite), textureSheet(texture_sheet), animationTimer(animation_timer),
                                            timer(0.f), width(width), height(height), done(false)
         {
-            this->startCropRect = sf::IntRect(start_frame_x_index * width, start_frame_y_index * height, width, height);
+            this->startCropRect = IntRect(start_frame_x_index * width, start_frame_y_index * height, width, height);
             this->currentCropRect = this->startCropRect;
-            this->endCropRect = sf::IntRect(end_frame_x_index * width, end_frame_y_index * height, width, height);
+            this->endCropRect = IntRect(end_frame_x_index * width, end_frame_y_index * height, width, height);
 
             this->sprite.setTexture(this->textureSheet, true);
 
@@ -215,9 +215,9 @@ private:
 
     /* VARIABLES ================================================================================================== */
 
-    sf::Sprite &sprite;
-    sf::Texture &textureSheet;
-    std::map<std::string, Animation *> animations;
+    Sprite &sprite;
+    Texture &textureSheet;
+    map<string, Animation *> animations;
 
     Animation *previousAnimation;
     Animation *priorityAnimation;
@@ -225,7 +225,7 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
-    AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet);
+    AnimationComponent(Sprite &sprite, Texture &texture_sheet);
 
     /**
      * @brief Delete all animations allocated memory
@@ -251,7 +251,7 @@ public:
      * @return void
      */
     void addAnimation(
-        const std::string key,
+        const string key,
         const float animation_update_timer,
         const int start_frame_x_index, const int start_frame_y_index,
         const int end_frame_x_index, const int end_frame_y_index,
@@ -270,7 +270,7 @@ public:
      *
      * @return const bool&
      */
-    const bool play(const std::string key, const float &dt, const bool priority = false);
+    const bool play(const string key, const float &dt, const bool priority = false);
 
     /**
      * @brief Plays an animation from the animations map.
@@ -284,7 +284,7 @@ public:
      *
      * @return const bool&
      */
-    const bool play(const std::string key, const float &dt,
+    const bool play(const string key, const float &dt,
                     const float &modifier, const float &modifier_max,
                     const bool priority = false);
 
@@ -293,11 +293,11 @@ public:
      * refered animation.
      *
      * @note OVERLOADED METHOD
-     * @note Uses a std::string as parameter.
+     * @note Uses a string as parameter.
      *
      * @return void
      */
-    void setNewPreviousAnimation(std::string key);
+    void setNewPreviousAnimation(string key);
 
     /**
      * @brief Sets previous animation pointer to be equal a refered animation.
@@ -317,7 +317,7 @@ public:
      *
      * @return const bool&
      */
-    const bool &isAnimationDone(std::string key);
+    const bool &isAnimationDone(string key);
 };
 
 #endif /* ANIMATIONCOMPONENT_H_ */

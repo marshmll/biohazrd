@@ -40,19 +40,19 @@ public:
      *
      * @return void
      */
-    virtual void update(const float &dt, const sf::Vector2f &mouse_pos_view = sf::Vector2f()) = 0;
+    virtual void update(const float &dt, const Vector2f &mouse_pos_view = Vector2f()) = 0;
 
     /**
      * @brief Renders the enemy into a target.
      *
-     * @param target A sf::RenderTarget& to render the enemy.
+     * @param target A RenderTarget& to render the enemy.
      * @param show_hitbox A flag to enable hitbox debugging.
      * @param shader A shader pointer to use. Default is nullptr.
      *
      * @return void
      */
-    virtual void render(sf::RenderTarget &target, const bool show_hitbox,
-                        sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f()) = 0;
+    virtual void render(RenderTarget &target, const bool show_hitbox,
+                        Shader *shader = nullptr, Vector2f light_pos = Vector2f()) = 0;
 
     /**
      * @brief Updates the enemy's animations.

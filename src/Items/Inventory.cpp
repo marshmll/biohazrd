@@ -85,12 +85,12 @@ const bool Inventory::remove(const short unsigned index)
     return false;
 }
 
-const bool Inventory::loadFromFile(const std::string file_path)
+const bool Inventory::loadFromFile(const string file_path)
 {
     return false;
 }
 
-const bool Inventory::saveToFile(const std::string file_path)
+const bool Inventory::saveToFile(const string file_path)
 {
     return false;
 }

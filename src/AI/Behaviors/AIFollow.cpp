@@ -18,7 +18,7 @@ AIFollow::~AIFollow()
 
 void AIFollow::update(const float &dt)
 {
-    sf::Vector2f move_vec;
+    Vector2f move_vec;
 
     move_vec.x = player.getPosition().x - self.getPosition().x;
     move_vec.y = player.getPosition().y - self.getPosition().y;

@@ -3,11 +3,11 @@
 
 /* PRIVATE FUNCTIONS ============================================================================================= */
 
-std::string IniParser::search(const std::string identifier, const std::string section)
+string IniParser::search(const string identifier, const string section)
 {
-    std::string parsed_str; // Value to be returned.
+    string parsed_str; // Value to be returned.
 
-    std::string str_buff;  // Buffer to read lines.
+    string str_buff;       // Buffer to read lines.
     unsigned line_num = 0; // Line counter.
 
     bool existent_section = false; // Flag to mark if the section exists.
@@ -15,7 +15,7 @@ std::string IniParser::search(const std::string identifier, const std::string se
     // Reset stream reading position to beginning.
     fsstream.seekg(0);
 
-    while (std::getline(fsstream, str_buff))
+    while (getline(fsstream, str_buff))
     {
         line_num++;
 
@@ -24,7 +24,10 @@ std::string IniParser::search(const std::string identifier, const std::string se
             continue;
 
         // Remove all white spaces
-        str_buff.erase(remove_if(str_buff.begin(), str_buff.end(), isspace), str_buff.end());
+        auto isSpace = [](const unsigned char c)
+        { return isspace(c); };
+
+        str_buff.erase(remove_if(str_buff.begin(), str_buff.end(), isSpace), str_buff.end());
 
         // If it is a comment, skip.
         if (str_buff.at(0) == ';')
@@ -51,7 +54,7 @@ std::string IniParser::search(const std::string identifier, const std::string se
                 // If it is a comment, skip to next line.
                 if (str_buff.at(0) == ';')
                 {
-                    std::getline(fsstream, str_buff);
+                    getline(fsstream, str_buff);
                     continue;
                 }
 
@@ -87,34 +90,34 @@ std::string IniParser::search(const std::string identifier, const std::string se
         ErrorHandler::throwErr("INIPARSER::SEARCH::INEXISTEXT_SECTION: " + section +
                                "\n	> At file: " + filePath);
 
-    return std::string();
+    return string();
 }
 
-void IniParser::throwSyntaxError(const std::string identifier, const std::string section, const unsigned line_num)
+void IniParser::throwSyntaxError(const string identifier, const string section, const unsigned line_num)
 {
-    std::cerr << "[IniParser] (Syntax Error): Expected operator \"=\"" << "\n"
-              << "	> At identifier \"" << identifier << "\"" << "\n"
-              << "	> At section \"" << section << "\" (line " << line_num << ")" << "\n"
-              << "	> At file \"" << filePath << "\"\n";
+    cerr << "[IniParser] (Syntax Error): Expected operator \"=\"" << "\n"
+         << "	> At identifier \"" << identifier << "\"" << "\n"
+         << "	> At section \"" << section << "\" (line " << line_num << ")" << "\n"
+         << "	> At file \"" << filePath << "\"\n";
 
     exit(EXIT_FAILURE);
 }
 
-void IniParser::throwConversionError(const std::string value, const std::string type,
-                                     const std::string identifier, const std::string section)
+void IniParser::throwConversionError(const string value, const string type,
+                                     const string identifier, const string section)
 {
-    std::cerr << "[IniParser] (Type Error): Invalid conversion" << "\n"
-              << "	> value \"" << value << "\" to " << type << "\n"
-              << "	> At identifier \"" << identifier << "\"" << "\n"
-              << "	> At section \"" << section << "\"\n"
-              << "	> At file \"" << filePath << "\"\n";
+    cerr << "[IniParser] (Type Error): Invalid conversion" << "\n"
+         << "	> value \"" << value << "\" to " << type << "\n"
+         << "	> At identifier \"" << identifier << "\"" << "\n"
+         << "	> At section \"" << section << "\"\n"
+         << "	> At file \"" << filePath << "\"\n";
 
     exit(EXIT_FAILURE);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-IniParser::IniParser(const std::string file_path)
+IniParser::IniParser(const string file_path)
 {
     filePath = file_path;
     sectionPreset = "";
@@ -126,9 +129,9 @@ IniParser::~IniParser() {}
 
 /* FUNCTIONS ===================================================================================================== */
 
-void IniParser::loadFile(const std::string file_path)
+void IniParser::loadFile(const string file_path)
 {
-    std::ifstream ifs(file_path);
+    ifstream ifs(file_path);
 
     fsstream.clear();
 
@@ -137,20 +140,20 @@ void IniParser::loadFile(const std::string file_path)
 
     char c;
 
-    while (ifs >> std::noskipws >> c)
+    while (ifs >> noskipws >> c)
         fsstream << c;
 
     ifs.close();
 }
 
-const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValuePairs(const std::string section)
+const vector<pair<string, string>> IniParser::getAllKeyValuePairs(const string section)
 {
-    std::string key;
-    std::string value;
+    string key;
+    string value;
 
-    std::vector<std::pair<std::string, std::string>> pairs;
+    vector<pair<string, string>> pairs;
 
-    std::string str_buff;  // Buffer to read lines.
+    string str_buff;       // Buffer to read lines.
     unsigned line_num = 0; // Line counter.
 
     bool existent_section = false; // Flag to mark if the section exists.
@@ -158,7 +161,7 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
     // Reset stream reading position to beginning.
     fsstream.seekg(0);
 
-    while (std::getline(fsstream, str_buff))
+    while (getline(fsstream, str_buff))
     {
         line_num++;
 
@@ -167,7 +170,9 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
             continue;
 
         // Remove all white spaces
-        str_buff.erase(remove_if(str_buff.begin(), str_buff.end(), isspace), str_buff.end());
+        auto isSpace = [](const unsigned char c)
+        { return isspace(c); };
+        str_buff.erase(remove_if(str_buff.begin(), str_buff.end(), isSpace), str_buff.end());
 
         // If it is a comment, skip.
         if (str_buff.at(0) == ';')
@@ -194,7 +199,7 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
                 // If it is a comment, skip to next line.
                 if (str_buff.at(0) == ';')
                 {
-                    std::getline(fsstream, str_buff);
+                    getline(fsstream, str_buff);
                     continue;
                 }
 
@@ -219,7 +224,7 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
                 value = str_buff;
 
                 // Insert a new pair into the vector.
-                pairs.push_back(std::pair<std::string, std::string>(key, value));
+                pairs.push_back(pair<string, string>(key, value));
             }
         }
     }
@@ -238,9 +243,9 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
     return pairs;
 }
 
-const std::string IniParser::getString(const std::string identifier, const std::string section)
+const string IniParser::getString(const string identifier, const string section)
 {
-    std::string value_as_string;
+    string value_as_string;
 
     if (section.empty())
     {
@@ -255,9 +260,9 @@ const std::string IniParser::getString(const std::string identifier, const std::
     return value_as_string;
 }
 
-const int IniParser::getInt(const std::string identifier, const std::string section)
+const int IniParser::getInt(const string identifier, const string section)
 {
-    std::string value_as_string;
+    string value_as_string;
     int parsed_int;
 
     if (section.empty())
@@ -270,7 +275,7 @@ const int IniParser::getInt(const std::string identifier, const std::string sect
     else
         value_as_string = search(identifier, section);
 
-    int conversion_sucess = std::sscanf(value_as_string.c_str(), "%d", &parsed_int);
+    int conversion_sucess = sscanf(value_as_string.c_str(), "%d", &parsed_int);
 
     if (!conversion_sucess)
         throwConversionError(value_as_string, "int", identifier, section);
@@ -278,9 +283,9 @@ const int IniParser::getInt(const std::string identifier, const std::string sect
     return parsed_int;
 }
 
-const bool IniParser::getBool(const std::string identifier, const std::string section)
+const bool IniParser::getBool(const string identifier, const string section)
 {
-    std::string value_as_string;
+    string value_as_string;
     bool parsed_bool;
 
     if (section.empty())
@@ -307,14 +312,14 @@ const bool IniParser::getBool(const std::string identifier, const std::string se
 
 /* ACCESSORS ===================================================================================================== */
 
-const std::string &IniParser::getSectionPreset() const
+const string &IniParser::getSectionPreset() const
 {
     return sectionPreset;
 }
 
 /* MODIFIERS ===================================================================================================== */
 
-void IniParser::setSectionPreset(const std::string section)
+void IniParser::setSectionPreset(const string section)
 {
     sectionPreset = section;
 }

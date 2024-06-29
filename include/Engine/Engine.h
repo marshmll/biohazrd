@@ -17,7 +17,7 @@ class Engine
 private:
     /* VARIABLES ============================================================================================= */
 
-    std::string currentPath;
+    string currentPath;
 
     Logger *logger;
 
@@ -25,18 +25,18 @@ private:
 
     GraphicsSettings gfxSettings;
 
-    sf::RenderWindow *window;
-    sf::Event event;
+    RenderWindow *window;
+    Event event;
 
-    sf::Clock dtClock;
+    Clock dtClock;
 
     float dt; // The delta time is the amount of time elapsed to process a entire frame.
 
     float gridSize;
 
-    std::stack<State *> states; // A stack with pointers to the engine states
+    stack<State *> states; // A stack with pointers to the engine states
 
-    std::map<std::string, sf::Keyboard::Key> acceptedKeys; // The keys accepted by the engine.
+    map<string, Keyboard::Key> acceptedKeys; // The keys accepted by the engine.
 
     /* INITIALIZERS FUNCTIONS ================================================================================= */
 

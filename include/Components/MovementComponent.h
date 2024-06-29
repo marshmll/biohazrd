@@ -20,13 +20,13 @@ class MovementComponent
 private:
     /* VARIABLES ================================================================================================= */
 
-    sf::Sprite &sprite;
+    Sprite &sprite;
 
     float maxVelocity;
     float acceleration;
     float deceleration;
 
-    sf::Vector2f velocity;
+    Vector2f velocity;
 
     short unsigned state;
     short unsigned direction;
@@ -34,7 +34,7 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
-    MovementComponent(sf::Sprite &sprite, float maxVelocity, float acceleration, float deceleration);
+    MovementComponent(Sprite &sprite, float maxVelocity, float acceleration, float deceleration);
 
     virtual ~MovementComponent();
 
@@ -60,11 +60,11 @@ public:
     /* ACCESSORS ================================================================================================= */
 
     /**
-     * @return const sf::Vectorf&
+     * @return const Vectorf&
      *
      * @brief Returns entity's current velocity.
      */
-    const sf::Vector2f &getVelocity() const;
+    const Vector2f &getVelocity() const;
 
     /**
      * @brief Returns the entity max velocity.
@@ -88,16 +88,16 @@ public:
      * @note -> "RIGHT"
      * @note -> "LEFT"
      *
-     * @return std::string
+     * @return string
      */
-    const std::string getDirection() const;
+    const string getDirection() const;
 
     /**
      * @brief Returns the direction based on the key pressed.
      *
-     * @return std::string
+     * @return string
      */
-    const std::string getKeyboardDirection() const;
+    const string getKeyboardDirection() const;
 
     /* MODIFIERS ================================================================================================= */
 

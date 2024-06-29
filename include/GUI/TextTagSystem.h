@@ -22,7 +22,7 @@ private:
     public:
         /* VARIABLES ============================================================= */
 
-        sf::Text text;
+        Text text;
 
         short dirX;
         short dirY;
@@ -41,9 +41,9 @@ private:
                 const short dir_x, const short dir_y,
                 const float speed_x, const float speed_y,
                 const float lifetime,
-                const sf::Color color,
+                const Color color,
                 const unsigned char_size,
-                const std::string string, sf::Font &font,
+                const string string, Font &font,
                 const bool use_fade_fx = USE_FADE_FX)
         {
             dirX = dir_x;
@@ -64,7 +64,7 @@ private:
             fadeFx = use_fade_fx;
         }
 
-        TextTag(TextTag *tag, const float x, const float y, const std::string string)
+        TextTag(TextTag *tag, const float x, const float y, const string string)
         {
             dirX = tag->dirX;
             dirY = tag->dirY;
@@ -94,9 +94,9 @@ private:
                 {
                     float opacity_percent = currentLifetime / initialLifetime;
 
-                    sf::Uint8 alpha = static_cast<sf::Uint8>(255 * opacity_percent);
+                    Uint8 alpha = static_cast<Uint8>(255 * opacity_percent);
 
-                    text.setFillColor(sf::Color(text.getFillColor().r,
+                    text.setFillColor(Color(text.getFillColor().r,
                                                 text.getFillColor().g,
                                                 text.getFillColor().b,
                                                 alpha));
@@ -108,7 +108,7 @@ private:
             updateLifetime(dt);
         }
 
-        void render(sf::RenderTarget &target)
+        void render(RenderTarget &target)
         {
             target.draw(text);
         }
@@ -145,7 +145,7 @@ private:
             currentLifetime = new_lifetime;
         }
 
-        void setString(const std::string string)
+        void setString(const string string)
         {
             text.setString(string);
         }
@@ -158,17 +158,17 @@ private:
 
     /* VARIABLES =================================================================================================== */
 
-    sf::Font font;
+    Font font;
 
-    sf::VideoMode &vm;
+    VideoMode &vm;
 
-    std::map<TextTagType, TextTag *> tagTemplates;
+    map<TextTagType, TextTag *> tagTemplates;
 
-    std::vector<TextTag *> tags;
+    vector<TextTag *> tags;
 
     /* PRIVATE FUNCTIONS ========================================================================================== */
 
-    void initFonts(const std::string font_path);
+    void initFonts(const string font_path);
 
     void initVariables();
 
@@ -177,7 +177,7 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
-    TextTagSystem(const std::string font_path, sf::VideoMode &vm);
+    TextTagSystem(const string font_path, VideoMode &vm);
 
     virtual ~TextTagSystem();
 
@@ -196,7 +196,7 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target);
+    void render(RenderTarget &target);
 
     /**
      * @brief Creates a new tag into the system. The tag will be
@@ -212,9 +212,9 @@ public:
      */
     template <typename T>
     void displayTag(const TextTagType type, const float x, const float y, const T content,
-                    const std::string prefix = "", const std::string postfix = "")
+                    const string prefix = "", const string postfix = "")
     {
-        std::stringstream ss;
+        stringstream ss;
         ss << prefix << content << postfix;
 
         tags.push_back(new TextTag(tagTemplates[type], x, y, ss.str()));
@@ -224,7 +224,7 @@ public:
      * @brief Creates a new tag into the system. The tag will be
      * shown and updated until it ends the lifetime.
      * @param type The tag type (TextTagType enum)
-     * @param position A sf::Vector2f of the position.
+     * @param position A Vector2f of the position.
      * @param content The content of the tag.
      * @param prefix A prefix to the tag. Default none.
      * @param postfix a postfix to the tag. Default none.
@@ -232,10 +232,10 @@ public:
      * @return void.
      */
     template <typename T>
-    void displayTag(const TextTagType type, const sf::Vector2f &position, const T content,
-                    const std::string prefix = "", const std::string postfix = "")
+    void displayTag(const TextTagType type, const Vector2f &position, const T content,
+                    const string prefix = "", const string postfix = "")
     {
-        std::stringstream ss;
+        stringstream ss;
         ss << prefix << content << postfix;
 
         tags.push_back(new TextTag(tagTemplates[type], position.x, position.y, ss.str()));

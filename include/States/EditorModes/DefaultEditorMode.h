@@ -9,11 +9,11 @@ class DefaultEditorMode : public EditorMode
 private:
     /* VARIABLES ============================================================================================ */
 
-    sf::Text cursorText;
-    sf::RectangleShape sidebar;
-    sf::RectangleShape selectorRect;
-    sf::RectangleShape collisionRect;
-    sf::IntRect textureRect;
+    Text cursorText;
+    RectangleShape sidebar;
+    RectangleShape selectorRect;
+    RectangleShape collisionRect;
+    IntRect textureRect;
 
     gui::TextureSelector *textureSelector;
     gui::CollisionEditor *collisionEditor;
@@ -59,7 +59,7 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target);
+    void render(RenderTarget &target);
 
     /**
      * @brief Updates the user input.
@@ -80,7 +80,7 @@ public:
      *
      * @return void
      */
-    void renderGUI(sf::RenderTarget &target);
+    void renderGUI(RenderTarget &target);
 
     /* ACCESSORS =============================================================================================== */
 
@@ -89,7 +89,7 @@ public:
      *
      * @return std::string
      */
-    const std::string getTypeName() const;
+    const string getTypeName() const;
 };
 
 #endif /* DEFAULTEDITORMODE_H_ */

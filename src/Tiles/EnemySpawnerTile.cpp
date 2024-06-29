@@ -5,7 +5,7 @@
 
 EnemySpawnerTile::EnemySpawnerTile(
     const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-    const sf::Texture &texture, const sf::IntRect texture_rect,
+    const Texture &texture, const IntRect texture_rect,
     const short enemy_type, const short enemy_amount,
     const short enemy_time_to_spawn, const short enemy_max_distance,
     const short enemy_spawn_area_size)
@@ -36,7 +36,7 @@ void EnemySpawnerTile::update()
 {
 }
 
-void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
+void EnemySpawnerTile::render(RenderTarget &target, Shader *shader, const Vector2f light_pos)
 {
     if (shader)
     {
@@ -51,7 +51,7 @@ void EnemySpawnerTile::render(sf::RenderTarget &target, sf::Shader *shader, cons
     }
 }
 
-const bool EnemySpawnerTile::canSpawn(const sf::Vector2f &player_pos)
+const bool EnemySpawnerTile::canSpawn(const Vector2f &player_pos)
 {
     if (hasElapsedSpawnTime() && !hasSpawnedAllEnemies())
         return isPlayerInsideSpawnArea(player_pos);
@@ -70,9 +70,9 @@ const bool EnemySpawnerTile::hasElapsedSpawnTime()
     return false;
 }
 
-const bool EnemySpawnerTile::isPlayerInsideSpawnArea(const sf::Vector2f &player_pos)
+const bool EnemySpawnerTile::isPlayerInsideSpawnArea(const Vector2f &player_pos)
 {
-    sf::Vector2f center = getCenteredPosition();
+    Vector2f center = getCenteredPosition();
 
     short distance = static_cast<short>(sqrt(pow(player_pos.x - center.x, 2) + pow(player_pos.y - center.y, 2)));
 
@@ -92,7 +92,7 @@ void EnemySpawnerTile::increaseEnemyCounter()
 
 void EnemySpawnerTile::decreaseEnemyCounter()
 {
-    if (enemyCounter > 0)   
+    if (enemyCounter > 0)
         --enemyCounter;
 }
 
@@ -103,9 +103,9 @@ const short &EnemySpawnerTile::getEnemyCounter() const
     return enemyCounter;
 }
 
-const std::string EnemySpawnerTile::getPropertiesAsString() const
+const string EnemySpawnerTile::getPropertiesAsString() const
 {
-    std::stringstream properties;
+    stringstream properties;
 
     properties << type << " "
                << tile.getTextureRect().left << " " << tile.getTextureRect().top << " "

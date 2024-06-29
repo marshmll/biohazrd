@@ -10,11 +10,11 @@ class MainMenuState : public State
 private:
     /* VARIABLES ================================================================================================= */
 
-    sf::Texture backgroundTexture;
-    sf::RectangleShape background;
-    sf::Font font;
+    Texture backgroundTexture;
+    RectangleShape background;
+    Font font;
 
-    std::map<std::string, gui::Button *> buttons;
+    map<string, gui::Button *> buttons;
 
     /* INITIALIZERS ============================================================================================== */
 
@@ -84,7 +84,7 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target);
+    void render(RenderTarget &target);
 
     /**
      * @brief Updates the input.
@@ -110,7 +110,7 @@ public:
      *
      * @return void
      */
-    void renderGUI(sf::RenderTarget &target);
+    void renderGUI(RenderTarget &target);
 
     /**
      * @brief Resets the entire GUI.

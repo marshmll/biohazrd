@@ -44,10 +44,10 @@ void Player::initInventory()
 
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
-Player::Player(const float x, const float y, sf::Texture &texture_sheet)
+Player::Player(const float x, const float y, Texture &texture_sheet)
 {
     initVariables();
-    setPosition(sf::Vector2f(x, y));
+    setPosition(Vector2f(x, y));
 
     createHitboxComponent(75.f, 90.f, 42.f, 42.f);
     createMovementComponent(180.f, 1200.f, 800.f);
@@ -66,7 +66,7 @@ Player::~Player()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
+void Player::update(const float &dt, const Vector2f &mouse_pos_view)
 {
     movementComponent->update(dt);
     hitboxComponent->update();
@@ -75,7 +75,7 @@ void Player::update(const float &dt, const sf::Vector2f &mouse_pos_view)
     sword.update(mouse_pos_view, getSize(), getCenteredPosition(), getDirection());
 }
 
-void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader, sf::Vector2f light_pos)
+void Player::render(RenderTarget &target, const bool show_hitbox, Shader *shader, Vector2f light_pos)
 {
     if (shader)
     {
@@ -114,7 +114,7 @@ void Player::updateAnimation(const float &dt)
     case MOVING:
         animationComponent->play(
             "WALK_" + movementComponent->getDirection(), dt,
-            std::abs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
+            abs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
             movementComponent->getMaxVelocity());
         break;
     }
@@ -130,11 +130,11 @@ Weapon *Player::getWeapon()
     return &sword;
 }
 
-const std::string Player::formatStringToCharTab()
+const string Player::formatStringToCharTab()
 {
     AttributeComponent *ac = attributeComponent;
 
-    std::stringstream sstream;
+    stringstream sstream;
 
     sstream << "Level: " << ac->level << "\n"
             << "Experience: " << ac->exp << "\n"

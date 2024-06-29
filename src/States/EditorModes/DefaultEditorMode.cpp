@@ -5,7 +5,7 @@
 
 void DefaultEditorMode::initVariables()
 {
-    textureRect = sf::IntRect(0, 0, static_cast<int>(data->gridSize), static_cast<int>(data->gridSize));
+    textureRect = IntRect(0, 0, static_cast<int>(data->gridSize), static_cast<int>(data->gridSize));
 
     collision = false;
 
@@ -26,24 +26,24 @@ void DefaultEditorMode::initGUI()
     cursorText.setCharacterSize(12);
 
     // Sidebar
-    sidebar.setSize(sf::Vector2f(data->gridSize, data->gfxSettings->resolution.height));
-    sidebar.setFillColor(sf::Color(50, 50, 50, 100));
+    sidebar.setSize(Vector2f(data->gridSize, data->gfxSettings->resolution.height));
+    sidebar.setFillColor(Color(50, 50, 50, 100));
     sidebar.setOutlineThickness(1.f);
-    sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
+    sidebar.setOutlineColor(Color(200, 200, 200, 150));
 
     // Tile world selector
-    selectorRect.setSize(sf::Vector2f(data->gridSize, data->gridSize));
-    selectorRect.setFillColor(sf::Color(255, 255, 255, 200));
-    selectorRect.setOutlineColor(sf::Color::Yellow);
+    selectorRect.setSize(Vector2f(data->gridSize, data->gridSize));
+    selectorRect.setFillColor(Color(255, 255, 255, 200));
+    selectorRect.setOutlineColor(Color::Yellow);
     selectorRect.setOutlineThickness(1.f);
     selectorRect.setTexture(editorData->tileMap->getTileTextureSheet());
     selectorRect.setTextureRect(textureRect);
 
     // Tile collision box world selector
-    collisionRect.setSize(sf::Vector2f(collBoxWidth, collBoxHeight));
-    collisionRect.setFillColor(sf::Color(255, 100, 100, 100));
+    collisionRect.setSize(Vector2f(collBoxWidth, collBoxHeight));
+    collisionRect.setFillColor(Color(255, 100, 100, 100));
     collisionRect.setOutlineThickness(1.f);
-    collisionRect.setOutlineColor(sf::Color::Red);
+    collisionRect.setOutlineColor(Color::Red);
 
     // Texture selector
     textureSelector = new gui::TextureSelector(
@@ -88,16 +88,16 @@ void DefaultEditorMode::update(const float &dt)
     updateGUI(dt);
 }
 
-void DefaultEditorMode::render(sf::RenderTarget &target)
+void DefaultEditorMode::render(RenderTarget &target)
 {
     renderGUI(target);
 }
 
 void DefaultEditorMode::updateInput(const float &dt)
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (Mouse::isButtonPressed(Mouse::Left))
     {
-        if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
+        if (!sidebar.getGlobalBounds().contains(Vector2f(*editorData->mousePosWindow)))
         {
             if (!textureSelector->isActive())
                 textureSelector->close();
@@ -126,9 +126,9 @@ void DefaultEditorMode::updateInput(const float &dt)
             }
         }
     }
-    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && hasElapsedKeyTimeMax())
+    else if (Mouse::isButtonPressed(Mouse::Right) && hasElapsedKeyTimeMax())
     {
-        if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
+        if (!sidebar.getGlobalBounds().contains(Vector2f(*editorData->mousePosWindow)))
         {
             if (!textureSelector->isActive())
             {
@@ -140,18 +140,18 @@ void DefaultEditorMode::updateInput(const float &dt)
     }
 
     // Toggle collision
-    if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("TOGGLE_COLLISION")) && hasElapsedKeyTimeMax())
+    if (Keyboard::isKeyPressed(editorData->keybinds->at("TOGGLE_COLLISION")) && hasElapsedKeyTimeMax())
     {
         collision = !collision;
     }
     // Type increase
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("INCREASE_TYPE")) && hasElapsedKeyTimeMax())
+    else if (Keyboard::isKeyPressed(editorData->keybinds->at("INCREASE_TYPE")) && hasElapsedKeyTimeMax())
     {
         if (static_cast<TileType>(type + 1) != TileType::SPAWNER)
             type++;
     }
     // Type decrease
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("DECREASE_TYPE")) && hasElapsedKeyTimeMax())
+    else if (Keyboard::isKeyPressed(editorData->keybinds->at("DECREASE_TYPE")) && hasElapsedKeyTimeMax())
     {
         if (static_cast<TileType>(type - 1) != TileType::SPAWNER && type > 0)
             type--;
@@ -171,15 +171,15 @@ void DefaultEditorMode::updateGUI(const float &dt)
 
         selectorRect.setTextureRect(textureRect);
 
-        collisionRect.setSize(sf::Vector2f(collBoxWidth, collBoxHeight));
+        collisionRect.setSize(Vector2f(collBoxWidth, collBoxHeight));
         collisionRect.setPosition(
             selectorRect.getPosition().x + collBoxOffsetX,
             selectorRect.getPosition().y + collBoxOffsetY);
     }
 
-    cursorText.setPosition(sf::Vector2f(editorData->mousePosView->x + 40.f, editorData->mousePosView->y));
+    cursorText.setPosition(Vector2f(editorData->mousePosView->x + 40.f, editorData->mousePosView->y));
 
-    std::stringstream ss;
+    stringstream ss;
     ss << editorData->mousePosWindow->x << " " << editorData->mousePosWindow->y << "\n"
        << editorData->mousePosGrid->x << " " << editorData->mousePosGrid->y << "\n"
        << textureRect.left << " " << textureRect.top << "\n"
@@ -189,10 +189,10 @@ void DefaultEditorMode::updateGUI(const float &dt)
     cursorText.setString(ss.str());
 }
 
-void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
+void DefaultEditorMode::renderGUI(RenderTarget &target)
 {
     if (!textureSelector->isActive() && !collisionEditor->isVisible() &&
-        !sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
+        !sidebar.getGlobalBounds().contains(Vector2f(*editorData->mousePosWindow)))
     {
         if (editorData->mousePosGrid->x >= 0 && editorData->mousePosGrid->y >= 0)
         {
@@ -223,7 +223,7 @@ void DefaultEditorMode::renderGUI(sf::RenderTarget &target)
 
 /* ACCESSORS ===================================================================================================== */
 
-const std::string DefaultEditorMode::getTypeName() const
+const string DefaultEditorMode::getTypeName() const
 {
     switch (type)
     {

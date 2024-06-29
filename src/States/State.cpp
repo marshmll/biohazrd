@@ -21,16 +21,16 @@ State::State(StateData *data) : vm(data->gfxSettings->resolution)
 
     acceptedKeys = data->acceptedKeys;
 
-    currentPath = std::filesystem::current_path().string();
+    currentPath = filesystem::current_path().string();
 
     quitState = false;
     isPaused = false;
 
     keyTimer.restart();
-    keyTimerMax = sf::Int32(200);
+    keyTimerMax = Int32(200);
 
     mouseTimer.restart();
-    mouseTimerMax = sf::Int32(50);
+    mouseTimerMax = Int32(50);
 
     gridSize = data->gridSize;
 }
@@ -41,18 +41,18 @@ State::~State()
 
 /* DEFINED VIRTUAL FUNCTIONS ===================================================================================== */
 
-void State::updateMousePositions(sf::View *view)
+void State::updateMousePositions(View *view)
 {
-    mousePosScreen = sf::Mouse::getPosition();
+    mousePosScreen = Mouse::getPosition();
 
-    mousePosWindow = sf::Mouse::getPosition(*window);
+    mousePosWindow = Mouse::getPosition(*window);
 
     if (view)
         window->setView(*view);
 
     mousePosView = window->mapPixelToCoords(mousePosWindow);
 
-    mousePosGrid = sf::Vector2i(
+    mousePosGrid = Vector2i(
         static_cast<int>(mousePosView.x) / static_cast<int>(data->gridSize),
         static_cast<int>(mousePosView.y) / static_cast<int>(data->gridSize));
 

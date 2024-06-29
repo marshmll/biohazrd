@@ -18,17 +18,17 @@ private:
 
     TileMap *tileMap;
 
-    sf::View editorCamera;
-    sf::Vector2i editorCameraPosGrid;
+    View editorCamera;
+    Vector2i editorCameraPosGrid;
     float cameraSpeed;
 
-    sf::Font font;
+    Font font;
 
     gui::PauseMenu *pauseMenu;
 
-    std::map<std::string, gui::Button *> buttons;
+    map<string, gui::Button *> buttons;
 
-    std::map<EditorModes, EditorMode *> modes;
+    map<EditorModes, EditorMode *> modes;
 
     EditorModes activeEditorMode;
 
@@ -134,7 +134,7 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target);
+    void render(RenderTarget &target);
 
     /**
      * @brief Updates the user input.
@@ -181,14 +181,14 @@ public:
      *
      * @return void
      */
-    void renderGUI(sf::RenderTarget &target);
+    void renderGUI(RenderTarget &target);
 
-     /**
+    /**
      * @brief Renders the active editor mode.
      *
      * @return void
      */
-    void renderModes(sf::RenderTarget &target);
+    void renderModes(RenderTarget &target);
 };
 
 #endif /* EDITORSTATE_H_ */

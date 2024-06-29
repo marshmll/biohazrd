@@ -15,8 +15,8 @@ public:
      * @param grid_x The x position relative to the grid.
      * @param grid_y The y position relative to the grid.
      * @param grid_size_f The grid size (float)
-     * @param texture A sf::Texture reference.
-     * @param texture_rect A sf::IntRect to crop the texture with.
+     * @param texture A Texture reference.
+     * @param texture_rect A IntRect to crop the texture with.
      * @param collision Is the tile collideable?
      * @param coll_box_width The collision box width (default = 0.f)
      * @param coll_box_height The collision box height (default = 0.f)
@@ -26,7 +26,7 @@ public:
     RegularTile(
         const TileType type,
         const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-        const sf::Texture &texture, const sf::IntRect texture_rect, const bool collision,
+        const Texture &texture, const IntRect texture_rect, const bool collision,
         const float coll_box_width = 0.f, const float coll_box_height = 0.f,
         const float coll_box_offset_x = 0.f, const float coll_box_offset_y = 0.f);
 
@@ -46,12 +46,12 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
+    void render(RenderTarget &target, Shader *shader = nullptr, const Vector2f light_pos = Vector2f());
 
     /* ACCESSORS ================================================================================================ */
 
     /**
-     * @brief Returns the tile properties as a std::string.
+     * @brief Returns the tile properties as a string.
      * @note Returns:
      * @note -> Type
      * @note -> Texture rectangle left
@@ -62,9 +62,9 @@ public:
      * @note -> Collision box offset x
      * @note -> Collision box offset y
      *
-     * @return const std::string
+     * @return const string
      */
-    const std::string getPropertiesAsString() const;
+    const string getPropertiesAsString() const;
 };
 
 #endif /* REGULARTILE_H_ */

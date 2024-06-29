@@ -2,7 +2,6 @@ target_sources(BIOHAZRD PRIVATE
     AI/Behaviors/AIBehavior.cpp
     AI/Behaviors/AIFollow.cpp
 
-    Components/AIComponent.cpp
     Components/AnimationComponent.cpp
     Components/AttributeComponent.cpp
     Components/HitboxComponent.cpp

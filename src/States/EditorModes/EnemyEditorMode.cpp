@@ -5,7 +5,7 @@
 
 void EnemyEditorMode::initVariables()
 {
-    textureRect = sf::IntRect(0, 0, 0, 0);
+    textureRect = IntRect(0, 0, 0, 0);
     enemyType = 0;
     enemyAmount = 5;
     enemyTimeToSpawn = 30;
@@ -20,15 +20,15 @@ void EnemyEditorMode::initGUI()
     cursorText.setCharacterSize(12);
 
     // Sidebar
-    sidebar.setSize(sf::Vector2f(data->gridSize, data->gfxSettings->resolution.height));
-    sidebar.setFillColor(sf::Color(50, 50, 50, 100));
+    sidebar.setSize(Vector2f(data->gridSize, data->gfxSettings->resolution.height));
+    sidebar.setFillColor(Color(50, 50, 50, 100));
     sidebar.setOutlineThickness(1.f);
-    sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
+    sidebar.setOutlineColor(Color(200, 200, 200, 150));
 
     // World selector
-    selectorRect.setSize(sf::Vector2f(data->gridSize, data->gridSize));
-    selectorRect.setFillColor(sf::Color::Transparent);
-    selectorRect.setOutlineColor(sf::Color::Red);
+    selectorRect.setSize(Vector2f(data->gridSize, data->gridSize));
+    selectorRect.setFillColor(Color::Transparent);
+    selectorRect.setOutlineColor(Color::Red);
     selectorRect.setOutlineThickness(1.f);
 }
 
@@ -53,7 +53,7 @@ void EnemyEditorMode::update(const float &dt)
     updateGUI(dt);
 }
 
-void EnemyEditorMode::render(sf::RenderTarget &target)
+void EnemyEditorMode::render(RenderTarget &target)
 {
     renderGUI(target);
 }
@@ -61,21 +61,21 @@ void EnemyEditorMode::render(sf::RenderTarget &target)
 void EnemyEditorMode::updateInput(const float &dt)
 {
     // Spawner adding
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (Mouse::isButtonPressed(Mouse::Left))
     {
-        if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
+        if (!sidebar.getGlobalBounds().contains(Vector2f(*editorData->mousePosWindow)))
         {
             editorData->tileMap->addSpawner(
                 editorData->mousePosGrid->x, editorData->mousePosGrid->y, 0,
-                sf::IntRect(0, 576, (int)data->gridSize, (int)data->gridSize),
+                IntRect(0, 576, (int)data->gridSize, (int)data->gridSize),
                 enemyType, enemyAmount, enemyTimeToSpawn,
                 enemyMaxDistance, enemySpawnAreaSize);
         }
     }
     // Spawner removing
-    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && hasElapsedMouseTimeMax())
+    else if (Mouse::isButtonPressed(Mouse::Right) && hasElapsedMouseTimeMax())
     {
-        if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
+        if (!sidebar.getGlobalBounds().contains(Vector2f(*editorData->mousePosWindow)))
         {
             if (editorData->tileMap->compareType(editorData->mousePosGrid->x,
                                                  editorData->mousePosGrid->y, 0,
@@ -88,9 +88,9 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy type inc/dec
-    if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TYPE_INC")) && hasElapsedKeyTimeMax())
+    if (Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TYPE_INC")) && hasElapsedKeyTimeMax())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        if (Keyboard::isKeyPressed(Keyboard::LShift))
         {
             if (enemyType > 0)
                 enemyType--;
@@ -100,9 +100,9 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy amount inc/dec
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_AMOUNT_INC")) && hasElapsedKeyTimeMax())
+    else if (Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_AMOUNT_INC")) && hasElapsedKeyTimeMax())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        if (Keyboard::isKeyPressed(Keyboard::LShift))
         {
             if (enemyAmount > 5)
                 enemyAmount--;
@@ -112,9 +112,9 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy time to spawn inc/dec
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TIME_TO_SPAWN_INC")) && hasElapsedKeyTimeMax())
+    else if (Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_TIME_TO_SPAWN_INC")) && hasElapsedKeyTimeMax())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        if (Keyboard::isKeyPressed(Keyboard::LShift))
         {
             if (enemyTimeToSpawn > 5)
                 enemyTimeToSpawn--;
@@ -124,9 +124,9 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy max distance inc/dec
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_MAX_DISTANCE_INC")) && hasElapsedKeyTimeMax())
+    else if (Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_MAX_DISTANCE_INC")) && hasElapsedKeyTimeMax())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        if (Keyboard::isKeyPressed(Keyboard::LShift))
         {
             if (enemyMaxDistance > 10)
                 enemyMaxDistance--;
@@ -136,9 +136,9 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 
     // Enemy spawn area size.
-    else if (sf::Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_SPAWN_AREA_SIZE_INC")) && hasElapsedKeyTimeMax())
+    else if (Keyboard::isKeyPressed(editorData->keybinds->at("ENEMY_SPAWN_AREA_SIZE_INC")) && hasElapsedKeyTimeMax())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        if (Keyboard::isKeyPressed(Keyboard::LShift))
         {
             if (enemySpawnAreaSize > 5)
                 enemySpawnAreaSize--;
@@ -154,9 +154,9 @@ void EnemyEditorMode::updateGUI(const float &dt)
         editorData->mousePosGrid->x * data->gridSize,
         editorData->mousePosGrid->y * data->gridSize);
 
-    cursorText.setPosition(sf::Vector2f(editorData->mousePosView->x + 40.f, editorData->mousePosView->y));
+    cursorText.setPosition(Vector2f(editorData->mousePosView->x + 40.f, editorData->mousePosView->y));
 
-    std::stringstream cursor_ss;
+    stringstream cursor_ss;
     cursor_ss << editorData->mousePosWindow->x << " " << editorData->mousePosWindow->y << "\n"
               << editorData->mousePosGrid->x << " " << editorData->mousePosGrid->y << "\n"
               << "stacked tiles: " << editorData->tileMap->getAmountOfStackedTiles(editorData->mousePosGrid->x, editorData->mousePosGrid->y, 0) << "\n"
@@ -169,7 +169,7 @@ void EnemyEditorMode::updateGUI(const float &dt)
     cursorText.setString(cursor_ss.str());
 }
 
-void EnemyEditorMode::renderGUI(sf::RenderTarget &target)
+void EnemyEditorMode::renderGUI(RenderTarget &target)
 {
     if (editorData->mousePosGrid->x >= 0 && editorData->mousePosGrid->y >= 0)
     {

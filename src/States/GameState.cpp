@@ -16,12 +16,12 @@ void GameState::initBufferedRender()
 
     renderSprite.setTexture(renderBuffer.getTexture());
 
-    renderSprite.setTextureRect(sf::IntRect(0, 0, vm.width, vm.height));
+    renderSprite.setTextureRect(IntRect(0, 0, vm.width, vm.height));
 }
 
 void GameState::initView()
 {
-    playerCamera.setSize(sf::Vector2f(vm.width, vm.height));
+    playerCamera.setSize(Vector2f(vm.width, vm.height));
 
     playerCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
 }
@@ -34,7 +34,7 @@ void GameState::initKeybinds()
         keybinds[it.first] = acceptedKeys->at(it.second);
 
     data->logger->log("GameState::initKeybinds", INFO,
-                      "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
+                      "Initialized " + to_string(keybinds.size()) + " keybinds.");
 }
 
 void GameState::initFonts()
@@ -159,7 +159,7 @@ void GameState::update(const float &dt)
     if (!isPaused)
     {
         /* DEBUG! */
-        std::stringstream ss;
+        stringstream ss;
         ss << "dt: " << dt << "ms";
         debugText.setString(ss.str());
         /*********/
@@ -182,7 +182,7 @@ void GameState::update(const float &dt)
     }
 }
 
-void GameState::render(sf::RenderTarget &target)
+void GameState::render(RenderTarget &target)
 {
     renderToBuffer();
 
@@ -234,7 +234,7 @@ void GameState::renderToBuffer()
 
 void GameState::updateInput(const float &dt)
 {
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["PAUSE"])))
+    if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds["PAUSE"])))
         pauseToggle();
 }
 
@@ -245,24 +245,24 @@ void GameState::updatePlayers(const float &dt)
 
 void GameState::updatePlayerInput(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
+    if (Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
     {
         player->move(0.f, -1.f, dt);
     }
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_DOWN"]))
+    else if (Keyboard::isKeyPressed(keybinds["MOVE_DOWN"]))
     {
         player->move(0.f, 1.f, dt);
     }
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
+    else if (Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
     {
         player->move(-1.f, 0.f, dt);
     }
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_RIGHT"]))
+    else if (Keyboard::isKeyPressed(keybinds["MOVE_RIGHT"]))
     {
         player->move(1.f, 0.f, dt);
     }
 
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["TOGGLE_CHAR_TAB"])))
+    if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds["TOGGLE_CHAR_TAB"])))
     {
         playerGUI->toggleTab(CHARACTER_TAB);
     }
@@ -303,7 +303,7 @@ void GameState::updateEnemiesAndCombat(const float &dt)
 
 void GameState::updateCombat(const float &dt, Enemy *enemy)
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (Mouse::isButtonPressed(Mouse::Left))
     {
         if (enemy->getGlobalBounds().contains(mousePosView) &&
             player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
@@ -353,8 +353,8 @@ void GameState::updatePlayerCamera(const float &dt)
     else
     {
         playerCamera.setCenter(
-            std::floor(player->getCenteredPosition().x + ((mousePosWindow.x) - static_cast<float>(vm.width / 2)) / 20.f),
-            std::floor(player->getCenteredPosition().y + ((mousePosWindow.y) - static_cast<float>(vm.height / 2)) / 20.f));
+            floor(player->getCenteredPosition().x + ((mousePosWindow.x) - static_cast<float>(vm.width / 2)) / 20.f),
+            floor(player->getCenteredPosition().y + ((mousePosWindow.y) - static_cast<float>(vm.height / 2)) / 20.f));
     }
 
     // Make sure that the player camera width is smaller than the world

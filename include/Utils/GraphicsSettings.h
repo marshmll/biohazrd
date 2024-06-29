@@ -6,15 +6,15 @@
 class GraphicsSettings
 {
 public:
-    /* VARIABLES ================================================================================================= */ 
+    /* VARIABLES ================================================================================================= */
 
-    std::string title;
-    sf::VideoMode resolution;
+    string title;
+    VideoMode resolution;
     bool fullscreen;
     bool verticalSync;
     unsigned frameRateLimit;
-    sf::ContextSettings contextSettings;
-    std::vector<sf::VideoMode> videoModes;
+    ContextSettings contextSettings;
+    vector<VideoMode> videoModes;
 
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
@@ -36,7 +36,7 @@ public:
      *
      * @return void
      */
-    void saveToFile(const std::string path);
+    void saveToFile(const string path);
 
     /**
      * @brief Loads the graphics settings from a graphics.ini
@@ -44,6 +44,6 @@ public:
      *
      * @return void
      */
-    void loadFromFile(const std::string path);
+    void loadFromFile(const string path);
 };
 #endif /* GRAPHICSSETTINGS_H_ */

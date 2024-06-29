@@ -15,8 +15,8 @@ void PlayerGUI::initExpBar()
         (vm.width / 2.f) - gui::p2pX(vm, 70.f) / 2.f, gui::p2pY(vm, 95.f),
         gui::p2pX(vm, 70.f), gui::p2pY(vm, 2.f),
         player.getAttributeComponent()->exp, player.getAttributeComponent()->expNext,
-        sf::Color(50, 50, 50, 200), sf::Color(20, 230, 20, 200),
-        font, sf::Color::White, gui::calc_char_size(vm, 140));
+        Color(50, 50, 50, 200), Color(20, 230, 20, 200),
+        font, Color::White, gui::calc_char_size(vm, 140));
 }
 
 void PlayerGUI::initLevelBar()
@@ -24,7 +24,7 @@ void PlayerGUI::initLevelBar()
     levelBar = new gui::SolidBar(
         expBar->getPosition().x, expBar->getPosition().y - gui::p2pY(vm, 3.5f),
         gui::p2pX(vm, 2.3f), gui::p2pY(vm, 3.2f),
-        sf::Color(20, 20, 250, 200), sf::Color::White,
+        Color(20, 20, 250, 200), Color::White,
         font, gui::calc_char_size(vm, 140));
 }
 
@@ -34,8 +34,8 @@ void PlayerGUI::initHpBar()
         expBar->getPosition().x + gui::p2pX(vm, 2.6f), expBar->getPosition().y - gui::p2pY(vm, 3.5f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 3.2f),
         player.getAttributeComponent()->hp, player.getAttributeComponent()->hpMax,
-        sf::Color(50, 50, 50, 200), sf::Color(230, 20, 20, 200),
-        font, sf::Color::White, gui::calc_char_size(vm, 140));
+        Color(50, 50, 50, 200), Color(230, 20, 20, 200),
+        font, Color::White, gui::calc_char_size(vm, 140));
 }
 
 void PlayerGUI::initCooldownBar()
@@ -44,7 +44,7 @@ void PlayerGUI::initCooldownBar()
         vm.width - gui::p2pX(vm, 10.f), expBar->getPosition().y,
         gui::p2pX(vm, 6.5f), gui::p2pY(vm, 1.2f),
         player.getWeapon()->getCooldownTimerMax(), player.getWeapon()->getCooldownTimerMax(),
-        sf::Color(50, 50, 50, 200), sf::Color(230, 230, 230, 200));
+        Color(50, 50, 50, 200), Color(230, 230, 230, 200));
 }
 
 void PlayerGUI::initPlayerMenu()
@@ -54,7 +54,7 @@ void PlayerGUI::initPlayerMenu()
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-PlayerGUI::PlayerGUI(Player &player, sf::VideoMode &vm)
+PlayerGUI::PlayerGUI(Player &player, VideoMode &vm)
     : player(player), vm(vm)
 {
     initFont();
@@ -85,7 +85,7 @@ void PlayerGUI::update(const float &dt)
     updatePlayerMenu(dt);
 }
 
-void PlayerGUI::render(sf::RenderTarget &target)
+void PlayerGUI::render(RenderTarget &target)
 {
     renderLevelBar(target);
     renderHpBar(target);
@@ -96,12 +96,12 @@ void PlayerGUI::render(sf::RenderTarget &target)
 
 void PlayerGUI::updateLevelBar()
 {
-    levelBar->setString(std::to_string(player.getAttributeComponent()->level));
+    levelBar->setString(to_string(player.getAttributeComponent()->level));
 }
 
 void PlayerGUI::updateHpBar()
 {
-    std::stringstream hpBarText;
+    stringstream hpBarText;
     hpBarText << player.getAttributeComponent()->hp << " | " << player.getAttributeComponent()->hpMax;
 
     hpBar->setString(hpBarText.str());
@@ -114,7 +114,7 @@ void PlayerGUI::updateHpBar()
 
 void PlayerGUI::updateExpBar()
 {
-    std::stringstream expBarText;
+    stringstream expBarText;
     expBarText << player.getAttributeComponent()->exp << " | " << player.getAttributeComponent()->expNext;
 
     expBar->setString(expBarText.str());
@@ -146,28 +146,28 @@ void PlayerGUI::updatePlayerMenu(const float &dt)
     playerMenu->update(dt);
 }
 
-void PlayerGUI::renderLevelBar(sf::RenderTarget &target)
+void PlayerGUI::renderLevelBar(RenderTarget &target)
 {
     levelBar->render(target);
 }
 
-void PlayerGUI::renderHpBar(sf::RenderTarget &target)
+void PlayerGUI::renderHpBar(RenderTarget &target)
 {
     hpBar->render(target);
 }
 
-void PlayerGUI::renderExpBar(sf::RenderTarget &target)
+void PlayerGUI::renderExpBar(RenderTarget &target)
 {
     expBar->render(target);
 }
 
-void PlayerGUI::renderCooldownBar(sf::RenderTarget &target)
+void PlayerGUI::renderCooldownBar(RenderTarget &target)
 {
     if (!player.getWeapon()->didCooldown(false))
         cooldownBar->render(target);
 }
 
-void PlayerGUI::renderPlayerMenu(sf::RenderTarget &target)
+void PlayerGUI::renderPlayerMenu(RenderTarget &target)
 {
     playerMenu->render(target);
 }

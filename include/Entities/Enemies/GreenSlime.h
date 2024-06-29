@@ -26,7 +26,7 @@ public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
     GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
-               const float x, const float y, sf::Texture &texture_sheet);
+               const float x, const float y, Texture &texture_sheet);
 
     virtual ~GreenSlime();
 
@@ -39,7 +39,7 @@ public:
      *
      * @return void
      */
-    void update(const float &dt, const sf::Vector2f &mouse_pos_view = sf::Vector2f());
+    void update(const float &dt, const Vector2f &mouse_pos_view = Vector2f());
 
     /**
      * @brief Renders the slime into a target. Can use a shader.
@@ -52,8 +52,8 @@ public:
      *
      * @return void
      */
-    void render(sf::RenderTarget &target, const bool show_hitbox = false,
-                sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f());
+    void render(RenderTarget &target, const bool show_hitbox = false,
+                Shader *shader = nullptr, Vector2f light_pos = Vector2f());
 
     /**
      * @brief Updates the animations being played for the slime entity.

@@ -11,7 +11,7 @@ private:
 
     Player &player;
 
-    sf::Text text;
+    Text text;
 
     /* INITIALIZERS ============================================================================================== */
 
@@ -21,7 +21,7 @@ public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
     CharacterTab(const float width, const float height,
-                 sf::VideoMode &vm, sf::Font &font, Player &player);
+                 VideoMode &vm, Font &font, Player &player);
 
     virtual ~CharacterTab();
 
@@ -29,7 +29,7 @@ public:
 
     void update(const float &dt);
 
-    void render(sf::RenderTarget &target);
+    void render(RenderTarget &target);
 
     /* ACCESSORS ================================================================================================= */
 

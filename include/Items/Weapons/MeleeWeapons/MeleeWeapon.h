@@ -10,17 +10,17 @@ protected:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
-    MeleeWeapon(const std::string texture_path, const short unsigned value,
+    MeleeWeapon(const string texture_path, const short unsigned value,
                 const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
 
     virtual ~MeleeWeapon();
 
     /* FUNCTIONS ============================================================================================== */
 
-    virtual void update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity_size,
-                        const sf::Vector2f entity_center, std::string entity_direction) = 0;
+    virtual void update(const Vector2f &mouse_pos_view, const Vector2f entity_size,
+                        const Vector2f entity_center, string entity_direction) = 0;
 
-    virtual void render(sf::RenderTarget &target, sf::Shader *shader = nullptr) = 0;
+    virtual void render(RenderTarget &target, Shader *shader = nullptr) = 0;
 
     virtual MeleeWeapon *clone() = 0;
 };

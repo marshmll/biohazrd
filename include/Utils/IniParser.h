@@ -12,7 +12,7 @@
  * @attention [Section2]
  * @attention Identifier1 = value 1
  * @attention Identifier2 = value 2
- * 
+ *
  * @note This parser handles inconsistent spacing.
  */
 class IniParser
@@ -20,25 +20,25 @@ class IniParser
 private:
 	/* VARIABLES ================================================================================================= */
 
-	std::string filePath;
+	string filePath;
 
-	std::stringstream fsstream;
+	stringstream fsstream;
 
-	std::string sectionPreset;
+	string sectionPreset;
 
 	/* PRIVATE FUNCTIONS ======================================================================================== */
 
-	std::string search(const std::string identifier, const std::string section);
+	string search(const string identifier, const string section);
 
-	void throwSyntaxError(const std::string identifier, const std::string section, const unsigned line_num);
+	void throwSyntaxError(const string identifier, const string section, const unsigned line_num);
 
-	void throwConversionError(const std::string value, const std::string type,
-							  const std::string identifier, const std::string section);
+	void throwConversionError(const string value, const string type,
+							  const string identifier, const string section);
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-	IniParser(const std::string file_path);
+	IniParser(const string file_path);
 
 	virtual ~IniParser();
 
@@ -52,26 +52,26 @@ public:
 	 *
 	 * @return void
 	 */
-	void loadFile(const std::string file_path);
+	void loadFile(const string file_path);
 
 	/**
 	 * @brief Returns all pairs of (key, value) of a given section.
 	 * @param section The section to extract all the identifiers and
 	 * their values.
 	 *
-	 * @return const std::vector<std::pair<std::string, std::string>>
+	 * @return const vector<pair<string, string>>
 	 */
-	const std::vector<std::pair<std::string, std::string>> getAllKeyValuePairs(const std::string section);
+	const vector<pair<string, string>> getAllKeyValuePairs(const string section);
 
 	/**
-	 * @brief Returns an identifier's value as a std::string.
+	 * @brief Returns an identifier's value as a string.
 	 * @param identifier The identifier's name
 	 * @param section The section the identifiers is contained in.
 	 * May leave empty if already pre-setted a section.
 	 *
-	 * @return const std::string
+	 * @return const string
 	 */
-	const std::string getString(const std::string identifier, const std::string section = "");
+	const string getString(const string identifier, const string section = "");
 
 	/**
 	 * @brief Returns an identifier's value as an int.
@@ -81,7 +81,7 @@ public:
 	 *
 	 * @return const int
 	 */
-	const int getInt(const std::string identifier, const std::string section = "");
+	const int getInt(const string identifier, const string section = "");
 
 	/**
 	 * @brief Returns an identifier's value as an bool.
@@ -91,16 +91,16 @@ public:
 	 *
 	 * @return const bool
 	 */
-	const bool getBool(const std::string identifier, const std::string section = "");
+	const bool getBool(const string identifier, const string section = "");
 
 	/* ACCESSORS ================================================================================================= */
 
 	/**
 	 * @brief Returns the current setted searching section.
 	 *
-	 * @return const std::string&
+	 * @return const string&
 	 */
-	const std::string &getSectionPreset() const;
+	const string &getSectionPreset() const;
 
 	/* MODIFIERS ================================================================================================= */
 
@@ -111,7 +111,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void setSectionPreset(const std::string section);
+	void setSectionPreset(const string section);
 };
 
 #endif /* INIPARSER_H_ */

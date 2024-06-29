@@ -14,9 +14,9 @@ void CharacterTab::initText()
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 CharacterTab::CharacterTab(const float width, const float height,
-                           sf::VideoMode &vm, sf::Font &font, Player &player)
+                           VideoMode &vm, Font &font, Player &player)
 
-    : Tab(width, height, sf::Color(5, 5, 5, 240), sf::Color::White, vm, font), player(player)
+    : Tab(width, height, Color(5, 5, 5, 240), Color::White, vm, font), player(player)
 {
     initText();
 }
@@ -35,7 +35,7 @@ void CharacterTab::update(const float &dt)
     }
 }
 
-void CharacterTab::render(sf::RenderTarget &target)
+void CharacterTab::render(RenderTarget &target)
 {
     if (!hidden)
     {

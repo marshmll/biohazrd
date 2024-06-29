@@ -17,27 +17,27 @@
  *
  *********************************************************************************************************/
 
-const float gui::p2pX(const sf::VideoMode &vm, const float percent)
+const float gui::p2pX(const VideoMode &vm, const float percent)
 {
     if (percent >= 100.f)
         return static_cast<float>(vm.width);
     else if (percent <= 0.f)
         return 0.f;
 
-    return std::floor(static_cast<float>(vm.width) * (percent / 100.f));
+    return floor(static_cast<float>(vm.width) * (percent / 100.f));
 }
 
-const float gui::p2pY(const sf::VideoMode &vm, const float percent)
+const float gui::p2pY(const VideoMode &vm, const float percent)
 {
     if (percent >= 100.f)
         return static_cast<float>(vm.height);
     else if (percent <= 0.f)
         return 0.f;
 
-    return std::floor(static_cast<float>(vm.height) * (percent / 100.f));
+    return floor(static_cast<float>(vm.height) * (percent / 100.f));
 }
 
-const unsigned gui::calc_char_size(const sf::VideoMode &vm, unsigned constant)
+const unsigned gui::calc_char_size(const VideoMode &vm, unsigned constant)
 {
     return (vm.width + vm.height) / constant;
 }
@@ -52,10 +52,10 @@ const unsigned gui::calc_char_size(const sf::VideoMode &vm, unsigned constant)
 
 gui::Button::Button(
     const float x, const float y, const float width, const float height,
-    sf::Font &font, std::string string, const unsigned char_size,
-    sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-    sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-    sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
+    Font &font, string string, const unsigned char_size,
+    Color text_idle_color, Color text_hover_color, Color text_active_color,
+    Color idle_color, Color hover_color, Color active_color,
+    Color outline_idle_color, Color outline_hover_color, Color outline_active_color,
     const short unsigned id)
 {
     this->id = id;
@@ -65,8 +65,8 @@ gui::Button::Button(
     hoverColor = hover_color;
     activeColor = active_color;
 
-    shape.setPosition(sf::Vector2f(x, y));
-    shape.setSize(sf::Vector2f(width, height));
+    shape.setPosition(Vector2f(x, y));
+    shape.setSize(Vector2f(width, height));
     shape.setFillColor(idle_color);
     shape.setOutlineThickness(1.f);
     shape.setOutlineColor(outline_idle_color);
@@ -82,7 +82,7 @@ gui::Button::Button(
 
     text.setPosition(
         shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getGlobalBounds().width / 2.f,
-        shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getGlobalBounds().height / 2.f - std::floor(char_size / 5.f));
+        shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getGlobalBounds().height / 2.f - floor(char_size / 5.f));
 
     outlineIdleColor = outline_idle_color;
     outlineHoverColor = outline_hover_color;
@@ -91,9 +91,9 @@ gui::Button::Button(
 
 gui::Button::Button(
     const float x, const float y, const float width, const float height,
-    sf::Texture *texture, const float img_w, const float img_h,
-    sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-    sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
+    Texture *texture, const float img_w, const float img_h,
+    Color idle_color, Color hover_color, Color active_color,
+    Color outline_idle_color, Color outline_hover_color, Color outline_active_color,
     const short unsigned id)
 {
     this->id = id;
@@ -103,13 +103,13 @@ gui::Button::Button(
     hoverColor = hover_color;
     activeColor = active_color;
 
-    shape.setPosition(sf::Vector2f(x, y));
-    shape.setSize(sf::Vector2f(width, height));
+    shape.setPosition(Vector2f(x, y));
+    shape.setSize(Vector2f(width, height));
     shape.setFillColor(idle_color);
     shape.setOutlineThickness(1.f);
     shape.setOutlineColor(outline_idle_color);
 
-    image.setSize(sf::Vector2f(img_w, img_h));
+    image.setSize(Vector2f(img_w, img_h));
     image.setTexture(texture);
     image.setPosition(
         shape.getPosition().x + (shape.getSize().x / 2.f) - image.getSize().x / 2.f,
@@ -126,7 +126,7 @@ gui::Button::~Button()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::Button::update(sf::Vector2f mouse_pos)
+void gui::Button::update(Vector2f mouse_pos)
 {
     btn_state = BTN_IDLE;
 
@@ -136,7 +136,7 @@ void gui::Button::update(sf::Vector2f mouse_pos)
         btn_state = BTN_HOVER;
 
         // Active
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        if (Mouse::isButtonPressed(Mouse::Left))
         {
             btn_state = BTN_ACTIVE;
         }
@@ -165,7 +165,7 @@ void gui::Button::update(sf::Vector2f mouse_pos)
     }
 }
 
-void gui::Button::render(sf::RenderTarget &target)
+void gui::Button::render(RenderTarget &target)
 {
     target.draw(shape);
 
@@ -187,7 +187,7 @@ const short unsigned gui::Button::getId() const
     return id;
 }
 
-const std::string gui::Button::getString() const
+const string gui::Button::getString() const
 {
     return text.getString();
 }
@@ -199,7 +199,7 @@ void gui::Button::setId(const short unsigned id)
     this->id = id;
 }
 
-void gui::Button::setString(std::string string)
+void gui::Button::setString(string string)
 {
     text.setString(string);
 
@@ -219,7 +219,7 @@ void gui::Button::setString(std::string string)
 gui::DropDownList::DropDownList(
     const float x, const float y,
     const float width, const float height,
-    sf::Font &font, const std::vector<std::string> labels,
+    Font &font, const vector<string> labels,
     const unsigned char_size,
     const int max_size,
     const short unsigned default_index)
@@ -229,9 +229,9 @@ gui::DropDownList::DropDownList(
     selectedElement = new gui::Button(
         x, y, width, height,
         font, labels[default_index], char_size,
-        sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
-        sf::Color(120, 120, 120, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
-        sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50));
+        Color(255, 255, 255, 150), Color(255, 255, 255, 200), Color(20, 20, 20, 50),
+        Color(120, 120, 120, 200), Color(150, 150, 150, 200), Color(20, 20, 20, 200),
+        Color(255, 255, 255, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50));
 
     for (size_t i = 0; i < labels.size(); i++)
     {
@@ -243,9 +243,9 @@ gui::DropDownList::DropDownList(
                     new gui::Button(
                         x, y + ((i + 1) * height), width, height,
                         font, labels[i], char_size,
-                        sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-                        sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
-                        sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
+                        Color(255, 255, 255, 150), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+                        Color(70, 70, 70, 200), Color(150, 150, 150, 200), Color(20, 20, 20, 200),
+                        Color(255, 255, 255, 0), Color(255, 255, 255, 0), Color(20, 20, 20, 0),
                         i));
             }
         }
@@ -255,9 +255,9 @@ gui::DropDownList::DropDownList(
                 new gui::Button(
                     x, y + ((i + 1) * height), width, height,
                     font, labels[i], char_size,
-                    sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-                    sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
-                    sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
+                    Color(255, 255, 255, 150), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+                    Color(70, 70, 70, 200), Color(150, 150, 150, 200), Color(20, 20, 20, 200),
+                    Color(255, 255, 255, 0), Color(255, 255, 255, 0), Color(20, 20, 20, 0),
                     i));
         }
     }
@@ -273,11 +273,11 @@ gui::DropDownList::~DropDownList()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::DropDownList::update(const sf::Vector2i &mouse_pos_window, const float &dt)
+void gui::DropDownList::update(const Vector2i &mouse_pos_window, const float &dt)
 {
     updateKeytime(dt);
 
-    selectedElement->update(sf::Vector2f(mouse_pos_window));
+    selectedElement->update(Vector2f(mouse_pos_window));
 
     if (selectedElement->isPressed() && hasCompletedKeytimeCicle())
         showList = !showList;
@@ -286,7 +286,7 @@ void gui::DropDownList::update(const sf::Vector2i &mouse_pos_window, const float
     {
         for (auto &button : list)
         {
-            button->update(sf::Vector2f(mouse_pos_window));
+            button->update(Vector2f(mouse_pos_window));
 
             if (button->isPressed() && hasCompletedKeytimeCicle())
             {
@@ -299,7 +299,7 @@ void gui::DropDownList::update(const sf::Vector2i &mouse_pos_window, const float
     }
 }
 
-void gui::DropDownList::render(sf::RenderTarget &target)
+void gui::DropDownList::render(RenderTarget &target)
 {
     if (showList)
     {
@@ -348,9 +348,9 @@ const bool gui::DropDownList::hasCompletedKeytimeCicle()
 
 gui::IncrementInput::IncrementInput(
     const float x, const float y, const float width, const float height,
-    const float step, const sf::Color bg_color,
-    sf::Color buttons_idle_color, sf::Color buttons_hover_color, sf::Color buttons_active_color,
-    sf::Font &font, sf::Color text_color, const unsigned char_size, const float initial_value)
+    const float step, const Color bg_color,
+    Color buttons_idle_color, Color buttons_hover_color, Color buttons_active_color,
+    Font &font, Color text_color, const unsigned char_size, const float initial_value)
     : mousetime(0.f), mousetimeMax(1.f)
 {
     // Variables
@@ -360,15 +360,15 @@ gui::IncrementInput::IncrementInput(
 
     // Background
     inputBg.setPosition(x, y);
-    inputBg.setSize(sf::Vector2f(width, height));
+    inputBg.setSize(Vector2f(width, height));
     inputBg.setFillColor(bg_color);
 
     // Text
     inputText.setFont(font);
     inputText.setCharacterSize(char_size);
 
-    std::stringstream ss;
-    ss << std::setprecision(4) << value;
+    stringstream ss;
+    ss << setprecision(4) << value;
     inputText.setString(ss.str());
 
     inputText.setFillColor(text_color);
@@ -385,12 +385,12 @@ gui::IncrementInput::IncrementInput(
     incrementBtn = new gui::Button(
         inputBg.getPosition().x + inputBg.getSize().x - btn_size, y, btn_size, btn_size,
         &incrementBtnIcon, btn_size / 2.f, btn_size / 2.f,
-        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+        Color(70, 70, 70, 0), Color(255, 255, 255, 100), Color(255, 255, 255, 200));
 
     decrementBtn = new gui::Button(
         x, y, btn_size, btn_size,
         &decrementBtnIcon, btn_size / 2.f, btn_size / 2.f,
-        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+        Color(70, 70, 70, 0), Color(255, 255, 255, 100), Color(255, 255, 255, 200));
 }
 
 gui::IncrementInput::~IncrementInput()
@@ -401,14 +401,14 @@ gui::IncrementInput::~IncrementInput()
 
 /* FUNCTIONS =================================================================================================== */
 
-void gui::IncrementInput::update(const float &dt, sf::Vector2f mouse_pos)
+void gui::IncrementInput::update(const float &dt, Vector2f mouse_pos)
 {
     // Update mousetime
     updateMousetime(dt);
 
     // Update text
-    std::stringstream ss;
-    ss << std::setprecision(4) << value;
+    stringstream ss;
+    ss << setprecision(4) << value;
     inputText.setString(ss.str());
     inputText.setPosition(inputBg.getPosition().x + inputBg.getSize().x / 2.f - inputText.getGlobalBounds().width / 2.f,
                           inputBg.getPosition().y + inputBg.getSize().y / 2.f - inputText.getGlobalBounds().height / 2.f);
@@ -421,7 +421,7 @@ void gui::IncrementInput::update(const float &dt, sf::Vector2f mouse_pos)
     updateInput();
 }
 
-void gui::IncrementInput::render(sf::RenderTarget &target)
+void gui::IncrementInput::render(RenderTarget &target)
 {
     target.draw(inputBg);
     target.draw(inputText);
@@ -432,10 +432,10 @@ void gui::IncrementInput::render(sf::RenderTarget &target)
 
 void gui::IncrementInput::updateInput()
 {
-    if (incrementBtn->isPressed() && hasCompletedMousetimeCycle(sf::Mouse::Left))
+    if (incrementBtn->isPressed() && hasCompletedMousetimeCycle(Mouse::Left))
         value += step;
 
-    else if (decrementBtn->isPressed() && hasCompletedMousetimeCycle(sf::Mouse::Left))
+    else if (decrementBtn->isPressed() && hasCompletedMousetimeCycle(Mouse::Left))
         value -= step;
 }
 
@@ -452,9 +452,9 @@ const float gui::IncrementInput::getValue() const
     return value;
 }
 
-const bool gui::IncrementInput::hasCompletedMousetimeCycle(sf::Mouse::Button mouse_btn)
+const bool gui::IncrementInput::hasCompletedMousetimeCycle(Mouse::Button mouse_btn)
 {
-    if (sf::Mouse::isButtonPressed(mouse_btn))
+    if (Mouse::isButtonPressed(mouse_btn))
     {
         if (mousetime >= mousetimeMax)
         {
@@ -487,30 +487,30 @@ void gui::PauseMenu::initButtons()
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-gui::PauseMenu::PauseMenu(sf::VideoMode &vm, sf::Font &font) : vm(vm), font(font)
+gui::PauseMenu::PauseMenu(VideoMode &vm, Font &font) : vm(vm), font(font)
 {
     // Background
-    background.setSize(sf::Vector2f(vm.width, vm.height));
-    background.setFillColor(sf::Color(20, 20, 20, 100));
+    background.setSize(Vector2f(vm.width, vm.height));
+    background.setFillColor(Color(20, 20, 20, 100));
 
     // Container
-    container.setSize(sf::Vector2f(
+    container.setSize(Vector2f(
         background.getSize().x / 4.f,
         background.getSize().y - gui::p2pY(vm, 7.5f)));
 
-    container.setFillColor(sf::Color(20, 20, 20, 200));
+    container.setFillColor(Color(20, 20, 20, 200));
 
-    container.setPosition(sf::Vector2f(
+    container.setPosition(Vector2f(
         background.getSize().x / 2 - container.getSize().x / 2,
         background.getSize().y / 2 - container.getSize().y / 2));
 
     // Pause menu text
     pmenuText.setFont(font);
-    pmenuText.setFillColor(sf::Color(255, 255, 255, 200));
+    pmenuText.setFillColor(Color(255, 255, 255, 200));
     pmenuText.setCharacterSize(gui::calc_char_size(vm, 60));
     pmenuText.setString("PAUSED");
 
-    pmenuText.setPosition(sf::Vector2f(
+    pmenuText.setPosition(Vector2f(
         container.getPosition().x + container.getSize().x / 2 - pmenuText.getGlobalBounds().width / 2,
         container.getPosition().y + gui::p2pY(vm, 7.5f) - pmenuText.getGlobalBounds().height / 2));
 
@@ -527,13 +527,13 @@ gui::PauseMenu::~PauseMenu()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::PauseMenu::update(const sf::Vector2i &mouse_pos_window)
+void gui::PauseMenu::update(const Vector2i &mouse_pos_window)
 {
     for (auto &it : buttons)
-        it.second->update(sf::Vector2f(mouse_pos_window));
+        it.second->update(Vector2f(mouse_pos_window));
 }
 
-void gui::PauseMenu::render(sf::RenderTarget &target)
+void gui::PauseMenu::render(RenderTarget &target)
 {
     target.draw(background);
     target.draw(container);
@@ -543,7 +543,7 @@ void gui::PauseMenu::render(sf::RenderTarget &target)
         it.second->render(target);
 }
 
-void gui::PauseMenu::addButton(const std::string key, const float y, const std::string text)
+void gui::PauseMenu::addButton(const string key, const float y, const string text)
 {
     float width = gui::p2pX(vm, 9.f);
     float height = gui::p2pY(vm, 6.2f);
@@ -553,18 +553,18 @@ void gui::PauseMenu::addButton(const std::string key, const float y, const std::
     buttons[key] = new Button(
         x, y, width, height,
         font, text, gui::calc_char_size(vm, 90),
-        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
+        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
 }
 
-const bool gui::PauseMenu::isButtonPressed(const std::string key)
+const bool gui::PauseMenu::isButtonPressed(const string key)
 {
     return buttons[key]->isPressed();
 }
 
 /* ACCESSORS ==================================================================================================== */
 
-std::map<std::string, gui::Button *> &gui::PauseMenu::getButtons()
+map<string, gui::Button *> &gui::PauseMenu::getButtons()
 {
     return buttons;
 }
@@ -582,7 +582,7 @@ gui::TextureSelector::TextureSelector(
     const float btn_width, const float btn_height,
     const float txtr_slctr_x, const float txtr_slctr_y,
     const float txtr_slctr_width, const float txtr_slctr_height,
-    const float grid_size_f, const sf::Texture *texture_sheet) : mousetime(0.f), mousetimeMax(10.f)
+    const float grid_size_f, const Texture *texture_sheet) : mousetime(0.f), mousetimeMax(10.f)
 {
     gridSizeF = grid_size_f;
     active = false;
@@ -590,12 +590,12 @@ gui::TextureSelector::TextureSelector(
     float offset = grid_size_f;
 
     // Outer box
-    bounds.setSize(sf::Vector2f(txtr_slctr_width, txtr_slctr_height));
+    bounds.setSize(Vector2f(txtr_slctr_width, txtr_slctr_height));
     bounds.setPosition(txtr_slctr_x, txtr_slctr_y);
-    bounds.setFillColor(sf::Color(50, 50, 50, 100));
+    bounds.setFillColor(Color(50, 50, 50, 100));
 
     bounds.setOutlineThickness(2.f);
-    bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
+    bounds.setOutlineColor(Color(255, 255, 255, 200));
 
     // Texture sheet
     sheet.setTexture(*texture_sheet);
@@ -605,22 +605,22 @@ gui::TextureSelector::TextureSelector(
     if (sheet.getGlobalBounds().width > bounds.getGlobalBounds().width)
     {
         sheet.setTextureRect(
-            sf::IntRect(0, 0, bounds.getGlobalBounds().width, sheet.getGlobalBounds().height));
+            IntRect(0, 0, bounds.getGlobalBounds().width, sheet.getGlobalBounds().height));
     }
 
     // If the sheet is taller than the outer box
     if (sheet.getGlobalBounds().height > bounds.getGlobalBounds().height)
     {
         sheet.setTextureRect(
-            sf::IntRect(0, 0, sheet.getGlobalBounds().width, bounds.getGlobalBounds().height));
+            IntRect(0, 0, sheet.getGlobalBounds().width, bounds.getGlobalBounds().height));
     }
 
     // Selector Box
     selector.setPosition(txtr_slctr_x, txtr_slctr_y);
-    selector.setSize(sf::Vector2f(grid_size_f, grid_size_f));
-    selector.setFillColor(sf::Color::Transparent);
+    selector.setSize(Vector2f(grid_size_f, grid_size_f));
+    selector.setFillColor(Color::Transparent);
     selector.setOutlineThickness(1.f);
-    selector.setOutlineColor(sf::Color::Green);
+    selector.setOutlineColor(Color::Green);
 
     // Mouse texture selector
     textureRect.width = static_cast<int>(grid_size_f);
@@ -632,7 +632,7 @@ gui::TextureSelector::TextureSelector(
     hideBtn = new gui::Button(
         btn_x, btn_y, btn_width, btn_height,
         &hideBtnIcon, btn_width, btn_height,
-        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+        Color(70, 70, 70, 0), Color(255, 255, 255, 100), Color(255, 255, 255, 200));
 }
 
 gui::TextureSelector::~TextureSelector()
@@ -642,18 +642,18 @@ gui::TextureSelector::~TextureSelector()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_window)
+void gui::TextureSelector::update(const float &dt, const Vector2i mouse_pos_window)
 {
     updateMousetime(dt);
 
-    hideBtn->update(sf::Vector2f(mouse_pos_window));
+    hideBtn->update(Vector2f(mouse_pos_window));
 
     if (hideBtn->isPressed() && hasCompletedMousetimeCycle())
         hidden = !hidden;
 
     if (!hidden)
     {
-        active = bounds.getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
+        active = bounds.getGlobalBounds().contains(Vector2f(mouse_pos_window));
 
         if (active)
         {
@@ -670,7 +670,7 @@ void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_
     }
 }
 
-void gui::TextureSelector::render(sf::RenderTarget &target)
+void gui::TextureSelector::render(RenderTarget &target)
 {
     if (!hidden)
     {
@@ -719,7 +719,7 @@ const bool gui::TextureSelector::hasCompletedMousetimeCycle()
     return false;
 }
 
-const sf::IntRect &gui::TextureSelector::getTextureRect() const
+const IntRect &gui::TextureSelector::getTextureRect() const
 {
     return textureRect;
 }
@@ -738,8 +738,8 @@ gui::CollisionEditor::CollisionEditor(
     const float col_editor_x, const float col_editor_y,
     const float col_editor_width, const float col_editor_height,
     const float grid_size_f, const float scale,
-    const sf::Texture *texture_sheet,
-    sf::Font &font, sf::VideoMode &vm)
+    const Texture *texture_sheet,
+    Font &font, VideoMode &vm)
     : mousetime(0.f), mousetimeMax(10.f), vm(vm)
 {
     gridSizeF = grid_size_f;
@@ -749,8 +749,8 @@ gui::CollisionEditor::CollisionEditor(
     hidden = true;
     editing = false;
 
-    offsets = sf::Vector2f(0.f, 0.f);
-    dimensions = sf::Vector2f(grid_size_f, grid_size_f);
+    offsets = Vector2f(0.f, 0.f);
+    dimensions = Vector2f(grid_size_f, grid_size_f);
 
     // Texture rectangle
     textureRect.width = static_cast<int>(grid_size_f);
@@ -762,34 +762,34 @@ gui::CollisionEditor::CollisionEditor(
     hideBtn = new gui::Button(
         btn_x, btn_y, btn_width, btn_height,
         &hideBtnIcon, btn_width, btn_height,
-        sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+        Color(70, 70, 70, 0), Color(255, 255, 255, 100), Color(255, 255, 255, 200));
 
     // Background
-    editorBg.setSize(sf::Vector2f(gridSizeF * scale * 2.f, gridSizeF * scale * 2.f));
-    editorBg.setFillColor(sf::Color(100, 100, 100, 100));
+    editorBg.setSize(Vector2f(gridSizeF * scale * 2.f, gridSizeF * scale * 2.f));
+    editorBg.setFillColor(Color(100, 100, 100, 100));
     editorBg.setOutlineThickness(1.f);
-    editorBg.setOutlineColor(sf::Color(100, 100, 100, 150));
+    editorBg.setOutlineColor(Color(100, 100, 100, 150));
     editorBg.setPosition(col_editor_x, col_editor_y);
 
     // Tile
     editorTile.setTexture(texture_sheet);
     editorTile.setTextureRect(textureRect);
-    editorTile.setSize(sf::Vector2f(gridSizeF * scale, gridSizeF * scale));
+    editorTile.setSize(Vector2f(gridSizeF * scale, gridSizeF * scale));
     editorTile.setPosition(editorBg.getPosition().x + editorBg.getSize().x / 2.f - editorTile.getSize().x / 2.f,
                            editorBg.getPosition().y + editorBg.getSize().y / 2.f - editorTile.getSize().y / 2.f);
     // Collision box
-    editorCollBox.setSize(sf::Vector2f(gridSizeF * scale, gridSizeF * scale));
-    editorCollBox.setFillColor(sf::Color(255, 100, 100, 100));
+    editorCollBox.setSize(Vector2f(gridSizeF * scale, gridSizeF * scale));
+    editorCollBox.setFillColor(Color(255, 100, 100, 100));
     editorCollBox.setOutlineThickness(1.f);
-    editorCollBox.setOutlineColor(sf::Color(255, 100, 100, 150));
+    editorCollBox.setOutlineColor(Color(255, 100, 100, 150));
     editorCollBox.setPosition(editorTile.getPosition());
 
     // Input labels
     inputLabels.setFont(font);
     inputLabels.setCharacterSize(gui::calc_char_size(vm, 140));
-    inputLabels.setFillColor(sf::Color(255, 255, 255, 150));
+    inputLabels.setFillColor(Color(255, 255, 255, 150));
     inputLabels.setString("Width\n\n\nHeight\n\n\nOffset X\n\n\nOffset Y");
-    inputLabels.setPosition(sf::Vector2f(
+    inputLabels.setPosition(Vector2f(
         editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
         editorBg.getPosition().y - gui::calc_char_size(vm, 140)));
 
@@ -797,38 +797,38 @@ gui::CollisionEditor::CollisionEditor(
     incrementInputs["WIDTH"] = new gui::IncrementInput(
         editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
         editorBg.getPosition().y,
-        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
-        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
-        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), grid_size_f);
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, Color(100, 100, 100, 100),
+        Color(70, 70, 70, 200), Color(255, 255, 255, 100), Color(255, 255, 255, 200),
+        font, Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), grid_size_f);
 
     incrementInputs["HEIGHT"] = new gui::IncrementInput(
         editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
         editorBg.getPosition().y + gui::p2pY(vm, 6.3f),
-        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
-        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
-        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), grid_size_f);
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, Color(100, 100, 100, 100),
+        Color(70, 70, 70, 200), Color(255, 255, 255, 100), Color(255, 255, 255, 200),
+        font, Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), grid_size_f);
 
     incrementInputs["OFFSET_X"] = new gui::IncrementInput(
         editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
         editorBg.getPosition().y + gui::p2pY(vm, 12.7f),
-        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
-        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
-        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), 0.f);
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, Color(100, 100, 100, 100),
+        Color(70, 70, 70, 200), Color(255, 255, 255, 100), Color(255, 255, 255, 200),
+        font, Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), 0.f);
 
     incrementInputs["OFFSET_Y"] = new gui::IncrementInput(
         editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
         editorBg.getPosition().y + gui::p2pY(vm, 19.1f),
-        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
-        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
-        font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), 0.f);
+        gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, Color(100, 100, 100, 100),
+        Color(70, 70, 70, 200), Color(255, 255, 255, 100), Color(255, 255, 255, 200),
+        font, Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), 0.f);
 
     // Reset button
     resetBtn = new Button(
         editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
         editorBg.getPosition().y + gui::p2pY(vm, 25.5f),
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), font, "Reset", gui::calc_char_size(vm, 130),
-        sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255),
-        sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
+        Color(255, 255, 255, 150), Color(255, 255, 255, 200), Color(255, 255, 255, 255),
+        Color(70, 70, 70, 200), Color(255, 255, 255, 100), Color(255, 255, 255, 200));
 }
 
 gui::CollisionEditor::~CollisionEditor()
@@ -843,12 +843,12 @@ gui::CollisionEditor::~CollisionEditor()
 
 /* FUNCTIONS =================================================================================================== */
 
-void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window, sf::IntRect &texture_rect)
+void gui::CollisionEditor::update(const float &dt, Vector2i mouse_pos_window, IntRect &texture_rect)
 {
     updateMousetime(dt);
 
-    hideBtn->update(sf::Vector2f(mouse_pos_window));
-    resetBtn->update(sf::Vector2f(mouse_pos_window));
+    hideBtn->update(Vector2f(mouse_pos_window));
+    resetBtn->update(Vector2f(mouse_pos_window));
 
     updateInput();
 
@@ -862,7 +862,7 @@ void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window
     if (editing)
     {
         for (auto &it : incrementInputs)
-            it.second->update(dt, static_cast<sf::Vector2f>(mouse_pos_window));
+            it.second->update(dt, static_cast<Vector2f>(mouse_pos_window));
 
         offsets.x = incrementInputs.at("OFFSET_X")->getValue();
         offsets.y = incrementInputs.at("OFFSET_Y")->getValue();
@@ -870,13 +870,13 @@ void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window
         dimensions.x = incrementInputs.at("WIDTH")->getValue();
         dimensions.y = incrementInputs.at("HEIGHT")->getValue();
 
-        editorCollBox.setSize(sf::Vector2f(dimensions.x * scale, dimensions.y * scale));
+        editorCollBox.setSize(Vector2f(dimensions.x * scale, dimensions.y * scale));
         editorCollBox.setPosition(editorTile.getPosition().x + offsets.x * scale,
                                   editorTile.getPosition().y + offsets.y * scale);
     }
 }
 
-void gui::CollisionEditor::render(sf::RenderTarget &target)
+void gui::CollisionEditor::render(RenderTarget &target)
 {
     if (editing)
     {
@@ -924,12 +924,12 @@ void gui::CollisionEditor::close()
 
 /* ACCESSORS =================================================================================================== */
 
-const sf::Vector2f &gui::CollisionEditor::getDimensions() const
+const Vector2f &gui::CollisionEditor::getDimensions() const
 {
     return dimensions;
 }
 
-const sf::Vector2f &gui::CollisionEditor::getOffsets() const
+const Vector2f &gui::CollisionEditor::getOffsets() const
 {
     return offsets;
 }
@@ -961,9 +961,9 @@ const bool gui::CollisionEditor::hasCompletedMousetimeCycle()
 gui::SolidBar::SolidBar(
     const float x, const float y,
     const float width, const float height,
-    const sf::Color bg_color, const sf::Color text_color,
-    const sf::Font &font, const unsigned char_size,
-    const std::string string)
+    const Color bg_color, const Color text_color,
+    const Font &font, const unsigned char_size,
+    const string string)
 {
     barMaxSize.x = width;
     barMaxSize.y = height;
@@ -979,8 +979,8 @@ gui::SolidBar::SolidBar(
 
     // Center bar text in the bar.
     barText.setPosition(
-        bar.getPosition().x + bar.getSize().x / 2.f - std::roundf(barText.getGlobalBounds().width / 2.f),
-        bar.getPosition().y + bar.getSize().y / 2.f - std::floor(barText.getGlobalBounds().height / 2.f + 2.f));
+        bar.getPosition().x + bar.getSize().x / 2.f - roundf(barText.getGlobalBounds().width / 2.f),
+        bar.getPosition().y + bar.getSize().y / 2.f - floor(barText.getGlobalBounds().height / 2.f + 2.f));
 }
 
 gui::SolidBar::~SolidBar()
@@ -993,7 +993,7 @@ void gui::SolidBar::update()
 {
 }
 
-void gui::SolidBar::render(sf::RenderTarget &target)
+void gui::SolidBar::render(RenderTarget &target)
 {
     target.draw(bar);
     target.draw(barText);
@@ -1001,14 +1001,14 @@ void gui::SolidBar::render(sf::RenderTarget &target)
 
 /* MODIFIERS ==================================================================================================== */
 
-void gui::SolidBar::setString(const std::string string)
+void gui::SolidBar::setString(const string string)
 {
     barText.setString(string);
 
     // Center bar text in the bar.
     barText.setPosition(
-        bar.getPosition().x + bar.getSize().x / 2.f - std::roundf(barText.getGlobalBounds().width / 2.f),
-        bar.getPosition().y + bar.getSize().y / 2.f - std::floor(barText.getGlobalBounds().height / 2.f + 2.f));
+        bar.getPosition().x + bar.getSize().x / 2.f - roundf(barText.getGlobalBounds().width / 2.f),
+        bar.getPosition().y + bar.getSize().y / 2.f - floor(barText.getGlobalBounds().height / 2.f + 2.f));
 }
 
 /**********************************************************************************************************
@@ -1023,9 +1023,9 @@ gui::ProgressBar::ProgressBar(
     const float x, const float y,
     const float width, const float height,
     const float current_value, const float max_value,
-    const sf::Color bg_color, const sf::Color fill_color,
-    sf::Font &font, const sf::Color text_color,
-    const unsigned char_size, const std::string string)
+    const Color bg_color, const Color fill_color,
+    Font &font, const Color text_color,
+    const unsigned char_size, const string string)
 {
     barMaxSize.x = width;
     barMaxSize.y = height;
@@ -1049,14 +1049,14 @@ gui::ProgressBar::ProgressBar(
     // Center bar text in the bar.
     barText.setPosition(
         barBg.getPosition().x + barBg.getSize().x / 10.f,
-        barBg.getPosition().y + barBg.getSize().y / 2.f - std::floor(barText.getGlobalBounds().height / 2.f + 2.f));
+        barBg.getPosition().y + barBg.getSize().y / 2.f - floor(barText.getGlobalBounds().height / 2.f + 2.f));
 }
 
 gui::ProgressBar::ProgressBar(
     const float x, const float y,
     const float width, const float height,
     const float current_value, const float max_value,
-    const sf::Color bg_color, const sf::Color fill_color)
+    const Color bg_color, const Color fill_color)
 {
     barMaxSize.x = width;
     barMaxSize.y = height;
@@ -1083,7 +1083,7 @@ void gui::ProgressBar::update()
 {
 }
 
-void gui::ProgressBar::render(sf::RenderTarget &target)
+void gui::ProgressBar::render(RenderTarget &target)
 {
     target.draw(barBg);
     target.draw(barFill);
@@ -1092,14 +1092,14 @@ void gui::ProgressBar::render(sf::RenderTarget &target)
         target.draw(barText);
 }
 
-const sf::Vector2f &gui::ProgressBar::getPosition() const
+const Vector2f &gui::ProgressBar::getPosition() const
 {
     return barBg.getPosition();
 }
 
 /* MODIFIERS ==================================================================================================== */
 
-void gui::ProgressBar::setString(const std::string string)
+void gui::ProgressBar::setString(const string string)
 {
     if (barText.getFont())
     {
@@ -1108,7 +1108,7 @@ void gui::ProgressBar::setString(const std::string string)
         // Center bar text in the bar.
         barText.setPosition(
             barBg.getPosition().x + barBg.getSize().x / 10.f,
-            barBg.getPosition().y + barBg.getSize().y / 2.f - std::floor(barText.getGlobalBounds().height / 2.f + 2.f));
+            barBg.getPosition().y + barBg.getSize().y / 2.f - floor(barText.getGlobalBounds().height / 2.f + 2.f));
     }
 }
 
@@ -1116,8 +1116,8 @@ void gui::ProgressBar::setProgress(const float percent)
 {
     setCurrentValue(maxValue * percent);
 
-    barFill.setSize(sf::Vector2f(
-        static_cast<float>(std::floor(barMaxSize.x * percent)),
+    barFill.setSize(Vector2f(
+        static_cast<float>(floor(barMaxSize.x * percent)),
         barMaxSize.y));
 }
 

@@ -14,11 +14,11 @@ Sword::~Sword()
 {
 }
 
-void Sword::update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity_size,
-                   const sf::Vector2f entity_center, std::string entity_direction)
+void Sword::update(const Vector2f &mouse_pos_view, const Vector2f entity_size,
+                   const Vector2f entity_center, string entity_direction)
 {
     float angle;
-    sf::Vector2f position;
+    Vector2f position;
 
     if (entity_direction == "LEFT")
     {
@@ -53,7 +53,7 @@ void Sword::update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity
     weaponSprite.setRotation(angle);
 }
 
-void Sword::render(sf::RenderTarget &target, sf::Shader *shader)
+void Sword::render(RenderTarget &target, Shader *shader)
 {
     if (shader)
     {

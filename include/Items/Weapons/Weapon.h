@@ -13,32 +13,32 @@ private:
 protected:
     /* PROTECTED VARIABLES ===================================================================================== */
 
-    sf::Texture weaponUpTexture;
-    sf::Texture weaponDownTexture;
-    sf::Texture weaponHorizontalTexture;
-    sf::Sprite weaponSprite;
+    Texture weaponUpTexture;
+    Texture weaponDownTexture;
+    Texture weaponHorizontalTexture;
+    Sprite weaponSprite;
 
     short unsigned range;
     short unsigned damageMin;
     short unsigned damageMax;
 
-    sf::Clock cooldownTimer;
-    sf::Int32 cooldownTimerMax;
+    Clock cooldownTimer;
+    Int32 cooldownTimerMax;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
-    Weapon(const ItemType type, const std::string texture_path, const short unsigned value,
+    Weapon(const ItemType type, const string texture_path, const short unsigned value,
            const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
 
     virtual ~Weapon();
 
     /* FUNCTIONS ================================================================================================ */
 
-    virtual void update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity_size,
-                        const sf::Vector2f entity_center, std::string entity_direction) = 0;
+    virtual void update(const Vector2f &mouse_pos_view, const Vector2f entity_size,
+                        const Vector2f entity_center, string entity_direction) = 0;
 
-    virtual void render(sf::RenderTarget &target, sf::Shader *shader = nullptr) = 0;
+    virtual void render(RenderTarget &target, Shader *shader = nullptr) = 0;
 
     virtual Weapon *clone() = 0;
 
@@ -52,13 +52,13 @@ public:
 
     const bool didCooldown(const bool reset_timer = true);
 
-    const sf::Int32 getCurrentCooldownTimerValue() const;
+    const Int32 getCurrentCooldownTimerValue() const;
 
-    const sf::Int32& getCooldownTimerMax() const;
+    const Int32 &getCooldownTimerMax() const;
 
     /* MODIFIERS ================================================================================================ */
 
-    void setCooldownTimerMax(const sf::Int32 new_timer_max);
+    void setCooldownTimerMax(const Int32 new_timer_max);
 };
 
 #endif /* WEAPON_H_ */
