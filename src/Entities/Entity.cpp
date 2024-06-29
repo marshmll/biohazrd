@@ -71,9 +71,9 @@ void Entity::createSkillComponent()
     skillComponent = new SkillComponent();
 }
 
-void Entity::createAIComponent()
+void Entity::createAIComponent(Entity *target_entity)
 {
-    aiComponent = new AIComponent();
+    aiComponent = new AIComponent(*this, target_entity);
 }
 
 /* FUNCTIONS ===================================================================================================== */

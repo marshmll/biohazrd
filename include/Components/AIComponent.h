@@ -4,6 +4,8 @@
 #include "AIBehaviors.h"
 #include "Entity.h"
 
+class Entity;
+
 class AIComponent
 {
 private:

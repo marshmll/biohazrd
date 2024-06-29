@@ -107,7 +107,7 @@ public:
      *
      * @return void
      */
-    void createAIComponent();
+    void createAIComponent(Entity *target_entity = nullptr);
 
     /* FUNCTIONS ================================================================================================== */
 

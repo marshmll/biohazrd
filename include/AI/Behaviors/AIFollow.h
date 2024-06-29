@@ -3,6 +3,8 @@
 
 #include "AIBehavior.h"
 
+class Entity;
+
 class AIFollow : public AIBehavior
 {
 private:
