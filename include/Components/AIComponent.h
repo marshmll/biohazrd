@@ -1,7 +1,10 @@
 #ifndef AICOMPONENT_H_
 #define AICOMPONENT_H_
 
+#include "AIBehaviors.h"
 #include "Entity.h"
+
+class Entity;
 
 class AIComponent
 {
@@ -11,7 +14,7 @@ private:
     Entity &self;
     Entity *targetEntity;
 
-    AIFollowBehavior *follow;
+    /* INITIALIZERS ============================================================================================== */
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -22,7 +25,7 @@ public:
 
     /* FUNCTIONS ================================================================================================= */
 
-    void addFollowBehavior();
+    void update(const float &dt);
 
     /* ACCESSORS ================================================================================================= */
 

@@ -19,19 +19,18 @@ void GreenSlime::initAnimations()
 /* CONSTRUCTOR AND DESTRUCTOR ====================================================================================== */
 
 GreenSlime::GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
-                       const float x, const float y, Texture &texture_sheet)
+                       const float x, const float y, sf::Texture &texture_sheet)
 
     : Enemy(enemy_spawner_tile, 20)
 {
     initVariables();
-    setPosition(Vector2f(x, y));
+    setPosition(sf::Vector2f(x, y));
 
     createHitboxComponent(35.f, 70.f, 25.f, 25.f);
     createMovementComponent(100.f, 1000.f, 700.f);
     createAnimationComponent(texture_sheet);
     createAttributeComponent(1);
-
-    enableFollowBehavior(player);
+    createAIComponent();
 
     initAnimations();
 }
@@ -42,15 +41,14 @@ GreenSlime::~GreenSlime()
 
 /* FUNCTIONS ======================================================================================================= */
 
-void GreenSlime::update(const float &dt, const Vector2f &mouse_pos_view)
+void GreenSlime::update(const float &dt, const sf::Vector2f &mouse_pos_view)
 {
     movementComponent->update(dt);
     hitboxComponent->update();
     updateAnimation(dt);
-    updateAIBehaviors(dt);
 }
 
-void GreenSlime::render(RenderTarget &target, const bool show_hitbox, Shader *shader, Vector2f light_pos)
+void GreenSlime::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader *shader, sf::Vector2f light_pos)
 {
     if (shader)
     {
@@ -80,14 +78,8 @@ void GreenSlime::updateAnimation(const float &dt)
     case MOVING:
         animationComponent->play(
             "WALK", dt,
-            abs(movementComponent->getVelocity().x) + abs(movementComponent->getVelocity().y),
+            std::abs(movementComponent->getVelocity().x) + std::abs(movementComponent->getVelocity().y),
             movementComponent->getMaxVelocity(), PRIORITARY);
         break;
     }
-}
-
-void GreenSlime::updateAIBehaviors(const float &dt)
-{
-    for (auto behavor : aiBehaviors)
-        behavor->update(dt);
 }

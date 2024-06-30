@@ -5,7 +5,7 @@
 
 const int AttributeComponent::calcNextExp()
 {
-    return static_cast<int>(pow(level, 4) + pow(level + 6, 3));
+    return static_cast<int>(std::pow(level, 4) + std::pow(level + 6, 3));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */

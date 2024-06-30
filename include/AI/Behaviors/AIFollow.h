@@ -1,39 +1,31 @@
-#ifndef CHARACTERTAB_H
-#define CHARACTERTAB_H
+#ifndef AIFOLLOW_H_
+#define AIFOLLOW_H_
 
-#include "Tab.h"
-#include "Player.h"
+#include "AIBehavior.h"
 
-class CharacterTab : public Tab
+class Entity;
+
+class AIFollow : public AIBehavior
 {
 private:
     /* VARIABLES ================================================================================================= */
 
-    Player &player;
-
-    sf::Text text;
-
-    /* INITIALIZERS ============================================================================================== */
-
-    void initText();
+    Entity &player;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    CharacterTab(const float width, const float height,
-                 sf::VideoMode &vm, sf::Font &font, Player &player);
+    AIFollow(Entity &self, Entity &player);
 
-    virtual ~CharacterTab();
+    virtual ~AIFollow();
 
     /* FUNCTIONS ================================================================================================= */
 
     void update(const float &dt);
-
-    void render(sf::RenderTarget &target);
 
     /* ACCESSORS ================================================================================================= */
 
     /* MODIFIERS ================================================================================================= */
 };
 
-#endif /* CHARACTERTAB_H */
+#endif /* AIFOLLOW_H_ */

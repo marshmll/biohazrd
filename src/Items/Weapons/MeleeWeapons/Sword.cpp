@@ -3,7 +3,7 @@
 
 Sword::Sword()
     : MeleeWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
-                  80, 5, 15, 300.f)
+                  80, 5, 15)
 {
     weaponSprite.setOrigin(
         weaponSprite.getGlobalBounds().width / 2.f,
@@ -14,11 +14,11 @@ Sword::~Sword()
 {
 }
 
-void Sword::update(const Vector2f &mouse_pos_view, const Vector2f entity_size,
-                   const Vector2f entity_center, string entity_direction)
+void Sword::update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity_size,
+                   const sf::Vector2f entity_center, std::string entity_direction)
 {
     float angle;
-    Vector2f position;
+    sf::Vector2f position;
 
     if (entity_direction == "LEFT")
     {
@@ -53,7 +53,7 @@ void Sword::update(const Vector2f &mouse_pos_view, const Vector2f entity_size,
     weaponSprite.setRotation(angle);
 }
 
-void Sword::render(RenderTarget &target, Shader *shader)
+void Sword::render(sf::RenderTarget &target, sf::Shader *shader)
 {
     if (shader)
     {

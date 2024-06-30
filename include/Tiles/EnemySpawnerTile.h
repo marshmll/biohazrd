@@ -8,7 +8,7 @@ class EnemySpawnerTile : public Tile
 private:
     /* VARIABLES ================================================================================================= */
 
-    Clock spawnTimer;
+    sf::Clock spawnTimer;
 
     short enemyType;
     short enemyAmount;
@@ -24,7 +24,7 @@ public:
 
     EnemySpawnerTile(
         const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-        const Texture &texture, const IntRect texture_rect,
+        const sf::Texture &texture, const sf::IntRect texture_rect,
         const short enemy_type, const short enemy_amount,
         const short enemy_time_to_spawn, const short enemy_max_distance,
         const short enemy_spawn_area_size);
@@ -45,13 +45,13 @@ public:
      *
      * @return void
      */
-    void render(RenderTarget &target, Shader *shader = nullptr, const Vector2f light_pos = Vector2f());
+    void render(sf::RenderTarget &target, sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
-    const bool canSpawn(const Vector2f &player_pos);
+    const bool canSpawn(const sf::Vector2f &player_pos);
 
     const bool hasElapsedSpawnTime();
 
-    const bool isPlayerInsideSpawnArea(const Vector2f &player_pos);
+    const bool isPlayerInsideSpawnArea(const sf::Vector2f &player_pos);
 
     const bool hasSpawnedAllEnemies() const;
 
@@ -64,7 +64,7 @@ public:
     const short &getEnemyCounter() const;
 
     /**
-     * @brief Returns the tile properties as a string.
+     * @brief Returns the tile properties as a std::string.
      * @note Returns:
      * @note -> Type
      * @note -> Texture rectangle left
@@ -74,9 +74,9 @@ public:
      * @note -> Enemy time to spawn
      * @note -> Enemy max distance
      *
-     * @return const string
+     * @return const std::string
      */
-    const string getPropertiesAsString() const;
+    const std::string getPropertiesAsString() const;
 
     /* MODIFIERS ================================================================================================= */
 };

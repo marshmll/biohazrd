@@ -40,7 +40,6 @@
 #include <fstream>
 #include <filesystem>
 #include <cmath>
-using namespace std;
 
 /* UTILS ========================================================================================================= */
 
@@ -53,6 +52,5 @@ using namespace std;
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-using namespace sf;
 
 #endif

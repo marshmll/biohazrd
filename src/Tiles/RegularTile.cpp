@@ -4,7 +4,7 @@
 RegularTile::RegularTile(
     const TileType type,
     const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-    const Texture &texture, const IntRect texture_rect, const bool collision,
+    const sf::Texture &texture, const sf::IntRect texture_rect, const bool collision,
     const float coll_box_width, const float coll_box_height,
     const float coll_box_offset_x, const float coll_box_offset_y)
 
@@ -23,7 +23,7 @@ void RegularTile::update()
 {
 }
 
-void RegularTile::render(RenderTarget &target, Shader *shader, const Vector2f light_pos)
+void RegularTile::render(sf::RenderTarget &target, sf::Shader *shader, const sf::Vector2f light_pos)
 {
     if (shader)
     {
@@ -38,9 +38,9 @@ void RegularTile::render(RenderTarget &target, Shader *shader, const Vector2f li
     }
 }
 
-const string RegularTile::getPropertiesAsString() const
+const std::string RegularTile::getPropertiesAsString() const
 {
-    stringstream properties;
+    std::stringstream properties;
 
     properties << type << " "
                << tile.getTextureRect().left << " " << tile.getTextureRect().top << " "

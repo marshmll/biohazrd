@@ -12,7 +12,7 @@
 
 void SettingsState::initVariables()
 {
-    videoModes = VideoMode::getFullscreenModes();
+    videoModes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initFonts()
@@ -32,10 +32,10 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGUI()
 {
-    const VideoMode &vm = data->gfxSettings->resolution;
+    const sf::VideoMode &vm = data->gfxSettings->resolution;
 
     // Background
-    background.setSize(Vector2f(vm.width, vm.height));
+    background.setSize(sf::Vector2f(vm.width, vm.height));
 
     if (!backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
     {
@@ -52,39 +52,39 @@ void SettingsState::initGUI()
         gui::p2pX(vm, 84.3f), gui::p2pY(vm, 82.5f),
         gui::p2pX(vm, 11.7f), gui::p2pY(vm, 6.2f),
         font, "Back", gui::calc_char_size(vm, 65),
-        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
-        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
     buttons["APPLY"] = new gui::Button(
         gui::p2pX(vm, 68.7f), gui::p2pY(vm, 82.5f),
         gui::p2pX(vm, 11.7f), gui::p2pY(vm, 6.2f),
         font, "Apply", gui::calc_char_size(vm, 65),
-        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
-        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
     // Drop down lists
-    vector<string> mode_labels;
+    std::vector<std::string> mode_labels;
 
     // Get the video modes strings
     for (auto &mode : videoModes)
     {
-        stringstream ss;
+        std::stringstream ss;
         ss << mode.width << "x" << mode.height;
 
-        if (find(mode_labels.begin(), mode_labels.end(), ss.str()) == mode_labels.end())
+        if (std::find(mode_labels.begin(), mode_labels.end(), ss.str()) == mode_labels.end())
             mode_labels.push_back(ss.str());
     }
 
     // Find the index of the current mode label in mode labels
     short unsigned selected_index = 0;
-    stringstream current_mode_label;
+    std::stringstream current_mode_label;
 
     current_mode_label << vm.width << "x" << vm.height;
 
-    auto it = find(mode_labels.begin(), mode_labels.end(), current_mode_label.str());
+    auto it = std::find(mode_labels.begin(), mode_labels.end(), current_mode_label.str());
     if (it != mode_labels.end())
     {
-        auto index = distance(mode_labels.begin(), it);
+        auto index = std::distance(mode_labels.begin(), it);
 
         selected_index = static_cast<short unsigned>(index);
     }
@@ -101,7 +101,7 @@ void SettingsState::initGUI()
     optionsText.setFont(font);
     optionsText.setPosition(gui::p2pX(vm, 6.2f), gui::p2pY(vm, 40.f));
     optionsText.setCharacterSize(gui::calc_char_size(vm, 70));
-    optionsText.setFillColor(Color(255, 255, 255, 200));
+    optionsText.setFillColor(sf::Color(255, 255, 255, 200));
     optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n");
 }
 
@@ -154,19 +154,19 @@ void SettingsState::update(const float &dt)
     updateGUI(dt);
 }
 
-void SettingsState::render(RenderTarget &target)
+void SettingsState::render(sf::RenderTarget &target)
 {
     target.draw(background);
     renderGUI(target);
     target.draw(optionsText);
 
     //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
-    // Text mouseText;
-    // mouseText.setPosition(Vector2f(mousePosView.x, mousePosView.y - 20));
+    // sf::Text mouseText;
+    // mouseText.setPosition(sf::Vector2f(mousePosView.x, mousePosView.y - 20));
     // mouseText.setFont(font);
     // mouseText.setCharacterSize(12);
 
-    // stringstream ss;
+    // std::stringstream ss;
     // ss << mousePosView.x << " " << mousePosView.y;
     // mouseText.setString(ss.str());
 
@@ -183,7 +183,7 @@ void SettingsState::updateGUI(const float &dt)
 {
     // Updates all buttons based on mouse position view.
     for (auto &it : buttons)
-        it.second->update(Vector2f(mousePosWindow));
+        it.second->update(sf::Vector2f(mousePosWindow));
 
     // Updates all ddls based on mouse position view and dt.
     for (auto &it : dropDownLists)
@@ -203,7 +203,7 @@ void SettingsState::updateGUI(const float &dt)
 
         gfxSettings->resolution = videoModes[dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
-        window->create(gfxSettings->resolution, "BIOHAZRD", Style::Titlebar | Style::Close);
+        window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
 
         resetGUI();
 
@@ -211,7 +211,7 @@ void SettingsState::updateGUI(const float &dt)
     }
 }
 
-void SettingsState::renderGUI(RenderTarget &target)
+void SettingsState::renderGUI(sf::RenderTarget &target)
 {
     // Render buttons
     for (auto &it : buttons)

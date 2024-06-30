@@ -3,7 +3,7 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
-EnemySystem::EnemySystem(vector<Enemy *> &active_enemies, map<string, Texture> &textures,
+EnemySystem::EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures,
                          Entity &player)
 
     : activeEnemies(active_enemies), textures(textures), player(player)
@@ -20,7 +20,7 @@ void EnemySystem::update(const float &dt)
 {
 }
 
-void EnemySystem::render(RenderTarget &target)
+void EnemySystem::render(sf::RenderTarget &target)
 {
 }
 
@@ -38,7 +38,7 @@ void EnemySystem::createEnemy(const EnemyType type, const float x, const float y
     }
 }
 
-void EnemySystem::createEnemy(const EnemyType type, const Vector2f position, EnemySpawnerTile &enemy_spawner_tile)
+void EnemySystem::createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile &enemy_spawner_tile)
 {
     switch (type)
     {
@@ -65,7 +65,7 @@ void EnemySystem::deleteEnemy(const size_t index)
 
 void EnemySystem::deleteEnemy(Enemy *enemy)
 {
-    auto enemy_it = find(activeEnemies.begin(), activeEnemies.end(), enemy);
+    auto enemy_it = std::find(activeEnemies.begin(), activeEnemies.end(), enemy);
 
     if (enemy_it == activeEnemies.end())
         ErrorHandler::throwErr("ENEMYSSYTEM::DELETEENEMY::ENEMY_POINTER_NOT_IN_VECTOR");

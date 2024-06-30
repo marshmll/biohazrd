@@ -11,24 +11,24 @@ class GameState : public State
 private:
     /* VARIABLES ================================================================================================= */
 
-    View playerCamera;
-    Vector2i playerCameraPosGrid;
+    sf::View playerCamera;
+    sf::Vector2i playerCameraPosGrid;
 
-    RenderTexture renderBuffer;
-    Sprite renderSprite;
+    sf::RenderTexture renderBuffer;
+    sf::Sprite renderSprite;
 
-    Text debugText; // TEMP
+    sf::Text debugText; // TEMP
 
-    Shader coreShader;
+    sf::Shader coreShader;
 
     gui::PauseMenu *pauseMenu;
 
     Player *player;
     PlayerGUI *playerGUI;
 
-    Font font;
+    sf::Font font;
 
-    vector<Enemy *> activeEnemies;
+    std::vector<Enemy *> activeEnemies;
     EnemySystem *enemySystem;
 
     TextTagSystem *textTagSystem;
@@ -171,7 +171,7 @@ public:
      *
      * @return void
      */
-    void render(RenderTarget &target);
+    void render(sf::RenderTarget &target);
 
     /**
      * @brief Renders everything into a RenderTexture buffer.
@@ -222,13 +222,13 @@ public:
      */
     void updateEnemiesAndCombat(const float &dt);
 
-    /**
+    /** 
      * @brief Updates the combat between player and an enemy.
      * @param dt The game delta time
      * @param enemy A pointer to an enemy
      * @param index The enemy's index in the activeEnemies vector.
      *
-     * @return void
+     * @return void 
      */
     void updateCombat(const float &dt, Enemy *enemy);
 

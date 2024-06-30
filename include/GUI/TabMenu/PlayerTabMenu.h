@@ -8,16 +8,16 @@ class PlayerTabMenu
 private:
     /* VARIABLES ================================================================================================= */
 
-    VideoMode &vm;
-    Font &font;
+    sf::VideoMode &vm;
+    sf::Font &font;
     Player &player;
 
-    Clock keyTimer;
-    Int32 keyTimerMax;
+    sf::Clock keyTimer;
+    sf::Int32 keyTimerMax;
 
     /* TABS */
 
-    map<TabType, Tab *> tabs;
+    std::map<TabType, Tab *> tabs;
 
     /* INITIALIZERS ============================================================================================== */
 
@@ -26,7 +26,7 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    PlayerTabMenu(VideoMode &vm, Font &font, Player &player);
+    PlayerTabMenu(sf::VideoMode &vm, sf::Font &font, Player &player);
 
     virtual ~PlayerTabMenu();
 
@@ -34,7 +34,7 @@ public:
 
     void update(const float &dt);
 
-    void render(RenderTarget &target);
+    void render(sf::RenderTarget &target);
 
     const bool hasElapsedKeyTimeMax();
 

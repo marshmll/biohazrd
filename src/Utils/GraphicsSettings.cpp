@@ -13,12 +13,12 @@
 GraphicsSettings::GraphicsSettings()
 {
     title = "BIOHAZRD";
-    resolution = VideoMode::getDesktopMode();
+    resolution = sf::VideoMode::getDesktopMode();
     fullscreen = true;
     verticalSync = false;
     frameRateLimit = 60;
     contextSettings.antialiasingLevel = 0;
-    videoModes = VideoMode::getFullscreenModes();
+    videoModes = sf::VideoMode::getFullscreenModes();
 }
 
 GraphicsSettings::~GraphicsSettings()
@@ -27,11 +27,11 @@ GraphicsSettings::~GraphicsSettings()
 
 /* FUNCTIONS ===================================================================================================== */
 
-void GraphicsSettings::saveToFile(const string path)
+void GraphicsSettings::saveToFile(const std::string path)
 {
-    ofstream ofs(path);
+    std::ofstream ofs(path);
 
-    videoModes = VideoMode::getFullscreenModes();
+    videoModes = sf::VideoMode::getFullscreenModes();
 
     if (ofs.is_open())
     {
@@ -50,7 +50,7 @@ void GraphicsSettings::saveToFile(const string path)
     ofs.close();
 }
 
-void GraphicsSettings::loadFromFile(const string path)
+void GraphicsSettings::loadFromFile(const std::string path)
 {
     IniParser parser(path);
 

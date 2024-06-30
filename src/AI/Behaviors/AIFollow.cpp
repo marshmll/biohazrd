@@ -1,20 +1,34 @@
 #include "stdafx.h"
-#include "AIBehavior.h"
+#include "AIFollow.h"
 
 /* INITIALIZERS ================================================================================================== */
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-AIBehavior::AIBehavior(Entity &self)
-    : self(self)
+AIFollow::AIFollow(Entity &self, Entity &player)
+    : AIBehavior(self), player(player)
 {
 }
 
-AIBehavior::~AIBehavior()
+AIFollow::~AIFollow()
 {
 }
 
 /* FUNCTIONS ===================================================================================================== */
+
+void AIFollow::update(const float &dt)
+{
+    sf::Vector2f move_vec;
+
+    move_vec.x = player.getPosition().x - self.getPosition().x;
+    move_vec.y = player.getPosition().y - self.getPosition().y;
+
+    float vec_len = sqrt(pow(move_vec.x, 2) + pow(move_vec.y, 2));
+
+    move_vec /= vec_len;
+
+    self.move(move_vec.x, move_vec.y, dt);
+}
 
 /* ACCESSORS ===================================================================================================== */
 

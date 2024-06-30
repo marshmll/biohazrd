@@ -1,25 +1,25 @@
 #include "stdafx.h"
 #include "AIComponent.h"
 
-/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+/* INITIALIZERS ============================================================================================== */
+
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
 AIComponent::AIComponent(Entity &self, Entity *target_entity)
     : self(self), targetEntity(target_entity)
 {
-    follow = nullptr;
 }
 
 AIComponent::~AIComponent()
 {
-    delete follow;
 }
 
-/* FUNCTIONS ===================================================================================================== */
+/* FUNCTIONS ================================================================================================= */
 
-void AIComponent::addFollowBehavior()
+void AIComponent::update(const float &dt)
 {
-    if (targetEntity)
-        follow = new AIFollowBehavior(self, *targetEntity);
-    else
-        ErrorHandler::throwErr("AICOMPONENT::ADDFOLLOWBEHAVIOR::ERR_NULL_ENTITY");
 }
+
+/* ACCESSORS ================================================================================================= */
+
+/* MODIFIERS ================================================================================================= */

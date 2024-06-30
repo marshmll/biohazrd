@@ -16,12 +16,12 @@ void GameState::initBufferedRender()
 
     renderSprite.setTexture(renderBuffer.getTexture());
 
-    renderSprite.setTextureRect(IntRect(0, 0, vm.width, vm.height));
+    renderSprite.setTextureRect(sf::IntRect(0, 0, vm.width, vm.height));
 }
 
 void GameState::initView()
 {
-    playerCamera.setSize(Vector2f(vm.width, vm.height));
+    playerCamera.setSize(sf::Vector2f(vm.width, vm.height));
 
     playerCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
 }
@@ -34,7 +34,7 @@ void GameState::initKeybinds()
         keybinds[it.first] = acceptedKeys->at(it.second);
 
     data->logger->log("GameState::initKeybinds", INFO,
-                      "Initialized " + to_string(keybinds.size()) + " keybinds.");
+                      "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
 }
 
 void GameState::initFonts()
@@ -159,7 +159,7 @@ void GameState::update(const float &dt)
     if (!isPaused)
     {
         /* DEBUG! */
-        stringstream ss;
+        std::stringstream ss;
         ss << "dt: " << dt << "ms";
         debugText.setString(ss.str());
         /*********/
@@ -182,7 +182,7 @@ void GameState::update(const float &dt)
     }
 }
 
-void GameState::render(RenderTarget &target)
+void GameState::render(sf::RenderTarget &target)
 {
     renderToBuffer();
 
@@ -234,7 +234,7 @@ void GameState::renderToBuffer()
 
 void GameState::updateInput(const float &dt)
 {
-    if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds["PAUSE"])))
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["PAUSE"])))
         pauseToggle();
 }
 
@@ -245,24 +245,24 @@ void GameState::updatePlayers(const float &dt)
 
 void GameState::updatePlayerInput(const float &dt)
 {
-    if (Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
+    if (sf::Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
     {
         player->move(0.f, -1.f, dt);
     }
-    else if (Keyboard::isKeyPressed(keybinds["MOVE_DOWN"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_DOWN"]))
     {
         player->move(0.f, 1.f, dt);
     }
-    else if (Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
     {
         player->move(-1.f, 0.f, dt);
     }
-    else if (Keyboard::isKeyPressed(keybinds["MOVE_RIGHT"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_RIGHT"]))
     {
         player->move(1.f, 0.f, dt);
     }
 
-    if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds["TOGGLE_CHAR_TAB"])))
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["TOGGLE_CHAR_TAB"])))
     {
         playerGUI->toggleTab(CHARACTER_TAB);
     }
@@ -285,47 +285,37 @@ void GameState::updateEnemiesAndCombat(const float &dt)
         tileMap->updateWorldBoundsCollision(dt, enemy);
         tileMap->updateTileCollision(dt, enemy);
 
-        if (Mouse::isButtonPressed(Mouse::Left))
+        updateCombat(dt, enemy);
+
+        if (enemy->isDead())
         {
-            updateCombat(dt, enemy);
+            player->earnExp(enemy->getExpDrop());
 
-            if (enemy->isDead())
-            {
-                player->earnExp(enemy->getExpDrop());
+            textTagSystem->displayTag(EXPERIENCE_TAG,
+                                      player->getPosition(),
+                                      enemy->getExpDrop(),
+                                      "+", "exp");
 
-                textTagSystem->displayTag(EXPERIENCE_TAG,
-                                          player->getPosition(),
-                                          enemy->getExpDrop(),
-                                          "+", "exp");
-
-                enemySystem->deleteEnemy(i);
-            }
+            enemySystem->deleteEnemy(i);
         }
     }
 }
 
 void GameState::updateCombat(const float &dt, Enemy *enemy)
 {
-    if (enemy->getGlobalBounds().contains(mousePosView) &&
-        player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
-        player->getWeapon()->didCooldown())
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        unsigned short damage = player->getWeapon()->getDamage();
+        if (enemy->getGlobalBounds().contains(mousePosView) &&
+            player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
+            player->getWeapon()->didCooldown())
+        {
+            enemy->loseHp(player->getWeapon()->getDamageMin());
 
-        enemy->loseHp(damage);
-
-        Vector2f knockback_vec(enemy->getPosition().x - player->getPosition().x,
-                               enemy->getPosition().y - player->getPosition().y);
-
-        float vec_len = sqrt(pow(knockback_vec.x, 2) + pow(knockback_vec.y, 2));
-
-        knockback_vec /= vec_len;
-
-        enemy->knockback(knockback_vec, player->getWeapon()->getKnockback());
-
-        textTagSystem->displayTag(DAMAGE_TAG, enemy->getPosition(),
-                                  damage,
-                                  "-", "hp");
+            textTagSystem->displayTag(TextTagType::DAMAGE_TAG,
+                                      enemy->getPosition(),
+                                      player->getWeapon()->getDamageMin(),
+                                      "-", "hp");
+        }
     }
 }
 
@@ -363,8 +353,8 @@ void GameState::updatePlayerCamera(const float &dt)
     else
     {
         playerCamera.setCenter(
-            floor(player->getCenteredPosition().x + ((mousePosWindow.x) - static_cast<float>(vm.width / 2)) / 20.f),
-            floor(player->getCenteredPosition().y + ((mousePosWindow.y) - static_cast<float>(vm.height / 2)) / 20.f));
+            std::floor(player->getCenteredPosition().x + ((mousePosWindow.x) - static_cast<float>(vm.width / 2)) / 20.f),
+            std::floor(player->getCenteredPosition().y + ((mousePosWindow.y) - static_cast<float>(vm.height / 2)) / 20.f));
     }
 
     // Make sure that the player camera width is smaller than the world

@@ -3,14 +3,14 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-EditorMode::EditorMode(StateData *data, EditorStateData *editor_data, string mode_name)
+EditorMode::EditorMode(StateData *data, EditorStateData *editor_data, std::string mode_name)
     : data(data), editorData(editor_data)
 {
     modeIndicatorText.setFont(*editor_data->font);
     modeIndicatorText.setCharacterSize(gui::calc_char_size(data->gfxSettings->resolution, 140));
     modeIndicatorText.setFillColor(sf::Color(255, 255, 255, 150));
     modeIndicatorText.setString(mode_name);
-    modeIndicatorText.setPosition((float)data->gfxSettings->resolution.width - floor(modeIndicatorText.getGlobalBounds().width) - 10.f, 15.f);
+    modeIndicatorText.setPosition((float)data->gfxSettings->resolution.width - std::floor(modeIndicatorText.getGlobalBounds().width) - 10.f, 15.f);
 }
 
 EditorMode::~EditorMode()

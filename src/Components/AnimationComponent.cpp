@@ -10,7 +10,7 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
-AnimationComponent::AnimationComponent(Sprite &sprite, Texture &texture_sheet)
+AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet)
     : sprite(sprite), textureSheet(texture_sheet),
       previousAnimation(nullptr), priorityAnimation(nullptr)
 {
@@ -25,7 +25,7 @@ AnimationComponent::~AnimationComponent()
 /* FUNCTIONS ==================================================================================================== */
 
 void AnimationComponent::addAnimation(
-    const string key,
+    const std::string key,
     const float animation_update_timer,
     const int start_frame_x_index, const int start_frame_y_index,
     const int end_frame_x_index, const int end_frame_y_index,
@@ -38,7 +38,7 @@ void AnimationComponent::addAnimation(
                                     width, height);
 }
 
-const bool AnimationComponent::play(const string key, const float &dt, const bool priority)
+const bool AnimationComponent::play(const std::string key, const float &dt, const bool priority)
 {
 
     bool done = false;
@@ -77,7 +77,7 @@ const bool AnimationComponent::play(const string key, const float &dt, const boo
     return done;
 }
 
-const bool AnimationComponent::play(const string key, const float &dt,
+const bool AnimationComponent::play(const std::string key, const float &dt,
                                     const float &modifier, const float &modifier_max,
                                     const bool priority)
 {
@@ -97,7 +97,7 @@ const bool AnimationComponent::play(const string key, const float &dt,
             setNewPreviousAnimation(priorityAnimation);
 
         // If the animation is done
-        if (priorityAnimation->play(dt, abs(modifier / modifier_max)))
+        if (priorityAnimation->play(dt, std::abs(modifier / modifier_max)))
         {
             // Reset the pointer and set done to true.
             priorityAnimation = nullptr;
@@ -113,13 +113,13 @@ const bool AnimationComponent::play(const string key, const float &dt,
             setNewPreviousAnimation(key);
 
         // Sets done equals to if the animation is done.
-        done = animations[key]->play(dt, abs(modifier / modifier_max));
+        done = animations[key]->play(dt, std::abs(modifier / modifier_max));
     }
 
     return done;
 }
 
-void AnimationComponent::setNewPreviousAnimation(string key)
+void AnimationComponent::setNewPreviousAnimation(std::string key)
 {
     // If there is no previous animation, set it to the refered animation.
     if (previousAnimation == nullptr)
@@ -151,7 +151,7 @@ void AnimationComponent::setNewPreviousAnimation(Animation *animation)
 
 /* ACCESSORS =================================================================================================== */
 
-const bool &AnimationComponent::isAnimationDone(string key)
+const bool &AnimationComponent::isAnimationDone(std::string key)
 {
     return animations[key]->isDone();
 }

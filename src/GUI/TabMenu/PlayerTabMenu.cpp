@@ -5,13 +5,13 @@
 
 void PlayerTabMenu::initVariables()
 {
-    keyTimerMax = Int32(500);
+    keyTimerMax = sf::Int32(500);
     keyTimer.restart();
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-PlayerTabMenu::PlayerTabMenu(VideoMode &vm, Font &font, Player &player)
+PlayerTabMenu::PlayerTabMenu(sf::VideoMode &vm, sf::Font &font, Player &player)
     : vm(vm), font(font), player(player)
 {
     initVariables();
@@ -34,7 +34,7 @@ void PlayerTabMenu::update(const float &dt)
         it.second->update(dt);
 }
 
-void PlayerTabMenu::render(RenderTarget &target)
+void PlayerTabMenu::render(sf::RenderTarget &target)
 {
     for (auto &it : tabs)
         it.second->render(target);

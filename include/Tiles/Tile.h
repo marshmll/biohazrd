@@ -14,14 +14,14 @@ class Tile
 protected:
     /* PROTECTED VARIABLES ======================================================================================= */
 
-    Sprite tile;
+    sf::Sprite tile;
     TileType type;
 
     float gridSizeF;
 
     bool collision;
 
-    RectangleShape collBox;
+    sf::RectangleShape collBox;
     float collBoxOffsetX;
     float collBoxOffsetY;
 
@@ -35,8 +35,8 @@ public:
      * @param grid_x The x position relative to the grid.
      * @param grid_y The y position relative to the grid.
      * @param grid_size_f The grid size (float)
-     * @param texture A Texture reference.
-     * @param texture_rect A IntRect to crop the texture with.
+     * @param texture A sf::Texture reference.
+     * @param texture_rect A sf::IntRect to crop the texture with.
      * @param collision Is the tile collideable?
      * @param coll_box_width The collision box width
      * @param coll_box_height The collision box height
@@ -45,7 +45,7 @@ public:
      */
     Tile(const TileType type,
          const unsigned grid_x, const unsigned grid_y, const float grid_size_f,
-         const Texture &texture, const IntRect texture_rect, const bool collision,
+         const sf::Texture &texture, const sf::IntRect texture_rect, const bool collision,
          const float coll_box_width, const float coll_box_height,
          const float coll_box_offset_x, const float coll_box_offset_y);
 
@@ -70,8 +70,8 @@ public:
      *
      * @return void
      */
-    virtual void render(RenderTarget &target,
-                        Shader *shader = nullptr, const Vector2f light_pos = Vector2f());
+    virtual void render(sf::RenderTarget &target,
+                        sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Returns if the tile's collision box intersects a
@@ -79,30 +79,30 @@ public:
      *
      * @return bool
      */
-    const bool intersects(const FloatRect &bounds) const;
+    const bool intersects(const sf::FloatRect &bounds) const;
 
     /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns the tile's sprite position.
      *
-     * @return const Vector2f&
+     * @return const sf::Vector2f&
      */
-    const Vector2f &getPosition() const;
+    const sf::Vector2f &getPosition() const;
 
     /**
      * @brief Returns the tile's sprite center position.
      *
-     * @return const Vector2f
+     * @return const sf::Vector2f
      */
-    const Vector2f getCenteredPosition() const;
+    const sf::Vector2f getCenteredPosition() const;
 
     /**
      * @brief Returns the tile's texture rect.
      *
-     * @return IntRect&
+     * @return sf::IntRect&
      */
-    const IntRect &getTextureRect() const;
+    const sf::IntRect &getTextureRect() const;
 
     /**
      * @brief Returns if the tile is collideable.
@@ -114,9 +114,9 @@ public:
     /**
      * @brief Returns the tile's collision box shape.
      *
-     * @return RectangleShape&
+     * @return sf::RectangleShape&
      */
-    const RectangleShape &getCollisionBox() const;
+    const sf::RectangleShape &getCollisionBox() const;
 
     /**
      * @brief Returns the tyle's type
@@ -126,18 +126,18 @@ public:
     const TileType &getType() const;
 
     /**
-     * @brief Returns the tile properties as a string.
+     * @brief Returns the tile properties as a std::string.
      *
-     * @return const string
+     * @return const std::string
      */
-    virtual const string getPropertiesAsString() const = 0;
+    virtual const std::string getPropertiesAsString() const = 0;
 
     /**
      * @brief Returns the tile collision box global bounds.
      *
-     * @return const FloatRect
+     * @return const sf::FloatRect
      */
-    const FloatRect getGlobalBounds() const;
+    const sf::FloatRect getGlobalBounds() const;
 };
 
 #endif /* TILE_H_ */

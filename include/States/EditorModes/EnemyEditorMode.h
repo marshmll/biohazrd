@@ -8,12 +8,12 @@ class EnemyEditorMode : public EditorMode
 {
 private:
     /* VARIABLES ================================================================================================= */
-
-    Text cursorText;
-    RectangleShape sidebar;
-    RectangleShape selectorRect;
-
-    IntRect textureRect;
+    
+    sf::Text cursorText;
+    sf::RectangleShape sidebar;
+    sf::RectangleShape selectorRect;
+    
+    sf::IntRect textureRect;
 
     short enemyType;
     short enemyAmount;
@@ -52,7 +52,7 @@ public:
      *
      * @return void
      */
-    void render(RenderTarget &target);
+    void render(sf::RenderTarget &target);
 
     /**
      * @brief Updates the user input.
@@ -73,6 +73,6 @@ public:
      *
      * @return void
      */
-    void renderGUI(RenderTarget &target);
+    void renderGUI(sf::RenderTarget &target);
 };
 #endif /* ENEMYEDITORMODE_H_ */

@@ -13,15 +13,15 @@ private:
     int gridSizeI;
     unsigned layers;
 
-    Vector2i mapGridDimensions;
-    Vector2f mapWorldDimensions;
+    sf::Vector2i mapGridDimensions;
+    sf::Vector2f mapWorldDimensions;
 
-    vector<vector<vector<vector<Tile *>>>> map;
+    std::vector<std::vector<std::vector<std::vector<Tile *>>>> map;
 
-    stack<Tile *> deferredTileRendering;
+    std::stack<Tile *> deferredTileRendering;
 
-    string textureFilePath;
-    Texture tileTextureSheet;
+    std::string textureFilePath;
+    sf::Texture tileTextureSheet;
 
     int startX;
     int endX;
@@ -60,7 +60,7 @@ public:
      * @param texture_file_path The relative path to the texture sheet.
      */
     TileMap(const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
-            const string texture_file_path);
+            const std::string texture_file_path);
 
     /**
      * @brief This constructor initializes a tilemap.
@@ -70,7 +70,7 @@ public:
      *
      * @param map_file_path The relative path to a map file.
      */
-    TileMap(const string map_file_path);
+    TileMap(const std::string map_file_path);
 
     /**
      * @brief
@@ -96,7 +96,7 @@ public:
      *
      * @return void
      */
-    void loadFromFile(const string file_path);
+    void loadFromFile(const std::string file_path);
 
     /**
      * @brief Saves the tilemap to a file in the Maps folder.
@@ -114,7 +114,7 @@ public:
      *
      * @return void
      */
-    void saveToFile(const string file_path);
+    void saveToFile(const std::string file_path);
 
     /**
      * @brief Adds a tile to the tilemap.
@@ -132,7 +132,7 @@ public:
      */
     void addTile(
         const unsigned x, const unsigned y, const unsigned z,
-        const IntRect &texture_rect,
+        const sf::IntRect &texture_rect,
         const bool &collision,
         const float coll_box_width, const float coll_box_height,
         const float coll_box_offset_x, const float coll_box_offset_y,
@@ -152,7 +152,7 @@ public:
      */
     void addSpawner(
         const unsigned x, const unsigned y, const unsigned z,
-        const IntRect &texture_rect,
+        const sf::IntRect &texture_rect,
         const short enemy_type, const short enemy_amount,
         const short enemy_time_to_spawn, const short enemy_max_distance,
         const short enemy_spawn_area_size);
@@ -187,14 +187,14 @@ public:
      * @param gridPosition A culling area for rendering
      * @param show_collision_box A flag for rendering the collision boxes (default: false)
      * @param shader A pointer to a shader. (default: nullptr)
-     * @param player_positon A Vector2f for the player's center position (default Vector2f()).
+     * @param player_positon A sf::Vector2f for the player's center position (default sf::Vector2f()).
      *
      * @return void
      */
     void render(
-        RenderTarget &target, const Vector2i &grid_position, VideoMode &vm,
+        sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
         const bool show_collision_box = false, const bool use_deferred_render = false,
-        Shader *shader = nullptr, const Vector2f light_pos = Vector2f());
+        sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Renders tiles that had its rendering delayed. Renders and
@@ -202,13 +202,13 @@ public:
      *
      * @param target A target to render in.
      * @param shader A shader to use. (default = nullptr)
-     * @param light_pos The light position. (default = Vector2f())
+     * @param light_pos The light position. (default = sf::Vector2f())
      *
      * @return void
      */
     void deferredRender(
-        RenderTarget &target, Shader *shader = nullptr,
-        const Vector2f light_pos = Vector2f());
+        sf::RenderTarget &target, sf::Shader *shader = nullptr,
+        const sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Updates the entity collision with the world bounds.
@@ -256,7 +256,7 @@ public:
      *
      * @return void
      */
-    void updateMapActiveArea(const Vector2i grid_position, const int width, const int height);
+    void updateMapActiveArea(const sf::Vector2i grid_position, const int width, const int height);
 
     /* ACCESSORS ================================================================================================= */
 
@@ -276,16 +276,16 @@ public:
     /**
      * @brief Returns the tilemap's size.
      *
-     * @return Vector2f
+     * @return sf::Vector2f
      */
-    const Vector2f &getSize() const;
+    const sf::Vector2f &getSize() const;
 
     /**
      * @brief Returns the tile texture sheet of the tilemap.
      *
-     * @return Texture*
+     * @return sf::Texture*
      */
-    const Texture *getTileTextureSheet() const;
+    const sf::Texture *getTileTextureSheet() const;
 
     /**
      * @brief Returns how many tiles are in top of the other

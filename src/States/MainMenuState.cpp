@@ -32,7 +32,7 @@ void MainMenuState::initKeybinds()
 void MainMenuState::initGUI()
 {
     // Background
-    background.setSize(Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+    background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
     if (!backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
     {
@@ -49,29 +49,29 @@ void MainMenuState::initGUI()
         gui::p2pX(vm, 8.6f), gui::p2pY(vm, 40.f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
         font, "New Game", gui::calc_char_size(vm, 65),
-        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
-        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
     buttons["EDITOR_STATE"] = new gui::Button(
         gui::p2pX(vm, 8.6f), gui::p2pY(vm, 49.f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
         font, "Editor", gui::calc_char_size(vm, 65),
-        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
-        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
     buttons["SETTINGS_STATE"] = new gui::Button(
         gui::p2pX(vm, 8.6f), gui::p2pY(vm, 58.f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
         font, "Settings", gui::calc_char_size(vm, 65),
-        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
-        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
     buttons["EXIT_STATE"] = new gui::Button(
         gui::p2pX(vm, 8.6f), gui::p2pY(vm, 82.f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
         font, "Exit", gui::calc_char_size(vm, 65),
-        Color(200, 200, 200, 200), Color(250, 250, 250, 250), Color(20, 20, 20, 50),
-        Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+        sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -99,19 +99,19 @@ void MainMenuState::update(const float &dt)
     updateGUI();
 }
 
-void MainMenuState::render(RenderTarget &target)
+void MainMenuState::render(sf::RenderTarget &target)
 {
 
     target.draw(background);
     renderGUI(target);
 
     //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
-    //	Text mouseText;
-    //	mouseText.setPosition(Vector2f(mousePosView.x, mousePosView.y - 20));
+    //	sf::Text mouseText;
+    //	mouseText.setPosition(sf::Vector2f(mousePosView.x, mousePosView.y - 20));
     //	mouseText.setFont(font);
     //	mouseText.setCharacterSize(12);
     //
-    //	stringstream ss;
+    //	std::stringstream ss;
     //	ss << mousePosView.x << " " << mousePosView.y;
     //	mouseText.setString(ss.str());
     //
@@ -159,7 +159,7 @@ void MainMenuState::updateGUI()
     }
 }
 
-void MainMenuState::renderGUI(RenderTarget &target)
+void MainMenuState::renderGUI(sf::RenderTarget &target)
 {
     for (auto &it : buttons)
         it.second->render(target);

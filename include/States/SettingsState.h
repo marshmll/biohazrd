@@ -13,17 +13,17 @@ private:
 
     MainMenuState *mainMenuState;
 
-    Texture backgroundTexture;
-    RectangleShape background;
-    Font font;
+    sf::Texture backgroundTexture;
+    sf::RectangleShape background;
+    sf::Font font;
 
-    map<string, gui::Button *> buttons;
+    std::map<std::string, gui::Button *> buttons;
 
-    map<string, gui::DropDownList *> dropDownLists;
+    std::map<std::string, gui::DropDownList *> dropDownLists;
 
-    Text optionsText;
+    sf::Text optionsText;
 
-    vector<VideoMode> videoModes;
+    std::vector<sf::VideoMode> videoModes;
 
     /* INITIALIZERS ============================================================================================== */
 
@@ -103,7 +103,7 @@ public:
      *
      * @return void
      */
-    void render(RenderTarget &target);
+    void render(sf::RenderTarget &target);
 
     /**
      * @brief Updates the mouse input.
@@ -125,7 +125,7 @@ public:
      *
      * @return void
      */
-    void renderGUI(RenderTarget &target);
+    void renderGUI(sf::RenderTarget &target);
 };
 
 #endif /* SETTINGSSTATE_H_ */

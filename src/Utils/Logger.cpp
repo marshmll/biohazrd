@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Logger.h"
 
-const string Logger::currentDateTime()
+const std::string Logger::currentDateTime()
 {
     time_t now = time(0);
     struct tm tstruct;
@@ -35,10 +35,10 @@ void Logger::begin()
 {
     initLogTypeTemplates();
 
-    time_t start = chrono::system_clock::to_time_t(chrono::system_clock::now());
+    std::time_t start = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-    string file_date = ctime(&start);
-    file_date.erase(remove(file_date.begin(), file_date.end(), '\n'), file_date.cend());
+    std::string file_date = std::ctime(&start);
+    file_date.erase(std::remove(file_date.begin(), file_date.end(), '\n'), file_date.cend());
 
     filename = "Logs/" + file_date + ".txt";
 
@@ -48,8 +48,8 @@ void Logger::begin()
 
 void Logger::end()
 {
-    // ofstream ofs;
-    // ofs.open(filename, ios::out);
+    // std::ofstream ofs;
+    // ofs.open(filename, std::ios::out);
 
     // if (!ofs.is_open())
     //     ErrorHandler::throwErr("LOGGER::END::ERR_COULD_NOT_OPEN_FILE: " + filename);
@@ -58,10 +58,10 @@ void Logger::end()
 
     // ofs.close();
 
-    // cout << "wrote logs to file: " << filename << "\n";
+    // std::cout << "wrote logs to file: " << filename << "\n";
 }
 
-void Logger::log(const string caller, const LogType log_type, const string log)
+void Logger::log(const std::string caller, const LOGTYPE log_type, const std::string log)
 {
     if (log_type == DEBUG && !debugMode)
         return;

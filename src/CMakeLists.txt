@@ -1,7 +1,6 @@
 target_sources(BIOHAZRD PRIVATE
-
     AI/Behaviors/AIBehavior.cpp
-    AI/Behaviors/AIFollowBehavior.cpp
+    AI/Behaviors/AIFollow.cpp
 
     Components/AIComponent.cpp
     Components/AnimationComponent.cpp

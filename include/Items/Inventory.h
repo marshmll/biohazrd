@@ -36,9 +36,9 @@ public:
 
     const bool remove(const short unsigned index);
 
-    const bool loadFromFile(const string file_path);
+    const bool loadFromFile(const std::string file_path);
     
-    const bool saveToFile(const string file_path);
+    const bool saveToFile(const std::string file_path);
 
     /* ACCESSORS ================================================================================================ */
 

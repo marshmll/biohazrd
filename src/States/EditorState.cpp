@@ -18,7 +18,7 @@ void EditorState::initVariables()
 
 void EditorState::initEditorCamera()
 {
-    editorCamera.setSize(Vector2f(vm.width, vm.height));
+    editorCamera.setSize(sf::Vector2f(vm.width, vm.height));
 
     editorCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
 }
@@ -31,7 +31,7 @@ void EditorState::initKeybinds()
         keybinds[it.first] = acceptedKeys->at(it.second);
 
     data->logger->log("EditorState::initKeybinds", INFO,
-                      "Initialized " + to_string(keybinds.size()) + " keybinds.");
+                      "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
 }
 
 void EditorState::initFonts()
@@ -132,7 +132,7 @@ void EditorState::update(const float &dt)
     }
 }
 
-void EditorState::render(RenderTarget &target)
+void EditorState::render(sf::RenderTarget &target)
 {
     // Render tilemap in the editor camera
     target.setView(editorCamera);
@@ -158,15 +158,15 @@ void EditorState::updateInput(const float &dt)
 {
 
     // Pause menu toggle
-    if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds["PAUSE"])))
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["PAUSE"])))
         pauseToggle();
 
     // Default editor mode
-    if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds.at("DEFAULT_EDITOR_MODE"))))
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("DEFAULT_EDITOR_MODE"))))
         activeEditorMode = EditorModes::DEFAULT_MODE;
 
     // Enemy editor mode
-    else if (hasElapsedKeyTimeMax(Keyboard::isKeyPressed(keybinds.at("ENEMY_EDITOR_MODE"))))
+    else if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("ENEMY_EDITOR_MODE"))))
         activeEditorMode = EditorModes::ENEMY_MODE;
 }
 
@@ -174,22 +174,22 @@ void EditorState::updateGUI(const float &dt)
 {
     // Buttons
     for (auto &it : buttons)
-        it.second->update(Vector2f(mousePosWindow));
+        it.second->update(sf::Vector2f(mousePosWindow));
 }
 
 void EditorState::updateEditorCamera(const float &dt)
 {
-    if (Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_UP"]))
-        editorCamera.move(0.f, floor(-cameraSpeed * dt));
+    if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_UP"]))
+        editorCamera.move(0.f, std::floor(-cameraSpeed * dt));
 
-    else if (Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_DOWN"]))
-        editorCamera.move(0.f, floor(cameraSpeed * dt));
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_DOWN"]))
+        editorCamera.move(0.f, std::floor(cameraSpeed * dt));
 
-    else if (Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_LEFT"]))
-        editorCamera.move(floor(-cameraSpeed * dt), 0.f);
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_LEFT"]))
+        editorCamera.move(std::floor(-cameraSpeed * dt), 0.f);
 
-    else if (Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_RIGHT"]))
-        editorCamera.move(floor(cameraSpeed * dt), 0.f);
+    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_RIGHT"]))
+        editorCamera.move(std::floor(cameraSpeed * dt), 0.f);
 
     editorCameraPosGrid.x = static_cast<int>(editorCamera.getCenter().x) / static_cast<int>(data->gridSize);
     editorCameraPosGrid.y = static_cast<int>(editorCamera.getCenter().y) / static_cast<int>(data->gridSize);
@@ -227,11 +227,11 @@ void EditorState::updateModes(const float &dt)
     modes[activeEditorMode]->update(dt);
 }
 
-void EditorState::renderGUI(RenderTarget &target)
+void EditorState::renderGUI(sf::RenderTarget &target)
 {
 }
 
-void EditorState::renderModes(RenderTarget &target)
+void EditorState::renderModes(sf::RenderTarget &target)
 {
     modes[activeEditorMode]->render(target);
 }

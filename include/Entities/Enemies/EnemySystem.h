@@ -14,14 +14,14 @@ class EnemySystem
 private:
     /* VARIABLES =============================================================================================== */
 
-    vector<Enemy *> &activeEnemies;
-    map<string, Texture> &textures;
+    std::vector<Enemy *> &activeEnemies;
+    std::map<std::string, sf::Texture> &textures;
     Entity &player;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
-    EnemySystem(vector<Enemy *> &active_enemies, map<string, Texture> &textures, Entity &player);
+    EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures, Entity &player);
 
     virtual ~EnemySystem();
 
@@ -29,21 +29,21 @@ public:
 
     void update(const float &dt);
 
-    void render(RenderTarget &target);
+    void render(sf::RenderTarget &target);
 
     /**
      * @brief Creates an enemy of a given type on x and y coordinates.
      *
      * @return void
      */
-    void createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile &enemy_spawner_tile);
+    void createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile& enemy_spawner_tile);
 
     /**
      * @brief Creates an enemy of a given type on a position.
      *
      * @return void
      */
-    void createEnemy(const EnemyType type, const Vector2f position, EnemySpawnerTile &enemy_spawner_tile);
+    void createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile& enemy_spawner_tile);
 
     /**
      * @brief Deletes an enemy by its index.

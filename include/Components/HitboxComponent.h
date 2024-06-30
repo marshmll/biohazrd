@@ -6,9 +6,9 @@ class HitboxComponent
 private:
     /* VARIABLES =================================================================================================== */
 
-    Sprite &sprite;
-    RectangleShape hitbox;
-    FloatRect nextPosition;
+    sf::Sprite &sprite;
+    sf::RectangleShape hitbox;
+    sf::FloatRect nextPosition;
 
     float offsetX;
     float offsetY;
@@ -22,7 +22,7 @@ public:
      * @note -> Sets size
      * @note -> Sets fill color to transparent
      */
-    HitboxComponent(Sprite &sprite,
+    HitboxComponent(sf::Sprite &sprite,
                     const float offset_x, const float offset_y,
                     const float width, const float height);
 
@@ -42,37 +42,37 @@ public:
      *
      * @return void
      */
-    void render(RenderTarget &target);
+    void render(sf::RenderTarget &target);
 
     /* ACCESSORS =================================================================================================== */
 
     /**
      * @brief Returns the hitbox position
      *
-     * @return const Vector2f&
+     * @return const sf::Vector2f&
      */
-    const Vector2f &getPosition() const;
+    const sf::Vector2f &getPosition() const;
 
     /**
      * @brief Returns the hitbox's center position.
      *
-     * @return const Vector2f
+     * @return const sf::Vector2f
      */
-    const Vector2f getCenteredPosition() const;
+    const sf::Vector2f getCenteredPosition() const;
 
     /**
      * @brief Returns the hitbox size
      *
-     * @return const Vector2f&
+     * @return const sf::Vector2f&
      */
-    const Vector2f &getSize() const;
+    const sf::Vector2f &getSize() const;
 
     /**
      * @brief Returns the hitbox's global bounds
      *
-     * @return Vector2f&
+     * @return sf::Vector2f&
      */
-    const FloatRect getGlobalBounds() const;
+    const sf::FloatRect getGlobalBounds() const;
 
     /**
      * @brief Returns the next position's global bounds.
@@ -80,17 +80,17 @@ public:
      * @param velocity The velocity to be used in the next position bounds calculation.
      * @param dt The game delta time.
      *
-     * @return FloatRect
+     * @return sf::FloatRect
      */
-    const FloatRect getNextPositionBounds(const Vector2f &velocity, const float &dt);
+    const sf::FloatRect getNextPositionBounds(const sf::Vector2f &velocity, const float &dt);
 
     /**
      * @brief Checks if the hitbox has intersected some other object
-     * (an FloatRect).
+     * (an sf::FloatRect).
      *
      * @return const bool
      */
-    const bool intersects(FloatRect &frect) const;
+    const bool intersects(sf::FloatRect &frect) const;
 
     /* MODIFIERS =================================================================================================== */
 
@@ -100,7 +100,7 @@ public:
      *
      * @return void
      */
-    void setPosition(const Vector2f &position);
+    void setPosition(const sf::Vector2f &position);
 };
 
 #endif /* HITBOXCOMPONENT_H_ */

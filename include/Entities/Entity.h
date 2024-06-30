@@ -6,7 +6,7 @@
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
 #include "SkillComponent.h"
-#include "AIBehaviors.h"
+#include "AIComponent.h"
 
 class Entity
 {
@@ -22,7 +22,7 @@ private:
 
 protected:
     /* ENTITY SPRITE */
-    Sprite sprite;
+    sf::Sprite sprite;
 
     /* ENTITY FUNCTIONAL COMPONENTS */
     HitboxComponent *hitboxComponent;
@@ -30,9 +30,7 @@ protected:
     AnimationComponent *animationComponent;
     AttributeComponent *attributeComponent;
     SkillComponent *skillComponent;
-    
-    /* AI COMPONENTS */
-    vector<AIBehavior *> aiBehaviors;
+    AIComponent *aiComponent;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -57,7 +55,7 @@ public:
      *
      * @return void
      */
-    void setTexture(Texture &texture);
+    void setTexture(sf::Texture &texture);
 
     /**
      * @brief Create a hitbox functionality component for the
@@ -85,7 +83,7 @@ public:
      *
      * @return void
      */
-    void createAnimationComponent(Texture &texture_sheet);
+    void createAnimationComponent(sf::Texture &texture_sheet);
 
     /**
      * @brief Creates an attribute functionality component for the
@@ -103,9 +101,13 @@ public:
      */
     void createSkillComponent();
 
-    /* AI BEHAVIORS */
-
-    void enableFollowBehavior(Entity &target_entity);
+    /**
+     * @brief Creates an Artificial Intelligence component for the
+     * entity.
+     *
+     * @return void
+     */
+    void createAIComponent(Entity *target_entity = nullptr);
 
     /* FUNCTIONS ================================================================================================== */
 
@@ -114,7 +116,7 @@ public:
      *
      * @return void
      */
-    virtual void update(const float &dt, const Vector2f &mouse_pos_view = Vector2f()) = 0;
+    virtual void update(const float &dt, const sf::Vector2f &mouse_pos_view = sf::Vector2f()) = 0;
 
     /**
      * @brief Renders the entity into a target.
@@ -123,12 +125,12 @@ public:
      * @param target A render target reference.
      * @param show_hitbox Flag for rendering hitbox outine. (default: false)
      * @param shader A shader pointer. (default: nullptr)
-     * @param light_pos The relative light position for shader rendering. (default Vector2f(0, 0))
+     * @param light_pos The relative light position for shader rendering. (default sf::Vector2f(0, 0))
      *
      * @return void
      */
-    virtual void render(RenderTarget &target, const bool show_hitbox = false,
-                        Shader *shader = nullptr, Vector2f light_pos = Vector2f()) = 0;
+    virtual void render(sf::RenderTarget &target, const bool show_hitbox = false,
+                        sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f()) = 0;
 
     /**
      * @brief Moves the movement component (whick moves the sprite) into some
@@ -139,65 +141,61 @@ public:
      */
     virtual void move(const float dir_x, const float dir_y, const float &dt);
 
-    virtual void knockback(const float dir_x, const float dir_y, const float strength);
-
-    virtual void knockback(const Vector2f norm_vec, const float strength);
-
     /* ACCESSORS ================================================================================================= */
 
     /**
      * @brief Returns the position of the hitbox or the position
      * of the sprite, if there is no hitbox.
      *
-     * @return const Vector2f&
+     * @return const sf::Vector2f&
      */
-    virtual const Vector2f &getPosition();
+    virtual const sf::Vector2f &getPosition();
 
     /**
      * @brief Returns the hitbox center position, or the sprite center
      * position if there is no hitbox.
      *
-     * @return Vector2f
+     * @return sf::Vector2f
      */
-    virtual const Vector2f getCenteredPosition();
+    virtual const sf::Vector2f getCenteredPosition();
 
     /**
      * @brief Returns the hitbox grid position, or the sprite grid
      * position if there is no hitbox.
      *
-     * @return Vector2i
+     * @return sf::Vector2i
      */
-    virtual const Vector2i getGridPosition(const int grid_size_i) const;
+    virtual const sf::Vector2i getGridPosition(const int grid_size_i) const;
 
     /**
      * @brief Returns the hitbox size, or the sprite size
      * if there is not hitbox.
      *
-     * @return const Vector2f
+     * @return const sf::Vector2f
      */
-    virtual const Vector2f getSize();
+    virtual const sf::Vector2f getSize();
 
     /**
      * @brief Returns the hitbox bounds, or the sprite bounds
      * if there is not hitbox.
      *
-     * @return const FloatRect
+     * @return const sf::FloatRect
      */
-    virtual const FloatRect getGlobalBounds();
+    virtual const sf::FloatRect getGlobalBounds();
 
     /**
      * @brief Returns the next global bounds based on the movement.
      *
-     * @return FloatRect
+     * @return sf::FloatRect
      */
-    virtual const FloatRect getNextPositionBounds(const float &dt);
+    virtual const sf::FloatRect getNextPositionBounds(const float &dt);
 
     /**
      * @brief Returns the entity's current velocity.
      *
-     * @return Vector2f&
+     * @return sf::Vector2f&
      */
-    virtual const Vector2f &getVelocity();
+    virtual const sf::Vector2f &getVelocity();
 
     /**
      * @brief Returns the entity's max velocity
@@ -209,17 +207,17 @@ public:
     /**
      * @brief Returns the entity's last direction.
      *
-     * @return const string
+     * @return const std::string
      */
-    virtual const string getDirection();
+    virtual const std::string getDirection();
 
     /**
      * @brief Returns the x and y absolute distance between both entities.
-     * @param point An Vector2f representing a single point.
+     * @param point An sf::Vector2f representing a single point.
      *
-     * @return const Vector2f;
+     * @return const sf::Vector2f;
      */
-    virtual const Vector2f getDistanceFrom(const Vector2f &point);
+    virtual const sf::Vector2f getDistanceFrom(const sf::Vector2f &point);
 
     /**
      * @brief Returns a single float value representing the absolute distance
@@ -236,7 +234,7 @@ public:
      *
      * @return const bool
      */
-    virtual const bool hasCollided(FloatRect &frect);
+    virtual const bool hasCollided(sf::FloatRect &frect);
 
     /**
      * @brief Returns if the entity is dead.
@@ -255,7 +253,7 @@ public:
      *
      * @return void
      */
-    virtual void setPosition(const Vector2f &position);
+    virtual void setPosition(const sf::Vector2f &position);
 
     /**
      * @brief Stops the entity's velocity

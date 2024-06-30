@@ -64,7 +64,7 @@ private:
             {
                 this->level++;
                 this->expBefore = expNext;
-                this->expNext = pow(this->level, 2) + this->level * 10 + this->level * 2 + this->level;
+                this->expNext = std::pow(this->level, 2) + this->level * 10 + this->level * 2 + this->level;
             }
         }
 
@@ -80,7 +80,7 @@ private:
             {
                 this->level--;
                 this->expNext = expBefore;
-                this->expBefore = pow(this->level, 2) + this->level * 10 + this->level * 2 + this->level;
+                this->expBefore = std::pow(this->level, 2) + this->level * 10 + this->level * 2 + this->level;
             }
         }
 
@@ -165,7 +165,7 @@ private:
         }
     };
 
-    vector<Skill> skills;
+    std::vector<Skill> skills;
 
     /* PRIVATE FUNCTIONS ========================================================================================= */
 

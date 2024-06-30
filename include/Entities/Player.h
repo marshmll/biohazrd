@@ -47,7 +47,7 @@ public:
      * @note -> Initializes components
      * @note -> Initializes animations
      */
-    Player(const float x, const float y, Texture &texture_sheet);
+    Player(const float x, const float y, sf::Texture &texture_sheet);
 
     /**
      * @brief Player destructor
@@ -63,15 +63,15 @@ public:
      *
      * @return void
      */
-    void update(const float &dt, const Vector2f &mouse_pos_view);
+    void update(const float &dt, const sf::Vector2f &mouse_pos_view);
 
     /**
      * @brief Renders the player into a target.
      *
      * @return void
      */
-    void render(RenderTarget &target, const bool show_hitbox = false,
-                Shader *shader = nullptr, Vector2f light_pos = Vector2f());
+    void render(sf::RenderTarget &target, const bool show_hitbox = false,
+                sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f());
 
     /**
      * @brief Updates the player animations.
@@ -91,7 +91,7 @@ public:
 
     Weapon *getWeapon();
 
-    const string formatStringToCharTab();
+    const std::string formatStringToCharTab();
 
     /**
      * @brief Increases hp by a given amount.

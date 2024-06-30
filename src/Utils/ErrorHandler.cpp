@@ -1,12 +1,12 @@
 #include "ErrorHandler.h"
 
-void ErrorHandler::throwErr(string msg)
+void ErrorHandler::throwErr(std::string msg)
 {
-    cerr << "ERRORHANDLER::THROWERR::" << msg << "\n";
+    std::cerr << "ERRORHANDLER::THROWERR::" << msg << "\n";
     exit(EXIT_FAILURE);
 }
 
-void ErrorHandler::printErr(string msg)
+void ErrorHandler::printErr(std::string msg)
 {
-    cerr << "ERRORHANDLER::PRINTERR::" << msg << "\n";
+    std::cerr << "ERRORHANDLER::PRINTERR::" << msg << "\n";
 }
