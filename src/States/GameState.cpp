@@ -285,37 +285,45 @@ void GameState::updateEnemiesAndCombat(const float &dt)
         tileMap->updateWorldBoundsCollision(dt, enemy);
         tileMap->updateTileCollision(dt, enemy);
 
-        updateCombat(dt, enemy);
-
-        if (enemy->isDead())
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            player->earnExp(enemy->getExpDrop());
+            updateCombat(dt, enemy);
 
-            textTagSystem->displayTag(EXPERIENCE_TAG,
-                                      player->getPosition(),
-                                      enemy->getExpDrop(),
-                                      "+", "exp");
+            if (enemy->isDead())
+            {
+                player->earnExp(enemy->getExpDrop());
 
-            enemySystem->deleteEnemy(i);
+                textTagSystem->displayTag(EXPERIENCE_TAG,
+                                          player->getPosition(),
+                                          enemy->getExpDrop(),
+                                          "+", "exp");
+
+                enemySystem->deleteEnemy(i);
+            }
         }
     }
 }
 
 void GameState::updateCombat(const float &dt, Enemy *enemy)
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (enemy->getGlobalBounds().contains(mousePosView) &&
+        player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
+        player->getWeapon()->didCooldown())
     {
-        if (enemy->getGlobalBounds().contains(mousePosView) &&
-            player->getRangeDistanceFrom(*enemy) <= player->getWeapon()->getRange() &&
-            player->getWeapon()->didCooldown())
-        {
-            enemy->loseHp(player->getWeapon()->getDamageMin());
+        unsigned short damage = player->getWeapon()->getDamage();
 
-            textTagSystem->displayTag(TextTagType::DAMAGE_TAG,
-                                      enemy->getPosition(),
-                                      player->getWeapon()->getDamageMin(),
-                                      "-", "hp");
-        }
+        enemy->loseHp(damage);
+
+        sf::Vector2f vec(enemy->getCenteredPosition().x - player->getCenteredPosition().x,
+                         enemy->getCenteredPosition().y - player->getCenteredPosition().y);
+
+        float vec_len = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
+
+        vec /= vec_len;
+
+        enemy->knockback(vec, player->getWeapon()->getKnockback());
+
+        textTagSystem->displayTag(DAMAGE_TAG, enemy->getPosition(), damage, "-", "hp");
     }
 }
 

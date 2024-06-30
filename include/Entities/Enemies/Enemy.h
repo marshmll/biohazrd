@@ -26,7 +26,7 @@ public:
      * @brief Enemy entity class constructor.
      * @param exp_drop  The amount of exp the enemy drops after death
      */
-    Enemy(EnemySpawnerTile &enemy_spawner_tile, const short unsigned exp_drop);
+    Enemy(const std::string name, EnemySpawnerTile &enemy_spawner_tile, const short unsigned exp_drop);
 
     virtual ~Enemy();
 

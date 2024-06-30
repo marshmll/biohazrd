@@ -45,6 +45,7 @@ void Player::initInventory()
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
 Player::Player(const float x, const float y, sf::Texture &texture_sheet)
+    : Entity("Player")
 {
     initVariables();
     setPosition(sf::Vector2f(x, y));

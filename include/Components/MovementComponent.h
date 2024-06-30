@@ -57,6 +57,15 @@ public:
      */
     void move(const float dir_x, const float dir_y, const float &dt);
 
+    /**
+     * @brief Pushes the entity into some x and y directions.
+     * @note -> Stops entity's velocity.
+     * @note -> Sets velocity to the directions and strength.
+     *
+     * @return void
+     */
+    void knockback(const sf::Vector2f norm_vec, const float strength);
+
     /* ACCESSORS ================================================================================================= */
 
     /**

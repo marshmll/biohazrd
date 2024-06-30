@@ -21,7 +21,7 @@ void GreenSlime::initAnimations()
 GreenSlime::GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
                        const float x, const float y, sf::Texture &texture_sheet)
 
-    : Enemy(enemy_spawner_tile, 20)
+    : Enemy("GreenSlime", enemy_spawner_tile, 20)
 {
     initVariables();
     setPosition(sf::Vector2f(x, y));

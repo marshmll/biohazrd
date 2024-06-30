@@ -22,7 +22,8 @@ void Entity::initVariables()
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-Entity::Entity()
+Entity::Entity(const std::string name)
+    : name(name)
 {
     initVariables();
 }
@@ -87,10 +88,26 @@ void Entity::move(const float dir_x, const float dir_y, const float &dt)
     {
         movementComponent->move(dir_x, dir_y, dt);
     }
+    else
+    {
+        ErrorHandler::printErr("ENTITY::MOVE::WARN_NULL_MOVEMENTCOMPONENT: Entity \"" + name + "\"");
+    }
 
     if (skillComponent)
     {
         skillComponent->gainExp(SKILLS::ENDURANCE, 1);
+    }
+}
+
+void Entity::knockback(const sf::Vector2f nomr_vec, const float strength)
+{
+    if (movementComponent)
+    {
+        movementComponent->knockback(nomr_vec, strength);
+    }
+    else
+    {
+        ErrorHandler::printErr("ENTITY::KNOCKBACK::WARN_NULL_MOVEMENTCOMPONENT: Entity \"" + name + "\"");
     }
 }
 
@@ -119,12 +136,12 @@ const sf::Vector2i Entity::getGridPosition(const int grid_size_i) const
 {
     if (hitboxComponent)
         return sf::Vector2i(
-            (int)hitboxComponent->getCenteredPosition().x / grid_size_i,
-            (int)hitboxComponent->getCenteredPosition().y / grid_size_i);
+            static_cast<int>(hitboxComponent->getCenteredPosition().x / grid_size_i),
+            static_cast<int>(hitboxComponent->getCenteredPosition().y / grid_size_i));
 
     return sf::Vector2i(
-        (int)sprite.getPosition().x / grid_size_i,
-        (int)sprite.getPosition().y / grid_size_i);
+        static_cast<int>(sprite.getPosition().x / grid_size_i),
+        static_cast<int>(sprite.getPosition().y / grid_size_i));
 }
 
 const sf::Vector2f Entity::getSize()
@@ -193,7 +210,8 @@ const float Entity::getRangeDistanceFrom(Entity &entity)
     sf::Vector2f entity_center = entity.getCenteredPosition();
 
     // Dxy = sqrt((x2 - x1)^2 + (y2 - y1)^2)
-    float distance = static_cast<float>(sqrt(pow(entity_center.x - this_center.x, 2.f) + pow(entity_center.y - this_center.y, 2.f)));
+    float distance = static_cast<float>(sqrt(pow(entity_center.x - this_center.x, 2.f) +
+                                             pow(entity_center.y - this_center.y, 2.f)));
 
     return distance;
 }
@@ -231,7 +249,7 @@ void Entity::stopVelocity()
     if (movementComponent)
         movementComponent->stopVelocity();
     else
-        ErrorHandler::printErr("ENTITY::STOPVELOCITY::WARNING_NULLPTR_MOVEMENTCOMPONENT");
+        ErrorHandler::printErr("ENTITY::STOPVELOCITY::WARNING_NULLPTR_MOVEMENTCOMPONENT: Entity \"" + name + "\"");
 }
 
 void Entity::stopVelocityX()
@@ -239,7 +257,7 @@ void Entity::stopVelocityX()
     if (movementComponent)
         movementComponent->stopVelocityX();
     else
-        ErrorHandler::printErr("ENTITY::STOPVELOCITYX::WARNING_NULLPTR_MOVEMENTCOMPONENT");
+        ErrorHandler::printErr("ENTITY::STOPVELOCITYX::WARNING_NULLPTR_MOVEMENTCOMPONENT: Entity \"" + name + "\"");
 }
 
 void Entity::stopVelocityY()
@@ -247,5 +265,5 @@ void Entity::stopVelocityY()
     if (movementComponent)
         movementComponent->stopVelocityY();
     else
-        ErrorHandler::printErr("ENTITY::STOPVELOCITYY::WARNING_NULLPTR_MOVEMENTCOMPONENT");
+        ErrorHandler::printErr("ENTITY::STOPVELOCITYY::WARNING_NULLPTR_MOVEMENTCOMPONENT: Entity \"" + name + "\"");
 }

@@ -10,8 +10,9 @@ protected:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================= */
 
-    RangedWeapon(const std::string texture_path, const short unsigned value,
-                 const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
+    RangedWeapon(const std::string texture_path, const unsigned short value,
+                 const unsigned short range, const unsigned short damage_min, const unsigned short damage_max,
+                 const unsigned short knockback);
 
     virtual ~RangedWeapon();
 

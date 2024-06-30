@@ -3,8 +3,8 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
-Enemy::Enemy(EnemySpawnerTile &enemy_spawner_tile, const short unsigned exp_drop)
-    : enemySpawnerTile(enemy_spawner_tile)
+Enemy::Enemy(const std::string name, EnemySpawnerTile &enemy_spawner_tile, const short unsigned exp_drop)
+    : Entity(name), enemySpawnerTile(enemy_spawner_tile)
 {
     expDrop = exp_drop;
 }

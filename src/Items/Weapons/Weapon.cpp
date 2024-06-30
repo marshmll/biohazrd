@@ -11,14 +11,16 @@ void Weapon::initVariables()
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
-Weapon::Weapon(const ItemType type, const std::string texture_path, const short unsigned value,
-               const short unsigned range, const short unsigned damage_min, const short unsigned damage_max)
+Weapon::Weapon(const ItemType type, const std::string texture_path, const unsigned short value,
+               const unsigned short range, const unsigned short damage_min, const unsigned short damage_max,
+               const unsigned short knockback)
 
     : Item(value, type)
 {
     this->range = range;
-    damageMin = damage_min;
-    damageMax = damage_max;
+    this->damageMin = damage_min;
+    this->damageMax = damage_max;
+    this->knockback = knockback;
 
     initVariables();
 
@@ -40,19 +42,29 @@ Weapon::~Weapon()
 
 /* ACCESSORS ================================================================================================ */
 
-const short unsigned &Weapon::getRange() const
+const unsigned short &Weapon::getRange() const
 {
     return range;
 }
 
-const short unsigned &Weapon::getDamageMin() const
+const unsigned short &Weapon::getDamageMin() const
 {
     return damageMin;
 }
 
-const short unsigned &Weapon::getDamageMax() const
+const unsigned short &Weapon::getDamageMax() const
 {
     return damageMax;
+}
+
+const unsigned short Weapon::getDamage() const
+{
+    return (rand() % damageMax - damageMin) + damageMin;
+}
+
+const unsigned short &Weapon::getKnockback() const
+{
+    return knockback;
 }
 
 const bool Weapon::didCooldown(const bool reset_timer)

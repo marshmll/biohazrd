@@ -24,14 +24,16 @@ protected:
     /* ENTITY SPRITE */
     sf::Sprite sprite;
 
+    std::string name;
+
     /* ENTITY FUNCTIONAL COMPONENTS */
     HitboxComponent *hitboxComponent;
     MovementComponent *movementComponent;
     AnimationComponent *animationComponent;
     AttributeComponent *attributeComponent;
     SkillComponent *skillComponent;
-   
-   /* AI BEHAVIORS */
+
+    /* AI BEHAVIORS */
     std::vector<AIBehavior *> aiBehaviors;
 
 public:
@@ -41,7 +43,7 @@ public:
      * @brief Creates a entity instance.
      * @note -> Initializes variables
      */
-    Entity();
+    Entity(const std::string name);
 
     /**
      * @brief Destructs entity instance.
@@ -131,13 +133,22 @@ public:
                         sf::Shader *shader = nullptr, sf::Vector2f light_pos = sf::Vector2f()) = 0;
 
     /**
-     * @brief Moves the movement component (whick moves the sprite) into some
+     * @brief Moves the movement component (which moves the sprite) into some
      * x and y directions.
      * @note -> Checks if the entity can move first.
      *
      * @return void
      */
     virtual void move(const float dir_x, const float dir_y, const float &dt);
+
+    /**
+     * @brief Pushed the entity into a direction with a given strength.
+     * @note Prints a warning if the entity does not have a movement
+     * component.
+     *
+     * @return void
+     */
+    virtual void knockback(const sf::Vector2f nomr_vec, const float strength);
 
     /* ACCESSORS ================================================================================================= */
 

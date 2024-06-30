@@ -18,9 +18,10 @@ protected:
     sf::Texture weaponHorizontalTexture;
     sf::Sprite weaponSprite;
 
-    short unsigned range;
-    short unsigned damageMin;
-    short unsigned damageMax;
+    unsigned short range;
+    unsigned short damageMin;
+    unsigned short damageMax;
+    unsigned short knockback;
 
     sf::Clock cooldownTimer;
     sf::Int32 cooldownTimerMax;
@@ -28,8 +29,9 @@ protected:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
-    Weapon(const ItemType type, const std::string texture_path, const short unsigned value,
-           const short unsigned range, const short unsigned damage_min, const short unsigned damage_max);
+    Weapon(const ItemType type, const std::string texture_path, const unsigned short value,
+           const unsigned short range, const unsigned short damage_min, const unsigned short damage_max,
+           const unsigned short knockback);
 
     virtual ~Weapon();
 
@@ -44,17 +46,21 @@ public:
 
     /* ACCESSORS ================================================================================================ */
 
-    const short unsigned &getRange() const;
+    const unsigned short &getRange() const;
 
-    const short unsigned &getDamageMin() const;
+    const unsigned short &getDamageMin() const;
 
-    const short unsigned &getDamageMax() const;
+    const unsigned short &getDamageMax() const;
+
+    const unsigned short getDamage() const;
+
+    const unsigned short &getKnockback() const;
 
     const bool didCooldown(const bool reset_timer = true);
 
     const sf::Int32 getCurrentCooldownTimerValue() const;
 
-    const sf::Int32& getCooldownTimerMax() const;
+    const sf::Int32 &getCooldownTimerMax() const;
 
     /* MODIFIERS ================================================================================================ */
 
