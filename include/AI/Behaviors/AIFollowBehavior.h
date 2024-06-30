@@ -2,22 +2,21 @@
 #define AIFOLLOW_H_
 
 #include "AIBehavior.h"
+#include "Entity.h"
 
-class Entity;
-
-class AIFollow : public AIBehavior
+class AIFollowBehavior : public AIBehavior
 {
 private:
     /* VARIABLES ================================================================================================= */
 
-    Entity &player;
+    Entity &targetEntity;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    AIFollow(Entity &self, Entity &player);
+    AIFollowBehavior(Entity &self, Entity &target_entity);
 
-    virtual ~AIFollow();
+    virtual ~AIFollowBehavior();
 
     /* FUNCTIONS ================================================================================================= */
 

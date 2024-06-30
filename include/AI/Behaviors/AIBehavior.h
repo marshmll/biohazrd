@@ -1,8 +1,6 @@
 #ifndef AIBEHAVIOR_H_
 #define AIBEHAVIOR_H_
 
-#include "Entity.h"
-
 class Entity;
 
 class AIBehavior

@@ -18,7 +18,6 @@ void Entity::initVariables()
     animationComponent = nullptr;
     attributeComponent = nullptr;
     skillComponent = nullptr;
-    aiComponent = nullptr;
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -35,7 +34,9 @@ Entity::~Entity()
     delete animationComponent;
     delete attributeComponent;
     delete skillComponent;
-    delete aiComponent;
+
+    for (auto behavior : aiBehaviors)
+        delete behavior;
 }
 /* COMPONENT FUNCTIONS ========================================================================================== */
 
@@ -71,9 +72,11 @@ void Entity::createSkillComponent()
     skillComponent = new SkillComponent();
 }
 
-void Entity::createAIComponent(Entity *target_entity)
+/* AI BEHAVIORS FUNCTIONS ======================================================================================== */
+
+void Entity::enableFollowBehavior(Entity &target_entity)
 {
-    aiComponent = new AIComponent(*this, target_entity);
+    aiBehaviors.push_back(new AIFollowBehavior(*this, target_entity));
 }
 
 /* FUNCTIONS ===================================================================================================== */

@@ -5,4 +5,4 @@
  *      Author: Renan Andrade
  */
 
-#include "AIFollow.h"
+#include "AIFollowBehavior.h"
