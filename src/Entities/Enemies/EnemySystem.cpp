@@ -4,9 +4,9 @@
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
 EnemySystem::EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures,
-                         Entity &player)
+                         Entity &player, TileMap &tilemap)
 
-    : activeEnemies(active_enemies), textures(textures), player(player)
+    : activeEnemies(active_enemies), textures(textures), player(player), tileMap(tilemap)
 {
 }
 

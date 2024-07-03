@@ -101,19 +101,19 @@ void GameState::initPlayerGUI()
     playerGUI = new PlayerGUI(*player, vm);
 }
 
+void GameState::initTileMap()
+{
+    tileMap = new TileMap("Maps/test.biomap");
+}
+
 void GameState::initEnemySystem()
 {
-    enemySystem = new EnemySystem(activeEnemies, textures, *player);
+    enemySystem = new EnemySystem(activeEnemies, textures, *player, *tileMap);
 }
 
 void GameState::initTextTagSystem()
 {
     textTagSystem = new TextTagSystem("Fonts/VCR_OSD_MONO_1.001.ttf", vm);
-}
-
-void GameState::initTileMap()
-{
-    tileMap = new TileMap("Maps/test.biomap");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -130,9 +130,9 @@ GameState::GameState(StateData *data) : State(data)
     initPauseMenu();
     initPlayers();
     initPlayerGUI();
+    initTileMap();
     initEnemySystem();
     initTextTagSystem();
-    initTileMap();
 }
 
 GameState::~GameState()

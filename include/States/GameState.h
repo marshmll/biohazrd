@@ -112,6 +112,13 @@ private:
     void initPlayerGUI();
 
     /**
+     * @brief Initializes a tilemap for the gamestate.
+     *
+     * @return void
+     */
+    void initTileMap();
+
+    /**
      * @brief Initializes the enemy system.
      *
      * @return void
@@ -124,13 +131,6 @@ private:
      * @return void
      */
     void initTextTagSystem();
-
-    /**
-     * @brief Initializes a tilemap for the gamestate.
-     *
-     * @return void
-     */
-    void initTileMap();
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
@@ -222,13 +222,13 @@ public:
      */
     void updateEnemiesAndCombat(const float &dt);
 
-    /** 
+    /**
      * @brief Updates the combat between player and an enemy.
      * @param dt The game delta time
      * @param enemy A pointer to an enemy
      * @param index The enemy's index in the activeEnemies vector.
      *
-     * @return void 
+     * @return void
      */
     void updateCombat(const float &dt, Enemy *enemy);
 

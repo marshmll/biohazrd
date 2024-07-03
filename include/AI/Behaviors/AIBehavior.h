@@ -1,7 +1,7 @@
 #ifndef AIBEHAVIOR_H_
 #define AIBEHAVIOR_H_
 
-class Entity;
+#include "Entity.h"
 
 class AIBehavior
 {

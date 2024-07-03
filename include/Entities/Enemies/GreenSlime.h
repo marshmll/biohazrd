@@ -2,6 +2,10 @@
 #define GREENSLIME_H_
 
 #include "Enemy.h"
+#include "TileMap.h"
+
+class Entity;
+class TileMap;
 
 class GreenSlime : public Enemy
 {
@@ -25,7 +29,8 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
-    GreenSlime(EnemySpawnerTile &enemy_spawner_tile, Entity &player,
+    GreenSlime(EnemySpawnerTile &enemy_spawner_tile,
+               Entity &player, TileMap &tilemap,
                const float x, const float y, sf::Texture &texture_sheet);
 
     virtual ~GreenSlime();

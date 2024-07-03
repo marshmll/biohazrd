@@ -1,8 +1,8 @@
 #ifndef ENEMY_H_
 #define ENEMY_H_
 
-#include "Entity.h"
 #include "EnemySpawnerTile.h"
+#include "Entity.h"
 
 class Enemy : public Entity
 {

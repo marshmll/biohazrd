@@ -4,6 +4,9 @@
 #include "EnemySpawnerTile.h"
 #include "GreenSlime.h"
 
+class TileMap;
+class Entity;
+
 enum EnemyType
 {
     GREEN_SLIME = 0
@@ -16,12 +19,15 @@ private:
 
     std::vector<Enemy *> &activeEnemies;
     std::map<std::string, sf::Texture> &textures;
+
     Entity &player;
+    TileMap &tileMap;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
-    EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures, Entity &player);
+    EnemySystem(std::vector<Enemy *> &active_enemies, std::map<std::string, sf::Texture> &textures,
+                Entity &player, TileMap &tilemap);
 
     virtual ~EnemySystem();
 
@@ -36,14 +42,14 @@ public:
      *
      * @return void
      */
-    void createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile& enemy_spawner_tile);
+    void createEnemy(const EnemyType type, const float x, const float y, EnemySpawnerTile &enemy_spawner_tile);
 
     /**
      * @brief Creates an enemy of a given type on a position.
      *
      * @return void
      */
-    void createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile& enemy_spawner_tile);
+    void createEnemy(const EnemyType type, const sf::Vector2f position, EnemySpawnerTile &enemy_spawner_tile);
 
     /**
      * @brief Deletes an enemy by its index.

@@ -80,6 +80,11 @@ void Entity::enableFollowBehavior(Entity &target_entity)
     aiBehaviors.push_back(new AIFollowBehavior(*this, target_entity));
 }
 
+void Entity::enableFindPathBehavior(Entity &target_entity, TileMap &tilemap)
+{
+    aiBehaviors.push_back(new AIFindPathBehavior(*this, target_entity, tilemap, 200.f));
+}
+
 /* FUNCTIONS ===================================================================================================== */
 
 void Entity::move(const float dir_x, const float dir_y, const float &dt)

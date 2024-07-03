@@ -7,6 +7,7 @@
 #include "AttributeComponent.h"
 #include "SkillComponent.h"
 #include "AIBehaviors.h"
+#include "TileMap.h"
 
 class Entity
 {
@@ -108,6 +109,8 @@ public:
     /* AI BEHAVIORS FUNCTIONS ==================================================================================== */
 
     void enableFollowBehavior(Entity &target_entity);
+
+    void enableFindPathBehavior(Entity &target_entity, TileMap &tilemap);
 
     /* FUNCTIONS ================================================================================================== */
 
