@@ -4,11 +4,6 @@ project(BIOHAZRD LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-file(COPY src/Assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
-file(COPY src/Config DESTINATION ${CMAKE_BINARY_DIR}/bin)
-file(COPY src/Fonts DESTINATION ${CMAKE_BINARY_DIR}/bin)
-file(COPY src/Maps DESTINATION ${CMAKE_BINARY_DIR}/bin)
-
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git

@@ -1,6 +1,5 @@
 target_sources(BIOHAZRD PRIVATE
     AI/Behaviors/AIBehavior.cpp
-    AI/Behaviors/AIFindPathBehavior.cpp
     AI/Behaviors/AIFollowBehavior.cpp
 
     Components/AnimationComponent.cpp
@@ -52,11 +51,4 @@ target_sources(BIOHAZRD PRIVATE
     Utils/GraphicsSettings.cpp
     Utils/IniParser.cpp
     Utils/Logger.cpp
-
-    main.cpp
 )
-
-file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
-file(COPY Config DESTINATION ${CMAKE_BINARY_DIR}/bin)
-file(COPY Fonts DESTINATION ${CMAKE_BINARY_DIR}/bin)
-file(COPY Maps DESTINATION ${CMAKE_BINARY_DIR}/bin)
