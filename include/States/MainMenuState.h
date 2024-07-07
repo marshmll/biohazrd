@@ -5,6 +5,8 @@
 #include "EditorState.h"
 #include "SettingsState.h"
 
+#include "MapManager.h"
+
 class MainMenuState : public State
 {
 private:
@@ -15,6 +17,8 @@ private:
     sf::Font font;
 
     std::map<std::string, gui::Button *> buttons;
+
+    MapManager *mapManager;
 
     /* INITIALIZERS ============================================================================================== */
 

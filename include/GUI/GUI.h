@@ -1,7 +1,7 @@
 #ifndef GUI_H_
 #define GUI_H_
 
-enum button_states
+enum ButtonStates
 {
     BTN_IDLE = 0,
     BTN_HOVER,
@@ -335,6 +335,58 @@ namespace gui
         /* MODIFIERS =========================================================================================== */
 
         void setValue(const float new_value);
+    };
+
+    /**********************************************************************************************************
+     *
+     * TEXT INPUT
+     *
+     *********************************************************************************************************/
+
+    class TextInput
+    {
+    private:
+        /* VARIABLES ========================================================================================== */
+
+        sf::RectangleShape bg;
+        sf::Text inputText;
+
+        std::string inputString;
+
+        bool hasFocus;
+
+        sf::Clock keyTimer;
+        sf::Int32 keyTimerMax;
+
+        /* INITIALIZERS ======================================================================================= */
+
+        void initTimer();
+
+    public:
+        /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
+
+        TextInput(const float x, const float y, const float width, const float height,
+                  const sf::Color &bg_color, const sf::Color &text_color,
+                  const unsigned short char_size,
+                  const sf::Font &font, const std::string initial_value = "");
+
+        virtual ~TextInput();
+
+        /* FUNCTIONS ========================================================================================== */
+
+        void update();
+
+        void render(sf::RenderTarget &target);
+
+        const bool hasElapsedKeyTimeMax(const bool key_pressed);
+
+        /* ACCESSORS ========================================================================================== */
+
+        const std::string getString() const;
+
+        /* MODIFIERS ========================================================================================== */
+
+        void setString(const std::string str, const bool clear_stream = true);
     };
 
     /**********************************************************************************************************
@@ -854,7 +906,7 @@ namespace gui
          * @return void
          */
         void setMaxValue(const float value);
-    };    
+    };
 }
 
 #endif /* GUI_H_ */

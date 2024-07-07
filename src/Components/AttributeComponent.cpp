@@ -10,7 +10,7 @@ const int AttributeComponent::calcNextExp()
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-AttributeComponent::AttributeComponent(const short unsigned level)
+AttributeComponent::AttributeComponent(const unsigned short level)
 {
     this->level = level;
     exp = 0;
@@ -68,7 +68,7 @@ const bool AttributeComponent::isDead() const
 
 /* MODIFIERS ==================================================================================================== */
 
-void AttributeComponent::earnHp(const short unsigned hp_amount)
+void AttributeComponent::earnHp(const unsigned short hp_amount)
 {
     hp += hp_amount;
 
@@ -76,7 +76,7 @@ void AttributeComponent::earnHp(const short unsigned hp_amount)
         hp = hpMax;
 }
 
-void AttributeComponent::loseHp(const short unsigned hp_amount)
+void AttributeComponent::loseHp(const unsigned short hp_amount)
 {
     hp -= hp_amount;
 
@@ -84,14 +84,14 @@ void AttributeComponent::loseHp(const short unsigned hp_amount)
         hp = 0;
 }
 
-void AttributeComponent::earnExp(const short unsigned exp_amount)
+void AttributeComponent::earnExp(const unsigned short exp_amount)
 {
     exp += exp_amount;
 
     updateLevel();
 }
 
-void AttributeComponent::loseExp(const short unsigned exp_amount)
+void AttributeComponent::loseExp(const unsigned short exp_amount)
 {
     exp -= exp_amount;
 

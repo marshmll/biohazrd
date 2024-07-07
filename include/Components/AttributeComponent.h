@@ -47,7 +47,7 @@ public:
     /**
      * @brief Creates an attribute component given a level.
      */
-    AttributeComponent(const short unsigned level);
+    AttributeComponent(const unsigned short level);
 
     /**
      * @brief Attribute component class destructor
@@ -95,7 +95,7 @@ public:
      *
      * @return void
      */
-    void earnHp(const short unsigned hp_amount);
+    void earnHp(const unsigned short hp_amount);
 
     /**
      * @brief Decreases hp by a given amount.
@@ -103,7 +103,7 @@ public:
      *
      * @return void
      */
-    void loseHp(const short unsigned hp_amount);
+    void loseHp(const unsigned short hp_amount);
 
     /**
      * @brief Increases exp by a given amount.
@@ -111,7 +111,7 @@ public:
      *
      * @return void
      */
-    void earnExp(const short unsigned exp_amount);
+    void earnExp(const unsigned short exp_amount);
 
     /**
      * @brief Decreases exp by a given amount.
@@ -119,7 +119,7 @@ public:
      *
      * @return void
      */
-    void loseExp(const short unsigned exp_amount);
+    void loseExp(const unsigned short exp_amount);
 
     /**
      * @brief Print data for debuggin purposes.

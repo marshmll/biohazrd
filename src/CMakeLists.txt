@@ -41,6 +41,7 @@ target_sources(BIOHAZRD PRIVATE
     States/SettingsState.cpp
     States/State.cpp
 
+    TileMap/MapManager.cpp
     TileMap/TileMap.cpp
 
     Tiles/EnemySpawnerTile.cpp

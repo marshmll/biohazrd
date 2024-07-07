@@ -475,6 +475,168 @@ void gui::IncrementInput::setValue(const float new_value)
 
 /**********************************************************************************************************
  *
+ * TEXT INPUT
+ *
+ *********************************************************************************************************/
+
+/* INITIALIZERS ============================================================================================== */
+
+void gui::TextInput::initTimer()
+{
+    keyTimer.restart();
+    keyTimerMax = sf::Int32(120);
+}
+
+/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
+
+gui::TextInput::TextInput(const float x, const float y, const float width, const float height,
+                          const sf::Color &bg_color, const sf::Color &text_color,
+                          const unsigned short char_size,
+                          const sf::Font &font, const std::string initial_value)
+{
+    initTimer();
+
+    inputString = initial_value;
+
+    bg.setSize(sf::Vector2f(width, height));
+    bg.setPosition(x, y);
+    bg.setFillColor(bg_color);
+
+    inputText.setFont(font);
+    inputText.setCharacterSize(char_size);
+    inputText.setString(initial_value);
+    inputText.setFillColor(text_color);
+    inputText.setPosition(
+        bg.getPosition().x + bg.getSize().x / 10.f,
+        bg.getPosition().y + bg.getSize().y / 2.f - inputText.getGlobalBounds().height / 2.f - char_size / 8.f);
+}
+
+gui::TextInput::~TextInput()
+{
+}
+
+/* FUNCTIONS ==================================================================================================== */
+
+void gui::TextInput::update()
+{
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
+        inputString.push_back('A');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::B)))
+        inputString.push_back('B');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::C)))
+        inputString.push_back('C');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
+        inputString.push_back('D');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::E)))
+        inputString.push_back('E');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::F)))
+        inputString.push_back('F');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::G)))
+        inputString.push_back('G');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::H)))
+        inputString.push_back('H');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::I)))
+        inputString.push_back('I');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::J)))
+        inputString.push_back('J');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::K)))
+        inputString.push_back('K');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::L)))
+        inputString.push_back('L');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::M)))
+        inputString.push_back('M');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::N)))
+        inputString.push_back('N');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::O)))
+        inputString.push_back('O');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::P)))
+        inputString.push_back('P');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)))
+        inputString.push_back('Q');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::R)))
+        inputString.push_back('R');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
+        inputString.push_back('S');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::T)))
+        inputString.push_back('T');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::U)))
+        inputString.push_back('U');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::V)))
+        inputString.push_back('V');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
+        inputString.push_back('W');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::X)))
+        inputString.push_back('X');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Y)))
+        inputString.push_back('Y');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)))
+        inputString.push_back('Z');
+
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)))
+        inputString.push_back('0');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)))
+        inputString.push_back('1');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)))
+        inputString.push_back('2');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)))
+        inputString.push_back('3');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)))
+        inputString.push_back('4');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)))
+        inputString.push_back('5');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)))
+        inputString.push_back('6');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)))
+        inputString.push_back('7');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)))
+        inputString.push_back('8');
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)))
+        inputString.push_back('9');
+
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && inputString.size() > 0))
+        inputString.pop_back();
+
+    inputText.setString(inputString);
+}
+
+void gui::TextInput::render(sf::RenderTarget &target)
+{
+    target.draw(bg);
+    target.draw(inputText);
+}
+
+const bool gui::TextInput::hasElapsedKeyTimeMax(const bool key_pressed)
+{
+    if (keyTimer.getElapsedTime().asMilliseconds() >= keyTimerMax)
+    {
+        if (key_pressed)
+            keyTimer.restart();
+
+        return key_pressed;
+    }
+
+    return false;
+}
+
+/* ACCESSORS ==================================================================================================== */
+
+const std::string gui::TextInput::getString() const
+{
+    return inputString;
+}
+
+/* MODIFIERS ==================================================================================================== */
+
+void gui::TextInput::setString(const std::string str, const bool clear)
+{
+    if (clear)
+        inputString.clear();
+
+    inputString = str;
+}
+
+/**********************************************************************************************************
+ *
  * PAUSEMENU
  *
  *********************************************************************************************************/

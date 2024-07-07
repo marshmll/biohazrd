@@ -72,6 +72,9 @@ void MainMenuState::initGUI()
         font, "Exit", gui::calc_char_size(vm, 65),
         sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
         sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+    // Map Manager
+    mapManager = new MapManager(vm, font);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -89,6 +92,8 @@ MainMenuState::~MainMenuState()
 {
     for (auto &it : buttons)
         delete it.second;
+
+    delete mapManager;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -157,12 +162,16 @@ void MainMenuState::updateGUI()
         data->logger->log("MainMenuState::updateGUI", DEBUG, "Quitting state.");
         quit();
     }
+
+    mapManager->update(mousePosView);
 }
 
 void MainMenuState::renderGUI(sf::RenderTarget &target)
 {
     for (auto &it : buttons)
         it.second->render(target);
+
+    mapManager->render(target);
 }
 
 void MainMenuState::resetGUI()
