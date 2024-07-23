@@ -100,6 +100,11 @@ void TileMap::loadFromFile(const std::string file_path)
     if (!in_file.is_open())
         ErrorHandler::throwErr("TILEMAP::LOADFROMFILE::ERR_COULD_NOT_LOAD_TILEMAP_FROM_FILE\n");
 
+    // METADATA
+    std::string title;
+    std::string description;
+    std::time_t creation_time;
+
     // CONFIG DATA
     unsigned map_grid_width = 0;
     unsigned map_grid_height = 0;
@@ -127,7 +132,16 @@ void TileMap::loadFromFile(const std::string file_path)
     float coll_box_offset_x = 0.f;
     float coll_box_offset_y = 0.f;
 
-    // Load CONFIG
+    // Load METADATA
+    std::getline(in_file, title);
+    std::getline(in_file, description);
+    in_file >> creation_time;
+
+    this->title = title;
+    this->description = description;
+    this->creation_time = creation_time;
+
+    // Load CONFIG DATA
     in_file >> map_grid_width >> map_grid_height >> grid_size >> layers >> texture_file_path;
 
     gridSizeF = (float)grid_size;

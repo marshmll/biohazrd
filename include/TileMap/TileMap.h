@@ -9,6 +9,10 @@ class TileMap
 private:
     /* VARIABLES ================================================================================================= */
 
+    std::string title;
+    std::string description;
+    std::time_t creation_time;
+
     float gridSizeF;
     int gridSizeI;
     unsigned layers;

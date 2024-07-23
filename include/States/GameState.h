@@ -116,7 +116,7 @@ private:
      *
      * @return void
      */
-    void initTileMap();
+    void initTileMap(const std::string map_path);
 
     /**
      * @brief Initializes the enemy system.
@@ -143,7 +143,7 @@ public:
      * @note -> Initializes pause menu
      * @note -> Initializes player(s)
      */
-    GameState(StateData *data);
+    GameState(StateData *data, const std::string map_path);
 
     /**
      * @brief Frees all allocated memory

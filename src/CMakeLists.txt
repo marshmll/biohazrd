@@ -1,55 +1,47 @@
 target_sources(BIOHAZRD PRIVATE
-    AI/Behaviors/AIBehavior.cpp
-    AI/Behaviors/AIFollowBehavior.cpp
-
-    Components/AnimationComponent.cpp
-    Components/AttributeComponent.cpp
-    Components/HitboxComponent.cpp
-    Components/MovementComponent.cpp
-    Components/SkillComponent.cpp
-
-    Engine/Engine.cpp
-
-    Entities/Enemies/Enemy.cpp
-    Entities/Enemies/EnemySystem.cpp
-    Entities/Enemies/GreenSlime.cpp
-
-    Entities/Entity.cpp
-    Entities/Player.cpp
-
-    GUI/TabMenu/PlayerTabMenu.cpp
-    GUI/TabMenu/Tabs/CharacterTab.cpp
-    GUI/TabMenu/Tabs/Tab.cpp
-    GUI/GUI.cpp
-    GUI/PlayerGUI.cpp
-    GUI/TextTagSystem.cpp
-
-    Items/Weapons/MeleeWeapons/MeleeWeapon.cpp
-    Items/Weapons/MeleeWeapons/Sword.cpp
-    Items/Weapons/RangedWeapons/RangedWeapon.cpp
-    Items/Weapons/RangedWeapons/Bow.cpp
-    Items/Weapons/Weapon.cpp
-    Items/Inventory.cpp
-    Items/Item.cpp
-
-    States/EditorModes/DefaultEditorMode.cpp
-    States/EditorModes/EditorMode.cpp
-    States/EditorModes/EnemyEditorMode.cpp
-    States/EditorState.cpp
-    States/GameState.cpp
-    States/MainMenuState.cpp
-    States/SettingsState.cpp
-    States/State.cpp
-
-    TileMap/MapManager.cpp
-    TileMap/TileMap.cpp
-
-    Tiles/EnemySpawnerTile.cpp
-    Tiles/RegularTile.cpp
-    Tiles/Tile.cpp
-
-    Utils/ErrorHandler.cpp
-    Utils/GraphicsSettings.cpp
-    Utils/IniParser.cpp
-    Utils/Logger.cpp
+./TileMap/TileMap.cpp
+./TileMap/MapManager.cpp
+./Entities/Player.cpp
+./Entities/Entity.cpp
+./Entities/Enemies/Enemy.cpp
+./Entities/Enemies/EnemySystem.cpp
+./Entities/Enemies/GreenSlime.cpp
+./AI/Behaviors/AIBehavior.cpp
+./AI/Behaviors/AIFollowBehavior.cpp
+./Components/AnimationComponent.cpp
+./Components/MovementComponent.cpp
+./Components/AttributeComponent.cpp
+./Components/SkillComponent.cpp
+./Components/HitboxComponent.cpp
+./Utils/Logger.cpp
+./Utils/GraphicsSettings.cpp
+./Utils/ErrorHandler.cpp
+./Utils/IniParser.cpp
+./GUI/PlayerGUI.cpp
+./GUI/TabMenu/Tabs/CharacterTab.cpp
+./GUI/TabMenu/Tabs/Tab.cpp
+./GUI/TabMenu/PlayerTabMenu.cpp
+./GUI/GUI.cpp
+./GUI/TextTagSystem.cpp
+./Engine/Engine.cpp
+./main.cpp
+./Tiles/Tile.cpp
+./Tiles/EnemySpawnerTile.cpp
+./Tiles/RegularTile.cpp
+./States/State.cpp
+./States/SettingsState.cpp
+./States/GameState.cpp
+./States/EditorState.cpp
+./States/EditorModes/EnemyEditorMode.cpp
+./States/EditorModes/DefaultEditorMode.cpp
+./States/EditorModes/EditorMode.cpp
+./States/MainMenuState.cpp
+./States/WorldSelectionState.cpp
+./Items/Weapons/Weapon.cpp
+./Items/Weapons/MeleeWeapons/MeleeWeapon.cpp
+./Items/Weapons/MeleeWeapons/Sword.cpp
+./Items/Weapons/RangedWeapons/RangedWeapon.cpp
+./Items/Weapons/RangedWeapons/Bow.cpp
+./Items/Inventory.cpp
+./Items/Item.cpp
 )

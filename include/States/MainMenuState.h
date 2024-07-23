@@ -4,8 +4,7 @@
 #include "GameState.h"
 #include "EditorState.h"
 #include "SettingsState.h"
-
-#include "MapManager.h"
+#include "WorldSelectionState.h"
 
 class MainMenuState : public State
 {
@@ -17,8 +16,6 @@ private:
     sf::Font font;
 
     std::map<std::string, gui::Button *> buttons;
-
-    MapManager *mapManager;
 
     /* INITIALIZERS ============================================================================================== */
 

@@ -101,9 +101,9 @@ void GameState::initPlayerGUI()
     playerGUI = new PlayerGUI(*player, vm);
 }
 
-void GameState::initTileMap()
+void GameState::initTileMap(const std::string map_path)
 {
-    tileMap = new TileMap("Maps/test.biomap");
+    tileMap = new TileMap(map_path);
 }
 
 void GameState::initEnemySystem()
@@ -118,7 +118,7 @@ void GameState::initTextTagSystem()
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-GameState::GameState(StateData *data) : State(data)
+GameState::GameState(StateData *data, const std::string map_path) : State(data)
 {
     initBufferedRender();
     initView();
@@ -130,7 +130,7 @@ GameState::GameState(StateData *data) : State(data)
     initPauseMenu();
     initPlayers();
     initPlayerGUI();
-    initTileMap();
+    initTileMap(map_path);
     initEnemySystem();
     initTextTagSystem();
 }

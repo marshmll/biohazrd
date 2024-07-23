@@ -45,10 +45,10 @@ void MainMenuState::initGUI()
     background.setTexture(&backgroundTexture);
 
     // Buttons
-    buttons["GAME_STATE"] = new gui::Button(
+    buttons["WORLD_SELECTION_STATE"] = new gui::Button(
         gui::p2pX(vm, 8.6f), gui::p2pY(vm, 40.f),
         gui::p2pX(vm, 19.5f), gui::p2pY(vm, 6.2f),
-        font, "New Game", gui::calc_char_size(vm, 65),
+        font, "Play", gui::calc_char_size(vm, 65),
         sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
         sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
@@ -72,9 +72,6 @@ void MainMenuState::initGUI()
         font, "Exit", gui::calc_char_size(vm, 65),
         sf::Color(200, 200, 200, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
         sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
-
-    // Map Manager
-    mapManager = new MapManager(vm, font);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -92,8 +89,6 @@ MainMenuState::~MainMenuState()
 {
     for (auto &it : buttons)
         delete it.second;
-
-    delete mapManager;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -135,11 +130,11 @@ void MainMenuState::updateGUI()
     for (auto &it : buttons)
         it.second->update(mousePosView);
 
-    // New game
-    if (buttons["GAME_STATE"]->isPressed())
+    // World Selection
+    if (buttons["WORLD_SELECTION_STATE"]->isPressed())
     {
-        data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new GameState.");
-        states->push(new GameState(data));
+        data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new WorldSelectionState.");
+        states->push(new WorldSelectionState(data));
     }
 
     // Editor state
@@ -162,16 +157,12 @@ void MainMenuState::updateGUI()
         data->logger->log("MainMenuState::updateGUI", DEBUG, "Quitting state.");
         quit();
     }
-
-    mapManager->update(mousePosView);
 }
 
 void MainMenuState::renderGUI(sf::RenderTarget &target)
 {
     for (auto &it : buttons)
         it.second->render(target);
-
-    mapManager->render(target);
 }
 
 void MainMenuState::resetGUI()

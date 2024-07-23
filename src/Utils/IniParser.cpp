@@ -66,7 +66,11 @@ std::string IniParser::search(const std::string identifier, const std::string se
                         throwSyntaxError(identifier, section, line_num);
 
                     // Get the assigned value
-                    fsstream >> parsed_str;
+                    std::getline(fsstream, parsed_str);
+
+                    // Remove whitespaces at the beginning
+                    while (parsed_str.at(0) == ' ')
+                        parsed_str.erase(parsed_str.begin());
 
                     // Return the value
                     return parsed_str;

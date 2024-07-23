@@ -89,12 +89,24 @@ namespace gui
 
         /**
          * @brief Creates a button instance WITH TEXT.
-         * @note -> Sets initial state to idle
-         * @note -> Sets button shape colors
-         * @note -> Sets position, size and fil color
-         * @note -> Sets font and text color
-         * @note -> Sets text string, character size and text color
-         * @note -> Sets text position centered in button.
+         * 
+         * @param x The x position
+         * @param y The y position
+         * @param width The width in pixels
+         * @param height The height in pixels
+         * @param font A font reference
+         * @param text The button text string
+         * @param characher_size The size of the characters
+         * @param text_idle_color The text's idle color
+         * @param text_hover_color The text's hover color
+         * @param text_active_color The text's active color
+         * @param idle_color The button's idle color
+         * @param hover_color The button's hover color
+         * @param active_color The button's active color
+         * @param outline_idle_color The outline's idle color (default = Transparent)
+         * @param outline_hover_color The outline's hover color (default = Transparent)
+         * @param outline_active_color The outline's active color (default = Transparent)
+         * @param id The button's id (default = 0)
          */
         Button(const float x, const float y, const float width, const float height,
                sf::Font &font, std::string text, const unsigned character_size,
@@ -107,12 +119,21 @@ namespace gui
 
         /**
          * @brief Creates a button instance WITH IMAGE.
-         * @note -> Sets initial state to idle
-         * @note -> Sets button shape colors
-         * @note -> Sets position, size and fil color
-         * @note -> Sets font to nullptr
-         * @note -> Sets image size, texture and position
-         * @note -> Sets image position centered in button.
+         * 
+         * @param x The x position
+         * @param y The y position
+         * @param width The width in pixels
+         * @param height The height in pixels
+         * @param texture A Texture pointer
+         * @param img_w The image width
+         * @param img_h The image height
+         * @param idle_color The button's idle color
+         * @param hover_color The button's hover color
+         * @param active_color The button's active color
+         * @param outline_idle_color The outline's idle color (default = Transparent)
+         * @param outline_hover_color The outline's hover color (default = Transparent)
+         * @param outline_active_color The outline's active color (default = Transparent)
+         * @param id The button's id (default = 0)
          */
         Button(const float x, const float y, const float width, const float height,
                sf::Texture *texture, const float img_w, const float img_h,
