@@ -1,6 +1,5 @@
 target_sources(BIOHAZRD PRIVATE
 ./TileMap/TileMap.cpp
-./TileMap/MapManager.cpp
 ./Entities/Player.cpp
 ./Entities/Entity.cpp
 ./Entities/Enemies/Enemy.cpp
