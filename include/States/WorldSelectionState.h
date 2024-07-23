@@ -28,7 +28,8 @@ private:
 
 		WorldDescriptorBox(const std::string filename, const std::string title,
 						   const std::string description, const std::time_t creation_date,
-						   sf::Font &font, const sf::VideoMode vm, const float y)
+						   sf::Font &font, const sf::VideoMode vm, const float y,
+						   sf::Texture &icon_texture)
 		{
 			this->filename = filename;
 			selected = false;
@@ -42,6 +43,7 @@ private:
 			icon.setFillColor(sf::Color(255, 255, 255, 200));
 			icon.setSize(sf::Vector2f(bg.getSize().y, bg.getSize().y));
 			icon.setPosition(bg.getPosition());
+			icon.setTexture(&icon_texture);
 
 			titleText.setFont(font);
 			descriptionText.setFont(font);
@@ -119,6 +121,8 @@ private:
 	/* VARIABLES ================================================================================================= */
 
 	sf::Font font;
+
+	sf::Texture iconTexture;
 
 	sf::RectangleShape background;
 	sf::Texture backgroundTexture;

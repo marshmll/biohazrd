@@ -5,6 +5,9 @@
 
 void WorldSelectionState::initVariables()
 {
+    if (!iconTexture.loadFromFile("Assets/Images/Icons/world_default_icon.png"))
+        ErrorHandler::throwErr("ERROR::WORLDSELECTIONS::INITVARIABLES::COULD_NOT_LOAD_ICON\n");
+
     selectedDescriptor = nullptr;
 }
 
@@ -17,7 +20,7 @@ void WorldSelectionState::initFonts()
     if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
     {
         data->logger->log("WorldSelectionState::initFonts", ERROR, "Could not load fonts.");
-        ErrorHandler::throwErr("ERROR::WORLDSELECTIONS::INITFONTS::COULD_NOT_LOAD_FONT\n");
+        ErrorHandler::throwErr("ERROR::WORLDSELECTIONSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
     }
 }
 
@@ -111,7 +114,9 @@ void WorldSelectionState::initGUI()
 
         ifs.close();
 
-        worldDescriptors.push_back(new WorldDescriptorBox(filename, title, description, creation_time, font, vm, gui::p2pY(vm, 20.f + (counter * 15.f))));
+        worldDescriptors.push_back(new WorldDescriptorBox(filename, title, description, creation_time,
+                                                          font, vm, gui::p2pY(vm, 20.f + (counter * 15.f)),
+                                                          iconTexture));
 
         ++counter;
     }
