@@ -1,2 +1,0 @@
-2024-06-27.12:54:49 [Engine::initKeys] > (INFO) Initialized 20 keys.
-2024-06-27.12:54:50 [GameState::initKeybinds] > (INFO) Initialized 5 keybinds.
