@@ -74,6 +74,16 @@ void MainMenuState::initGUI()
         sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
+void MainMenuState::initSounds()
+{
+    data->soundSys->loadBuffers("Global");
+
+    data->soundSys->createGlobalSound("MAIN_THEME", "MAIN_THEME", 80.f, true);
+    data->soundSys->createGlobalSound("CLICK_BUTTON", "CLICK_BUTTON", 20.f, false);
+
+    data->soundSys->play("MAIN_THEME");
+}
+
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 MainMenuState::MainMenuState(StateData *data) : State(data)
@@ -82,7 +92,7 @@ MainMenuState::MainMenuState(StateData *data) : State(data)
     initFonts();
     initKeybinds();
     initGUI();
-    resetGUI();
+    initSounds();
 }
 
 MainMenuState::~MainMenuState()
@@ -96,6 +106,7 @@ MainMenuState::~MainMenuState()
 void MainMenuState::update(const float &dt)
 {
     updateInput(dt);
+    updateSounds();
     updateGUI();
 }
 
@@ -110,6 +121,12 @@ void MainMenuState::updateInput(const float &dt)
     updateMousePositions();
 }
 
+void MainMenuState::updateSounds()
+{
+    if (!data->soundSys->isPlaying("MAIN_THEME"))
+        data->soundSys->play("MAIN_THEME");
+}
+
 void MainMenuState::updateGUI()
 {
     // Updates all buttons based on mouse position view.
@@ -120,6 +137,9 @@ void MainMenuState::updateGUI()
     if (buttons["WORLD_SELECTION_STATE"]->isPressed())
     {
         data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new WorldSelectionState.");
+
+        data->soundSys->play("CLICK_BUTTON");
+
         states->push(new WorldSelectionState(data));
     }
 
@@ -127,6 +147,11 @@ void MainMenuState::updateGUI()
     else if (buttons["EDITOR_STATE"]->isPressed())
     {
         data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new EditorState.");
+
+        data->soundSys->play("CLICK_BUTTON");
+
+        data->soundSys->stop("MAIN_THEME");
+
         states->push(new EditorState(data));
     }
 
@@ -134,6 +159,9 @@ void MainMenuState::updateGUI()
     else if (buttons["SETTINGS_STATE"]->isPressed())
     {
         data->logger->log("MainMenuState::updateGUI", DEBUG, "Pushing a new SettingsState.");
+
+        data->soundSys->play("CLICK_BUTTON");
+
         states->push(new SettingsState(data, this));
     }
 
@@ -141,6 +169,8 @@ void MainMenuState::updateGUI()
     else if (buttons["EXIT_STATE"]->isPressed())
     {
         data->logger->log("MainMenuState::updateGUI", DEBUG, "Quitting state.");
+        data->soundSys->play("CLICK_BUTTON");
+
         quit();
     }
 }

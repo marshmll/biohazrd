@@ -180,19 +180,6 @@ void SettingsState::render(sf::RenderTarget &target)
     target.draw(background);
     renderGUI(target);
     target.draw(optionsText);
-
-    //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
-    // sf::Text mouseText;
-    // mouseText.setPosition(sf::Vector2f(mousePosView.x, mousePosView.y - 20));
-    // mouseText.setFont(font);
-    // mouseText.setCharacterSize(12);
-
-    // std::stringstream ss;
-    // ss << mousePosView.x << " " << mousePosView.y;
-    // mouseText.setString(ss.str());
-
-    // target.draw(mouseText);
-    ///////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void SettingsState::updateInput(const float &dt)
@@ -214,6 +201,7 @@ void SettingsState::updateGUI(const float &dt)
     if (buttons["BACK"]->isPressed())
     {
         data->logger->log("SettingsState::updateGUI", DEBUG, "Quitting state.");
+        data->soundSys->play("CLICK_BUTTON");
         quit();
     }
 
@@ -221,6 +209,8 @@ void SettingsState::updateGUI(const float &dt)
     else if (buttons["APPLY"]->isPressed())
     {
         data->logger->log("SettingsState::updateGUI", DEBUG, "Applying new graphics settings.");
+
+        data->soundSys->play("CLICK_BUTTON");
 
         gfxSettings->resolution = videoModes[dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 

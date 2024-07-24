@@ -61,7 +61,7 @@ public:
 	 *
 	 * @return const std::vector<std::pair<std::string, std::string>>
 	 */
-	const std::vector<std::pair<std::string, std::string>> getAllKeyValuePairs(const std::string section);
+	const std::vector<std::pair<std::string, std::string>> getAllKeyValuePairs(const std::string section = "");
 
 	/**
 	 * @brief Returns an identifier's value as a std::string.

@@ -171,7 +171,12 @@ void WorldSelectionState::updateInput(const float &dt)
 void WorldSelectionState::updateGUI(const float &dt)
 {
     for (auto &[key, button] : buttons)
+    {
         button->update(mousePosView);
+
+        if (button->isPressed())
+            data->soundSys->play("CLICK_BUTTON");
+    }
 
     for (auto &descriptor : worldDescriptors)
     {
@@ -179,6 +184,8 @@ void WorldSelectionState::updateGUI(const float &dt)
 
         if (descriptor->isSelected() && selectedDescriptor != descriptor)
         {
+            data->soundSys->play("CLICK_BUTTON");
+
             if (selectedDescriptor != nullptr)
             {
                 selectedDescriptor->deselect();
@@ -199,7 +206,10 @@ void WorldSelectionState::updateGUI(const float &dt)
     else if (hasElapsedMouseTimeMax(buttons.at("PLAY")->isPressed()) && selectedDescriptor != nullptr)
     {
         data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Popping self from stack.");
+        data->soundSys->stop("MAIN_THEME");
+
         data->states->pop();
+
 
         data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new GameState from the map: " + selectedDescriptor->getFilename());
         data->states->push(new GameState(data, selectedDescriptor->getFilename()));

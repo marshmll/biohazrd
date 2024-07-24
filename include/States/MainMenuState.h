@@ -49,6 +49,8 @@ private:
      */
     void initGUI();
 
+    void initSounds();
+
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
@@ -94,6 +96,8 @@ public:
      * @return void
      */
     void updateInput(const float &dt);
+
+    void updateSounds();
 
     /**
      * @brief Updates the GUI.

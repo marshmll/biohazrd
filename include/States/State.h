@@ -2,6 +2,7 @@
 #define STATE_H_
 
 #include "Logger.h"
+#include "SoundSystem.h"
 #include "IniParser.h"
 #include "GraphicsSettings.h"
 #include "Player.h"
@@ -23,6 +24,7 @@ class State; // Needed to typedef StateData.
 typedef struct
 {
     Logger *logger;
+    SoundSystem *soundSys;
     std::stack<State *> *states;
     GraphicsSettings *gfxSettings;
     sf::RenderWindow *window;

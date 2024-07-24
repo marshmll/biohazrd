@@ -58,16 +58,13 @@ void Engine::initKeys()
 
 void Engine::initSoundSystem()
 {
-    soundSys = new SoundSystem();
-
-    test.setBuffer(soundSys->getSoundBuffer("TEST"));
-
-    test.play();
+    soundSys = new SoundSystem("Config/sounds.ini");
 }
 
 void Engine::initStateData()
 {
     data.logger = logger;
+    data.soundSys = soundSys;
     data.states = &states;
     data.gfxSettings = &gfxSettings;
     data.window = window;
@@ -106,6 +103,10 @@ Engine::~Engine()
         states.pop();
     }
 
+    logger->log("Engine::~Engine", DEBUG, "Successfully called destructor. Ending logs.");
+
+    logger->end();
+
     delete logger;
     delete soundSys;
 }
@@ -123,8 +124,6 @@ void Engine::run()
             render();
         }
     }
-
-    logger->end();
 }
 
 void Engine::update()
