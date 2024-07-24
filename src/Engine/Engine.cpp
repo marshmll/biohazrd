@@ -56,6 +56,15 @@ void Engine::initKeys()
     logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys.");
 }
 
+void Engine::initSoundSystem()
+{
+    soundSys = new SoundSystem();
+
+    test.setBuffer(soundSys->getSoundBuffer("TEST"));
+
+    test.play();
+}
+
 void Engine::initStateData()
 {
     data.logger = logger;
@@ -82,6 +91,7 @@ Engine::Engine()
     initGraphicsSettings();
     initWindow();
     initKeys();
+    initSoundSystem();
     initStateData();
     initStates();
 }
@@ -97,6 +107,7 @@ Engine::~Engine()
     }
 
     delete logger;
+    delete soundSys;
 }
 
 /* MAIN FUNCTIONS ================================================================================================= */

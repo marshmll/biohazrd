@@ -43,4 +43,5 @@ target_sources(BIOHAZRD PRIVATE
 ./Items/Weapons/RangedWeapons/Bow.cpp
 ./Items/Inventory.cpp
 ./Items/Item.cpp
+./Sound/SoundSystem.cpp
 )

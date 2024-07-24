@@ -11,6 +11,7 @@
 #include "Logger.h"
 #include "IniParser.h"
 #include "MainMenuState.h"
+#include "SoundSystem.h"
 
 class Engine
 {
@@ -20,6 +21,9 @@ private:
     std::string currentPath;
 
     Logger *logger;
+
+    SoundSystem *soundSys;
+    sf::Sound test;
 
     StateData data;
 
@@ -71,6 +75,14 @@ private:
      * @return void
      */
     void initKeys();
+
+    /**
+     * @brief Initializes the sound system that will be used as a
+     * interface for other classes to load and play audio files.
+     *
+     * @return void
+     */
+    void initSoundSystem();
 
     /**
      * @brief Initializes the data struct members.

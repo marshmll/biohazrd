@@ -216,8 +216,16 @@ const std::vector<std::pair<std::string, std::string>> IniParser::getAllKeyValue
                 if (str_buff != "=")
                     throwSyntaxError(key, section, line_num);
 
-                // Read the value
-                fsstream >> str_buff;
+                // Get the assigned value
+                std::getline(fsstream, str_buff);
+
+                // Remove whitespaces at the beginning
+                while (str_buff.at(0) == ' ')
+                    str_buff.erase(str_buff.begin());
+
+                // Remove whitespaces at the end
+                while (str_buff.at(str_buff.size() - 1) == ' ')
+                    str_buff.erase(str_buff.end());
 
                 // Save the value
                 value = str_buff;

@@ -7,5 +7,7 @@ int main()
 
     engine.run();
 
+    engine.~Engine();
+
     exit(EXIT_SUCCESS);
 }
