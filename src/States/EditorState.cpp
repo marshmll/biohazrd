@@ -27,8 +27,8 @@ void EditorState::initKeybinds()
 {
     IniParser parser("Config/keybinds.ini");
 
-    for (auto it : parser.getAllKeyValuePairs("EditorState"))
-        keybinds[it.first] = acceptedKeys->at(it.second);
+    for (auto &[action, key] : parser.getAllKeyValuePairs("EditorState"))
+        keybinds[action] = acceptedKeys->at(key);
 
     data->logger->log("EditorState::initKeybinds", INFO,
                       "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
@@ -102,15 +102,15 @@ EditorState::EditorState(StateData *data) : State(data)
 
 EditorState::~EditorState()
 {
-    for (auto &it : buttons)
-        delete it.second;
+    for (auto &[key, button] : buttons)
+        delete button;
 
     delete pauseMenu;
 
     delete tileMap;
 
-    for (auto &it : modes)
-        delete it.second;
+    for (auto &[key, mode] : modes)
+        delete mode;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -179,16 +179,16 @@ void EditorState::updateGUI(const float &dt)
 
 void EditorState::updateEditorCamera(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_UP"]))
+    if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_CAMERA_UP")))
         editorCamera.move(0.f, std::floor(-cameraSpeed * dt));
 
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_DOWN"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_CAMERA_DOWN")))
         editorCamera.move(0.f, std::floor(cameraSpeed * dt));
 
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_LEFT"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_CAMERA_LEFT")))
         editorCamera.move(std::floor(-cameraSpeed * dt), 0.f);
 
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAMERA_RIGHT"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_CAMERA_RIGHT")))
         editorCamera.move(std::floor(cameraSpeed * dt), 0.f);
 
     editorCameraPosGrid.x = static_cast<int>(editorCamera.getCenter().x) / static_cast<int>(data->gridSize);
@@ -200,7 +200,7 @@ void EditorState::updatePauseMenuInteraction()
     if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("LOAD")))
     {
         tileMap->loadFromFile("Maps/test.biomap");
-        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Loaded map to Maps/test.biomap");
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Loaded map from Maps/test.biomap");
     }
 
     else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("SAVE")))

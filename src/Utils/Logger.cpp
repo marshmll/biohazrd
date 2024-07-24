@@ -66,7 +66,8 @@ void Logger::log(const std::string caller, const LOGTYPE log_type, const std::st
     if (log_type == DEBUG && !debugMode)
         return;
 
-    logstream << currentDateTime() << " [" << caller << "] > " << logTypeTemplates[log_type] << log << "\n";
+    // logstream << currentDateTime() << " [" << caller << "] > " << logTypeTemplates[log_type] << log << "\n";
+    std::cout << currentDateTime() << " [" << caller << "] > " << logTypeTemplates[log_type] << log << "\n";
 
     if (log_type == ERROR)
         end();

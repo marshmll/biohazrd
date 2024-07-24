@@ -30,8 +30,8 @@ void GameState::initKeybinds()
 {
     IniParser parser("Config/keybinds.ini");
 
-    for (auto it : parser.getAllKeyValuePairs("GameState"))
-        keybinds[it.first] = acceptedKeys->at(it.second);
+    for (auto &[action, key] : parser.getAllKeyValuePairs("GameState"))
+        keybinds[action] = acceptedKeys->at(key);
 
     data->logger->log("GameState::initKeybinds", INFO,
                       "Initialized " + std::to_string(keybinds.size()) + " keybinds.");
@@ -234,7 +234,7 @@ void GameState::renderToBuffer()
 
 void GameState::updateInput(const float &dt)
 {
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["PAUSE"])))
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("PAUSE"))))
         pauseToggle();
 }
 
@@ -245,24 +245,24 @@ void GameState::updatePlayers(const float &dt)
 
 void GameState::updatePlayerInput(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
+    if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_UP")))
     {
         player->move(0.f, -1.f, dt);
     }
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_DOWN"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_DOWN")))
     {
         player->move(0.f, 1.f, dt);
     }
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_LEFT")))
     {
         player->move(-1.f, 0.f, dt);
     }
-    else if (sf::Keyboard::isKeyPressed(keybinds["MOVE_RIGHT"]))
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_RIGHT")))
     {
         player->move(1.f, 0.f, dt);
     }
 
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds["TOGGLE_CHAR_TAB"])))
+    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("TOGGLE_CHAR_TAB"))))
     {
         playerGUI->toggleTab(CHARACTER_TAB);
     }
@@ -293,10 +293,8 @@ void GameState::updateEnemiesAndCombat(const float &dt)
             {
                 player->earnExp(enemy->getExpDrop());
 
-                textTagSystem->displayTag(EXPERIENCE_TAG,
-                                          player->getPosition(),
-                                          enemy->getExpDrop(),
-                                          "+", "exp");
+                textTagSystem->displayTag(EXPERIENCE_TAG, player->getPosition(),
+                                          enemy->getExpDrop(), "+", "exp");
 
                 enemySystem->deleteEnemy(i);
             }
@@ -314,14 +312,14 @@ void GameState::updateCombat(const float &dt, Enemy *enemy)
 
         enemy->loseHp(damage);
 
-        sf::Vector2f vec(enemy->getCenteredPosition().x - player->getCenteredPosition().x,
-                         enemy->getCenteredPosition().y - player->getCenteredPosition().y);
+        sf::Vector2f knock_vec(enemy->getCenteredPosition().x - player->getCenteredPosition().x,
+                               enemy->getCenteredPosition().y - player->getCenteredPosition().y);
 
-        float vec_len = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
+        float knock_vec_len = sqrt(pow(knock_vec.x, 2) + pow(knock_vec.y, 2));
 
-        vec /= vec_len;
+        knock_vec /= knock_vec_len;
 
-        enemy->knockback(vec, player->getWeapon()->getKnockback());
+        enemy->knockback(knock_vec, player->getWeapon()->getKnockback());
 
         textTagSystem->displayTag(DAMAGE_TAG, enemy->getPosition(), damage, "-", "hp");
     }

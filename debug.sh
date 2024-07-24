@@ -20,6 +20,7 @@ clear
 cd Debug/ &&
 make &&
 cd bin/ &&
+clear &&
 ./BIOHAZRD &&
 cd ../../
 

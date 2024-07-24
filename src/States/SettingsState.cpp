@@ -89,13 +89,34 @@ void SettingsState::initGUI()
         selected_index = static_cast<short unsigned>(index);
     }
 
-    // Create the drop down list.
+    // Create the drop down lists.
     dropDownLists["RESOLUTIONS"] = new gui::DropDownList(
-        gui::p2pX(vm, 25.f), gui::p2pY(vm, 40.f),
+        gui::p2pX(vm, 25.f), gui::p2pY(vm, 41.f),
         gui::p2pX(vm, 16.f), gui::p2pY(vm, 3.f),
         font, mode_labels,
         gui::calc_char_size(vm, 135),
         10, selected_index);
+
+    dropDownLists["FULLSCREEN"] = new gui::DropDownList(
+        gui::p2pX(vm, 25.f), gui::p2pY(vm, 50.f),
+        gui::p2pX(vm, 16.f), gui::p2pY(vm, 3.f),
+        font, {"ON", "OFF"},
+        gui::calc_char_size(vm, 135),
+        10, data->gfxSettings->fullscreen ? 0 : 1);
+
+    dropDownLists["VSYNC"] = new gui::DropDownList(
+        gui::p2pX(vm, 25.f), gui::p2pY(vm, 59.f),
+        gui::p2pX(vm, 16.f), gui::p2pY(vm, 3.f),
+        font, {"ON", "OFF"},
+        gui::calc_char_size(vm, 135),
+        10, 1);
+
+    // dropDownLists["ANTIALIASING"] = new gui::DropDownList(
+    //     gui::p2pX(vm, 25.f), gui::p2pY(vm, 40.f),
+    //     gui::p2pX(vm, 16.f), gui::p2pY(vm, 3.f),
+    //     font, mode_labels,
+    //     gui::calc_char_size(vm, 135),
+    //     10);
 
     // Create options text
     optionsText.setFont(font);
@@ -109,12 +130,12 @@ void SettingsState::resetGUI()
 {
     data->logger->log("SettingsState::resetGUI", DEBUG, "Resetting GUI. initGUI will be called.");
 
-    for (auto &it : buttons)
-        delete it.second;
+    for (auto &[key, button] : buttons)
+        delete button;
     buttons.clear();
 
-    for (auto &it : dropDownLists)
-        delete it.second;
+    for (auto &[key, ddl] : dropDownLists)
+        delete ddl;
     dropDownLists.clear();
 
     initGUI();
@@ -138,12 +159,12 @@ SettingsState::SettingsState(StateData *data, MainMenuState *main_menu_state) : 
 SettingsState::~SettingsState()
 {
     // Delete buttons
-    for (auto &it : buttons)
-        delete it.second;
+    for (auto &[key, button] : buttons)
+        delete button;
 
     // Delete ddls
-    for (auto &it : dropDownLists)
-        delete it.second;
+    for (auto &[key, ddl] : dropDownLists)
+        delete ddl;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -182,12 +203,12 @@ void SettingsState::updateInput(const float &dt)
 void SettingsState::updateGUI(const float &dt)
 {
     // Updates all buttons based on mouse position view.
-    for (auto &it : buttons)
-        it.second->update(sf::Vector2f(mousePosWindow));
+    for (auto &[key, button] : buttons)
+        button->update(sf::Vector2f(mousePosWindow));
 
     // Updates all ddls based on mouse position view and dt.
-    for (auto &it : dropDownLists)
-        it.second->update(mousePosWindow, dt);
+    for (auto &[key, ddl] : dropDownLists)
+        ddl->update(mousePosWindow, dt);
 
     // Checks for returning
     if (buttons["BACK"]->isPressed())
@@ -203,7 +224,16 @@ void SettingsState::updateGUI(const float &dt)
 
         gfxSettings->resolution = videoModes[dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 
-        window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
+        gfxSettings->fullscreen = dropDownLists.at("FULLSCREEN")->getSelectedElementId() == 0 ? true : false;
+
+        if (gfxSettings->fullscreen)
+        {
+            window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Fullscreen);
+        }
+        else
+        {
+            window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
+        }
 
         resetGUI();
 
@@ -214,10 +244,10 @@ void SettingsState::updateGUI(const float &dt)
 void SettingsState::renderGUI(sf::RenderTarget &target)
 {
     // Render buttons
-    for (auto &it : buttons)
-        it.second->render(target);
+    for (auto &[key, button] : buttons)
+        button->render(target);
 
     // Render ddls
-    for (auto &it : dropDownLists)
-        it.second->render(target);
+    for (auto &[key, ddl] : dropDownLists)
+        ddl->render(target);
 }

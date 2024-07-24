@@ -87,8 +87,8 @@ MainMenuState::MainMenuState(StateData *data) : State(data)
 
 MainMenuState::~MainMenuState()
 {
-    for (auto &it : buttons)
-        delete it.second;
+    for (auto &[key, button] : buttons)
+        delete button;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -101,22 +101,8 @@ void MainMenuState::update(const float &dt)
 
 void MainMenuState::render(sf::RenderTarget &target)
 {
-
     target.draw(background);
     renderGUI(target);
-
-    //////////////////////////// REMOVE LATER: DEBUGGING STUFF ////////////////////////////////
-    //	sf::Text mouseText;
-    //	mouseText.setPosition(sf::Vector2f(mousePosView.x, mousePosView.y - 20));
-    //	mouseText.setFont(font);
-    //	mouseText.setCharacterSize(12);
-    //
-    //	std::stringstream ss;
-    //	ss << mousePosView.x << " " << mousePosView.y;
-    //	mouseText.setString(ss.str());
-    //
-    //	target.draw(mouseText);
-    ///////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void MainMenuState::updateInput(const float &dt)
@@ -161,16 +147,16 @@ void MainMenuState::updateGUI()
 
 void MainMenuState::renderGUI(sf::RenderTarget &target)
 {
-    for (auto &it : buttons)
-        it.second->render(target);
+    for (auto &[key, button] : buttons)
+        button->render(target);
 }
 
 void MainMenuState::resetGUI()
 {
-    data->logger->log("MainMenuState::resetGUI", DEBUG, "Resetting GUI. initGUI will be called.");
+    data->logger->log("MainMenuState::resetGUI", DEBUG, "Resetting GUI, initGUI will be called.");
 
-    for (auto &it : buttons)
-        delete it.second;
+    for (auto &[key, button] : buttons)
+        delete button;
 
     buttons.clear();
 

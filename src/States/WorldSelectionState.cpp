@@ -6,7 +6,10 @@
 void WorldSelectionState::initVariables()
 {
     if (!iconTexture.loadFromFile("Assets/Images/Icons/world_default_icon.png"))
+    {
+        data->logger->log("WorldSelectionState::initVariables", ERROR, "Could not load icon texture.");
         ErrorHandler::throwErr("ERROR::WORLDSELECTIONS::INITVARIABLES::COULD_NOT_LOAD_ICON\n");
+    }
 
     selectedDescriptor = nullptr;
 }
@@ -106,7 +109,10 @@ void WorldSelectionState::initGUI()
         std::ifstream ifs(filename);
 
         if (!ifs.is_open())
+        {
+            data->logger->log("WorldSelectionState::initGUI", ERROR, "An error ocurred while trying to open file: " + filename);
             ErrorHandler::throwErr("WORDLSELECTIONSTATE::INITGUI::ERR_COULD_NOT_OPEN_FILE: " + filename);
+        }
 
         std::getline(ifs, title);
         std::getline(ifs, description);
@@ -120,6 +126,8 @@ void WorldSelectionState::initGUI()
 
         ++counter;
     }
+
+    data->logger->log("WorldSelectionState::initGUI", INFO, "Loaded " + std::to_string(counter) + " map files.");
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -190,7 +198,10 @@ void WorldSelectionState::updateGUI(const float &dt)
     }
     else if (hasElapsedMouseTimeMax(buttons.at("PLAY")->isPressed()) && selectedDescriptor != nullptr)
     {
+        data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Popping self from stack.");
         data->states->pop();
+
+        data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new GameState from the map: " + selectedDescriptor->getFilename());
         data->states->push(new GameState(data, selectedDescriptor->getFilename()));
     }
 }

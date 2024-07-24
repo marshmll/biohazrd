@@ -5,7 +5,7 @@
 
 void Engine::initLogger()
 {
-    logger = new Logger();
+    logger = new Logger(DEBUG_MODE);
 
     logger->begin();
 }
@@ -30,7 +30,6 @@ void Engine::initGraphicsSettings()
 
 void Engine::initWindow()
 {
-
     // Create the window
     if (gfxSettings.fullscreen) // If in fullscreen mode
     {
@@ -51,8 +50,8 @@ void Engine::initKeys()
 {
     IniParser parser("Config/accepted_keys.ini");
 
-    for (auto it : parser.getAllKeyValuePairs("AcceptedKeys"))
-        acceptedKeys[it.first] = static_cast<sf::Keyboard::Key>(std::stoi(it.second));
+    for (auto &[key, keycode] : parser.getAllKeyValuePairs("AcceptedKeys"))
+        acceptedKeys[key] = static_cast<sf::Keyboard::Key>(std::stoi(keycode));
 
     logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys.");
 }
@@ -63,12 +62,14 @@ void Engine::initStateData()
     data.states = &states;
     data.gfxSettings = &gfxSettings;
     data.window = window;
+    data.event = &event;
     data.acceptedKeys = &acceptedKeys;
     data.gridSize = gridSize;
 }
 
 void Engine::initStates()
 {
+    logger->log("Engine::initStates", DEBUG, "Pushing a new MainMenuState.");
     states.push(new MainMenuState(&data));
 }
 
@@ -94,7 +95,7 @@ Engine::~Engine()
         delete states.top();
         states.pop();
     }
-    
+
     delete logger;
 }
 

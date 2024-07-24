@@ -12,9 +12,11 @@ class State; // Needed to typedef StateData.
 /**
  * @brief This struct packs all important data from a state.
  * @note Saves:
+ * @note Pointer to logger
  * @note Pointer to States stack
  * @note Pointer to graphics settings
  * @note Pointer to the render window
+ * @note Pointer to the SFML event
  * @note Pointer to the accepted keys map
  * @note Grid Size F.
  */
@@ -24,6 +26,7 @@ typedef struct
     std::stack<State *> *states;
     GraphicsSettings *gfxSettings;
     sf::RenderWindow *window;
+    sf::Event *event;
     std::map<std::string, sf::Keyboard::Key> *acceptedKeys;
     float gridSize;
 } StateData;
