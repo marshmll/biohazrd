@@ -79,6 +79,15 @@ private:
     void initTileMap();
 
     /**
+     * @brief Initializes the tilemap for the editor.
+     *
+     * @attention LOADS TILEMAP
+     *
+     * @return void
+     */
+    void initTileMap(const std::string map_file_path);
+
+    /**
      * @brief Initializes the GUI elements.
      *
      * @return void
@@ -110,6 +119,16 @@ public:
      * @note -> Initializes buttons
      */
     EditorState(StateData *data);
+
+    /**
+     * @brief Calls the parent constructor for State.
+     * @attention LOADS TILEMAP
+     * @note -> Initializes variables
+     * @note -> Initializes fonts
+     * @note -> Initializes keybinds
+     * @note -> Initializes buttons
+     */
+    EditorState(StateData *data, const std::string map_file_path);
 
     /**
      * @brief Frees all the memory allocated for the buttons.
@@ -183,7 +202,7 @@ public:
      */
     void renderGUI(sf::RenderTarget &target);
 
-     /**
+    /**
      * @brief Renders the active editor mode.
      *
      * @return void

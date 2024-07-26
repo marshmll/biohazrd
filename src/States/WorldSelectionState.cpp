@@ -111,6 +111,8 @@ void WorldSelectionState::initGUI()
         {
             if (fpath.substr(fpath.size() - 7, 7) == ".biomap")
             {
+                std::cout << dp->d_name << "\n";
+
                 std::string title;
                 std::string description;
                 std::time_t creation_time;
@@ -258,13 +260,22 @@ void WorldSelectionState::updateGUI(const float &dt)
 
         data->states->pop();
 
-        data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new GameState from the map: " + selectedDescriptor->getFilename());
-        data->states->push(new GameState(data, selectedDescriptor->getFilename()));
+        data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new GameState from the map: " + selectedDescriptor->filename);
+        data->states->push(new GameState(data, selectedDescriptor->filename));
     }
     else if (hasElapsedMouseTimeMax(buttons.at("DELETE")->isPressed()) && selectedDescriptor != nullptr)
     {
         deleteConfirmationModal->setAnswered(false);
         deleteConfirmationModal->setActive(true);
+    }
+    else if (hasElapsedMouseTimeMax(buttons.at("EDIT")->isPressed()) && selectedDescriptor != nullptr)
+    {
+        data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Popping self from stack.");
+        data->states->pop();
+        data->soundSys->stop("MAIN_THEME");
+
+        data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new EditorState from the map: " + selectedDescriptor->filename);
+        data->states->push(new EditorState(data, selectedDescriptor->filename));
     }
 }
 

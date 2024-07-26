@@ -50,9 +50,16 @@ void TileMap::resize(const int size_x, const int size_y, const int layers)
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================== */
 
-TileMap::TileMap(const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
-                 const std::string texture_file_path)
+TileMap::TileMap(const std::string title, const std::string description,
+                 const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
+                 const std::string file_path, const std::string texture_file_path)
 {
+    this->title = title;
+    this->description = description;
+    this->creationTime = time(0);
+
+    filePath = file_path;
+
     gridSizeF = grid_size;
     gridSizeI = (int)gridSizeF;
     layers = 1;
@@ -75,6 +82,8 @@ TileMap::TileMap(const float grid_size, const unsigned map_grid_width, const uns
     startY = 0;
     endY = 0;
     layer = 0;
+
+    saveToFile(file_path);
 }
 
 TileMap::TileMap(const std::string map_file_path)
@@ -92,6 +101,8 @@ TileMap::~TileMap()
 void TileMap::loadFromFile(const std::string file_path)
 {
     std::ifstream in_file;
+
+    filePath = file_path;
 
     // Try to open a file.
     in_file.open(file_path);
@@ -139,14 +150,14 @@ void TileMap::loadFromFile(const std::string file_path)
 
     this->title = title;
     this->description = description;
-    this->creation_time = creation_time;
+    this->creationTime = creation_time;
 
     // Load CONFIG DATA
     in_file >> map_grid_width >> map_grid_height >> grid_size >> layers >> texture_file_path;
 
     gridSizeF = (float)grid_size;
     gridSizeI = grid_size;
-    layers = layers;
+    this->layers = layers;
 
     mapGridDimensions.x = map_grid_width;
     mapGridDimensions.y = map_grid_height;
@@ -154,7 +165,7 @@ void TileMap::loadFromFile(const std::string file_path)
     mapWorldDimensions.x = static_cast<float>(map_grid_width) * gridSizeF;
     mapWorldDimensions.y = static_cast<float>(map_grid_height) * gridSizeF;
 
-    texture_file_path = texture_file_path;
+    textureFilePath = texture_file_path;
 
     // If failed to load texture
     if (!tileTextureSheet.loadFromFile(texture_file_path))
@@ -222,6 +233,8 @@ void TileMap::saveToFile(const std::string file_path)
 {
     std::ofstream out_file;
 
+    std::cout << "TileMap::saveToFile > Saving map to: " + file_path << "\n";
+
     // Try to open a file.
     out_file.open(file_path);
 
@@ -229,8 +242,11 @@ void TileMap::saveToFile(const std::string file_path)
     if (!out_file.is_open())
         ErrorHandler::throwErr("TILEMAP::SAVETOFILE::ERR_COULD_NOT_SAVE_TILEMAP_TO_FILE\n");
 
-    // CONFIG data
-    out_file << mapGridDimensions.x << " " << mapGridDimensions.y << "\n"
+    // METADATA and CONFIG data
+    out_file << title << "\n"
+             << description << "\n"
+             << creationTime << "\n"
+             << mapGridDimensions.x << " " << mapGridDimensions.y << "\n"
              << gridSizeI << "\n"
              << layers << "\n"
              << textureFilePath << "\n";
@@ -248,7 +264,7 @@ void TileMap::saveToFile(const std::string file_path)
                     {
                         out_file << x << " " << y << " " << z << " " << k << " "
                                  << map[x][y][z][k]->getPropertiesAsString()
-                                 << "\n";
+                                 << " ";
                     }
                 }
             }
@@ -571,6 +587,11 @@ const bool TileMap::compareType(const int x, const int y, const unsigned layer, 
         return map[x][y][layer].back()->getType() == type;
 
     return false;
+}
+
+const std::string &TileMap::getFilePath() const
+{
+    return filePath;
 }
 
 const sf::Vector2f &TileMap::getSize() const

@@ -11,7 +11,9 @@ private:
 
     std::string title;
     std::string description;
-    std::time_t creation_time;
+    std::time_t creationTime;
+
+    std::string filePath;
 
     float gridSizeF;
     int gridSizeI;
@@ -58,13 +60,16 @@ public:
      * y, z and k coordinates. Also uses a resize vector method to
      * ensure the vectors allocate the required amount of memory.
      *
+     * @param title The map title.
+     * @param description The map description.
      * @param grid_size The grid size for the tiles.
      * @param map_grid_width The width of the tilemap based on the grid size.
      * @param map_grid_height The height of the tilemap based on the grid size.
      * @param texture_file_path The relative path to the texture sheet.
      */
-    TileMap(const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
-            const std::string texture_file_path);
+    TileMap(const std::string title, const std::string description,
+            const float grid_size, const unsigned map_grid_width, const unsigned map_grid_height,
+            const std::string file_path, const std::string texture_file_path);
 
     /**
      * @brief This constructor initializes a tilemap.
@@ -276,6 +281,13 @@ public:
      * @return const bool
      */
     const bool compareType(const int x, const int y, const unsigned layer, const TileType &type) const;
+
+    /**
+     * @brief Returns the map file's path.
+     *
+     * @return const std::string&
+     */
+    const std::string &getFilePath() const;
 
     /**
      * @brief Returns the tilemap's size.

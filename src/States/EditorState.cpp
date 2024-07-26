@@ -56,7 +56,13 @@ void EditorState::initPauseMenu()
 
 void EditorState::initTileMap()
 {
-    tileMap = new TileMap(data->gridSize, 100, 100, "Assets/Images/Tiles/tilesheet.png");
+    tileMap = new TileMap("New World", "No description provided", data->gridSize, 100, 100,
+                          "Maps/unnamed.biomap", "Assets/Images/Tiles/tilesheet.png");
+}
+
+void EditorState::initTileMap(const std::string map_file_path)
+{
+    tileMap = new TileMap(map_file_path);
 }
 
 void EditorState::initGUI()
@@ -95,6 +101,19 @@ EditorState::EditorState(StateData *data) : State(data)
     initKeybinds();
     initPauseMenu();
     initTileMap();
+    initGUI();
+    initEditorStateData();
+    initModes();
+}
+
+EditorState::EditorState(StateData *data, const std::string map_file_path) : State(data)
+{
+    initVariables();
+    initEditorCamera();
+    initFonts();
+    initKeybinds();
+    initPauseMenu();
+    initTileMap(map_file_path);
     initGUI();
     initEditorStateData();
     initModes();
@@ -199,24 +218,28 @@ void EditorState::updatePauseMenuInteraction()
 {
     if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("LOAD")))
     {
-        tileMap->loadFromFile("Maps/test.biomap");
-        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Loaded map from Maps/test.biomap");
+        tileMap->loadFromFile(tileMap->getFilePath());
+        data->soundSys->play("CLICK_BUTTON");
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Loaded map from " + tileMap->getFilePath());
     }
 
     else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("SAVE")))
     {
-        tileMap->saveToFile("Maps/test.biomap");
-        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Saved map to Maps/test.biomap");
+        tileMap->saveToFile(tileMap->getFilePath());
+        data->soundSys->play("CLICK_BUTTON");
+        data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Saved map to " + tileMap->getFilePath());
     }
 
     else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("RESUME")))
     {
+        data->soundSys->play("CLICK_BUTTON");
         data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Resuming state.");
         resume();
     }
 
     else if (hasElapsedMouseTimeMax(pauseMenu->isButtonPressed("QUIT")))
     {
+        data->soundSys->play("CLICK_BUTTON");
         data->logger->log("EditorState::updatePauseMenuInteraction", DEBUG, "Quitting state.");
         quit();
     }

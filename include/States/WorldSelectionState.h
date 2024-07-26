@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "GameState.h"
+#include "EditorState.h"
 
 class WorldSelectionState : public State
 {
