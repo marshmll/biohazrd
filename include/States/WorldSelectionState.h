@@ -116,6 +116,18 @@ private:
 		/* MODIFIERS ============================================================================================= */
 
 		void deselect() { selected = false; }
+
+		void setYPosition(const sf::VideoMode &vm, const float y)
+		{
+			bg.setPosition(vm.width / 2.f - bg.getSize().x / 2.f, y);
+			icon.setPosition(bg.getPosition());
+
+			titleText.setPosition(bg.getPosition().x + icon.getSize().x + gui::p2pX(vm, 1.f),
+								  bg.getPosition().y + gui::p2pY(vm, 1.f));
+
+			descriptionText.setPosition(bg.getPosition().x + icon.getSize().x + gui::p2pX(vm, 1.f),
+										bg.getPosition().y + titleText.getGlobalBounds().height + gui::p2pY(vm, 2.f));
+		}
 	};
 
 	/* VARIABLES ================================================================================================= */
@@ -166,6 +178,8 @@ public:
 	void updateInput(const float &dt);
 
 	void updateGUI(const float &dt);
+
+	void updateWorldDescriptors();
 
 	void renderGUI(sf::RenderTarget &target);
 };

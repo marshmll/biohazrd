@@ -111,8 +111,6 @@ void WorldSelectionState::initGUI()
         {
             if (fpath.substr(fpath.size() - 7, 7) == ".biomap")
             {
-                std::cout << fpath << "\n";
-
                 std::string title;
                 std::string description;
                 std::time_t creation_time;
@@ -147,7 +145,7 @@ void WorldSelectionState::initGUI()
     data->logger->log("WorldSelectionState::initGUI", INFO, "Loaded " + std::to_string(counter) + " map files.");
 
     deleteConfirmationModal = new gui::ConfirmationModal(
-        "Do you want to delete the world?", gui::calc_char_size(vm, 80),
+        "Do you want to delete the world forever?", gui::calc_char_size(vm, 90),
         sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 220), font, vm);
 }
 
@@ -199,11 +197,17 @@ void WorldSelectionState::updateGUI(const float &dt)
     {
         if (deleteConfirmationModal->isAnswered())
         {
-            std::cout << "Answer: " << deleteConfirmationModal->getAnswer() << "\n";
-
-            if (deleteConfirmationModal->getAnswer())
+            if (deleteConfirmationModal->getAnswer() == true)
             {
-                std::cout << selectedDescriptor->getFilename() << "\n";
+                std::cout << "WorldSelectionState::UpdateGUI > Deleting " << selectedDescriptor->filename << "\n";
+
+                remove(selectedDescriptor->filename.c_str());
+                delete selectedDescriptor;
+
+                worldDescriptors.erase(std::find(worldDescriptors.begin(), worldDescriptors.end(), selectedDescriptor));
+                selectedDescriptor = nullptr;
+
+                updateWorldDescriptors();
             }
 
             data->soundSys->play("CLICK_BUTTON");
@@ -261,6 +265,18 @@ void WorldSelectionState::updateGUI(const float &dt)
     {
         deleteConfirmationModal->setAnswered(false);
         deleteConfirmationModal->setActive(true);
+    }
+}
+
+void WorldSelectionState::updateWorldDescriptors()
+{
+    int counter = 0;
+
+    for (auto &descriptor : worldDescriptors)
+    {
+        descriptor->setYPosition(vm, gui::p2pY(vm, 20.f + (counter * 15.f)));
+
+        ++counter;
     }
 }
 
