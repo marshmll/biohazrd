@@ -89,7 +89,7 @@ namespace gui
 
         /**
          * @brief Creates a button instance WITH TEXT.
-         * 
+         *
          * @param x The x position
          * @param y The y position
          * @param width The width in pixels
@@ -119,7 +119,7 @@ namespace gui
 
         /**
          * @brief Creates a button instance WITH IMAGE.
-         * 
+         *
          * @param x The x position
          * @param y The y position
          * @param width The width in pixels
@@ -503,6 +503,62 @@ namespace gui
          * @return std::map<std::string, Button*>&
          */
         std::map<std::string, gui::Button *> &getButtons();
+    };
+
+    /**********************************************************************************************************
+     *
+     * CONFIRMATION MODAL
+     *
+     *********************************************************************************************************/
+
+    class ConfirmationModal
+    {
+    private:
+        /* VARIABLES ============================================================================================= */
+
+        sf::RectangleShape bg;
+        sf::RectangleShape container;
+
+        sf::Text text;
+
+        gui::Button *confirmBtn;
+        gui::Button *denyBtn;
+
+        bool active;
+
+        bool answered;
+        bool answer;
+
+    public:
+        /* CONSTRUCTOR AND DESTRUCTOR ============================================================================ */
+
+        ConfirmationModal(const std::string msg, const unsigned char_size,
+                          const sf::Color bg_color, const sf::Color container_color,
+                          sf::Font &font, const sf::VideoMode &vm);
+
+        virtual ~ConfirmationModal();
+
+        /* FUNCTIONS ============================================================================================= */
+
+        void update(const float &dt, sf::Vector2f mouse_pos);
+
+        void render(sf::RenderTarget &target);
+
+        /* ACCESSORS ============================================================================================= */
+
+        const bool isAnswered() const;
+
+        const bool getAnswer() const;
+
+        const bool isActive() const;
+
+        /* MODIFIERS ============================================================================================= */
+
+        void setAnswered(const bool answered);
+
+        void setAnswer(const bool answer);
+
+        void setActive(const bool active);
     };
 
     /**********************************************************************************************************

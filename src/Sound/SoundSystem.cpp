@@ -20,6 +20,8 @@ const bool SoundSystem::loadBuffers(const std::string file_section)
         ++loaded_amount;
     }
 
+    std::cout << "SoundSystem: Loaded " << loaded_amount << " sound files." << "\n";
+
     return loaded_amount > 0;
 }
 

@@ -733,11 +733,133 @@ std::map<std::string, gui::Button *> &gui::PauseMenu::getButtons()
 
 /**********************************************************************************************************
  *
+ * CONFIRMATION MODAL
+ *
+ *********************************************************************************************************/
+
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+
+gui::ConfirmationModal::ConfirmationModal(const std::string msg, const unsigned char_size,
+                                          const sf::Color bg_color, const sf::Color container_color,
+                                          sf::Font &font, const sf::VideoMode &vm)
+{
+    bg.setSize(sf::Vector2f(vm.width, vm.height));
+    bg.setPosition(0.f, 0.f);
+    bg.setFillColor(bg_color);
+
+    container.setSize(sf::Vector2f(.5f * vm.width, .5f * vm.height));
+    container.setPosition(vm.width / 2.f - container.getSize().x / 2.f,
+                          vm.height / 2.f - container.getSize().y / 2.f);
+    container.setFillColor(container_color);
+
+    text.setFont(font);
+    text.setCharacterSize(char_size);
+    text.setString(msg);
+    text.setPosition(container.getPosition().x + container.getSize().x / 2.f - text.getGlobalBounds().width / 2.f,
+                     container.getPosition().y + gui::p2pY(vm, 2.f));
+
+    confirmBtn = new gui::Button(
+        container.getPosition().x + gui::p2pX(vm, 1.f), container.getPosition().y + container.getSize().y - gui::p2pY(vm, 6.f),
+        container.getSize().x / 2.f - gui::p2pX(vm, 1.f), gui::p2pY(vm, 5.f),
+        font, "Yes", gui::calc_char_size(vm, 120),
+        sf::Color(255, 255, 255, 250), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(150, 70, 70, 250), sf::Color(200, 150, 150, 250), sf::Color(50, 20, 20, 50));
+
+    denyBtn = new gui::Button(
+        container.getPosition().x + container.getSize().x / 2.f, container.getPosition().y + container.getSize().y - gui::p2pY(vm, 6.f),
+        container.getSize().x / 2.f - gui::p2pX(vm, 1.f), gui::p2pY(vm, 5.f),
+        font, "No", gui::calc_char_size(vm, 120),
+        sf::Color(255, 255, 255, 250), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 70, 70, 250), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));
+
+    answered = true;
+    answer = false;
+    active = false;
+}
+
+gui::ConfirmationModal::~ConfirmationModal()
+{
+    delete confirmBtn;
+    delete denyBtn;
+}
+
+/* FUNCTIONS ===================================================================================================== */
+
+void gui::ConfirmationModal::update(const float &dt, sf::Vector2f mouse_pos)
+{
+    if (active)
+    {
+        confirmBtn->update(mouse_pos);
+        denyBtn->update(mouse_pos);
+
+        if (confirmBtn->isPressed() && !answered)
+        {
+            answer = true;
+            answered = true;
+        }
+        else if (denyBtn->isPressed() && !answered)
+        {
+            answer = false;
+            answered = true;
+        }
+    }
+}
+
+void gui::ConfirmationModal::render(sf::RenderTarget &target)
+{
+    if (active)
+    {
+        target.draw(bg);
+        target.draw(container);
+
+        target.draw(text);
+
+        confirmBtn->render(target);
+        denyBtn->render(target);
+    }
+}
+
+/* ACCESSORS ===================================================================================================== */
+
+const bool gui::ConfirmationModal::isAnswered() const
+{
+    return answered;
+}
+
+const bool gui::ConfirmationModal::getAnswer() const
+{
+    return answer;
+}
+
+const bool gui::ConfirmationModal::isActive() const
+{
+    return active;
+}
+
+/* MODIFIERS ===================================================================================================== */
+
+void gui::ConfirmationModal::setAnswered(const bool answered)
+{
+    this->answered = answered;
+}
+
+void gui::ConfirmationModal::setAnswer(const bool answer)
+{
+    this->answer = answer;
+}
+
+void gui::ConfirmationModal::setActive(const bool active)
+{
+    this->active = active;
+}
+
+/**********************************************************************************************************
+ *
  * TEXTURE SELECTOR
  *
  *********************************************************************************************************/
 
-/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 gui::TextureSelector::TextureSelector(
     const float btn_x, const float btn_y,

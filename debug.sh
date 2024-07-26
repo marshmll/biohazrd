@@ -14,7 +14,6 @@ cp -r src/Config/ Debug/bin/
 cp -r src/Fonts/ Debug/bin/
 cp -r src/Maps/ Debug/bin/
 cp -r src/Shaders/ Debug/bin/
-cp -r src/Logs/ Debug/bin/
 
 clear
 cd Debug/ &&
@@ -30,4 +29,3 @@ cp -r Debug/bin/Config src/
 cp -r Debug/bin/Fonts src/
 cp -r Debug/bin/Maps src/
 cp -r Debug/bin/Shaders src/
-cp -r Debug/bin/Logs src/

@@ -95,39 +95,60 @@ void WorldSelectionState::initGUI()
         sf::Color(100, 100, 100, 250), sf::Color(120, 120, 120, 250), sf::Color(80, 80, 80, 250));
 
     // Map descriptors
-    IniParser parser("Maps/maps.ini");
-    std::vector<std::pair<std::string, std::string>> maps = parser.getAllKeyValuePairs("Maps");
+
+    std::vector<std::string> map_filepaths;
+
+    DIR *dirp = opendir("Maps/");
+    struct dirent *dp;
 
     int counter = 0;
-
-    for (auto &[key, filename] : maps)
+    while ((dp = readdir(dirp)) != NULL)
     {
-        std::string title;
-        std::string description;
-        std::time_t creation_time;
+        std::string fpath = "Maps/";
+        fpath.append(dp->d_name);
 
-        std::ifstream ifs(filename);
-
-        if (!ifs.is_open())
+        if (fpath.size() > 7) // .biomap
         {
-            data->logger->log("WorldSelectionState::initGUI", ERROR, "An error ocurred while trying to open file: " + filename);
-            ErrorHandler::throwErr("WORDLSELECTIONSTATE::INITGUI::ERR_COULD_NOT_OPEN_FILE: " + filename);
+            if (fpath.substr(fpath.size() - 7, 7) == ".biomap")
+            {
+                std::cout << fpath << "\n";
+
+                std::string title;
+                std::string description;
+                std::time_t creation_time;
+
+                std::ifstream ifs(fpath);
+
+                if (!ifs.is_open())
+                {
+                    data->logger->log("WorldSelectionState::initGUI", ERROR,
+                                      "An error ocurred while trying to open file: " + fpath);
+
+                    ErrorHandler::throwErr("WORDLSELECTIONSTATE::INITGUI::ERR_COULD_NOT_OPEN_FILE: " + fpath);
+                }
+
+                std::getline(ifs, title);
+                std::getline(ifs, description);
+                ifs >> creation_time;
+
+                ifs.close();
+
+                worldDescriptors.push_back(new WorldDescriptorBox(fpath, title, description, creation_time,
+                                                                  font, vm, gui::p2pY(vm, 20.f + (counter * 15.f)),
+                                                                  iconTexture));
+
+                ++counter;
+            }
         }
-
-        std::getline(ifs, title);
-        std::getline(ifs, description);
-        ifs >> creation_time;
-
-        ifs.close();
-
-        worldDescriptors.push_back(new WorldDescriptorBox(filename, title, description, creation_time,
-                                                          font, vm, gui::p2pY(vm, 20.f + (counter * 15.f)),
-                                                          iconTexture));
-
-        ++counter;
     }
 
+    closedir(dirp);
+
     data->logger->log("WorldSelectionState::initGUI", INFO, "Loaded " + std::to_string(counter) + " map files.");
+
+    deleteConfirmationModal = new gui::ConfirmationModal(
+        "Do you want to delete the world?", gui::calc_char_size(vm, 80),
+        sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 220), font, vm);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -148,6 +169,8 @@ WorldSelectionState::~WorldSelectionState()
 
     for (auto &descriptor : worldDescriptors)
         delete descriptor;
+
+    delete deleteConfirmationModal;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -170,6 +193,27 @@ void WorldSelectionState::updateInput(const float &dt)
 
 void WorldSelectionState::updateGUI(const float &dt)
 {
+    deleteConfirmationModal->update(dt, mousePosView);
+
+    if (deleteConfirmationModal->isActive())
+    {
+        if (deleteConfirmationModal->isAnswered())
+        {
+            std::cout << "Answer: " << deleteConfirmationModal->getAnswer() << "\n";
+
+            if (deleteConfirmationModal->getAnswer())
+            {
+                std::cout << selectedDescriptor->getFilename() << "\n";
+            }
+
+            data->soundSys->play("CLICK_BUTTON");
+
+            deleteConfirmationModal->setActive(false);
+        }
+
+        return;
+    }
+
     for (auto &[key, button] : buttons)
     {
         button->update(mousePosView);
@@ -210,9 +254,13 @@ void WorldSelectionState::updateGUI(const float &dt)
 
         data->states->pop();
 
-
         data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new GameState from the map: " + selectedDescriptor->getFilename());
         data->states->push(new GameState(data, selectedDescriptor->getFilename()));
+    }
+    else if (hasElapsedMouseTimeMax(buttons.at("DELETE")->isPressed()) && selectedDescriptor != nullptr)
+    {
+        deleteConfirmationModal->setAnswered(false);
+        deleteConfirmationModal->setActive(true);
     }
 }
 
@@ -230,4 +278,6 @@ void WorldSelectionState::renderGUI(sf::RenderTarget &target)
 
     for (auto &descriptor : worldDescriptors)
         descriptor->render(target);
+
+    deleteConfirmationModal->render(target);
 }

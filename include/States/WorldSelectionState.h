@@ -138,6 +138,8 @@ private:
 
 	WorldDescriptorBox *selectedDescriptor;
 
+	gui::ConfirmationModal *deleteConfirmationModal;
+
 	/* INITIALIZERS ============================================================================================== */
 
 	void initVariables();
