@@ -94,8 +94,13 @@ void WorldSelectionState::initGUI()
         sf::Color(255, 255, 255, 255), sf::Color(250, 250, 250, 255), sf::Color(20, 20, 20, 50),
         sf::Color(100, 100, 100, 250), sf::Color(120, 120, 120, 250), sf::Color(80, 80, 80, 250));
 
-    // Map descriptors
+    deleteConfirmationModal = new gui::ConfirmationModal(
+        "Do you want to delete the world forever?", gui::calc_char_size(vm, 90),
+        sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 220), font, vm);
+}
 
+void WorldSelectionState::initWorldDescriptors()
+{
     std::vector<std::string> map_filepaths;
 
     DIR *dirp = opendir("Maps/");
@@ -111,8 +116,6 @@ void WorldSelectionState::initGUI()
         {
             if (fpath.substr(fpath.size() - 7, 7) == ".biomap")
             {
-                std::cout << dp->d_name << "\n";
-
                 std::string title;
                 std::string description;
                 std::time_t creation_time;
@@ -121,10 +124,11 @@ void WorldSelectionState::initGUI()
 
                 if (!ifs.is_open())
                 {
-                    data->logger->log("WorldSelectionState::initGUI", ERROR,
+                    data->logger->log("WorldSelectionState::initWorldDescriptors", ERROR,
                                       "An error ocurred while trying to open file: " + fpath);
 
-                    ErrorHandler::throwErr("WORDLSELECTIONSTATE::INITGUI::ERR_COULD_NOT_OPEN_FILE: " + fpath);
+                    ErrorHandler::throwErr(
+                        "WORDLSELECTIONSTATE::INITWORLDDESCRIPTORS::ERR_COULD_NOT_OPEN_FILE: " + fpath);
                 }
 
                 std::getline(ifs, title);
@@ -133,9 +137,10 @@ void WorldSelectionState::initGUI()
 
                 ifs.close();
 
-                worldDescriptors.push_back(new WorldDescriptorBox(fpath, title, description, creation_time,
-                                                                  font, vm, gui::p2pY(vm, 20.f + (counter * 15.f)),
-                                                                  iconTexture));
+                worldDescriptors.push_back(
+                    new WorldDescriptorBox(fpath, title, description, creation_time,
+                                           font, vm, gui::p2pY(vm, 20.f + (counter * 15.f)),
+                                           iconTexture));
 
                 ++counter;
             }
@@ -145,10 +150,6 @@ void WorldSelectionState::initGUI()
     closedir(dirp);
 
     data->logger->log("WorldSelectionState::initGUI", INFO, "Loaded " + std::to_string(counter) + " map files.");
-
-    deleteConfirmationModal = new gui::ConfirmationModal(
-        "Do you want to delete the world forever?", gui::calc_char_size(vm, 90),
-        sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 220), font, vm);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
@@ -160,6 +161,7 @@ WorldSelectionState::WorldSelectionState(StateData *data)
     initKeybinds();
     initFonts();
     initGUI();
+    initWorldDescriptors();
 }
 
 WorldSelectionState::~WorldSelectionState()

@@ -1,7 +1,6 @@
 #ifndef WORLDSELECTIONSTATE_H_
 #define WORLDSELECTIONSTATE_H_
 
-#include "State.h"
 #include "GameState.h"
 #include "EditorState.h"
 
@@ -155,33 +154,97 @@ private:
 
 	/* INITIALIZERS ============================================================================================== */
 
+	/**
+	 * @brief Initializes variables for the state.
+	 *
+	 * @return void
+	 */
 	void initVariables();
 
+	/**
+	 * @brief Initializes keybinds for the state.
+	 *
+	 * @return void
+	 */
 	void initKeybinds();
 
+	/**
+	 * @brief Initializes fonts for the state.
+	 *
+	 * @return void
+	 */
 	void initFonts();
 
+	/**
+	 * @brief Initializes GUI elements for the state.
+	 *
+	 * @return void
+	 */
 	void initGUI();
+
+	/**
+	 * @brief Initializes the world description selection
+	 * boxes for the state.
+	 *
+	 * @return void
+	 */
+	void initWorldDescriptors();
 
 public:
 	/* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
+	/**
+	 * @brief This State is responsible for managing map/world loading,
+	 * deleting, creatng editing and saving.
+	 */
 	WorldSelectionState(StateData *data);
 
 	virtual ~WorldSelectionState();
 
 	/* FUNCTIONS ================================================================================================= */
 
+	/**
+	 * @brief Updates all elements of the state.
+	 *
+	 * @return void
+	 */
 	void update(const float &dt);
 
+	/**
+	 * @brief Renders all elements of the state.
+	 *
+	 * @return void
+	 */
 	void render(sf::RenderTarget &target);
 
+	/**
+	 * @brief Updates user input in the state.
+	 *
+	 * @return void
+	 */
 	void updateInput(const float &dt);
 
+	/**
+	 * @brief Updates the state's GUI.
+	 *
+	 * @return void
+	 */
 	void updateGUI(const float &dt);
 
+	/**
+	 * @brief Updates all World Selection Boxes of the state.
+	 *
+	 * @note Called just when deleting or creating a new world.
+	 *
+	 * @return void
+	 */
 	void updateWorldDescriptors();
 
+	/**
+	 * @brief Renders all GUI elements into the screen.
+	 *
+	 * @return void
+	 */
 	void renderGUI(sf::RenderTarget &target);
 };
 
