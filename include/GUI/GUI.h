@@ -563,6 +563,61 @@ namespace gui
 
     /**********************************************************************************************************
      *
+     * WORLD DATA MODAL
+     *
+     *********************************************************************************************************/
+
+    class WorldDataModal
+    {
+    private:
+        /* VARIABLES ============================================================================================= */
+
+        sf::RectangleShape bg;
+        sf::RectangleShape container;
+
+        gui::TextInput *titleInput;
+        gui::TextInput *descriptionInput;
+
+        gui::Button *confirmBtn;
+        gui::Button *denyBtn;
+
+        bool active;
+
+        bool answered;
+
+    public:
+        /* CONSTRUCTOR AND DESTRUCTOR ============================================================================ */
+
+        WorldDataModal(const sf::Color bg_color, const sf::Color container_color,
+                       sf::Font &font, const sf::VideoMode &vm);
+
+        virtual ~WorldDataModal();
+
+        /* FUNCTIONS ============================================================================================= */
+
+        void update(const float &dt, sf::Vector2f mouse_pos);
+
+        void render(sf::RenderTarget &target);
+
+        /* ACCESSORS ============================================================================================= */
+
+        const bool isAnswered() const;
+
+        const bool getAnswer() const;
+
+        const bool isActive() const;
+
+        /* MODIFIERS ============================================================================================= */
+
+        void setAnswered(const bool answered);
+
+        void setAnswer(const bool answer);
+
+        void setActive(const bool active);
+    };
+
+    /**********************************************************************************************************
+     *
      * TEXTURE SELECTOR
      *
      *********************************************************************************************************/

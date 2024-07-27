@@ -152,6 +152,8 @@ private:
 
 	gui::ConfirmationModal *deleteConfirmationModal;
 
+	gui::WorldDataModal *worldDataModal;
+
 	/* INITIALIZERS ============================================================================================== */
 
 	/**

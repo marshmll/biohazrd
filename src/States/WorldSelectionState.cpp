@@ -97,6 +97,8 @@ void WorldSelectionState::initGUI()
     deleteConfirmationModal = new gui::ConfirmationModal(
         "Do you want to delete the world forever?", gui::calc_char_size(vm, 90),
         sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 220), font, vm);
+
+    worldDataModal = new gui::WorldDataModal(sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 220), font, vm);
 }
 
 void WorldSelectionState::initWorldDescriptors()
@@ -173,6 +175,7 @@ WorldSelectionState::~WorldSelectionState()
         delete descriptor;
 
     delete deleteConfirmationModal;
+    delete worldDataModal;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -196,6 +199,7 @@ void WorldSelectionState::updateInput(const float &dt)
 void WorldSelectionState::updateGUI(const float &dt)
 {
     deleteConfirmationModal->update(dt, mousePosView);
+    worldDataModal->update(dt, mousePosView);
 
     if (deleteConfirmationModal->isActive())
     {
@@ -219,6 +223,11 @@ void WorldSelectionState::updateGUI(const float &dt)
             deleteConfirmationModal->setActive(false);
         }
 
+        return;
+    }
+
+    if (worldDataModal->isActive())
+    {
         return;
     }
 
@@ -279,6 +288,11 @@ void WorldSelectionState::updateGUI(const float &dt)
         data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Pushing a new EditorState from the map: " + selectedDescriptor->filename);
         data->states->push(new EditorState(data, selectedDescriptor->filename));
     }
+    else if (hasElapsedMouseTimeMax(buttons.at("CREATE")->isPressed()))
+    {
+        worldDataModal->setAnswered(false);
+        worldDataModal->setActive(true);
+    }
 }
 
 void WorldSelectionState::updateWorldDescriptors()
@@ -309,4 +323,6 @@ void WorldSelectionState::renderGUI(sf::RenderTarget &target)
         descriptor->render(target);
 
     deleteConfirmationModal->render(target);
+
+    worldDataModal->render(target);
 }

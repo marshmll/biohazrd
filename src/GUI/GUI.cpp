@@ -855,6 +855,138 @@ void gui::ConfirmationModal::setActive(const bool active)
 
 /**********************************************************************************************************
  *
+ * WORLD DATA MODAL
+ *
+ *********************************************************************************************************/
+
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+
+gui::WorldDataModal::WorldDataModal(const sf::Color bg_color, const sf::Color container_color,
+                                    sf::Font &font, const sf::VideoMode &vm)
+{
+    bg.setSize(sf::Vector2f(vm.width, vm.height));
+    bg.setPosition(0.f, 0.f);
+    bg.setFillColor(bg_color);
+
+    container.setSize(sf::Vector2f(.5f * vm.width, .5f * vm.height));
+    container.setPosition(vm.width / 2.f - container.getSize().x / 2.f,
+                          vm.height / 2.f - container.getSize().y / 2.f);
+    container.setFillColor(container_color);
+
+    titleInput = new gui::TextInput(container.getPosition().x + container.getSize().x / 2.f - (container.getSize().x * .8f) / 2.f,
+                                    container.getPosition().y + gui::p2pY(vm, 5.f),
+                                    container.getSize().x * .8f, gui::p2pY(vm, 4.f),
+                                    sf::Color(255, 255, 255, 250), sf::Color::Black,
+                                    gui::calc_char_size(vm, 120), font);
+
+    descriptionInput = new gui::TextInput(container.getPosition().x + container.getSize().x / 2.f - (container.getSize().x * .8f) / 2.f,
+                                          container.getPosition().y + gui::p2pY(vm, 10.f),
+                                          container.getSize().x * .8f, gui::p2pY(vm, 8.f),
+                                          sf::Color(255, 255, 255, 250), sf::Color::Black,
+                                          gui::calc_char_size(vm, 120), font);
+
+    confirmBtn = new gui::Button(
+        container.getPosition().x + gui::p2pX(vm, 1.f), container.getPosition().y + container.getSize().y - gui::p2pY(vm, 6.f),
+        container.getSize().x / 2.f - gui::p2pX(vm, 1.f), gui::p2pY(vm, 5.f),
+        font, "Create", gui::calc_char_size(vm, 120),
+        sf::Color(255, 255, 255, 250), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(70, 150, 70, 250), sf::Color(150, 200, 150, 250), sf::Color(20, 50, 20, 50));
+
+    denyBtn = new gui::Button(
+        container.getPosition().x + container.getSize().x / 2.f, container.getPosition().y + container.getSize().y - gui::p2pY(vm, 6.f),
+        container.getSize().x / 2.f - gui::p2pX(vm, 1.f), gui::p2pY(vm, 5.f),
+        font, "Cancel", gui::calc_char_size(vm, 120),
+        sf::Color(255, 255, 255, 250), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+        sf::Color(150, 70, 70, 250), sf::Color(200, 150, 150, 250), sf::Color(50, 20, 20, 50));
+
+    answered = true;
+    active = false;
+}
+
+gui::WorldDataModal::~WorldDataModal()
+{
+    delete titleInput;
+    delete descriptionInput;
+    delete confirmBtn;
+    delete denyBtn;
+}
+
+/* FUNCTIONS ===================================================================================================== */
+
+void gui::WorldDataModal::update(const float &dt, sf::Vector2f mouse_pos)
+{
+    if (active)
+    {
+        titleInput->update();
+        descriptionInput->update();
+
+        confirmBtn->update(mouse_pos);
+        denyBtn->update(mouse_pos);
+
+        if (confirmBtn->isPressed())
+        {
+            answered = true;
+        }
+        else if (denyBtn->isPressed())
+        {
+            answered = true;
+        }
+    }
+}
+
+void gui::WorldDataModal::render(sf::RenderTarget &target)
+{
+    if (active)
+    {
+        target.draw(bg);
+        target.draw(container);
+
+        titleInput->render(target);
+        descriptionInput->render(target);
+
+        confirmBtn->render(target);
+        denyBtn->render(target);
+
+        if (answered)
+            active = false;
+    }
+}
+
+/* ACCESSORS ===================================================================================================== */
+
+const bool gui::WorldDataModal::isAnswered() const
+{
+    return answered;
+}
+
+const bool gui::WorldDataModal::getAnswer() const
+{
+    return false;
+}
+
+const bool gui::WorldDataModal::isActive() const
+{
+    return active;
+}
+
+/* MODIFIERS ===================================================================================================== */
+
+void gui::WorldDataModal::setAnswered(const bool answered)
+{
+    this->answered = answered;
+}
+
+void gui::WorldDataModal::setAnswer(const bool answer)
+{
+}
+
+void gui::WorldDataModal::setActive(const bool active)
+{
+    this->active = active;
+}
+
+/**********************************************************************************************************
+ *
  * TEXTURE SELECTOR
  *
  *********************************************************************************************************/
