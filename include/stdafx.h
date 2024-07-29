@@ -3,6 +3,8 @@
 
 /* DEFINITIONS =================================================================================================== */
 
+#define PI 3.141592f
+
 #define RESET true
 #define DEBUG_MODE true
 #define PRIORITARY true

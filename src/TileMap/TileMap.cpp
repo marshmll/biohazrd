@@ -84,11 +84,19 @@ TileMap::TileMap(const std::string title, const std::string description,
     layer = 0;
 
     saveToFile(file_path);
+
+    worldTimeClock.restart();
+    currentWorldTimeAsDegrees = 0.f; // TODO: LOAD AND SAVE FROM FILE.
+    worldTimeMax = 360.f;
 }
 
 TileMap::TileMap(const std::string map_file_path)
 {
     loadFromFile(map_file_path);
+
+    worldTimeClock.restart();
+    currentWorldTimeAsDegrees = 0.f; // TODO: LOAD AND SAVE FROM FILE.
+    worldTimeMax = 360.f;
 }
 
 TileMap::~TileMap()
@@ -577,6 +585,20 @@ void TileMap::updateMapActiveArea(const sf::Vector2i grid_position, const int wi
         endY = 0;
     else if (endY >= mapGridDimensions.y)
         endY = mapGridDimensions.y;
+}
+
+void TileMap::updateAmbientLight(sf::Vector3f &ambient_light)
+{
+    currentWorldTimeAsDegrees = worldTimeClock.getElapsedTime().asSeconds() / 2.f;
+
+    if (currentWorldTimeAsDegrees >= worldTimeMax)
+        worldTimeClock.restart();
+
+    float time_factor = fabs(sinf(currentWorldTimeAsDegrees * PI / 180.f));
+
+    ambient_light.x = 0.05f + time_factor * (1.f - 0.05f);
+    ambient_light.y = 0.05f + time_factor * (1.f - 0.05f);
+    ambient_light.z = 0.2f + time_factor * (1.f - 0.2f);
 }
 
 /* ACCESSORS =================================================================================================== */

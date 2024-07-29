@@ -240,6 +240,8 @@ public:
      */
     void updateTileMap(const float &dt);
 
+    void updateShaders();
+
     /**
      * @brief Updates button interactions from the pause menu.
      * Executes its functionality.

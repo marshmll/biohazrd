@@ -74,7 +74,7 @@ void GameState::initTextures()
 
 void GameState::initShaders()
 {
-    ambientLight = sf::Vector3f(0.01f, 0.01f, 0.2f);
+    ambientLight = sf::Vector3f(.2f, .2f, .2f);
 
     if (!coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
     {
@@ -83,6 +83,7 @@ void GameState::initShaders()
     }
 
     coreShader.setUniform("ambient", ambientLight);
+    coreShader.setUniform("useVignette", true);
 
     data->logger->log("GameState::initShaders", DEBUG, "Successfully loaded shaders.");
 }
@@ -174,6 +175,7 @@ void GameState::update(const float &dt)
         updatePlayerGUI(dt);
         updateEnemiesAndCombat(dt);
         updateTileMap(dt);
+        updateShaders();
 
         textTagSystem->update(dt);
     }
@@ -335,6 +337,13 @@ void GameState::updateTileMap(const float &dt)
 
     tileMap->updateWorldBoundsCollision(dt, player);
     tileMap->updateTileCollision(dt, player);
+
+    tileMap->updateAmbientLight(ambientLight);
+}
+
+void GameState::updateShaders()
+{
+    coreShader.setUniform("ambient", ambientLight);
 }
 
 void GameState::updatePauseMenuButtons()

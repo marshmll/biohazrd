@@ -29,6 +29,10 @@ private:
     std::string textureFilePath;
     sf::Texture tileTextureSheet;
 
+    sf::Clock worldTimeClock;
+    float currentWorldTimeAsDegrees;
+    float worldTimeMax; // LEAVE AT 360
+
     int startX;
     int endX;
     int startY;
@@ -266,6 +270,8 @@ public:
      * @return void
      */
     void updateMapActiveArea(const sf::Vector2i grid_position, const int width, const int height);
+
+    void updateAmbientLight(sf::Vector3f &ambient_light);
 
     /* ACCESSORS ================================================================================================= */
 
