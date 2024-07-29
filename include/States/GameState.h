@@ -20,6 +20,7 @@ private:
     sf::Text debugText; // TEMP
 
     sf::Shader coreShader;
+    sf::Vector3f ambientLight;
 
     gui::PauseMenu *pauseMenu;
 

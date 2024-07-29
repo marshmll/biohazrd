@@ -3,11 +3,12 @@ varying vec4 vert_pos;
 uniform sampler2D texture;
 uniform bool hasTexture;
 uniform vec2 lightPos;
+uniform vec3 ambient;
 
 void main()
 {
     // Ambient light
-    vec4 ambient = vec4(0.01, 0.01, 0.3, 1.0);
+    vec4 ambient_light = vec4(ambient.x, ambient.y, ambient.z, 1.0);
     
     // Convert light to view coords
     vec2 lightPosTransformed = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
@@ -25,7 +26,7 @@ void main()
     // Multiply it by the color and lighting
     if(hasTexture == true)
     {
-        gl_FragColor = gl_Color * pixel * (clamp(ambient + vec4(1.0-vecLength, 1.0-vecLength, 1.0-vecLength, 1.0), 0.0, 1.0));
+        gl_FragColor = gl_Color * pixel * (clamp(ambient_light + vec4(1.0-vecLength, 1.0-vecLength, 1.0-vecLength, 1.0), 0.0, 1.0));
     }
     else
     {

@@ -74,11 +74,15 @@ void GameState::initTextures()
 
 void GameState::initShaders()
 {
+    ambientLight = sf::Vector3f(0.01f, 0.01f, 0.2f);
+
     if (!coreShader.loadFromFile("Shaders/vertex_shader.vert", "Shaders/fragment_shader.frag"))
     {
         data->logger->log("GameState::initShaders", ERROR, "Could not load shaders.");
         ErrorHandler::throwErr("GAMESTATE::INITSHADERS::ERR_COULD_NOT_LOAD_SHADERS\n");
     }
+
+    coreShader.setUniform("ambient", ambientLight);
 
     data->logger->log("GameState::initShaders", DEBUG, "Successfully loaded shaders.");
 }
