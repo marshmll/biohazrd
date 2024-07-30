@@ -589,7 +589,7 @@ void TileMap::updateMapActiveArea(const sf::Vector2i grid_position, const int wi
 
 void TileMap::updateAmbientLight(sf::Vector3f &ambient_light)
 {
-    currentWorldTimeAsDegrees = worldTimeClock.getElapsedTime().asSeconds() / 2.f;
+    currentWorldTimeAsDegrees = worldTimeClock.getElapsedTime().asSeconds() / 4.f;
 
     if (currentWorldTimeAsDegrees >= worldTimeMax)
         worldTimeClock.restart();
