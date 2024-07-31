@@ -206,19 +206,15 @@ void GameState::renderToBuffer()
 
     renderBuffer.setView(playerCamera);
 
-    tileMap->render(
-        renderBuffer, playerCameraPosGrid,
-        vm, DO_NOT_SHOW_COL_BOX, USE_DEFERRED_RENDER,
-        &coreShader, player->getCenteredPosition());
+    tileMap->render(renderBuffer, playerCameraPosGrid, vm, DO_NOT_SHOW_COL_BOX, USE_DEFERRED_RENDER,
+                    &coreShader, player->getCenteredPosition());
 
     for (auto &enemy : activeEnemies)
         enemy->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
     player->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
-    tileMap->deferredRender(
-        renderBuffer,
-        &coreShader, player->getCenteredPosition());
+    tileMap->deferredRender(renderBuffer, &coreShader, player->getCenteredPosition());
 
     renderBuffer.setView(playerCamera);
     textTagSystem->render(renderBuffer);
