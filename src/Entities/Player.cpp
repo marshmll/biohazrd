@@ -50,8 +50,8 @@ Player::Player(const float x, const float y, sf::Texture &texture_sheet)
     initVariables();
     setPosition(sf::Vector2f(x, y));
 
-    createHitboxComponent(75.f, 90.f, 42.f, 42.f);
-    createMovementComponent(180.f, 1200.f, 800.f);
+    createHitboxComponent(40.f, 50.f, 16.f, 16.f);
+    createMovementComponent(120.f, 1000.f, 600.f);
     createAnimationComponent(texture_sheet);
     createAttributeComponent(1);
     createSkillComponent();

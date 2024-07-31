@@ -18,7 +18,7 @@ void Engine::initVariables()
 
     dt = 0.f;
 
-    gridSize = 64.f; // Tile size.
+    gridSize = 32.f; // Tile size.
 }
 
 void Engine::initGraphicsSettings()

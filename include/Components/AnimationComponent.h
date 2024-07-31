@@ -55,7 +55,7 @@ private:
 
             this->sprite.setTextureRect(this->startCropRect);
 
-            this->sprite.setScale(3.f, 3.f);
+            this->sprite.setScale(1.5f, 1.5f);
         }
 
         virtual ~Animation() {}

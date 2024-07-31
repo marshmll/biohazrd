@@ -21,9 +21,9 @@ void GameState::initBufferedRender()
 
 void GameState::initView()
 {
-    playerCamera.setSize(sf::Vector2f(vm.width, vm.height));
+    playerCamera.setSize(sf::Vector2f(vm.width / 2.f, vm.height / 2.f));
 
-    playerCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
+    playerCamera.setCenter((vm.width / 2.f) / 2.f, (vm.height / 2.f) / 2.f);
 }
 
 void GameState::initKeybinds()
@@ -210,9 +210,9 @@ void GameState::renderToBuffer()
                     &coreShader, player->getCenteredPosition());
 
     for (auto &enemy : activeEnemies)
-        enemy->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
+        enemy->render(renderBuffer, SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
-    player->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
+    player->render(renderBuffer, SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
     tileMap->deferredRender(renderBuffer, &coreShader, player->getCenteredPosition());
 
