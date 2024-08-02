@@ -17,10 +17,10 @@ void EnemyEditorMode::initGUI()
 {
     // Cursor text
     cursorText.setFont(*editorData->font);
-    cursorText.setCharacterSize(12);
+    cursorText.setCharacterSize(8);
 
     // Sidebar
-    sidebar.setSize(sf::Vector2f(data->gridSize, data->gfxSettings->resolution.height));
+    sidebar.setSize(sf::Vector2f(64.f, data->gfxSettings->resolution.height));
     sidebar.setFillColor(sf::Color(50, 50, 50, 100));
     sidebar.setOutlineThickness(1.f);
     sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
