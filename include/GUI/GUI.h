@@ -330,6 +330,24 @@ namespace gui
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ========================================================================== */
 
+        /**
+         * @brief Creates a IncrementInput instance. A IncrementInput is numeric input
+         * which allows increasing and decreasing the value by a given step.
+         *
+         * @param x The x position
+         * @param y The y position
+         * @param width The input width
+         * @param height The input height
+         * @param step The increment/decrement step
+         * @param bg_color The background color of the input.
+         * @param buttons_idle_color The idle color of the buttons.
+         * @param buttons_hover_color The hover color of the buttons.
+         * @param buttons_active_color The active color of the buttons.
+         * @param font A font reference.
+         * @param text_color The color of the text.
+         * @param char_size The text's character size.
+         * @param initial_value The value the input stars with.
+         */
         IncrementInput(const float x, const float y, const float width, const float height,
                        const float step, const sf::Color bg_color,
                        sf::Color buttons_idle_color, sf::Color buttons_hover_color, sf::Color buttons_active_color,
@@ -339,22 +357,52 @@ namespace gui
 
         /* FUNCTIONS =========================================================================================== */
 
+        /**
+         * @brief Updates the whole input, as text, user input and value.
+         *
+         * @return void
+         */
         void update(const float &dt, sf::Vector2f mouse_pos);
 
+        /**
+         * @brief Renders the input into a target.
+         *
+         * @return void
+         */
         void render(sf::RenderTarget &target);
 
+        /**
+         * @brief Updates the user input and the buttons.
+         *
+         * @return void
+         */
         void updateInput();
 
+        /**
+         * @brief Updates the mouse time.
+         *
+         * @return void
+         */
         void updateMousetime(const float &dt);
 
         /* ACCESSORS =========================================================================================== */
 
+        /**
+         * @brief Returns the input's value.
+         *
+         * @return const float
+         */
         const float getValue() const;
 
         const bool hasCompletedMousetimeCycle(sf::Mouse::Button mouse_btn);
 
         /* MODIFIERS =========================================================================================== */
 
+        /**
+         * @brief Sets the input value to a new value.
+         *
+         * @return void
+         */
         void setValue(const float new_value);
     };
 
@@ -392,6 +440,20 @@ namespace gui
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ======================================================================== */
 
+        /**
+         * @brief Creates a TextInput instance.
+         *
+         * @param x The x position
+         * @param y The y position
+         * @param width The input width
+         * @param height The input height
+         * @param bg_color The color of the input's interior.
+         * @param text_color The text's color.
+         * @param char_size The text's character size.
+         * @param font A font reference.
+         * @param initial_value The value the input starts with. Default = ""
+         * @param active If the input starts being active or not. Default = false
+         */
         TextInput(const float x, const float y, const float width, const float height,
                   const sf::Color &bg_color, const sf::Color &text_color,
                   const unsigned short char_size,
@@ -402,24 +464,60 @@ namespace gui
 
         /* FUNCTIONS ========================================================================================== */
 
+        /**
+         * @brief Update the input if active.
+         * Watch's for key releases and text entered.
+         *
+         * @return void
+         */
         void update(const float &dt, const sf::Vector2f mouse_pos, sf::Event &event);
 
+        /**
+         * @brief Renders the text input if active.
+         *
+         * @return void
+         */
         void render(sf::RenderTarget &target);
 
+        /**
+         * @brief Updates the cursor position when the input changes.
+         *
+         * @return void.
+         */
         void updateCursor(const float &dt);
 
         const bool hasElapsedKeyTimeMax(const bool key_pressed);
 
         /* ACCESSORS ========================================================================================== */
 
+        /**
+         * @brief Returns if the input is active.
+         *
+         @return const bool.
+         */
         const bool isActive() const;
 
+        /**
+         * @brief Returns the input's text content as a string.
+         *
+         * @return const std::string
+         */
         const std::string getString() const;
 
         /* MODIFIERS ========================================================================================== */
 
+        /**
+         * @brief Sets active to the given value
+         *
+         * @return void
+         */
         void setActive(const bool active);
 
+        /**
+         * @brief Sets the input's value to the given string.
+         *
+         * @return void
+         */
         void setString(const std::string str, const bool clear_stream = true);
     };
 
@@ -545,6 +643,16 @@ namespace gui
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ============================================================================ */
 
+        /**
+         * @brief Creates a confirmation modal instance.
+         *
+         * @param msg The message to be displayed
+         * @param char_size The character size.
+         * @param bg_color The color of the background.
+         * @param container_color The color of the container box.
+         * @param font A font reference.
+         * @param vm A videomode reference.
+         */
         ConfirmationModal(const std::string msg, const unsigned char_size,
                           const sf::Color bg_color, const sf::Color container_color,
                           sf::Font &font, const sf::VideoMode &vm);
@@ -553,26 +661,71 @@ namespace gui
 
         /* FUNCTIONS ============================================================================================= */
 
+        /**
+         * @brief Updates the confirmation modal, if active.
+         *
+         * @return void
+         */
         void update(const float &dt, sf::Vector2f mouse_pos);
 
+        /**
+         * @brief Renders the confirmation modal, if active.
+         */
         void render(sf::RenderTarget &target);
 
+        /**
+         * @brief Displays the confirmation modal. Sets itself as
+         * active and set answered to false.
+         *
+         * @return void
+         */
         void display();
 
         /* ACCESSORS ============================================================================================= */
 
+        /**
+         * @brief Returns if the confirmation modal is answered.
+         *
+         * @return const bool
+         */
         const bool isAnswered() const;
 
+        /**
+         * @brief Returns the given answer. Returns true if confirmed,
+         * otherwise false.
+         *
+         * @return const bool
+         */
         const bool getAnswer() const;
 
+        /**
+         * @brief Returns if the modal is active.
+         *
+         * @return const bool
+         */
         const bool isActive() const;
 
         /* MODIFIERS ============================================================================================= */
 
+        /**
+         * @brief Sets answred to the given value.
+         *
+         * @return bool
+         */
         void setAnswered(const bool answered);
 
+        /**
+         * @brief Sets the answer to the given value.
+         *
+         * @return void
+         */
         void setAnswer(const bool answer);
 
+        /**
+         * @brief Sets active to the given value.
+         *
+         * @return void
+         */
         void setActive(const bool active);
     };
 
@@ -602,6 +755,16 @@ namespace gui
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ============================================================================ */
 
+        /**
+         * @brief Creates a instance of a world data modal.
+         * The world data modal is used in the creation and in the edition
+         * of worlds data.
+         *
+         * @param bg_color The color of the background when the modal is active.
+         * @param container_color The color of the modal container.
+         * @param font A font reference.
+         * @param vm A videomode reference.
+         */
         WorldDataModal(const sf::Color bg_color, const sf::Color container_color,
                        sf::Font &font, const sf::VideoMode &vm);
 
@@ -609,26 +772,76 @@ namespace gui
 
         /* FUNCTIONS ============================================================================================= */
 
+        /**
+         * @brief Updates the modal, if active.
+         *
+         * @param dt The delta time.
+         * @param mouse_pos The mouse position.
+         * @param event Engine event reference.
+         *
+         * @return void.
+         */
         void update(const float &dt, sf::Vector2f mouse_pos, sf::Event &event);
 
+        /**
+         * @brief Renders the modal into a target, if active.
+         *
+         * @return void.
+         */
         void render(sf::RenderTarget &target);
 
+        /**
+         * @brief Displays the modal. Sets active to true and
+         * confirmation to false.
+         *
+         * @return void
+         */
         void display();
 
         /* ACCESSORS ============================================================================================= */
 
+        /**
+         * @brief Returns the content of the title TextInput.
+         *
+         * @return const std::string
+         */
         const std::string getTitle() const;
 
+        /**
+         * @brief Returns the content of the description TextInput.
+         *
+         * @return const std::string
+         */
         const std::string getDescription() const;
 
+        /**
+         * @brief Returns if the modal is active.
+         *
+         * @return const bool
+         */
         const bool isActive() const;
 
+        /**
+         * @brief Returns if the modal was submitted.
+         *
+         * @return const bool
+         */
         const bool isConfirmed() const;
 
         /* MODIFIERS ============================================================================================= */
 
+        /**
+         * @brief Sets active to the given value.
+         *
+         * @return void
+         */
         void setActive(const bool active);
 
+        /**
+         * @brief Sets the confirmation to the given value.
+         *
+         * @return void
+         */
         void setConfirmed(const bool confirmed);
     };
 

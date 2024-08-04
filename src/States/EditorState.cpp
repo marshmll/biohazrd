@@ -18,9 +18,8 @@ void EditorState::initVariables()
 
 void EditorState::initEditorCamera()
 {
-    editorCamera.setSize(sf::Vector2f((vm.width / 2.f), (vm.height / 2.f)));
-
-    editorCamera.setCenter((vm.width / 2.f) / 2.f, (vm.height / 2.f) / 2.f);
+    editorCamera.setSize(sf::Vector2f(vm.width, vm.height));
+    editorCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
 }
 
 void EditorState::initKeybinds()

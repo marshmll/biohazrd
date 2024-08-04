@@ -6,7 +6,6 @@
 void Engine::initLogger()
 {
     logger = new Logger(DEBUG_MODE);
-
     logger->begin();
 }
 
@@ -18,7 +17,7 @@ void Engine::initVariables()
 
     dt = 0.f;
 
-    gridSize = 32.f; // Tile size.
+    gridSize = 64.f; // Tile size.
 }
 
 void Engine::initGraphicsSettings()
