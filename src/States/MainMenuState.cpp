@@ -93,12 +93,20 @@ MainMenuState::MainMenuState(StateData *data) : State(data)
     initKeybinds();
     initGUI();
     initSounds();
+
+    test = new gui::WindowBaseFrame(100.f, 100.f, 700.f, 500.f, 30.f, sf::Color(20, 20, 20, 100),
+                                    sf::Color(50, 50, 50, 250), font, "My new Window",
+                                    gui::calc_char_size(vm, 130), sf::Color::White,
+                                    sf::Color(200, 50, 50, 255), sf::Color(255, 50, 50, 255), sf::Color(100, 50, 50, 255),
+                                    sf::Color(200, 200, 200, 200), -2.f);
 }
 
 MainMenuState::~MainMenuState()
 {
     for (auto &[key, button] : buttons)
         delete button;
+
+    delete test;
 }
 
 /* FUNCTIONS ===================================================================================================== */
@@ -108,12 +116,15 @@ void MainMenuState::update(const float &dt)
     updateInput(dt);
     updateSounds();
     updateGUI();
+
+    test->update(dt, mousePosView);
 }
 
 void MainMenuState::render(sf::RenderTarget &target)
 {
     target.draw(background);
     renderGUI(target);
+    test->render(target);
 }
 
 void MainMenuState::updateInput(const float &dt)

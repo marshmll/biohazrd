@@ -56,7 +56,7 @@ gui::Button::Button(
     sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
     sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
-    const short unsigned id)
+    const short unsigned id) : texture(nullptr)
 {
     this->id = id;
     btn_state = BTN_IDLE;
@@ -94,7 +94,7 @@ gui::Button::Button(
     sf::Texture *texture, const float img_w, const float img_h,
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
     sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
-    const short unsigned id)
+    const short unsigned id) : texture(texture)
 {
     this->id = id;
     btn_state = BTN_IDLE;
@@ -206,6 +206,24 @@ void gui::Button::setString(std::string string)
     text.setPosition(
         shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getGlobalBounds().width / 2.f,
         shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getGlobalBounds().height / 2.f);
+}
+
+void gui::Button::setPosition(sf::Vector2f pos)
+{
+    shape.setPosition(pos);
+
+    if (texture == nullptr)
+    {
+        text.setPosition(
+            shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getGlobalBounds().width / 2.f,
+            shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getGlobalBounds().height / 2.f);
+    }
+    else
+    {
+        image.setPosition(
+            shape.getPosition().x + (shape.getSize().x / 2.f) - image.getSize().x / 2.f,
+            shape.getPosition().y + (shape.getSize().y / 2.f) - image.getSize().y / 2.f);
+    }
 }
 
 /**********************************************************************************************************
@@ -627,6 +645,123 @@ void gui::TextInput::setString(const std::string str, const bool clear)
 
 /**********************************************************************************************************
  *
+ * WINDOW BASE FRAME
+ *
+ *********************************************************************************************************/
+
+/* INITIALIZERS ================================================================================================== */
+
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+
+gui::WindowBaseFrame::WindowBaseFrame(
+    const float x, const float y, const float width, const float height, const float titlebar_height,
+    const sf::Color bg_color, const sf::Color titlebar_color,
+    sf::Font &font, const std::string title, const unsigned char_size,
+    const sf::Color title_text_color,
+    const sf::Color btn_idle_color, const sf::Color btn_hover_color, const sf::Color btn_active_color,
+    const sf::Color outline_color, const float outline_thickness, const bool visible)
+{
+    bg.setPosition(x, y);
+    bg.setSize(sf::Vector2f(width, height));
+    bg.setFillColor(bg_color);
+    bg.setOutlineColor(outline_color);
+    bg.setOutlineThickness(outline_thickness);
+
+    titleBar.setPosition(x, y - titlebar_height);
+    titleBar.setSize(sf::Vector2f(width, titlebar_height));
+    titleBar.setFillColor(titlebar_color);
+
+    titleText.setFont(font);
+    titleText.setString(title);
+    titleText.setFillColor(title_text_color);
+    titleText.setCharacterSize(char_size);
+    titleText.setPosition(titleBar.getPosition().x + titleBar.getSize().x / 2.f - titleText.getGlobalBounds().width / 2.f,
+                          titleBar.getPosition().y + titleBar.getSize().y / 2.f - titleText.getGlobalBounds().height / 2.f);
+
+    if (!closeIcon.loadFromFile("Assets/Images/Icons/x_icon.png"))
+        ErrorHandler::printErr("GUI::WINDOWBASEFRAME::WINDOWBASEFRAME::ERR_COULD_NOT_LOAD_ICON");
+
+    closeBtn = new gui::Button(titleBar.getPosition().x + titleBar.getSize().x - titleBar.getSize().y,
+                               titleBar.getPosition().y,
+                               titleBar.getSize().y, titleBar.getSize().y,
+                               &closeIcon, titleBar.getSize().y / 1.5f, titleBar.getSize().y / 1.5f,
+                               btn_idle_color, btn_hover_color, btn_active_color);
+
+    this->visible = visible;
+
+    movementLock = false;
+}
+
+gui::WindowBaseFrame::~WindowBaseFrame()
+{
+    delete closeBtn;
+}
+
+/* FUNCTIONS ===================================================================================================== */
+
+void gui::WindowBaseFrame::update(const float &dt, const sf::Vector2f &mouse_pos)
+{
+    if (isVisible())
+    {
+        closeBtn->update(mouse_pos);
+
+        if (closeBtn->isPressed())
+        {
+            movementLock = false;
+            setVisibility(false);
+        }
+
+        if (titleBar.getGlobalBounds().contains(mouse_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && !movementLock)
+        {
+            movementLock = true;
+            mouse_offset = mouse_pos - titleBar.getPosition();
+        }
+        else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            movementLock = false;
+        }
+
+        if (movementLock)
+        {
+            titleBar.setPosition(mouse_pos.x - mouse_offset.x, mouse_pos.y - mouse_offset.y);
+            titleText.setPosition(titleBar.getPosition().x + titleBar.getSize().x / 2.f - titleText.getGlobalBounds().width / 2.f,
+                                  titleBar.getPosition().y + titleBar.getSize().y / 2.f - titleText.getGlobalBounds().height / 2.f);
+
+            bg.setPosition(titleBar.getPosition().x, titleBar.getPosition().y + titleBar.getSize().y);
+
+            closeBtn->setPosition(sf::Vector2f(titleBar.getPosition().x + titleBar.getSize().x - titleBar.getSize().y,
+                                               titleBar.getPosition().y));
+        }
+    }
+}
+
+void gui::WindowBaseFrame::render(sf::RenderTarget &target)
+{
+    if (isVisible())
+    {
+        target.draw(bg);
+        target.draw(titleBar);
+        target.draw(titleText);
+        closeBtn->render(target);
+    }
+}
+
+const bool gui::WindowBaseFrame::isVisible() const
+{
+    return visible;
+}
+
+void gui::WindowBaseFrame::setVisibility(const bool visibility)
+{
+    visible = visibility;
+}
+
+/* ACCESSORS ===================================================================================================== */
+
+/* MODIFIERS ===================================================================================================== */
+
+/**********************************************************************************************************
+ *
  * PAUSEMENU
  *
  *********************************************************************************************************/
@@ -926,6 +1061,7 @@ void gui::WorldDataModal::update(const float &dt, sf::Vector2f mouse_pos, sf::Ev
         else if (denyBtn->isPressed())
         {
             setConfirmed(false);
+            setActive(false);
         }
     }
 }

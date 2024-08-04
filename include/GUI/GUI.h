@@ -71,6 +71,7 @@ namespace gui
 
         // Image button
         sf::RectangleShape image;
+        sf::Texture *texture;
 
         sf::Color textIdleColor;
         sf::Color textHoverColor;
@@ -205,6 +206,8 @@ namespace gui
          * @return void
          */
         void setString(std::string string);
+
+        void setPosition(sf::Vector2f pos);
     };
 
     /**********************************************************************************************************
@@ -519,6 +522,61 @@ namespace gui
          * @return void
          */
         void setString(const std::string str, const bool clear_stream = true);
+    };
+
+    /**********************************************************************************************************
+     *
+     * WINDOW BASE FRAME
+     *
+     *********************************************************************************************************/
+
+    class WindowBaseFrame
+    {
+    private:
+        /* VARIABLES ============================================================================================= */
+
+        sf::RectangleShape bg;
+        sf::RectangleShape titleBar;
+
+        sf::Text titleText;
+
+        sf::Texture closeIcon;
+        gui::Button *closeBtn;
+        
+        bool visible;
+
+        sf::Vector2f mouse_offset;
+        bool movementLock; 
+
+        /* INITIALIZERS ========================================================================================== */
+
+    public:
+        /* CONSTRUCTOR AND DESTRUCTOR ============================================================================ */
+
+        WindowBaseFrame(
+            const float x, const float y, const float width, const float height, const float titlebar_height,
+            const sf::Color bg_color, const sf::Color titlebar_color,
+            sf::Font &font, const std::string title, const unsigned char_size,
+            const sf::Color title_text_color,
+            const sf::Color btn_idle_color, const sf::Color btn_hover_color, const sf::Color btn_active_color,
+            const sf::Color outline_color = sf::Color::Transparent, const float outline_thickness = 0.f,
+            const bool visible = true);
+
+        virtual ~WindowBaseFrame();
+
+        /* FUNCTIONS ============================================================================================= */
+
+        void update(const float &dt, const sf::Vector2f &mouse_pos);
+
+        void render(sf::RenderTarget &target);
+
+        /* ACCESSORS ============================================================================================= */
+
+        const bool isVisible() const;
+
+        /* MODIFIERS ============================================================================================= */
+
+        void setVisibility(const bool visibility);
     };
 
     /**********************************************************************************************************
