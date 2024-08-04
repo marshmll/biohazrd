@@ -542,11 +542,11 @@ namespace gui
 
         sf::Texture closeIcon;
         gui::Button *closeBtn;
-        
+
         bool visible;
 
         sf::Vector2f mouse_offset;
-        bool movementLock; 
+        bool movementLock;
 
         /* INITIALIZERS ========================================================================================== */
 
@@ -570,11 +570,23 @@ namespace gui
 
         void render(sf::RenderTarget &target);
 
+        void updateMouseDrag(const sf::Vector2f &mouse_pos);
+
         /* ACCESSORS ============================================================================================= */
 
         const bool isVisible() const;
 
+        const sf::FloatRect getGlobalBounds() const;
+
+        const sf::RectangleShape &getTitleBar();
+
+        const sf::RectangleShape &getBackground();
+
+        const bool isDragging() const;
+
         /* MODIFIERS ============================================================================================= */
+
+        void setPosition(const sf::Vector2f &pos);
 
         void setVisibility(const bool visibility);
     };
@@ -916,15 +928,14 @@ namespace gui
 
         float gridSizeF;
         bool active;
-        bool hidden;
 
         float mousetime;
         const float mousetimeMax;
 
-        sf::Texture hideBtnIcon;
-        gui::Button *hideBtn;
+        sf::Texture toggleBtnIcon;
+        gui::Button *toggleBtn;
 
-        sf::RectangleShape bounds;
+        gui::WindowBaseFrame *frame;
         sf::Sprite sheet;
 
         sf::RectangleShape selector;
@@ -942,7 +953,8 @@ namespace gui
                         const float btn_width, const float btn_height,
                         const float txtr_slctr_x, const float txtr_slctr_y,
                         const float txtr_slctr_width, const float txtr_slctr_height,
-                        const float grid_size_f, const sf::Texture *texture_sheet);
+                        const float grid_size_f, const sf::Texture *texture_sheet,
+                        sf::Font &font, const sf::VideoMode &vm);
 
         /**
          * @brief Frees all buttons memory.
@@ -983,6 +995,8 @@ namespace gui
          * @return void
          */
         void updateMousetime(const float &dt);
+
+        void updateMouseDrag(const sf::Vector2f mouse_pos);
 
         /**
          * @brief Closes the texture selector by setting hidden to true.
@@ -1052,8 +1066,8 @@ namespace gui
         float mousetime;
         const float mousetimeMax;
 
-        sf::Texture hideBtnIcon;
-        gui::Button *hideBtn;
+        sf::Texture toggleBtnIcon;
+        gui::Button *toggleBtn;
 
         sf::RectangleShape bounds;
         sf::Sprite sheet;

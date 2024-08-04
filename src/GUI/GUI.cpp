@@ -661,13 +661,13 @@ gui::WindowBaseFrame::WindowBaseFrame(
     const sf::Color btn_idle_color, const sf::Color btn_hover_color, const sf::Color btn_active_color,
     const sf::Color outline_color, const float outline_thickness, const bool visible)
 {
-    bg.setPosition(x, y);
+    bg.setPosition(x, y + titlebar_height);
     bg.setSize(sf::Vector2f(width, height));
     bg.setFillColor(bg_color);
     bg.setOutlineColor(outline_color);
     bg.setOutlineThickness(outline_thickness);
 
-    titleBar.setPosition(x, y - titlebar_height);
+    titleBar.setPosition(x, y);
     titleBar.setSize(sf::Vector2f(width, titlebar_height));
     titleBar.setFillColor(titlebar_color);
 
@@ -709,6 +709,7 @@ void gui::WindowBaseFrame::update(const float &dt, const sf::Vector2f &mouse_pos
         {
             movementLock = false;
             setVisibility(false);
+            return;
         }
 
         if (titleBar.getGlobalBounds().contains(mouse_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && !movementLock)
@@ -723,14 +724,7 @@ void gui::WindowBaseFrame::update(const float &dt, const sf::Vector2f &mouse_pos
 
         if (movementLock)
         {
-            titleBar.setPosition(mouse_pos.x - mouse_offset.x, mouse_pos.y - mouse_offset.y);
-            titleText.setPosition(titleBar.getPosition().x + titleBar.getSize().x / 2.f - titleText.getGlobalBounds().width / 2.f,
-                                  titleBar.getPosition().y + titleBar.getSize().y / 2.f - titleText.getGlobalBounds().height / 2.f);
-
-            bg.setPosition(titleBar.getPosition().x, titleBar.getPosition().y + titleBar.getSize().y);
-
-            closeBtn->setPosition(sf::Vector2f(titleBar.getPosition().x + titleBar.getSize().x - titleBar.getSize().y,
-                                               titleBar.getPosition().y));
+            updateMouseDrag(mouse_pos);
         }
     }
 }
@@ -746,9 +740,49 @@ void gui::WindowBaseFrame::render(sf::RenderTarget &target)
     }
 }
 
+void gui::WindowBaseFrame::updateMouseDrag(const sf::Vector2f &mouse_pos)
+{
+    sf::Vector2f new_position(mouse_pos.x - mouse_offset.x, mouse_pos.y - mouse_offset.y);
+
+    setPosition(new_position);
+}
+
 const bool gui::WindowBaseFrame::isVisible() const
 {
     return visible;
+}
+
+const sf::FloatRect gui::WindowBaseFrame::getGlobalBounds() const
+{
+    return sf::FloatRect(titleBar.getPosition().x, titleBar.getPosition().y,
+                         titleBar.getSize().x, titleBar.getSize().y + bg.getSize().y);
+}
+
+const sf::RectangleShape &gui::WindowBaseFrame::getTitleBar()
+{
+    return titleBar;
+}
+
+const sf::RectangleShape &gui::WindowBaseFrame::getBackground()
+{
+    return bg;
+}
+
+const bool gui::WindowBaseFrame::isDragging() const
+{
+    return movementLock;
+}
+
+void gui::WindowBaseFrame::setPosition(const sf::Vector2f &pos)
+{
+    titleBar.setPosition(pos);
+    titleText.setPosition(titleBar.getPosition().x + titleBar.getSize().x / 2.f - titleText.getGlobalBounds().width / 2.f,
+                          titleBar.getPosition().y + titleBar.getSize().y / 2.f - titleText.getGlobalBounds().height / 2.f);
+
+    bg.setPosition(titleBar.getPosition().x, titleBar.getPosition().y + titleBar.getSize().y);
+
+    closeBtn->setPosition(sf::Vector2f(titleBar.getPosition().x + titleBar.getSize().x - titleBar.getSize().y,
+                                       titleBar.getPosition().y));
 }
 
 void gui::WindowBaseFrame::setVisibility(const bool visibility)
@@ -1137,37 +1171,37 @@ gui::TextureSelector::TextureSelector(
     const float btn_width, const float btn_height,
     const float txtr_slctr_x, const float txtr_slctr_y,
     const float txtr_slctr_width, const float txtr_slctr_height,
-    const float grid_size_f, const sf::Texture *texture_sheet) : mousetime(0.f), mousetimeMax(10.f)
+    const float grid_size_f, const sf::Texture *texture_sheet,
+    sf::Font &font, const sf::VideoMode &vm) : mousetime(0.f), mousetimeMax(10.f)
 {
     gridSizeF = grid_size_f;
     active = false;
-    hidden = true;
     float offset = grid_size_f;
 
-    // Outer box
-    bounds.setSize(sf::Vector2f(txtr_slctr_width, txtr_slctr_height));
-    bounds.setPosition(txtr_slctr_x, txtr_slctr_y);
-    bounds.setFillColor(sf::Color(50, 50, 50, 100));
-
-    bounds.setOutlineThickness(2.f);
-    bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
+    // Window frame
+    frame = new gui::WindowBaseFrame(
+        txtr_slctr_x, txtr_slctr_y, txtr_slctr_width, txtr_slctr_height, 30.f,
+        sf::Color(20, 20, 20, 100), sf::Color(50, 50, 50, 250), font, "Texture Selector",
+        gui::calc_char_size(vm, 130), sf::Color::White,
+        sf::Color(200, 50, 50, 255), sf::Color(255, 50, 50, 255), sf::Color(100, 50, 50, 255),
+        sf::Color(200, 200, 200, 200), -2.f, false);
 
     // Texture sheet
     sheet.setTexture(*texture_sheet);
-    sheet.setPosition(txtr_slctr_x, txtr_slctr_y);
+    sheet.setPosition(frame->getBackground().getPosition().x, frame->getBackground().getPosition().y);
 
     // If the sheet is larger than the outer box
-    if (sheet.getGlobalBounds().width > bounds.getGlobalBounds().width)
+    if (sheet.getGlobalBounds().width > frame->getBackground().getGlobalBounds().width)
     {
         sheet.setTextureRect(
-            sf::IntRect(0, 0, bounds.getGlobalBounds().width, sheet.getGlobalBounds().height));
+            sf::IntRect(0, 0, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
     }
 
     // If the sheet is taller than the outer box
-    if (sheet.getGlobalBounds().height > bounds.getGlobalBounds().height)
+    if (sheet.getGlobalBounds().height > frame->getBackground().getGlobalBounds().height)
     {
         sheet.setTextureRect(
-            sf::IntRect(0, 0, sheet.getGlobalBounds().width, bounds.getGlobalBounds().height));
+            sf::IntRect(0, 0, sheet.getGlobalBounds().width, frame->getBackground().getGlobalBounds().height));
     }
 
     // Selector Box
@@ -1181,18 +1215,19 @@ gui::TextureSelector::TextureSelector(
     textureRect.width = static_cast<int>(grid_size_f);
     textureRect.height = static_cast<int>(grid_size_f);
 
-    if (!hideBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png"))
+    if (!toggleBtnIcon.loadFromFile("Assets/Images/Icons/texture_selector_icon.png"))
         ErrorHandler::throwErr("GUI::TEXTURESELECTOR::TEXTURESELECTOR::ERR_COULD_NOT_LOAD_TEXTURE_SELECTOR_ICON");
 
-    hideBtn = new gui::Button(
+    toggleBtn = new gui::Button(
         btn_x, btn_y, btn_width, btn_height,
-        &hideBtnIcon, btn_width, btn_height,
+        &toggleBtnIcon, btn_width, btn_height,
         sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 }
 
 gui::TextureSelector::~TextureSelector()
 {
-    delete hideBtn;
+    delete toggleBtn;
+    delete frame;
 }
 
 /* FUNCTIONS ==================================================================================================== */
@@ -1200,43 +1235,52 @@ gui::TextureSelector::~TextureSelector()
 void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_window)
 {
     updateMousetime(dt);
+    updateMouseDrag(sf::Vector2f(mouse_pos_window));
 
-    hideBtn->update(sf::Vector2f(mouse_pos_window));
+    toggleBtn->update(sf::Vector2f(mouse_pos_window));
+    frame->update(dt, sf::Vector2f(mouse_pos_window));
 
-    if (hideBtn->isPressed() && hasCompletedMousetimeCycle())
-        hidden = !hidden;
+    if (toggleBtn->isPressed() && hasCompletedMousetimeCycle())
+        frame->setVisibility(!frame->isVisible());
 
-    if (!hidden)
+    if (frame->isVisible())
     {
-        active = bounds.getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
+        active = frame->getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
 
-        if (active)
+        if (active && !frame->getTitleBar().getGlobalBounds().contains(sf::Vector2f(mouse_pos_window)))
         {
-            mousePosGrid.x = (mouse_pos_window.x - bounds.getPosition().x) / (unsigned)gridSizeF;
-            mousePosGrid.y = (mouse_pos_window.y - bounds.getPosition().y) / (unsigned)gridSizeF;
+            mousePosGrid.x = (mouse_pos_window.x - frame->getBackground().getPosition().x) / (unsigned)gridSizeF;
+            mousePosGrid.y = (mouse_pos_window.y - frame->getBackground().getPosition().y) / (unsigned)gridSizeF;
 
             selector.setPosition(
-                bounds.getPosition().x + mousePosGrid.x * gridSizeF,
-                bounds.getPosition().y + mousePosGrid.y * gridSizeF);
+                frame->getBackground().getPosition().x + mousePosGrid.x * gridSizeF,
+                frame->getBackground().getPosition().y + mousePosGrid.y * gridSizeF);
 
-            textureRect.left = mousePosGrid.x * gridSizeF;
-            textureRect.top = mousePosGrid.y * gridSizeF;
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                textureRect.left = mousePosGrid.x * gridSizeF;
+                textureRect.top = mousePosGrid.y * gridSizeF;
+            }
         }
+    }
+    else
+    {
+        active = false;
     }
 }
 
 void gui::TextureSelector::render(sf::RenderTarget &target)
 {
-    if (!hidden)
+    if (frame->isVisible())
     {
-        target.draw(bounds);
+        frame->render(target);
         target.draw(sheet);
 
         if (active)
             target.draw(selector);
     }
 
-    hideBtn->render(target);
+    toggleBtn->render(target);
 }
 
 void gui::TextureSelector::updateMousetime(const float &dt)
@@ -1246,9 +1290,15 @@ void gui::TextureSelector::updateMousetime(const float &dt)
         mousetime += 100.f * dt;
     }
 }
+
+void gui::TextureSelector::updateMouseDrag(const sf::Vector2f mouse_pos)
+{
+    sheet.setPosition(frame->getBackground().getPosition().x, frame->getBackground().getPosition().y);
+}
+
 void gui::TextureSelector::close()
 {
-    hidden = true;
+    frame->setVisibility(false);
 }
 
 /* ACCESSORS ================================================================================================= */
@@ -1260,7 +1310,7 @@ const bool &gui::TextureSelector::isActive() const
 
 const bool gui::TextureSelector::isVisible() const
 {
-    return hidden;
+    return frame->isVisible();
 }
 
 const bool gui::TextureSelector::hasCompletedMousetimeCycle()
@@ -1311,12 +1361,12 @@ gui::CollisionEditor::CollisionEditor(
     textureRect.width = static_cast<int>(grid_size_f);
     textureRect.height = static_cast<int>(grid_size_f);
 
-    if (!hideBtnIcon.loadFromFile("Assets/Images/Icons/collision_editor_icon.png"))
+    if (!toggleBtnIcon.loadFromFile("Assets/Images/Icons/collision_editor_icon.png"))
         ErrorHandler::throwErr("GUI::COLLISIONEDITOR::COLLISIONEDITOR::ERR_COULD_NOT_LOAD_COLLISION_EDITOR_ICON\n");
 
-    hideBtn = new gui::Button(
+    toggleBtn = new gui::Button(
         btn_x, btn_y, btn_width, btn_height,
-        &hideBtnIcon, btn_width, btn_height,
+        &toggleBtnIcon, btn_width, btn_height,
         sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 
     // Background
@@ -1388,7 +1438,7 @@ gui::CollisionEditor::CollisionEditor(
 
 gui::CollisionEditor::~CollisionEditor()
 {
-    delete hideBtn;
+    delete toggleBtn;
 
     for (auto &it : incrementInputs)
         delete it.second;
@@ -1402,12 +1452,12 @@ void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window
 {
     updateMousetime(dt);
 
-    hideBtn->update(sf::Vector2f(mouse_pos_window));
+    toggleBtn->update(sf::Vector2f(mouse_pos_window));
     resetBtn->update(sf::Vector2f(mouse_pos_window));
 
     updateInput();
 
-    if (hideBtn->isPressed() && hasCompletedMousetimeCycle())
+    if (toggleBtn->isPressed() && hasCompletedMousetimeCycle())
         editing = !editing;
 
     textureRect = texture_rect;
@@ -1447,7 +1497,7 @@ void gui::CollisionEditor::render(sf::RenderTarget &target)
         resetBtn->render(target);
     }
 
-    hideBtn->render(target);
+    toggleBtn->render(target);
 }
 
 void gui::CollisionEditor::updateInput()

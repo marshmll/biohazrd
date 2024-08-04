@@ -23,7 +23,7 @@ void DefaultEditorMode::initGUI()
 {
     // Cursor text
     cursorText.setFont(*editorData->font);
-    cursorText.setCharacterSize(8);
+    cursorText.setCharacterSize(12);
 
     // Sidebar
     sidebar.setSize(sf::Vector2f(64.f, data->gfxSettings->resolution.height));
@@ -52,7 +52,8 @@ void DefaultEditorMode::initGUI()
         sidebar.getSize().x + gui::p2pY(data->gfxSettings->resolution, 2.5f),
         gui::p2pY(data->gfxSettings->resolution, 2.5f),
         960.f, 640.f,
-        data->gridSize, editorData->tileMap->getTileTextureSheet());
+        data->gridSize, editorData->tileMap->getTileTextureSheet(),
+        *editorData->font, data->gfxSettings->resolution);
 
     // Collision editor
     collisionEditor = new gui::CollisionEditor(
@@ -99,12 +100,10 @@ void DefaultEditorMode::updateInput(const float &dt)
     {
         if (!sidebar.getGlobalBounds().contains(sf::Vector2f(*editorData->mousePosWindow)))
         {
-            if (!textureSelector->isActive())
-                textureSelector->close();
-
-            else
+            if (textureSelector->isActive())
+            {
                 textureRect = textureSelector->getTextureRect();
-
+            }
             if (collisionEditor->isVisible())
             {
                 // Update collision box offsets and dimensions.
@@ -114,7 +113,6 @@ void DefaultEditorMode::updateInput(const float &dt)
                 collBoxOffsetX = collisionEditor->getOffsets().x;
                 collBoxOffsetY = collisionEditor->getOffsets().y;
             }
-
             if (!textureSelector->isActive() && !collisionEditor->isVisible())
             {
                 editorData->tileMap->addTile(editorData->mousePosGrid->x, editorData->mousePosGrid->y,
