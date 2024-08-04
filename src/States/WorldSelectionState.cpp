@@ -199,7 +199,7 @@ void WorldSelectionState::updateInput(const float &dt)
 void WorldSelectionState::updateGUI(const float &dt)
 {
     deleteConfirmationModal->update(dt, mousePosView);
-    worldDataModal->update(dt, mousePosView);
+    worldDataModal->update(dt, mousePosView, *data->event);
 
     if (deleteConfirmationModal->isActive())
     {
@@ -217,7 +217,6 @@ void WorldSelectionState::updateGUI(const float &dt)
 
                 updateWorldDescriptors();
             }
-
             data->soundSys->play("CLICK_BUTTON");
 
             deleteConfirmationModal->setActive(false);
@@ -228,6 +227,21 @@ void WorldSelectionState::updateGUI(const float &dt)
 
     if (worldDataModal->isActive())
     {
+        if (worldDataModal->isConfirmed())
+        {
+            const std::string map_title = worldDataModal->getTitle();
+            const std::string map_description = worldDataModal->getDescription();
+
+            data->soundSys->play("CLICK_BUTTON");
+
+            data->soundSys->stop("MAIN_THEME");
+
+            data->logger->log("WorldSelectionState::updateGUI", DEBUG, "Creating new world: " + map_title);
+            data->states->pop();
+            data->states->push(new EditorState(data, map_title, map_description));
+
+            worldDataModal->setActive(false);
+        }
         return;
     }
 
@@ -276,8 +290,7 @@ void WorldSelectionState::updateGUI(const float &dt)
     }
     else if (hasElapsedMouseTimeMax(buttons.at("DELETE")->isPressed()) && selectedDescriptor != nullptr)
     {
-        deleteConfirmationModal->setAnswered(false);
-        deleteConfirmationModal->setActive(true);
+        deleteConfirmationModal->display();
     }
     else if (hasElapsedMouseTimeMax(buttons.at("EDIT")->isPressed()) && selectedDescriptor != nullptr)
     {
@@ -290,8 +303,7 @@ void WorldSelectionState::updateGUI(const float &dt)
     }
     else if (hasElapsedMouseTimeMax(buttons.at("CREATE")->isPressed()))
     {
-        worldDataModal->setAnswered(false);
-        worldDataModal->setActive(true);
+        worldDataModal->display();
     }
 }
 

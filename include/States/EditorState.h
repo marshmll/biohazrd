@@ -87,6 +87,8 @@ private:
      */
     void initTileMap(const std::string map_file_path);
 
+    void initTileMap(const std::string map_title, const std::string map_description);
+
     /**
      * @brief Initializes the GUI elements.
      *
@@ -129,6 +131,8 @@ public:
      * @note -> Initializes buttons
      */
     EditorState(StateData *data, const std::string map_file_path);
+
+    EditorState(StateData *data, const std::string map_title, const std::string map_description);
 
     /**
      * @brief Frees all the memory allocated for the buttons.

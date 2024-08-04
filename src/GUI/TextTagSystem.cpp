@@ -20,7 +20,7 @@ void TextTagSystem::initTagTemplates()
                                             5.f, 50.f,
                                             300.f,
                                             sf::Color::White,
-                                            gui::calc_char_size(vm, 140),
+                                            gui::calc_char_size(vm, 130),
                                             "DEFAULT_TAG", font);
 
     tagTemplates[NEGATIVE_TAG] = new TextTag(0.f, 0.f,

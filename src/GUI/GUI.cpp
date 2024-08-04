@@ -492,7 +492,8 @@ void gui::TextInput::initTimer()
 gui::TextInput::TextInput(const float x, const float y, const float width, const float height,
                           const sf::Color &bg_color, const sf::Color &text_color,
                           const unsigned short char_size,
-                          const sf::Font &font, const std::string initial_value)
+                          const sf::Font &font, const std::string initial_value,
+                          const bool active)
 {
     initTimer();
 
@@ -501,6 +502,8 @@ gui::TextInput::TextInput(const float x, const float y, const float width, const
     bg.setSize(sf::Vector2f(width, height));
     bg.setPosition(x, y);
     bg.setFillColor(bg_color);
+    bg.setOutlineColor(sf::Color(150, 150, 150, 255));
+    bg.setOutlineThickness(0.f);
 
     inputText.setFont(font);
     inputText.setCharacterSize(char_size);
@@ -508,7 +511,13 @@ gui::TextInput::TextInput(const float x, const float y, const float width, const
     inputText.setFillColor(text_color);
     inputText.setPosition(
         bg.getPosition().x + bg.getSize().x / 10.f,
-        bg.getPosition().y + bg.getSize().y / 2.f - inputText.getGlobalBounds().height / 2.f - char_size / 8.f);
+        bg.getPosition().y + bg.getSize().y / 10.f);
+
+    cursor.setSize(sf::Vector2f(2.f, 25.f));
+    cursor.setPosition(inputText.getPosition().x + inputText.getGlobalBounds().width + 2.f, inputText.getPosition().y);
+    cursor.setFillColor(sf::Color(180, 180, 180, 240));
+
+    this->active = active;
 }
 
 gui::TextInput::~TextInput()
@@ -517,92 +526,63 @@ gui::TextInput::~TextInput()
 
 /* FUNCTIONS ==================================================================================================== */
 
-void gui::TextInput::update()
+void gui::TextInput::update(const float &dt, const sf::Vector2f mouse_pos, sf::Event &event)
 {
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
-        inputString.push_back('A');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::B)))
-        inputString.push_back('B');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::C)))
-        inputString.push_back('C');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
-        inputString.push_back('D');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::E)))
-        inputString.push_back('E');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::F)))
-        inputString.push_back('F');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::G)))
-        inputString.push_back('G');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::H)))
-        inputString.push_back('H');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::I)))
-        inputString.push_back('I');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::J)))
-        inputString.push_back('J');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::K)))
-        inputString.push_back('K');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::L)))
-        inputString.push_back('L');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::M)))
-        inputString.push_back('M');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::N)))
-        inputString.push_back('N');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::O)))
-        inputString.push_back('O');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::P)))
-        inputString.push_back('P');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)))
-        inputString.push_back('Q');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::R)))
-        inputString.push_back('R');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
-        inputString.push_back('S');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::T)))
-        inputString.push_back('T');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::U)))
-        inputString.push_back('U');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::V)))
-        inputString.push_back('V');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
-        inputString.push_back('W');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::X)))
-        inputString.push_back('X');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Y)))
-        inputString.push_back('Y');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)))
-        inputString.push_back('Z');
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        if (bg.getGlobalBounds().contains(mouse_pos))
+        {
+            active = true;
+            bg.setOutlineThickness(2.f);
+        }
+        else
+        {
+            active = false;
+            bg.setOutlineThickness(0.f);
+        }
+    }
 
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)))
-        inputString.push_back('0');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)))
-        inputString.push_back('1');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)))
-        inputString.push_back('2');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)))
-        inputString.push_back('3');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)))
-        inputString.push_back('4');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)))
-        inputString.push_back('5');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)))
-        inputString.push_back('6');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)))
-        inputString.push_back('7');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)))
-        inputString.push_back('8');
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)))
-        inputString.push_back('9');
+    if (active)
+    {
+        updateCursor(dt);
 
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && inputString.size() > 0))
-        inputString.pop_back();
+        if (event.type == sf::Event::KeyReleased && previousEvent.type == sf::Event::TextEntered)
+        {
+            if (event.key.code == sf::Keyboard::BackSpace)
+            {
+                if (inputString.size() > 0)
+                {
+                    inputString.pop_back();
+                }
+            }
+            else if (previousEvent.text.unicode < 0x80)
+            {
+                char c = static_cast<char>(previousEvent.text.unicode);
+                inputString.push_back(c);
+            }
+        }
 
-    inputText.setString(inputString);
+        previousEvent = event;
+        inputText.setString(inputString);
+    }
+    else
+    {
+        bg.setOutlineThickness(0.f);
+    }
 }
 
 void gui::TextInput::render(sf::RenderTarget &target)
 {
     target.draw(bg);
     target.draw(inputText);
+
+    if (active)
+        target.draw(cursor);
+}
+
+void gui::TextInput::updateCursor(const float &dt)
+{
+    cursor.setPosition(inputText.getPosition().x + inputText.getGlobalBounds().width, inputText.getPosition().y);
 }
 
 const bool gui::TextInput::hasElapsedKeyTimeMax(const bool key_pressed)
@@ -620,12 +600,22 @@ const bool gui::TextInput::hasElapsedKeyTimeMax(const bool key_pressed)
 
 /* ACCESSORS ==================================================================================================== */
 
+const bool gui::TextInput::isActive() const
+{
+    return active;
+}
+
 const std::string gui::TextInput::getString() const
 {
     return inputString;
 }
 
 /* MODIFIERS ==================================================================================================== */
+
+void gui::TextInput::setActive(const bool active)
+{
+    this->active = active;
+}
 
 void gui::TextInput::setString(const std::string str, const bool clear)
 {
@@ -794,13 +784,13 @@ void gui::ConfirmationModal::update(const float &dt, sf::Vector2f mouse_pos)
 
         if (confirmBtn->isPressed() && !answered)
         {
-            answer = true;
-            answered = true;
+            setAnswered(true);
+            setAnswer(true);
         }
         else if (denyBtn->isPressed() && !answered)
         {
-            answer = false;
-            answered = true;
+            setAnswered(true);
+            setAnswer(false);
         }
     }
 }
@@ -817,6 +807,12 @@ void gui::ConfirmationModal::render(sf::RenderTarget &target)
         confirmBtn->render(target);
         denyBtn->render(target);
     }
+}
+
+void gui::ConfirmationModal::display()
+{
+    setAnswered(false);
+    setActive(true);
 }
 
 /* ACCESSORS ===================================================================================================== */
@@ -876,14 +872,14 @@ gui::WorldDataModal::WorldDataModal(const sf::Color bg_color, const sf::Color co
     titleInput = new gui::TextInput(container.getPosition().x + container.getSize().x / 2.f - (container.getSize().x * .8f) / 2.f,
                                     container.getPosition().y + gui::p2pY(vm, 5.f),
                                     container.getSize().x * .8f, gui::p2pY(vm, 4.f),
-                                    sf::Color(255, 255, 255, 250), sf::Color::Black,
-                                    gui::calc_char_size(vm, 120), font);
+                                    sf::Color(20, 20, 20, 250), sf::Color::White,
+                                    gui::calc_char_size(vm, 120), font, "New World", false);
 
     descriptionInput = new gui::TextInput(container.getPosition().x + container.getSize().x / 2.f - (container.getSize().x * .8f) / 2.f,
                                           container.getPosition().y + gui::p2pY(vm, 10.f),
                                           container.getSize().x * .8f, gui::p2pY(vm, 8.f),
-                                          sf::Color(255, 255, 255, 250), sf::Color::Black,
-                                          gui::calc_char_size(vm, 120), font);
+                                          sf::Color(20, 20, 20, 250), sf::Color::White,
+                                          gui::calc_char_size(vm, 120), font, "My new world", false);
 
     confirmBtn = new gui::Button(
         container.getPosition().x + gui::p2pX(vm, 1.f), container.getPosition().y + container.getSize().y - gui::p2pY(vm, 6.f),
@@ -899,8 +895,8 @@ gui::WorldDataModal::WorldDataModal(const sf::Color bg_color, const sf::Color co
         sf::Color(255, 255, 255, 250), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
         sf::Color(150, 70, 70, 250), sf::Color(200, 150, 150, 250), sf::Color(50, 20, 20, 50));
 
-    answered = true;
     active = false;
+    confirmed = true;
 }
 
 gui::WorldDataModal::~WorldDataModal()
@@ -913,23 +909,23 @@ gui::WorldDataModal::~WorldDataModal()
 
 /* FUNCTIONS ===================================================================================================== */
 
-void gui::WorldDataModal::update(const float &dt, sf::Vector2f mouse_pos)
+void gui::WorldDataModal::update(const float &dt, sf::Vector2f mouse_pos, sf::Event &event)
 {
     if (active)
     {
-        titleInput->update();
-        descriptionInput->update();
+        titleInput->update(dt, mouse_pos, event);
+        descriptionInput->update(dt, mouse_pos, event);
 
         confirmBtn->update(mouse_pos);
         denyBtn->update(mouse_pos);
 
         if (confirmBtn->isPressed())
         {
-            answered = true;
+            setConfirmed(true);
         }
         else if (denyBtn->isPressed())
         {
-            answered = true;
+            setConfirmed(false);
         }
     }
 }
@@ -947,21 +943,27 @@ void gui::WorldDataModal::render(sf::RenderTarget &target)
         confirmBtn->render(target);
         denyBtn->render(target);
 
-        if (answered)
+        if (confirmed)
             active = false;
     }
 }
 
-/* ACCESSORS ===================================================================================================== */
-
-const bool gui::WorldDataModal::isAnswered() const
+void gui::WorldDataModal::display()
 {
-    return answered;
+    setActive(true);
+    setConfirmed(false);
 }
 
-const bool gui::WorldDataModal::getAnswer() const
+/* ACCESSORS ===================================================================================================== */
+
+const std::string gui::WorldDataModal::getTitle() const
 {
-    return false;
+    return titleInput->getString();
+}
+
+const std::string gui::WorldDataModal::getDescription() const
+{
+    return descriptionInput->getString();
 }
 
 const bool gui::WorldDataModal::isActive() const
@@ -969,20 +971,21 @@ const bool gui::WorldDataModal::isActive() const
     return active;
 }
 
+const bool gui::WorldDataModal::isConfirmed() const
+{
+    return confirmed;
+}
+
 /* MODIFIERS ===================================================================================================== */
-
-void gui::WorldDataModal::setAnswered(const bool answered)
-{
-    this->answered = answered;
-}
-
-void gui::WorldDataModal::setAnswer(const bool answer)
-{
-}
 
 void gui::WorldDataModal::setActive(const bool active)
 {
     this->active = active;
+}
+
+void gui::WorldDataModal::setConfirmed(const bool confirmed)
+{
+    this->confirmed = confirmed;
 }
 
 /**********************************************************************************************************

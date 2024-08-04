@@ -21,9 +21,9 @@ void GameState::initBufferedRender()
 
 void GameState::initView()
 {
-    playerCamera.setSize(sf::Vector2f(vm.width / 2.f, vm.height / 2.f));
+    playerCamera.setSize(sf::Vector2f(vm.width, vm.height));
 
-    playerCamera.setCenter((vm.width / 2.f) / 2.f, (vm.height / 2.f) / 2.f);
+    playerCamera.setCenter(vm.width / 2.f, vm.height / 2.f);
 }
 
 void GameState::initKeybinds()

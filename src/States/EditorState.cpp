@@ -65,6 +65,12 @@ void EditorState::initTileMap(const std::string map_file_path)
     tileMap = new TileMap(map_file_path);
 }
 
+void EditorState::initTileMap(const std::string map_title, const std::string map_description)
+{
+    tileMap = new TileMap(map_title, map_description, data->gridSize, 100, 100,
+                          "Maps/" + map_title + ".biomap", "Assets/Images/Tiles/tilesheet.png");
+}
+
 void EditorState::initGUI()
 {
 }
@@ -114,6 +120,19 @@ EditorState::EditorState(StateData *data, const std::string map_file_path) : Sta
     initKeybinds();
     initPauseMenu();
     initTileMap(map_file_path);
+    initGUI();
+    initEditorStateData();
+    initModes();
+}
+
+EditorState::EditorState(StateData *data, const std::string map_title, const std::string map_description) : State(data)
+{
+    initVariables();
+    initEditorCamera();
+    initFonts();
+    initKeybinds();
+    initPauseMenu();
+    initTileMap(map_title, map_description);
     initGUI();
     initEditorStateData();
     initModes();

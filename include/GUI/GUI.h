@@ -372,12 +372,18 @@ namespace gui
         sf::RectangleShape bg;
         sf::Text inputText;
 
+        sf::RectangleShape cursor;
+
         std::string inputString;
 
         bool hasFocus;
 
         sf::Clock keyTimer;
         sf::Int32 keyTimerMax;
+
+        sf::Event previousEvent;
+
+        bool active;
 
         /* INITIALIZERS ======================================================================================= */
 
@@ -389,23 +395,30 @@ namespace gui
         TextInput(const float x, const float y, const float width, const float height,
                   const sf::Color &bg_color, const sf::Color &text_color,
                   const unsigned short char_size,
-                  const sf::Font &font, const std::string initial_value = "");
+                  const sf::Font &font, const std::string initial_value = "",
+                  const bool active = false);
 
         virtual ~TextInput();
 
         /* FUNCTIONS ========================================================================================== */
 
-        void update();
+        void update(const float &dt, const sf::Vector2f mouse_pos, sf::Event &event);
 
         void render(sf::RenderTarget &target);
+
+        void updateCursor(const float &dt);
 
         const bool hasElapsedKeyTimeMax(const bool key_pressed);
 
         /* ACCESSORS ========================================================================================== */
 
+        const bool isActive() const;
+
         const std::string getString() const;
 
         /* MODIFIERS ========================================================================================== */
+
+        void setActive(const bool active);
 
         void setString(const std::string str, const bool clear_stream = true);
     };
@@ -544,6 +557,8 @@ namespace gui
 
         void render(sf::RenderTarget &target);
 
+        void display();
+
         /* ACCESSORS ============================================================================================= */
 
         const bool isAnswered() const;
@@ -582,8 +597,7 @@ namespace gui
         gui::Button *denyBtn;
 
         bool active;
-
-        bool answered;
+        bool confirmed;
 
     public:
         /* CONSTRUCTOR AND DESTRUCTOR ============================================================================ */
@@ -595,25 +609,27 @@ namespace gui
 
         /* FUNCTIONS ============================================================================================= */
 
-        void update(const float &dt, sf::Vector2f mouse_pos);
+        void update(const float &dt, sf::Vector2f mouse_pos, sf::Event &event);
 
         void render(sf::RenderTarget &target);
 
+        void display();
+
         /* ACCESSORS ============================================================================================= */
 
-        const bool isAnswered() const;
+        const std::string getTitle() const;
 
-        const bool getAnswer() const;
+        const std::string getDescription() const;
 
         const bool isActive() const;
 
+        const bool isConfirmed() const;
+
         /* MODIFIERS ============================================================================================= */
 
-        void setAnswered(const bool answered);
-
-        void setAnswer(const bool answer);
-
         void setActive(const bool active);
+
+        void setConfirmed(const bool confirmed);
     };
 
     /**********************************************************************************************************
