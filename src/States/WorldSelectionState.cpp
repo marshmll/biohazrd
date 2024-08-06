@@ -105,15 +105,16 @@ void WorldSelectionState::initWorldDescriptors()
 {
     std::vector<std::string> map_filepaths;
 
-    DIR *dirp = opendir("Maps/");
-    struct dirent *dp;
+    std::filesystem::path fpath("Maps/");
+    std::filesystem::directory_iterator start(fpath);
+    std::filesystem::directory_iterator end;
+    std::transform(start, end, std::back_inserter(map_filepaths),
+                   [](const std::filesystem::directory_entry &entry)
+                   { return entry.path().string(); });
 
     int counter = 0;
-    while ((dp = readdir(dirp)) != NULL)
+    for (auto &fpath : map_filepaths)
     {
-        std::string fpath = "Maps/";
-        fpath.append(dp->d_name);
-
         if (fpath.size() > 7) // .biomap
         {
             if (fpath.substr(fpath.size() - 7, 7) == ".biomap")
@@ -148,8 +149,6 @@ void WorldSelectionState::initWorldDescriptors()
             }
         }
     }
-
-    closedir(dirp);
 
     data->logger->log("WorldSelectionState::initGUI", INFO, "Loaded " + std::to_string(counter) + " map files.");
 }

@@ -33,8 +33,6 @@
 #include <map>
 #include <memory>
 #include <set>
-#include <sys/types.h>
-#include <dirent.h>
 #include <thread>
 #include <utility>
 #include <vector>
