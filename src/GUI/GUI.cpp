@@ -484,6 +484,17 @@ const bool gui::IncrementInput::hasCompletedMousetimeCycle(sf::Mouse::Button mou
     return false;
 }
 
+void gui::IncrementInput::setPosition(const float x, const float y)
+{
+    inputBg.setPosition(x, y);
+
+    inputText.setPosition(inputBg.getPosition().x + inputBg.getSize().x / 2.f - inputText.getGlobalBounds().width / 2.f,
+                          inputBg.getPosition().y + inputBg.getSize().y / 2.f - inputText.getGlobalBounds().height / 2.f);
+
+    incrementBtn->setPosition(sf::Vector2f(inputBg.getPosition().x + inputBg.getSize().x - inputBg.getSize().y, y));
+    decrementBtn->setPosition(sf::Vector2f(x, y));
+}
+
 /* MODIFIERS =================================================================================================== */
 
 void gui::IncrementInput::setValue(const float new_value)
@@ -1352,7 +1363,6 @@ gui::CollisionEditor::CollisionEditor(
 
     active = false;
     hidden = true;
-    editing = false;
 
     offsets = sf::Vector2f(0.f, 0.f);
     dimensions = sf::Vector2f(grid_size_f, grid_size_f);
@@ -1370,18 +1380,20 @@ gui::CollisionEditor::CollisionEditor(
         sf::Color(70, 70, 70, 0), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
 
     // Background
-    editorBg.setSize(sf::Vector2f(gridSizeF * scale * 2.f, gridSizeF * scale * 2.f));
-    editorBg.setFillColor(sf::Color(100, 100, 100, 100));
-    editorBg.setOutlineThickness(1.f);
-    editorBg.setOutlineColor(sf::Color(100, 100, 100, 150));
-    editorBg.setPosition(col_editor_x, col_editor_y);
+    frame = new gui::WindowBaseFrame(
+        col_editor_x, col_editor_y,
+        gridSizeF * scale * 2.f, gridSizeF * scale * 2.f, 30.f,
+        sf::Color(100, 100, 100, 100), sf::Color(20, 20, 20, 200),
+        font, "Collision Editor", gui::calc_char_size(vm, 125), sf::Color::White,
+        sf::Color(200, 50, 50, 255), sf::Color(255, 50, 50, 255), sf::Color(100, 50, 50, 255),
+        sf::Color(200, 200, 200, 200), -2.f);
 
     // Tile
     editorTile.setTexture(texture_sheet);
     editorTile.setTextureRect(textureRect);
     editorTile.setSize(sf::Vector2f(gridSizeF * scale, gridSizeF * scale));
-    editorTile.setPosition(editorBg.getPosition().x + editorBg.getSize().x / 2.f - editorTile.getSize().x / 2.f,
-                           editorBg.getPosition().y + editorBg.getSize().y / 2.f - editorTile.getSize().y / 2.f);
+    editorTile.setPosition(frame->getBackground().getPosition().x + frame->getBackground().getSize().x / 2.f - editorTile.getSize().x / 2.f,
+                           frame->getBackground().getPosition().y + frame->getBackground().getSize().y / 2.f - editorTile.getSize().y / 2.f);
     // Collision box
     editorCollBox.setSize(sf::Vector2f(gridSizeF * scale, gridSizeF * scale));
     editorCollBox.setFillColor(sf::Color(255, 100, 100, 100));
@@ -1395,42 +1407,42 @@ gui::CollisionEditor::CollisionEditor(
     inputLabels.setFillColor(sf::Color(255, 255, 255, 150));
     inputLabels.setString("Width\n\n\nHeight\n\n\nOffset X\n\n\nOffset Y");
     inputLabels.setPosition(sf::Vector2f(
-        editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        editorBg.getPosition().y - gui::calc_char_size(vm, 140)));
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y - gui::calc_char_size(vm, 140)));
 
     // Inputs
     incrementInputs["WIDTH"] = new gui::IncrementInput(
-        editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        editorBg.getPosition().y,
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y,
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), grid_size_f);
 
     incrementInputs["HEIGHT"] = new gui::IncrementInput(
-        editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        editorBg.getPosition().y + gui::p2pY(vm, 6.3f),
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y + gui::p2pY(vm, 6.3f),
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), grid_size_f);
 
     incrementInputs["OFFSET_X"] = new gui::IncrementInput(
-        editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        editorBg.getPosition().y + gui::p2pY(vm, 12.7f),
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y + gui::p2pY(vm, 12.7f),
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), 0.f);
 
     incrementInputs["OFFSET_Y"] = new gui::IncrementInput(
-        editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        editorBg.getPosition().y + gui::p2pY(vm, 19.1f),
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y + gui::p2pY(vm, 19.1f),
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), 1.f, sf::Color(100, 100, 100, 100),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200),
         font, sf::Color(255, 255, 255, 255), gui::calc_char_size(vm, 140), 0.f);
 
     // Reset button
     resetBtn = new Button(
-        editorBg.getPosition().x + editorBg.getSize().x + gui::p2pX(vm, 2.f),
-        editorBg.getPosition().y + gui::p2pY(vm, 25.5f),
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y + gui::p2pY(vm, 25.5f),
         gui::p2pX(vm, 15.6f), gui::p2pY(vm, 3.75f), font, "Reset", gui::calc_char_size(vm, 130),
         sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255),
         sf::Color(70, 70, 70, 200), sf::Color(255, 255, 255, 100), sf::Color(255, 255, 255, 200));
@@ -1438,6 +1450,7 @@ gui::CollisionEditor::CollisionEditor(
 
 gui::CollisionEditor::~CollisionEditor()
 {
+    delete frame;
     delete toggleBtn;
 
     for (auto &it : incrementInputs)
@@ -1448,9 +1461,11 @@ gui::CollisionEditor::~CollisionEditor()
 
 /* FUNCTIONS =================================================================================================== */
 
-void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window, sf::IntRect &texture_rect)
+void gui::CollisionEditor::update(const float &dt, const sf::Vector2i &mouse_pos_window, sf::IntRect &texture_rect)
 {
     updateMousetime(dt);
+
+    frame->update(dt, sf::Vector2f(mouse_pos_window));
 
     toggleBtn->update(sf::Vector2f(mouse_pos_window));
     resetBtn->update(sf::Vector2f(mouse_pos_window));
@@ -1458,13 +1473,13 @@ void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window
     updateInput();
 
     if (toggleBtn->isPressed() && hasCompletedMousetimeCycle())
-        editing = !editing;
+        frame->setVisibility(!frame->isVisible());
 
     textureRect = texture_rect;
 
     editorTile.setTextureRect(textureRect);
 
-    if (editing)
+    if (frame->isVisible())
     {
         for (auto &it : incrementInputs)
             it.second->update(dt, static_cast<sf::Vector2f>(mouse_pos_window));
@@ -1478,14 +1493,19 @@ void gui::CollisionEditor::update(const float &dt, sf::Vector2i mouse_pos_window
         editorCollBox.setSize(sf::Vector2f(dimensions.x * scale, dimensions.y * scale));
         editorCollBox.setPosition(editorTile.getPosition().x + offsets.x * scale,
                                   editorTile.getPosition().y + offsets.y * scale);
+
+        if (frame->isDragging())
+        {
+            updateDrag(mouse_pos_window);
+        }
     }
 }
 
 void gui::CollisionEditor::render(sf::RenderTarget &target)
 {
-    if (editing)
+    if (frame->isVisible())
     {
-        target.draw(editorBg);
+        frame->render(target);
         target.draw(editorTile);
         target.draw(editorCollBox);
 
@@ -1506,6 +1526,33 @@ void gui::CollisionEditor::updateInput()
         resetValues();
 }
 
+void gui::CollisionEditor::updateDrag(const sf::Vector2i &mouse_pos_window)
+{
+    editorTile.setPosition(frame->getBackground().getPosition().x + frame->getBackground().getSize().x / 2.f - editorTile.getSize().x / 2.f,
+                           frame->getBackground().getPosition().y + frame->getBackground().getSize().y / 2.f - editorTile.getSize().y / 2.f);
+
+    editorCollBox.setPosition(editorTile.getPosition());
+
+    inputLabels.setPosition(sf::Vector2f(
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y - gui::calc_char_size(vm, 140)));
+
+    incrementInputs.at("WIDTH")->setPosition(
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y);
+
+    incrementInputs.at("HEIGHT")->setPosition(
+        frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+        frame->getBackground().getPosition().y + gui::p2pY(vm, 6.3f));
+
+    incrementInputs.at("OFFSET_X")->setPosition(frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f), frame->getBackground().getPosition().y + gui::p2pY(vm, 12.7f));
+
+    incrementInputs.at("OFFSET_Y")->setPosition(frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f), frame->getBackground().getPosition().y + gui::p2pY(vm, 19.1f));
+
+    resetBtn->setPosition(sf::Vector2f(frame->getBackground().getPosition().x + frame->getBackground().getSize().x + gui::p2pX(vm, 2.f),
+                                       frame->getBackground().getPosition().y + gui::p2pY(vm, 25.5f)));
+}
+
 void gui::CollisionEditor::updateMousetime(const float &dt)
 {
     if (mousetime < mousetimeMax)
@@ -1524,7 +1571,7 @@ void gui::CollisionEditor::resetValues()
 
 void gui::CollisionEditor::close()
 {
-    editing = false;
+    frame->setVisibility(false);
 }
 
 /* ACCESSORS =================================================================================================== */
@@ -1541,7 +1588,7 @@ const sf::Vector2f &gui::CollisionEditor::getOffsets() const
 
 const bool gui::CollisionEditor::isVisible() const
 {
-    return editing;
+    return frame->isVisible();
 }
 
 const bool gui::CollisionEditor::hasCompletedMousetimeCycle()

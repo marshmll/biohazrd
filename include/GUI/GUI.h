@@ -401,6 +401,8 @@ namespace gui
 
         /* MODIFIERS =========================================================================================== */
 
+        void setPosition(const float x, const float y);
+
         /**
          * @brief Sets the input value to a new value.
          *
@@ -1058,7 +1060,6 @@ namespace gui
 
         bool active;
         bool hidden;
-        bool editing;
 
         sf::Vector2f offsets;
         sf::Vector2f dimensions;
@@ -1079,7 +1080,7 @@ namespace gui
 
         sf::VideoMode &vm;
 
-        sf::RectangleShape editorBg;
+        gui::WindowBaseFrame *frame;
         sf::RectangleShape editorTile;
         sf::RectangleShape editorCollBox;
 
@@ -1113,7 +1114,7 @@ namespace gui
          * @note -> Changes the selector position
          * @note -> Sets the texture rect.
          */
-        void update(const float &dt, sf::Vector2i mouse_pos_window, sf::IntRect &texture_rect);
+        void update(const float &dt, const sf::Vector2i &mouse_pos_window, sf::IntRect &texture_rect);
 
         /**
          * @brief Renders the collision editor into a target if
@@ -1128,6 +1129,8 @@ namespace gui
         void render(sf::RenderTarget &target);
 
         void updateInput();
+
+        void updateDrag(const sf::Vector2i &mouse_pos_window);
 
         /**
          * @brief Updates the mousetime.
