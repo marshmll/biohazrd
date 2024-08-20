@@ -37,7 +37,7 @@
       <a href="#configurating-and-running">Configurating and running</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#running-the-oroject">Running the project</a></li>
+        <li><a href="#running-the-project">Running the project</a></li>
       </ul>
     </li>
     <li><a href="#contributing">Contributing</a></li>
