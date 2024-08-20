@@ -143,7 +143,7 @@ Renan Andrade - [Instagram](https://instagram.com/renan._.and) - renandasilvaoli
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+A immense thanks to these people/projects that helped me through here! :)
 
 * [Pedro Senes](https://github.com/prussianmaster1871)
 * [Victor Fadel](https://github.com/VictorFadel06)
