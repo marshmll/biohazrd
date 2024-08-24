@@ -16,7 +16,7 @@ void InventoryGUI::initHotbar()
     hotbarSelector.setSize(sf::Vector2f(hotbarBg.getSize().y, hotbarBg.getSize().y));
     hotbarSelector.setPosition(hotbarBg.getPosition());
     hotbarSelector.setFillColor(sf::Color::Transparent);
-    hotbarSelector.setOutlineThickness(1.f);
+    hotbarSelector.setOutlineThickness(2.f);
     hotbarSelector.setOutlineColor(sf::Color::White);
 }
 

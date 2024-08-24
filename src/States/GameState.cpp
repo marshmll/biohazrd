@@ -210,9 +210,9 @@ void GameState::renderToBuffer()
                     &coreShader, player->getCenteredPosition());
 
     for (auto &enemy : activeEnemies)
-        enemy->render(renderBuffer, SHOW_HITBOX, &coreShader, player->getCenteredPosition());
+        enemy->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
-    player->render(renderBuffer, SHOW_HITBOX, &coreShader, player->getCenteredPosition());
+    player->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
     tileMap->deferredRender(renderBuffer, &coreShader, player->getCenteredPosition());
 
