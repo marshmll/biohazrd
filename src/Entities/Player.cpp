@@ -132,6 +132,11 @@ AttributeComponent *Player::getAttributeComponent()
     return attributeComponent;
 }
 
+Inventory *Player::getInventory() 
+{
+    return inventory;
+}
+
 Weapon *Player::getWeapon()
 {
     return &sword;

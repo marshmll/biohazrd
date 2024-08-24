@@ -4,7 +4,7 @@ cd src/
 
 echo "target_sources(BIOHAZRD PRIVATE" > CMakeLists.txt
 
-for fname in $(find . -maxdepth 4 -type f)
+for fname in $(find . -maxdepth 10 -type f)
     do 
         if [ ${fname##*\.} == "cpp" ];
         then

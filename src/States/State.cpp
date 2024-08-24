@@ -9,10 +9,8 @@
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-State::State(StateData *data) : vm(data->gfxSettings->resolution)
+State::State(StateData *data) : data(data), vm(data->gfxSettings->resolution)
 {
-    this->data = data;
-
     states = data->states;
 
     gfxSettings = data->gfxSettings;

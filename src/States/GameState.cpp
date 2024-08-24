@@ -172,7 +172,7 @@ void GameState::update(const float &dt)
         updatePlayerCamera(dt);
         updatePlayerInput(dt);
         updatePlayers(dt);
-        updatePlayerGUI(dt);
+        updatePlayerGUI(dt, sf::Vector2f(mousePosWindow));
         updateEnemiesAndCombat(dt);
         updateTileMap(dt);
         updateShaders();
@@ -263,16 +263,11 @@ void GameState::updatePlayerInput(const float &dt)
     {
         player->move(1.f, 0.f, dt);
     }
-
-    if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("TOGGLE_CHAR_TAB"))))
-    {
-        playerGUI->toggleTab(CHARACTER_TAB);
-    }
 }
 
-void GameState::updatePlayerGUI(const float &dt)
+void GameState::updatePlayerGUI(const float &dt, sf::Vector2f mouse_pos)
 {
-    playerGUI->update(dt);
+    playerGUI->update(dt, mouse_pos);
 }
 
 void GameState::updateEnemiesAndCombat(const float &dt)
@@ -358,19 +353,10 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updatePlayerCamera(const float &dt)
 {
-    // Disable player camera movement on the mouse if any tab is open.
-    if (playerGUI->hasTabsOpen())
-    {
-        playerCamera.setCenter(
-            player->getCenteredPosition().x,
-            player->getCenteredPosition().y);
-    }
-    else
-    {
-        playerCamera.setCenter(
-            std::floor(player->getCenteredPosition().x + ((mousePosWindow.x) - static_cast<float>(vm.width / 2)) / 20.f),
-            std::floor(player->getCenteredPosition().y + ((mousePosWindow.y) - static_cast<float>(vm.height / 2)) / 20.f));
-    }
+
+    playerCamera.setCenter(
+        std::floor(player->getCenteredPosition().x + ((mousePosWindow.x) - static_cast<float>(vm.width / 2)) / 20.f),
+        std::floor(player->getCenteredPosition().y + ((mousePosWindow.y) - static_cast<float>(vm.height / 2)) / 20.f));
 
     // Make sure that the player camera width is smaller than the world
     if (playerCamera.getSize().x <= tileMap->getSize().x)

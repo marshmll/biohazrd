@@ -9,6 +9,11 @@ void PlayerGUI::initFont()
         ErrorHandler::throwErr("PLAYERGUI::INITFONT::ERR::COULD_NOT_LOAD_FONT\n");
 }
 
+void PlayerGUI::initInventoryGUI()
+{
+    inventory = new InventoryGUI(*player.getInventory(), vm);
+}
+
 void PlayerGUI::initExpBar()
 {
     expBar = new gui::ProgressBar(
@@ -47,51 +52,53 @@ void PlayerGUI::initCooldownBar()
         sf::Color(50, 50, 50, 200), sf::Color(230, 230, 230, 200));
 }
 
-void PlayerGUI::initPlayerMenu()
-{
-    playerMenu = new PlayerTabMenu(vm, font, player);
-}
-
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
 PlayerGUI::PlayerGUI(Player &player, sf::VideoMode &vm)
     : player(player), vm(vm)
 {
     initFont();
+    initInventoryGUI();
     initExpBar();
     initLevelBar();
     initHpBar();
     initCooldownBar();
-    initPlayerMenu();
 }
 
 PlayerGUI::~PlayerGUI()
 {
+    delete inventory;
     delete levelBar;
     delete hpBar;
     delete expBar;
     delete cooldownBar;
-    delete playerMenu;
 }
 
 /* FUNCTIONS ===================================================================================================== */
 
-void PlayerGUI::update(const float &dt)
+void PlayerGUI::update(const float &dt, sf::Vector2f &mouse_pos)
 {
+    updateInventory(dt, mouse_pos);
+    
     updateLevelBar();
     updateHpBar();
     updateExpBar();
     updateCooldownBar();
-    updatePlayerMenu(dt);
 }
 
 void PlayerGUI::render(sf::RenderTarget &target)
 {
+    renderInventory(target);
+
     renderLevelBar(target);
     renderHpBar(target);
     renderExpBar(target);
     renderCooldownBar(target);
-    renderPlayerMenu(target);
+}
+
+void PlayerGUI::updateInventory(const float &dt, sf::Vector2f &mouse_pos)
+{
+    inventory->update(dt, mouse_pos);
 }
 
 void PlayerGUI::updateLevelBar()
@@ -141,9 +148,9 @@ void PlayerGUI::updateCooldownBar()
     }
 }
 
-void PlayerGUI::updatePlayerMenu(const float &dt)
+void PlayerGUI::renderInventory(sf::RenderTarget &target)
 {
-    playerMenu->update(dt);
+    inventory->render(target);
 }
 
 void PlayerGUI::renderLevelBar(sf::RenderTarget &target)
@@ -167,19 +174,4 @@ void PlayerGUI::renderCooldownBar(sf::RenderTarget &target)
         cooldownBar->render(target);
 }
 
-void PlayerGUI::renderPlayerMenu(sf::RenderTarget &target)
-{
-    playerMenu->render(target);
-}
-
-void PlayerGUI::toggleTab(TabType tab_type)
-{
-    playerMenu->toggleTab(tab_type);
-}
-
 /* ACCESSORS ===================================================================================================== */
-
-const bool PlayerGUI::hasTabsOpen() const
-{
-    return playerMenu->hasTabsOpen();
-}

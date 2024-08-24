@@ -89,6 +89,8 @@ public:
      */
     AttributeComponent *getAttributeComponent();
 
+    Inventory *getInventory();
+
     Weapon *getWeapon();
 
     const std::string formatStringToCharTab();

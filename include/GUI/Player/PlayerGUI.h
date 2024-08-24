@@ -2,8 +2,8 @@
 #define PLAYERGUI_H_
 
 #include "Player.h"
+#include "InventoryGUI.h"
 #include "GUI.h"
-#include "PlayerTabMenu.h"
 
 class PlayerGUI
 {
@@ -11,6 +11,7 @@ private:
     /* VARIABLES ================================================================================================= */
 
     Player &player;
+    InventoryGUI *inventory;
 
     sf::VideoMode &vm;
 
@@ -21,9 +22,6 @@ private:
     gui::ProgressBar *hpBar;
     gui::ProgressBar *cooldownBar;
 
-    PlayerTabMenu *playerMenu;
-
-
     /* INITIALIZERS =============================================================================================== */
 
     /**
@@ -32,6 +30,13 @@ private:
      * @return void
      */
     void initFont();
+
+    /**
+     * @brief Initializes GUI for player inventory
+     * 
+     * @return void
+     */
+    void initInventoryGUI();
 
     /**
      * @brief Initializes the exp bar.
@@ -61,14 +66,6 @@ private:
      */
     void initCooldownBar();
 
-    /**
-     * @brief Initializes the player tab menu.
-     *
-     * @return void
-     */
-
-    void initPlayerMenu();
-
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
@@ -89,7 +86,7 @@ public:
      *
      * @return void
      */
-    void update(const float &dt);
+    void update(const float &dt, sf::Vector2f &mouse_pos);
 
     /**
      * @brief Updates the Player's GUI
@@ -97,6 +94,8 @@ public:
      * @return void
      */
     void render(sf::RenderTarget &target);
+
+    void updateInventory(const float &dt, sf::Vector2f &mouse_pos);
 
     /**
      * @brief Updates the player's level bar.
@@ -121,7 +120,8 @@ public:
 
     void updateCooldownBar();
 
-    void updatePlayerMenu(const float &dt);
+
+    void renderInventory(sf::RenderTarget &target);
 
     void renderLevelBar(sf::RenderTarget &target);
 
@@ -131,13 +131,7 @@ public:
 
     void renderCooldownBar(sf::RenderTarget &target);
 
-    void renderPlayerMenu(sf::RenderTarget &target);
-
-    void toggleTab(TabType tab_type);
-
     /* ACCESSORS ================================================================================================= */
-
-    const bool hasTabsOpen() const;
 };
 
 #endif /* PLAYERGUI_H_ */

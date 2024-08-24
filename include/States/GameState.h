@@ -214,7 +214,7 @@ public:
      *
      * @return void
      */
-    void updatePlayerGUI(const float &dt);
+    void updatePlayerGUI(const float &dt, sf::Vector2f mouse_pos);
 
     /**
      * @brief Updates all game enemies.
