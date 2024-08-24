@@ -17,8 +17,6 @@ private:
 
     std::map<std::string, gui::Button *> buttons;
 
-    gui::WindowBaseFrame *test;
-
     /* INITIALIZERS ============================================================================================== */
 
     /**

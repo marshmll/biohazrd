@@ -85,8 +85,7 @@ TileMap::TileMap(const std::string title, const std::string description,
 
     saveToFile(file_path);
 
-    worldTimeClock.restart();
-    currentWorldTimeAsDegrees = 0.f; // TODO: LOAD AND SAVE FROM FILE.
+    currentWorldTimeAsDegrees = 180.f; // TODO: LOAD AND SAVE FROM FILE.
     worldTimeMax = 360.f;
 }
 
@@ -94,8 +93,7 @@ TileMap::TileMap(const std::string map_file_path)
 {
     loadFromFile(map_file_path);
 
-    worldTimeClock.restart();
-    currentWorldTimeAsDegrees = 0.f; // TODO: LOAD AND SAVE FROM FILE.
+    currentWorldTimeAsDegrees = 180.f; // TODO: LOAD AND SAVE FROM FILE.
     worldTimeMax = 360.f;
 }
 
@@ -587,14 +585,14 @@ void TileMap::updateMapActiveArea(const sf::Vector2i grid_position, const int wi
         endY = mapGridDimensions.y;
 }
 
-void TileMap::updateAmbientLight(sf::Vector3f &ambient_light)
+void TileMap::updateAmbientLight(const float &dt, sf::Vector3f &ambient_light)
 {
-    currentWorldTimeAsDegrees = worldTimeClock.getElapsedTime().asSeconds() / 4.f;
+    currentWorldTimeAsDegrees += dt / 2.f; 
 
     if (currentWorldTimeAsDegrees >= worldTimeMax)
-        worldTimeClock.restart();
+	currentWorldTimeAsDegrees = 0.f;
 
-    float time_factor = fabs(sinf(currentWorldTimeAsDegrees * PI / 180.f));
+    float time_factor = fabs(sinf(currentWorldTimeAsDegrees * PI / 360.f)); 
 
     ambient_light.x = 0.05f + time_factor * (1.f - 0.05f);
     ambient_light.y = 0.05f + time_factor * (1.f - 0.05f);

@@ -1386,7 +1386,7 @@ gui::CollisionEditor::CollisionEditor(
         sf::Color(100, 100, 100, 100), sf::Color(20, 20, 20, 200),
         font, "Collision Editor", gui::calc_char_size(vm, 125), sf::Color::White,
         sf::Color(200, 50, 50, 255), sf::Color(255, 50, 50, 255), sf::Color(100, 50, 50, 255),
-        sf::Color(200, 200, 200, 200), -2.f);
+        sf::Color(200, 200, 200, 200), -2.f, false);
 
     // Tile
     editorTile.setTexture(texture_sheet);

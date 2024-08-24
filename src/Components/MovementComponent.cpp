@@ -6,12 +6,14 @@
 /* CONSTRUCTOR AND DESTRUCTOR */
 
 MovementComponent::MovementComponent(
-    sf::Sprite &sprite, float maxVelocity,
-    float acceleration, float deceleration)
+    sf::Sprite &sprite, const float maxVelocity,
+    const float acceleration, const float deceleration,
+    const bool allow_sprint, const float sprint_factor)
 
     : sprite(sprite), maxVelocity(maxVelocity),
       acceleration(acceleration), deceleration(deceleration),
-      state(States::IDLE), direction(Directions::DOWN)
+      allowSprint(allow_sprint), sprintFactor(sprint_factor),
+      state(MovementStates::IDLE), direction(MovementDirections::DOWN)
 {
 }
 
@@ -25,11 +27,22 @@ void MovementComponent::update(const float &dt)
 {
     /* Deceleration */
 
+    float sprint_factor;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && allowSprint)
+    {
+        sprint_factor = sprintFactor;
+    }
+    else
+    {
+        sprint_factor = 1.f;
+    }
+
     // If player is moving right
     if (velocity.x >= 0.f)
     {
         // Decrease velocity
-        velocity.x -= deceleration * dt;
+        velocity.x -= deceleration * sprint_factor * dt;
 
         // If velocity hits 0, keep it at 0.
         if (velocity.x < 0.f)
@@ -39,7 +52,7 @@ void MovementComponent::update(const float &dt)
     else if (velocity.x <= 0.f)
     {
         // Decrease velocity
-        velocity.x += deceleration * dt;
+        velocity.x += deceleration * sprint_factor * dt;
 
         // If velocity hits 0, keep it at 0.
         if (velocity.x > 0.f)
@@ -50,7 +63,7 @@ void MovementComponent::update(const float &dt)
     if (velocity.y >= 0.f)
     {
         // Decrease velocity
-        velocity.y -= deceleration * dt;
+        velocity.y -= deceleration * sprint_factor * dt;
 
         // If velocity hits 0, keep it at 0.
         if (velocity.y < 0.f)
@@ -60,7 +73,7 @@ void MovementComponent::update(const float &dt)
     else if (velocity.y <= 0.f)
     {
         // Decrease velocity
-        velocity.y += deceleration * dt;
+        velocity.y += deceleration * sprint_factor * dt;
 
         // If velocity hits 0, keep it at 0.
         if (velocity.y > 0)
@@ -79,8 +92,21 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
 {
     /* Acceleration */
 
+    float sprint_factor;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && allowSprint)
+    {
+        sprint_factor = sprintFactor;
+        state = MovementStates::SPRINTING;
+    }
+    else
+    {
+        sprint_factor = 1.f;
+        state = MovementStates::MOVING;
+    }
+
     // Accelerate player x
-    velocity.x += acceleration * dir_x * dt;
+    velocity.x += acceleration * sprint_factor * dir_x * dt;
 
     // Get the x and y directions coeficients (-1.0 or +1.0)
     // +1.0 for DOWN and RIGHT.
@@ -89,40 +115,38 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float &
     float yDirection = velocity.y / std::fabs(velocity.y);
 
     // If player hits max velocity in x axis
-    if (std::fabs(velocity.x) > maxVelocity)
+    if (std::fabs(velocity.x) > maxVelocity * sprint_factor)
     {
         // Keep the x velocity equal to max velocity.
-        velocity.x = maxVelocity * xDirection;
+        velocity.x = maxVelocity * xDirection * sprint_factor;
     }
 
     // Accelerate player y
-    velocity.y += acceleration * dir_y * dt;
+    velocity.y += acceleration * sprint_factor * dir_y * dt;
 
     // If player hits max velocity in y axis
-    if (std::fabs(velocity.y) > maxVelocity)
+    if (std::fabs(velocity.y) > maxVelocity * sprint_factor)
     {
         // Keep the y velocity equal to max velocity.
-        velocity.y = maxVelocity * yDirection;
+        velocity.y = maxVelocity * yDirection * sprint_factor;
     }
-
-    state = States::MOVING;
 
     // Update moving direction
     if (xDirection == 1 && velocity.y == 0)
 
-        direction = Directions::RIGHT;
+        direction = MovementDirections::RIGHT;
 
     else if (xDirection == -1 && velocity.y == 0)
 
-        direction = Directions::LEFT;
+        direction = MovementDirections::LEFT;
 
     else if (yDirection == 1 && velocity.x == 0)
 
-        direction = Directions::DOWN;
+        direction = MovementDirections::DOWN;
 
     else if (yDirection == -1 && velocity.x == 0)
 
-        direction = Directions::UP;
+        direction = MovementDirections::UP;
 }
 
 void MovementComponent::knockback(const sf::Vector2f norm_vec, const float strength)
@@ -155,16 +179,16 @@ const std::string MovementComponent::getDirection() const
 
     switch (this->direction)
     {
-    case Directions::DOWN:
+    case MovementDirections::DOWN:
         direction = "DOWN";
         break;
-    case Directions::UP:
+    case MovementDirections::UP:
         direction = "UP";
         break;
-    case Directions::RIGHT:
+    case MovementDirections::RIGHT:
         direction = "RIGHT";
         break;
-    case Directions::LEFT:
+    case MovementDirections::LEFT:
         direction = "LEFT";
         break;
     }

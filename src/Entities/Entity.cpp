@@ -53,9 +53,11 @@ void Entity::createHitboxComponent(const float offset_x, const float offset_y,
 }
 
 void Entity::createMovementComponent(const float max_velocity,
-                                     const float acceleration, const float deceleration)
+                                     const float acceleration, const float deceleration,
+                                     const bool allow_sprint, const float sprint_factor)
 {
-    movementComponent = new MovementComponent(sprite, max_velocity, acceleration, deceleration);
+    movementComponent = new MovementComponent(sprite, max_velocity, acceleration, deceleration,
+                                              allow_sprint, sprint_factor);
 }
 
 void Entity::createAnimationComponent(sf::Texture &texture_sheet)

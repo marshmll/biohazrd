@@ -26,10 +26,10 @@ void Player::initAnimations()
     animationComponent->addAnimation("WALK_RIGHT", 11.f, 0, 6, 5, 6, 64.f, 64.f);
     animationComponent->addAnimation("WALK_LEFT", 11.f, 0, 7, 5, 7, 64.f, 64.f);
 
-    animationComponent->addAnimation("SPRINT_DOWN", 10.f, 6, 4, 9, 4, 64.f, 64.f);
-    animationComponent->addAnimation("SPRINT_UP", 10.f, 6, 5, 9, 5, 64.f, 64.f);
-    animationComponent->addAnimation("SPRINT_RIGHT", 10.f, 6, 6, 9, 6, 64.f, 64.f);
-    animationComponent->addAnimation("SPRINT_LEFT", 10.f, 6, 7, 9, 7, 64.f, 64.f);
+    animationComponent->addAnimation("SPRINT_DOWN", 20.f, 6, 4, 9, 4, 64.f, 64.f);
+    animationComponent->addAnimation("SPRINT_UP", 20.f, 6, 5, 9, 5, 64.f, 64.f);
+    animationComponent->addAnimation("SPRINT_RIGHT", 20.f, 6, 6, 9, 6, 64.f, 64.f);
+    animationComponent->addAnimation("SPRINT_LEFT", 20.f, 6, 7, 9, 7, 64.f, 64.f);
 
     animationComponent->addAnimation("JUMP_DOWN", 13.f, 5, 0, 8, 0, 64.f, 64.f);
     animationComponent->addAnimation("JUMP_UP", 13.f, 5, 1, 8, 1, 64.f, 64.f);
@@ -50,8 +50,8 @@ Player::Player(const float x, const float y, sf::Texture &texture_sheet)
     initVariables();
     setPosition(sf::Vector2f(x, y));
 
-    createHitboxComponent(40.f, 50.f, 16.f, 16.f);
-    createMovementComponent(120.f, 1000.f, 600.f);
+    createHitboxComponent(76.f, 120.f, 42.f, 12.f);
+    createMovementComponent(180.f, 1000.f, 600.f, true, 2.f);
     createAnimationComponent(texture_sheet);
     createAttributeComponent(1);
     createSkillComponent();
@@ -115,7 +115,13 @@ void Player::updateAnimation(const float &dt)
     case MOVING:
         animationComponent->play(
             "WALK_" + movementComponent->getDirection(), dt,
-            std::abs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
+            std::fabs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
+            movementComponent->getMaxVelocity());
+        break;
+    case SPRINTING:
+        animationComponent->play(
+            "SPRINT_" + movementComponent->getDirection(), dt,
+            std::fabs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
             movementComponent->getMaxVelocity());
         break;
     }

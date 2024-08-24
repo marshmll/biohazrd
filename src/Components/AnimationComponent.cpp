@@ -18,8 +18,8 @@ AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_
 
 AnimationComponent::~AnimationComponent()
 {
-    for (auto &it : animations)
-        delete it.second;
+    for (auto &[key, animation] : animations)
+        delete animation;
 }
 
 /* FUNCTIONS ==================================================================================================== */

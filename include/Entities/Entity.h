@@ -79,7 +79,8 @@ public:
      */
     void createMovementComponent(
         const float max_velocity,
-        const float acceleration, const float deceleration);
+        const float acceleration, const float deceleration,
+        const bool allow_sprint = false, const float sprint_factor = 1.f);
 
     /**
      * @brief Creates an animation functionality component for the

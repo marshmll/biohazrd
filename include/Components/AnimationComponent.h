@@ -55,7 +55,7 @@ private:
 
             this->sprite.setTextureRect(this->startCropRect);
 
-            this->sprite.setScale(1.5f, 1.5f);
+            this->sprite.setScale(3.f, 3.f);
         }
 
         virtual ~Animation() {}
@@ -131,10 +131,10 @@ private:
         const bool &play(const float &dt, float mod_percent)
         {
             // If modifier percent is too small
-            if (mod_percent < 0.5f)
+            if (mod_percent < 0.7f)
             {
-                // Assure its at least 50%
-                mod_percent = 0.5f;
+                // Assure its at least 70%
+                mod_percent = 0.7f;
             }
 
             this->done = false;

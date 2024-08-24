@@ -1,13 +1,14 @@
 #ifndef MOVEMENTCOMPONENT_H_
 #define MOVEMENTCOMPONENT_H_
 
-enum States
+enum MovementStates
 {
     IDLE = 0,
-    MOVING
+    MOVING,
+    SPRINTING,
 };
 
-enum Directions
+enum MovementDirections
 {
     DOWN = 0,
     UP,
@@ -25,6 +26,8 @@ private:
     float maxVelocity;
     float acceleration;
     float deceleration;
+    bool allowSprint;
+    float sprintFactor;
 
     sf::Vector2f velocity;
 
@@ -34,7 +37,9 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
-    MovementComponent(sf::Sprite &sprite, float maxVelocity, float acceleration, float deceleration);
+    MovementComponent(sf::Sprite &sprite, const float maxVelocity,
+                      const float acceleration, const float deceleration,
+                      const bool allow_sprint = false, const float sprint_factor = 1.f);
 
     virtual ~MovementComponent();
 
