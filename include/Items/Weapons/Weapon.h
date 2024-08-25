@@ -13,9 +13,9 @@ private:
 protected:
     /* PROTECTED VARIABLES ===================================================================================== */
 
-    sf::Texture weaponUpTexture;
-    sf::Texture weaponDownTexture;
-    sf::Texture weaponHorizontalTexture;
+    sf::IntRect weaponUpIntRect;
+    sf::IntRect weaponDownIntRect;
+    sf::IntRect weaponHorizontalIntRect;
     sf::Sprite weaponSprite;
 
     unsigned short range;
@@ -29,7 +29,8 @@ protected:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ============================================================================== */
 
-    Weapon(const ItemType type, const std::string texture_path, const unsigned short value,
+    Weapon(const std::string name, const unsigned short value, const ItemType type,
+           sf::Texture &texture,
            const unsigned short range, const unsigned short damage_min, const unsigned short damage_max,
            const unsigned short knockback);
 

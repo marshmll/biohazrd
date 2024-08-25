@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword()
-    : MeleeWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
-                  80, 2, 10, 250)
+Sword::Sword(std::map<std::string, sf::Texture> &textures)
+    : MeleeWeapon("Sword", 80, textures.at("SWORD"), 20, 5, 25, 30)
 {
     weaponSprite.setOrigin(
         weaponSprite.getGlobalBounds().width / 2.f,
@@ -22,28 +21,28 @@ void Sword::update(const sf::Vector2f &mouse_pos_view, const sf::Vector2f entity
 
     if (entity_direction == "LEFT")
     {
-        weaponSprite.setTexture(weaponHorizontalTexture);
+        weaponSprite.setTextureRect(weaponHorizontalIntRect);
         angle = -90.f;
         position.x = entity_center.x;
         position.y = entity_center.y - 10.f;
     }
     else if (entity_direction == "RIGHT")
     {
-        weaponSprite.setTexture(weaponHorizontalTexture);
+        weaponSprite.setTextureRect(weaponHorizontalIntRect);
         angle = 90.f;
         position.x = entity_center.x - 15.f;
         position.y = entity_center.y - 10.f;
     }
     else if (entity_direction == "UP")
     {
-        weaponSprite.setTexture(weaponUpTexture);
+        weaponSprite.setTextureRect(weaponUpIntRect);
         position.x = entity_center.x + entity_size.x / 2.f - 5.f;
         position.y = entity_center.y;
         angle = 0.f;
     }
     else if (entity_direction == "DOWN")
     {
-        weaponSprite.setTexture(weaponDownTexture);
+        weaponSprite.setTextureRect(weaponDownIntRect);
         position.x = entity_center.x - entity_size.x / 2.f + 10.f;
         position.y = entity_center.y + 15.f;
         angle = 0.f;

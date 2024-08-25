@@ -587,12 +587,12 @@ void TileMap::updateMapActiveArea(const sf::Vector2i grid_position, const int wi
 
 void TileMap::updateAmbientLight(const float &dt, sf::Vector3f &ambient_light)
 {
-    currentWorldTimeAsDegrees += dt / 2.f; 
+    currentWorldTimeAsDegrees += dt / 2.f;
 
     if (currentWorldTimeAsDegrees >= worldTimeMax)
-	currentWorldTimeAsDegrees = 0.f;
+        currentWorldTimeAsDegrees = 0.f;
 
-    float time_factor = fabs(sinf(currentWorldTimeAsDegrees * PI / 360.f)); 
+    float time_factor = fabs(sinf(currentWorldTimeAsDegrees * PI / 360.f));
 
     ambient_light.x = 0.05f + time_factor * (1.f - 0.05f);
     ambient_light.y = 0.05f + time_factor * (1.f - 0.05f);
@@ -632,6 +632,11 @@ const int TileMap::getAmountOfStackedTiles(const int x, const int y, const unsig
         return static_cast<int>(map[x][y][layer].size());
 
     return -1;
+}
+
+const float TileMap::getDayTime() const
+{
+    return currentWorldTimeAsDegrees;
 }
 
 const bool TileMap::isTileEmpty(const int x, const int y, const unsigned layer) const

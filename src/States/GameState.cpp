@@ -10,6 +10,11 @@
 
 /* INITIALIZERS ================================================================================================== */
 
+void GameState::initVariables()
+{
+    showDebugStats = false;
+}
+
 void GameState::initBufferedRender()
 {
     renderBuffer.create(vm.width, vm.height);
@@ -53,22 +58,25 @@ void GameState::initFonts()
 void GameState::initText()
 {
     debugText.setFont(font);
-    debugText.setCharacterSize(gui::calc_char_size(vm, 150));
-    debugText.setPosition(vm.width - gui::p2pX(vm, 10.f), gui::p2pY(vm, 5.f));
+    debugText.setCharacterSize(gui::calc_char_size(vm, 135));
+    debugText.setPosition(gui::p2pX(vm, 1.f), gui::p2pY(vm, 1.f));
 }
 
 void GameState::initTextures()
 {
-    if (!textures["PLAYER_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Player/char_a_p1_0bas_humn_v01.png"))
-    {
-        data->logger->log("GameState::initTextures", ERROR, "Could not player spritesheet.");
-        ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_PLAYER_SPRITESHEET\n");
-    }
+    IniParser parser;
 
-    if (!textures["SLIME_SPRITESHEET"].loadFromFile("Assets/Images/Sprites/Slime/slime.png"))
+    parser.loadFromFile("Config/textures.ini");
+
+    for (auto &[key, path] : parser.getAllProperties())
     {
-        data->logger->log("GameState::initTextures", ERROR, "Could not slime spritesheet.");
-        ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE_SLIME_SPRITESHEEET\n");
+        std::cout << key << ": " << path << "\n";
+
+        if (!textures[key].loadFromFile(path))
+        {
+            data->logger->log("GameState::initTextures", ERROR, "Could not load texture: " + key);
+            ErrorHandler::throwErr("ERROR::GAMESTATE::INITTEXTURES::COULD_NOT_LOAD_TEXTURE");
+        }
     }
 
     data->logger->log("GameState::initTextures", DEBUG, "Successfully loaded textures.");
@@ -100,7 +108,7 @@ void GameState::initPauseMenu()
 
 void GameState::initPlayers()
 {
-    player = new Player(200.f, 200.f, textures["PLAYER_SPRITESHEET"]);
+    player = new Player(200.f, 200.f, textures);
 }
 
 void GameState::initPlayerGUI()
@@ -127,6 +135,7 @@ void GameState::initTextTagSystem()
 
 GameState::GameState(StateData *data, const std::string map_path) : State(data)
 {
+    initVariables();
     initBufferedRender();
     initView();
     initKeybinds();
@@ -165,11 +174,7 @@ void GameState::update(const float &dt)
     // Not-paused update
     if (!isPaused)
     {
-        /* DEBUG! */
-        std::stringstream ss;
-        ss << "dt: " << dt << "ms";
-        debugText.setString(ss.str());
-        /*********/
+        updateDebugStats(dt);
 
         updatePlayerCamera(dt);
         updatePlayerInput(dt);
@@ -195,10 +200,6 @@ void GameState::render(sf::RenderTarget &target)
     renderToBuffer();
 
     target.draw(renderSprite);
-
-    /* DEBUG! */
-    target.draw(debugText);
-    /**********/
 }
 
 void GameState::renderToBuffer()
@@ -230,6 +231,12 @@ void GameState::renderToBuffer()
         pauseMenu->render(renderBuffer);
     }
 
+    if (showDebugStats)
+    {
+        // renderBuffer.setView(renderBuffer.getDefaultView());
+        renderBuffer.draw(debugText);
+    }
+
     // Display render buffer
     renderBuffer.display();
 
@@ -240,6 +247,8 @@ void GameState::updateInput(const float &dt)
 {
     if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("PAUSE"))))
         pauseToggle();
+    else if (hasElapsedKeyTimeMax(sf::Keyboard::isKeyPressed(keybinds.at("DEBUG_STATS"))))
+        debugStatsToggle();
 }
 
 void GameState::updatePlayers(const float &dt)
@@ -339,6 +348,20 @@ void GameState::updateShaders()
     coreShader.setUniform("ambient", ambientLight);
 }
 
+void GameState::updateDebugStats(const float &dt)
+{
+    std::stringstream ss;
+
+    ss << "[delta]: " << dt << "ms" << "\n"
+       << "[player x]: " << player->getGridPosition(gridSize).x << "\n"
+       << "[player y]: " << player->getGridPosition(gridSize).y << "\n"
+       << "[velocity x]: " << player->getVelocity().x << "\n"
+       << "[velocity y]: " << player->getVelocity().y << "\n"
+       << "[daytime]: " << tileMap->getDayTime() << "\n";
+
+    debugText.setString(ss.str());
+}
+
 void GameState::updatePauseMenuButtons()
 {
     if (pauseMenu->isButtonPressed("QUIT"))
@@ -382,4 +405,9 @@ void GameState::updatePlayerCamera(const float &dt)
 
     playerCameraPosGrid.x = static_cast<int>(playerCamera.getCenter().x) / static_cast<int>(data->gridSize);
     playerCameraPosGrid.y = static_cast<int>(playerCamera.getCenter().y) / static_cast<int>(data->gridSize);
+}
+
+void GameState::debugStatsToggle()
+{
+    showDebugStats = !showDebugStats;
 }

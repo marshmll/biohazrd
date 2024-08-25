@@ -10,7 +10,7 @@ protected:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    Bow();
+    Bow(std::map<std::string, sf::Texture> &textures);
 
     virtual ~Bow();
 

@@ -17,7 +17,8 @@ private:
     sf::RenderTexture renderBuffer;
     sf::Sprite renderSprite;
 
-    sf::Text debugText; // TEMP
+    bool showDebugStats;
+    sf::Text debugText;
 
     sf::Shader coreShader;
     sf::Vector3f ambientLight;
@@ -37,6 +38,13 @@ private:
     TileMap *tileMap;
 
     /* INITIALIZERS ============================================================================================== */
+
+    /**
+     * @brief Initializes general game variables.
+     *
+     * @return void.
+     */
+    void initVariables();
 
     /**
      * @brief Initializes the buffered render.
@@ -242,6 +250,8 @@ public:
 
     void updateShaders();
 
+    void updateDebugStats(const float &dt);
+
     /**
      * @brief Updates button interactions from the pause menu.
      * Executes its functionality.
@@ -257,6 +267,8 @@ public:
      * @return void
      */
     void updatePlayerCamera(const float &dt);
+
+    void debugStatsToggle();
 };
 
 #endif /* GAMESTATE_H_ */

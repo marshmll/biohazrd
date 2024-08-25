@@ -31,28 +31,30 @@ void Player::initAnimations()
     animationComponent->addAnimation("SPRINT_RIGHT", 20.f, 6, 6, 9, 6, 64.f, 64.f);
     animationComponent->addAnimation("SPRINT_LEFT", 20.f, 6, 7, 9, 7, 64.f, 64.f);
 
-    animationComponent->addAnimation("JUMP_DOWN", 13.f, 5, 0, 8, 0, 64.f, 64.f);
-    animationComponent->addAnimation("JUMP_UP", 13.f, 5, 1, 8, 1, 64.f, 64.f);
-    animationComponent->addAnimation("JUMP_RIGHT", 13.f, 5, 2, 8, 2, 64.f, 64.f);
-    animationComponent->addAnimation("JUMP_LEFT", 13.f, 5, 3, 8, 3, 64.f, 64.f);
+    // animationComponent->addAnimation("JUMP_DOWN", 13.f, 5, 0, 8, 0, 64.f, 64.f);
+    // animationComponent->addAnimation("JUMP_UP", 13.f, 5, 1, 8, 1, 64.f, 64.f);
+    // animationComponent->addAnimation("JUMP_RIGHT", 13.f, 5, 2, 8, 2, 64.f, 64.f);
+    // animationComponent->addAnimation("JUMP_LEFT", 13.f, 5, 3, 8, 3, 64.f, 64.f);
 }
 
 void Player::initInventory()
 {
     inventory = new Inventory(40);
+
+    inventory->add(&sword);
 }
 
 /* CONSTRUCTOR AND DESTRUCTOR =================================================================================== */
 
-Player::Player(const float x, const float y, sf::Texture &texture_sheet)
-    : Entity("Player")
+Player::Player(const float x, const float y, std::map<std::string, sf::Texture> &textures)
+    : Entity("Player"), sword(textures)
 {
     initVariables();
     setPosition(sf::Vector2f(x, y));
 
     createHitboxComponent(76.f, 120.f, 42.f, 12.f);
     createMovementComponent(180.f, 1000.f, 600.f, true, 2.f);
-    createAnimationComponent(texture_sheet);
+    createAnimationComponent(textures.at("PLAYER_SPRITESHEET"));
     createAttributeComponent(1);
     createSkillComponent();
 
@@ -132,7 +134,7 @@ AttributeComponent *Player::getAttributeComponent()
     return attributeComponent;
 }
 
-Inventory *Player::getInventory() 
+Inventory *Player::getInventory()
 {
     return inventory;
 }

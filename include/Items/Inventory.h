@@ -1,7 +1,7 @@
 #ifndef INVENTORY_H_
 #define INVENTORY_H_
 
-#include "Item.h"
+#include "Items.h"
 
 class Inventory
 {
@@ -32,12 +32,14 @@ public:
 
     void clear();
 
+    Item *at(const short unsigned index);
+
     const bool add(Item *item);
 
     const bool remove(const short unsigned index);
 
     const bool loadFromFile(const std::string file_path);
-    
+
     const bool saveToFile(const std::string file_path);
 
     /* ACCESSORS ================================================================================================ */

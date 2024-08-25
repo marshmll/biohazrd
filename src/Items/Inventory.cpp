@@ -57,11 +57,32 @@ void Inventory::clear()
     nullify();
 }
 
+Item *Inventory::at(const short unsigned index)
+{
+    if (size() > 0 && index >= 0 && index < capacity)
+    {
+        return itemArray[index];
+    }
+
+    ErrorHandler::throwErr("INVENTORY::AT::ERR_INDEX_OUT_OF_BOUNDS");
+
+    return nullptr;
+}
+
 const bool Inventory::add(Item *item)
 {
     if (!full())
     {
-        itemArray[numOfItems++] = item->clone();
+        for (unsigned short i = 0; i < capacity; ++i)
+        {
+            if (itemArray[i] == nullptr)
+            {
+                itemArray[i] = item->clone();
+                ++numOfItems;
+
+                break;
+            }
+        }
 
         return true;
     }

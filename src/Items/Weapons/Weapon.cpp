@@ -11,11 +11,12 @@ void Weapon::initVariables()
 
 /* CONSTRUCTOR AND DESTRUCTOR ================================================================================= */
 
-Weapon::Weapon(const ItemType type, const std::string texture_path, const unsigned short value,
+Weapon::Weapon(const std::string name, const unsigned short value, const ItemType type,
+               sf::Texture &texture,
                const unsigned short range, const unsigned short damage_min, const unsigned short damage_max,
                const unsigned short knockback)
 
-    : Item(value, type)
+    : Item(name, value, type, texture)
 {
     this->range = range;
     this->damageMin = damage_min;
@@ -24,16 +25,12 @@ Weapon::Weapon(const ItemType type, const std::string texture_path, const unsign
 
     initVariables();
 
-    if (!weaponHorizontalTexture.loadFromFile(texture_path, sf::IntRect(0, 0, 64, 64)))
-        ErrorHandler::throwErr("WEAPON::WEAPON::ERR_LOADING_TEXTURE::" + texture_path);
+    weaponHorizontalIntRect = sf::IntRect(64, 0, 64, 64);
+    weaponUpIntRect = sf::IntRect(128, 0, 64, 64);
+    weaponDownIntRect = sf::IntRect(192, 0, 64, 64);
 
-    if (!weaponUpTexture.loadFromFile(texture_path, sf::IntRect(64, 0, 64, 64)))
-        ErrorHandler::throwErr("WEAPON::WEAPON::ERR_LOADING_TEXTURE::" + texture_path);
-
-    if (!weaponDownTexture.loadFromFile(texture_path, sf::IntRect(128, 0, 64, 64)))
-        ErrorHandler::throwErr("WEAPON::WEAPON::ERR_LOADING_TEXTURE::" + texture_path);
-
-    weaponSprite.setTexture(weaponDownTexture);
+    weaponSprite.setTexture(texture);
+    weaponSprite.setTextureRect(weaponDownIntRect);
 }
 
 Weapon::~Weapon()

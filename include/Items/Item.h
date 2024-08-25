@@ -28,20 +28,32 @@ private:
 protected:
     /* PROTECTED VARIABLES =======================================================================================*/
 
+    std::string name;
+    short unsigned value;
     ItemType type;
 
-    short unsigned value;
+    sf::Texture &texture;
+    sf::IntRect iconIntRect;
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR =============================================================================== */
 
-    Item(const short unsigned value = 0, const ItemType type = ItemType::DEFAULT_ITEM);
+    Item(const std::string name, const unsigned short value,
+         const ItemType type, sf::Texture &texture);
 
     virtual ~Item();
 
     /* FUNCTIONS ================================================================================================= */
 
     virtual Item *clone() = 0;
+
+    /* ACCESSORS ================================================================================================= */
+
+    virtual const std::string &getName() const;
+
+    virtual const sf::Texture *getTexture() const;
+
+    virtual sf::IntRect getIconIntRect() const;
 };
 
 #endif /* ITEM_H_ */

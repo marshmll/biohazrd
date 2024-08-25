@@ -142,8 +142,6 @@ const std::vector<std::pair<std::string, std::string>> Parser::parse_identifier_
 
             pair.second = parse_assignment_expression(pair.first, true).value_or("NULL");
 
-            std::cout << pair.first << ": " << pair.second << "\n";
-
             pairs.push_back(pair);
         }
         else if (token.getType() == TokenType::SECTION)

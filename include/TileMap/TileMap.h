@@ -318,6 +318,13 @@ public:
     const int getAmountOfStackedTiles(const int x, const int y, const unsigned layer) const;
 
     /**
+     * @brief Returns the current day time.
+     * 
+     * @return const float
+     */
+    const float getDayTime() const;
+
+    /**
      * @brief Checks if a tile in a x, y and z coordinate are from a given type.
      * @param x The x coordinate.
      * @param y The y coordinate.

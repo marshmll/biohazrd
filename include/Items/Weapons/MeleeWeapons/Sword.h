@@ -9,7 +9,7 @@ private:
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 
-    Sword();
+    Sword(std::map<std::string, sf::Texture> &textures);
     virtual ~Sword();
 
     /* FUNCTIONS ================================================================================================= */

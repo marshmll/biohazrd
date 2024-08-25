@@ -13,12 +13,17 @@ private:
     // Hotbar
     sf::RectangleShape hotbarBg;
     sf::RectangleShape hotbarFrame;
+    
     sf::RectangleShape hotbarSelector;
+
+    unsigned short hotbarSize;
+
+    std::vector<sf::RectangleShape> hotbarSlots;
+    std::unique_ptr<Item *[]> hotbarItems;
 
     void initHotbar();
 
 public:
-    
     InventoryGUI(Inventory &inventory, sf::VideoMode &vm);
 
     virtual ~InventoryGUI();

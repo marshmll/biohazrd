@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-Bow::Bow()
-    : RangedWeapon("Assets/Images/Sprites/Player/pickaxe_spritesheet.png", 10,
-                   200, 5, 50, 100)
+Bow::Bow(std::map<std::string, sf::Texture> &textures)
+    : RangedWeapon("Bow", 20, textures.at("BOW"), 200, 5, 15, 10)
 {
 }
 

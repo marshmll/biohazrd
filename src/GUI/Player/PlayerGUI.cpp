@@ -5,7 +5,7 @@
 
 void PlayerGUI::initFont()
 {
-    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
         ErrorHandler::throwErr("PLAYERGUI::INITFONT::ERR::COULD_NOT_LOAD_FONT\n");
 }
 
@@ -17,8 +17,8 @@ void PlayerGUI::initInventoryGUI()
 void PlayerGUI::initExpBar()
 {
     expBar = new gui::ProgressBar(
-        (vm.width / 2.f) - gui::p2pX(vm, 70.f) / 2.f, gui::p2pY(vm, 95.f),
-        gui::p2pX(vm, 70.f), gui::p2pY(vm, 2.f),
+        (vm.width / 2.f) - gui::p2pY(vm, 8.f) * 9.f / 2.f, gui::p2pY(vm, 87.f),
+        gui::p2pY(vm, 8.f) * 9.f, gui::p2pY(vm, 2.f),
         player.getAttributeComponent()->exp, player.getAttributeComponent()->expNext,
         sf::Color(50, 50, 50, 200), sf::Color(20, 230, 20, 200),
         font, sf::Color::White, gui::calc_char_size(vm, 140));
@@ -79,7 +79,7 @@ PlayerGUI::~PlayerGUI()
 void PlayerGUI::update(const float &dt, sf::Vector2f &mouse_pos)
 {
     updateInventory(dt, mouse_pos);
-    
+
     updateLevelBar();
     updateHpBar();
     updateExpBar();
