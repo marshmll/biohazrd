@@ -47,9 +47,11 @@ void Engine::initWindow()
 
 void Engine::initKeys()
 {
-    IniParser parser("Config/accepted_keys.ini");
+    IniParser parser;
 
-    for (auto &[key, keycode] : parser.getAllKeyValuePairs("AcceptedKeys"))
+    parser.loadFromFile("Config/accepted_keys.ini");
+
+    for (auto &[key, keycode] : parser.getAllPropertiesFrom("AcceptedKeys"))
         acceptedKeys[key] = static_cast<sf::Keyboard::Key>(std::stoi(keycode));
 
     logger->log("Engine::initKeys", INFO, "Initialized " + std::to_string(acceptedKeys.size()) + " keys.");

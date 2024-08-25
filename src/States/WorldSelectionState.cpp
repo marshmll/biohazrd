@@ -20,7 +20,7 @@ void WorldSelectionState::initKeybinds()
 
 void WorldSelectionState::initFonts()
 {
-    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
     {
         data->logger->log("WorldSelectionState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::WORLDSELECTIONSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");

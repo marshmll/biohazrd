@@ -16,7 +16,7 @@ void MainMenuState::initVariables()
 
 void MainMenuState::initFonts()
 {
-    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
     {
         data->logger->log("MainMenuState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::MAINMENUSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");

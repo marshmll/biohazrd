@@ -25,9 +25,13 @@ target_sources(BIOHAZRD PRIVATE
 ./AI/Behaviors/AIFollowBehavior.cpp
 ./AI/Behaviors/AIBehavior.cpp
 ./Utils/GraphicsSettings.cpp
+./Utils/IniParser/Parser.cpp
+./Utils/IniParser/Lexer.cpp
+./Utils/IniParser/Token.cpp
+./Utils/IniParser/TextSpan.cpp
+./Utils/IniParser/IniParser.cpp
 ./Utils/Logger.cpp
 ./Utils/ErrorHandler.cpp
-./Utils/IniParser.cpp
 ./main.cpp
 ./TileMap/TileMap.cpp
 ./Tiles/EnemySpawnerTile.cpp

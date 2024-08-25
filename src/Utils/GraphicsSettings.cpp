@@ -52,15 +52,15 @@ void GraphicsSettings::saveToFile(const std::string path)
 
 void GraphicsSettings::loadFromFile(const std::string path)
 {
-    IniParser parser(path);
+    IniParser parser;
 
-    parser.setSectionPreset("Graphics");
+    parser.loadFromFile(path);
 
-    title = parser.getString("Title");
-    resolution.width = parser.getInt("ResolutionWidth");
-    resolution.height = parser.getInt("ResolutionHeight");
-    fullscreen = parser.getBool("Fullscreen");
-    frameRateLimit = parser.getInt("FramerateLimit");
-    verticalSync = parser.getBool("VSync");
-    contextSettings.antialiasingLevel = parser.getInt("AntialiasingLevel");
+    title = parser.getProperty("Graphics", "Title");
+    resolution.width = parser.getInt("Graphics", "ResolutionWidth");
+    resolution.height = parser.getInt("Graphics", "ResolutionHeight");
+    fullscreen = parser.getBool("Graphics", "Fullscreen");
+    frameRateLimit = parser.getInt("Graphics", "FramerateLimit");
+    verticalSync = parser.getBool("Graphics", "VSync");
+    contextSettings.antialiasingLevel = parser.getInt("Graphics", "AntialiasingLevel");
 }

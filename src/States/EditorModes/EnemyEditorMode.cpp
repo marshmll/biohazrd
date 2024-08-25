@@ -17,7 +17,7 @@ void EnemyEditorMode::initGUI()
 {
     // Cursor text
     cursorText.setFont(*editorData->font);
-    cursorText.setCharacterSize(8);
+    cursorText.setCharacterSize(12);
 
     // Sidebar
     sidebar.setSize(sf::Vector2f(64.f, data->gfxSettings->resolution.height));

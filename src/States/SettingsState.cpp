@@ -17,7 +17,7 @@ void SettingsState::initVariables()
 
 void SettingsState::initFonts()
 {
-    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
     {
         data->logger->log("SettingsState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");

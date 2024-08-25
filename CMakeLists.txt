@@ -36,6 +36,7 @@ target_include_directories(BIOHAZRD PRIVATE include/States/EditorModes)
 target_include_directories(BIOHAZRD PRIVATE include/Tiles)
 target_include_directories(BIOHAZRD PRIVATE include/TileMap)
 target_include_directories(BIOHAZRD PRIVATE include/Utils)
+target_include_directories(BIOHAZRD PRIVATE include/Utils/IniParser)
 
 target_precompile_headers(BIOHAZRD PRIVATE include/stdafx.h)
 

@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "SoundSystem.h"
 
-SoundSystem::SoundSystem(const std::string file_path) : parser(file_path)
+SoundSystem::SoundSystem(const std::string file_path)
 {
+    parser.loadFromFile(file_path);
 }
 
 SoundSystem::~SoundSystem()
@@ -12,7 +13,7 @@ SoundSystem::~SoundSystem()
 const bool SoundSystem::loadBuffers(const std::string file_section)
 {
     int loaded_amount = 0;
-    for (auto &[key, filename] : parser.getAllKeyValuePairs(file_section))
+    for (auto &[key, filename] : parser.getAllPropertiesFrom(file_section))
     {
         if (!buffers[key].loadFromFile(filename))
             ErrorHandler::throwErr("SOUNDSYSTEM::LOADBUFFERS::ERR_COULD_NOT_LOAD_BUFFER_" + filename);

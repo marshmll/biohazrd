@@ -28,9 +28,11 @@ void GameState::initView()
 
 void GameState::initKeybinds()
 {
-    IniParser parser("Config/keybinds.ini");
+    IniParser parser;
 
-    for (auto &[action, key] : parser.getAllKeyValuePairs("GameState"))
+    parser.loadFromFile("Config/keybinds.ini");
+
+    for (auto &[action, key] : parser.getAllPropertiesFrom("GameState"))
         keybinds[action] = acceptedKeys->at(key);
 
     data->logger->log("GameState::initKeybinds", INFO,
@@ -39,7 +41,7 @@ void GameState::initKeybinds()
 
 void GameState::initFonts()
 {
-    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
     {
         data->logger->log("GameState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::GAMESTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");

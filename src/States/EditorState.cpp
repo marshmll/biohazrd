@@ -24,9 +24,11 @@ void EditorState::initEditorCamera()
 
 void EditorState::initKeybinds()
 {
-    IniParser parser("Config/keybinds.ini");
+    IniParser parser;
 
-    for (auto &[action, key] : parser.getAllKeyValuePairs("EditorState"))
+    parser.loadFromFile("Config/keybinds.ini");
+
+    for (auto &[action, key] : parser.getAllPropertiesFrom("EditorState"))
         keybinds[action] = acceptedKeys->at(key);
 
     data->logger->log("EditorState::initKeybinds", INFO,
@@ -35,7 +37,7 @@ void EditorState::initKeybinds()
 
 void EditorState::initFonts()
 {
-    if (!font.loadFromFile("Fonts/JetBrainsMono-Regular.ttf"))
+    if (!font.loadFromFile("Fonts/VCR_OSD_MONO_1.001.ttf"))
     {
         data->logger->log("EditorState::initFonts", ERROR, "Could not load fonts.");
         ErrorHandler::throwErr("ERROR::EDITORSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
