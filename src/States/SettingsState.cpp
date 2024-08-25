@@ -225,6 +225,8 @@ void SettingsState::updateGUI(const float &dt)
             window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
         }
 
+        window->setIcon(gfxSettings->icon.getSize().x, gfxSettings->icon.getSize().y, gfxSettings->icon.getPixelsPtr());
+
         resetGUI();
 
         mainMenuState->resetGUI();

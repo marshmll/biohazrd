@@ -35,7 +35,7 @@ void Engine::initWindow()
         window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,
                                       sf::Style::Fullscreen, gfxSettings.contextSettings);
     }
-    else // If in window mode
+    else // If in windowed mode
     {
         window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,
                                       sf::Style::Titlebar | sf::Style::Close, gfxSettings.contextSettings);
@@ -43,6 +43,7 @@ void Engine::initWindow()
 
     window->setFramerateLimit(gfxSettings.frameRateLimit);
     window->setVerticalSyncEnabled(gfxSettings.verticalSync);
+    window->setIcon(gfxSettings.icon.getSize().x, gfxSettings.icon.getSize().y, gfxSettings.icon.getPixelsPtr());
 }
 
 void Engine::initKeys()

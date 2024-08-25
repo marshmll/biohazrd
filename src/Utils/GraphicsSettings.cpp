@@ -19,6 +19,7 @@ GraphicsSettings::GraphicsSettings()
     frameRateLimit = 60;
     contextSettings.antialiasingLevel = 0;
     videoModes = sf::VideoMode::getFullscreenModes();
+    icon.loadFromFile("Assets/Images/Icons/biohazrd.png");
 }
 
 GraphicsSettings::~GraphicsSettings()
@@ -56,11 +57,12 @@ void GraphicsSettings::loadFromFile(const std::string path)
 
     parser.loadFromFile(path);
 
-    title = parser.getProperty("Graphics", "Title");
+    title = parser.getString("Graphics", "Title");
     resolution.width = parser.getInt("Graphics", "ResolutionWidth");
     resolution.height = parser.getInt("Graphics", "ResolutionHeight");
     fullscreen = parser.getBool("Graphics", "Fullscreen");
     frameRateLimit = parser.getInt("Graphics", "FramerateLimit");
     verticalSync = parser.getBool("Graphics", "VSync");
     contextSettings.antialiasingLevel = parser.getInt("Graphics", "AntialiasingLevel");
+    icon.loadFromFile(parser.getString("Graphics", "Icon"));
 }

@@ -15,6 +15,7 @@ public:
     unsigned frameRateLimit;
     sf::ContextSettings contextSettings;
     std::vector<sf::VideoMode> videoModes;
+    sf::Image icon;
 
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */
 

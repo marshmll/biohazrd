@@ -70,8 +70,6 @@ void GameState::initTextures()
 
     for (auto &[key, path] : parser.getAllProperties())
     {
-        std::cout << key << ": " << path << "\n";
-
         if (!textures[key].loadFromFile(path))
         {
             data->logger->log("GameState::initTextures", ERROR, "Could not load texture: " + key);
@@ -93,7 +91,7 @@ void GameState::initShaders()
     }
 
     coreShader.setUniform("ambient", ambientLight);
-    coreShader.setUniform("useVignette", true);
+    coreShader.setUniform("useVignette", false);
 
     data->logger->log("GameState::initShaders", DEBUG, "Successfully loaded shaders.");
 }
