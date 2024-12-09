@@ -6,9 +6,7 @@ SoundSystem::SoundSystem(const std::string file_path)
     parser.loadFromFile(file_path);
 }
 
-SoundSystem::~SoundSystem()
-{
-}
+SoundSystem::~SoundSystem() {}
 
 const bool SoundSystem::loadBuffers(const std::string file_section)
 {
@@ -18,7 +16,7 @@ const bool SoundSystem::loadBuffers(const std::string file_section)
         if (!buffers[key].loadFromFile(filename))
             ErrorHandler::throwErr("SOUNDSYSTEM::LOADBUFFERS::ERR_COULD_NOT_LOAD_BUFFER_" + filename);
 
-        std::cout << "SoundSystem: Loaded " << filename << " sound file." << "\n";
+        // std::cout << "SoundSystem: Loaded " << filename << " sound file." << "\n";
 
         ++loaded_amount;
     }

@@ -163,7 +163,7 @@ void EditorState::update(const float &dt)
     {
         updateGUI(dt);
         updateEditorCamera(dt);
-        updateModes(dt);
+        updateModes(dt, *data->event);
     }
     else
     {
@@ -265,9 +265,9 @@ void EditorState::updatePauseMenuInteraction()
     }
 }
 
-void EditorState::updateModes(const float &dt)
+void EditorState::updateModes(const float &dt, const sf::Event &event)
 {
-    modes[activeEditorMode]->update(dt);
+    modes[activeEditorMode]->update(dt, event);
 }
 
 void EditorState::renderGUI(sf::RenderTarget &target)

@@ -3,7 +3,7 @@
 
 #define LOGFOLDER "Logs/"
 
-enum LOGTYPE
+enum LogType
 {
     DEBUG = 0,
     INFO,
@@ -20,7 +20,7 @@ private:
     std::stringstream logstream;
     std::string filename;
 
-    std::map<LOGTYPE, std::string> logTypeTemplates;
+    std::map<LogType, std::string> logTypeTemplates;
 
     const std::string currentDateTime();
 
@@ -35,7 +35,7 @@ public:
 
     void end();
 
-    void log(const std::string caller, const LOGTYPE log_type, const std::string log);
+    void log(const std::string caller, const LogType log_type, const std::string log);
 };
 
 #endif /* LOGGER_H_ */

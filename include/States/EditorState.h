@@ -197,7 +197,7 @@ public:
      *
      * @return void
      */
-    void updateModes(const float &dt);
+    void updateModes(const float &dt, const sf::Event &event);
 
     /**
      * @brief Renders the GUI elements into a target

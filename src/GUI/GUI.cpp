@@ -1197,6 +1197,9 @@ gui::TextureSelector::TextureSelector(
         sf::Color(200, 50, 50, 255), sf::Color(255, 50, 50, 255), sf::Color(100, 50, 50, 255),
         sf::Color(200, 200, 200, 200), -2.f, false);
 
+    sheetOffsetX = 0.f;
+    sheetOffsetY = 0.f;
+
     // Texture sheet
     sheet.setTexture(*texture_sheet);
     sheet.setPosition(frame->getBackground().getPosition().x, frame->getBackground().getPosition().y);
@@ -1205,14 +1208,14 @@ gui::TextureSelector::TextureSelector(
     if (sheet.getGlobalBounds().width > frame->getBackground().getGlobalBounds().width)
     {
         sheet.setTextureRect(
-            sf::IntRect(0, 0, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
+            sf::IntRect(sheetOffsetX, sheetOffsetY, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
     }
 
     // If the sheet is taller than the outer box
     if (sheet.getGlobalBounds().height > frame->getBackground().getGlobalBounds().height)
     {
         sheet.setTextureRect(
-            sf::IntRect(0, 0, sheet.getGlobalBounds().width, frame->getBackground().getGlobalBounds().height));
+            sf::IntRect(sheetOffsetX, sheetOffsetY, sheet.getGlobalBounds().width, frame->getBackground().getGlobalBounds().height));
     }
 
     // Selector Box
@@ -1246,7 +1249,6 @@ gui::TextureSelector::~TextureSelector()
 void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_window)
 {
     updateMousetime(dt);
-    updateMouseDrag(sf::Vector2f(mouse_pos_window));
 
     toggleBtn->update(sf::Vector2f(mouse_pos_window));
     frame->update(dt, sf::Vector2f(mouse_pos_window));
@@ -1256,6 +1258,8 @@ void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_
 
     if (frame->isVisible())
     {
+        updateMouseDrag(sf::Vector2f(mouse_pos_window));
+        updateTextureSheetView();
         active = frame->getGlobalBounds().contains(sf::Vector2f(mouse_pos_window));
 
         if (active && !frame->getTitleBar().getGlobalBounds().contains(sf::Vector2f(mouse_pos_window)))
@@ -1269,8 +1273,8 @@ void gui::TextureSelector::update(const float &dt, const sf::Vector2i mouse_pos_
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
-                textureRect.left = mousePosGrid.x * gridSizeF;
-                textureRect.top = mousePosGrid.y * gridSizeF;
+                textureRect.left = (mousePosGrid.x * gridSizeF) + sheetOffsetX;
+                textureRect.top = (mousePosGrid.y * gridSizeF) + sheetOffsetY;
             }
         }
     }
@@ -1305,6 +1309,49 @@ void gui::TextureSelector::updateMousetime(const float &dt)
 void gui::TextureSelector::updateMouseDrag(const sf::Vector2f mouse_pos)
 {
     sheet.setPosition(frame->getBackground().getPosition().x, frame->getBackground().getPosition().y);
+}
+
+void gui::TextureSelector::updateTextureSheetView()
+{
+    if (hasCompletedMousetimeCycle())
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))
+        {
+            if (sheetOffsetY > 0.f)
+            {
+                sheetOffsetY -= gridSizeF;
+                sheet.setTextureRect(
+                    sf::IntRect(sheetOffsetX, sheetOffsetY, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
+            }
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
+        {
+            if (sheetOffsetY < sheet.getTexture()->getSize().y - sheet.getTextureRect().height)
+            {
+                sheetOffsetY += gridSizeF;
+                sheet.setTextureRect(
+                    sf::IntRect(sheetOffsetX, sheetOffsetY, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
+            }
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6))
+        {
+            if (sheetOffsetX < sheet.getTexture()->getSize().x - sheet.getTextureRect().width)
+            {
+                sheetOffsetX += gridSizeF;
+                sheet.setTextureRect(
+                    sf::IntRect(sheetOffsetX, sheetOffsetY, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
+            }
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
+        {
+            if (sheetOffsetX > 0.f)
+            {
+                sheetOffsetX -= gridSizeF;
+                sheet.setTextureRect(
+                    sf::IntRect(sheetOffsetX, sheetOffsetY, frame->getBackground().getGlobalBounds().width, sheet.getGlobalBounds().height));
+            }
+        }
+    }
 }
 
 void gui::TextureSelector::close()

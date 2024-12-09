@@ -938,6 +938,9 @@ namespace gui
         gui::Button *toggleBtn;
 
         gui::WindowBaseFrame *frame;
+
+        float sheetOffsetX;
+        float sheetOffsetY;
         sf::Sprite sheet;
 
         sf::RectangleShape selector;
@@ -999,6 +1002,8 @@ namespace gui
         void updateMousetime(const float &dt);
 
         void updateMouseDrag(const sf::Vector2f mouse_pos);
+
+        void updateTextureSheetView();
 
         /**
          * @brief Closes the texture selector by setting hidden to true.

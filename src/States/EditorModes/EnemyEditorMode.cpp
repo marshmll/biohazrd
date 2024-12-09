@@ -47,10 +47,10 @@ EnemyEditorMode::~EnemyEditorMode()
 
 /* FUNCTIONS ================================================================================================== */
 
-void EnemyEditorMode::update(const float &dt)
+void EnemyEditorMode::update(const float &dt, const sf::Event &event)
 {
     updateInput(dt);
-    updateGUI(dt);
+    updateGUI(dt, event);
 }
 
 void EnemyEditorMode::render(sf::RenderTarget &target)
@@ -148,7 +148,7 @@ void EnemyEditorMode::updateInput(const float &dt)
     }
 }
 
-void EnemyEditorMode::updateGUI(const float &dt)
+void EnemyEditorMode::updateGUI(const float &dt, const sf::Event &event)
 {
     selectorRect.setPosition(
         editorData->mousePosGrid->x * data->gridSize,

@@ -48,7 +48,7 @@ public:
      *
      * @return void
      */
-    virtual void update(const float &dt) = 0;
+    virtual void update(const float &dt, const sf::Event &event) = 0;
 
     /**
      * @brief Renders the editor mode.
@@ -71,7 +71,7 @@ public:
      *
      * @return void
      */
-    virtual void updateGUI(const float &dt) = 0;
+    virtual void updateGUI(const float &dt, const sf::Event &event) = 0;
 
     /**
      * @brief Renders the GUI elements into a target
@@ -81,7 +81,7 @@ public:
     virtual void renderGUI(sf::RenderTarget &target) = 0;
 
     const bool hasElapsedKeyTimeMax();
-    
+
     const bool hasElapsedMouseTimeMax();
 };
 

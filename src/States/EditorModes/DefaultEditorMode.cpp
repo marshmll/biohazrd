@@ -51,7 +51,7 @@ void DefaultEditorMode::initGUI()
         50.f, 50.f,
         sidebar.getSize().x + gui::p2pY(data->gfxSettings->resolution, 2.5f),
         gui::p2pY(data->gfxSettings->resolution, 2.5f),
-        960.f, 640.f,
+        data->gridSize * 6.f, data->gridSize * 4.f,
         data->gridSize, editorData->tileMap->getTileTextureSheet(),
         *editorData->font, data->gfxSettings->resolution);
 
@@ -83,10 +83,10 @@ DefaultEditorMode::~DefaultEditorMode()
 
 /* FUNCTIONS ======================================================================================================= */
 
-void DefaultEditorMode::update(const float &dt)
+void DefaultEditorMode::update(const float &dt, const sf::Event &event)
 {
     updateInput(dt);
-    updateGUI(dt);
+    updateGUI(dt, event);
 }
 
 void DefaultEditorMode::render(sf::RenderTarget &target)
@@ -156,7 +156,7 @@ void DefaultEditorMode::updateInput(const float &dt)
     }
 }
 
-void DefaultEditorMode::updateGUI(const float &dt)
+void DefaultEditorMode::updateGUI(const float &dt, const sf::Event &event)
 {
     textureSelector->update(dt, *editorData->mousePosWindow);
     collisionEditor->update(dt, *editorData->mousePosWindow, textureRect);
@@ -181,7 +181,7 @@ void DefaultEditorMode::updateGUI(const float &dt)
     ss << editorData->mousePosWindow->x << " " << editorData->mousePosWindow->y << "\n"
        << editorData->mousePosGrid->x << " " << editorData->mousePosGrid->y << "\n"
        << textureRect.left << " " << textureRect.top << "\n"
-       << "collision: " << (collision ? "true" : "false") << "\n"
+       << "collision: " << (collision ? "on" : "off") << "\n"
        << "type selected: " << getTypeName() << "\n"
        << "stacked tiles: " << editorData->tileMap->getAmountOfStackedTiles(editorData->mousePosGrid->x, editorData->mousePosGrid->y, layer);
     cursorText.setString(ss.str());

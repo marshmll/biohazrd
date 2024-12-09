@@ -8,11 +8,11 @@ class EnemyEditorMode : public EditorMode
 {
 private:
     /* VARIABLES ================================================================================================= */
-    
+
     sf::Text cursorText;
     sf::RectangleShape sidebar;
     sf::RectangleShape selectorRect;
-    
+
     sf::IntRect textureRect;
 
     short enemyType;
@@ -43,7 +43,7 @@ public:
      *
      * @return void
      */
-    void update(const float &dt);
+    void update(const float &dt, const sf::Event &event);
 
     /**
      * @brief Renders the editor mode.
@@ -66,7 +66,7 @@ public:
      *
      * @return void
      */
-    void updateGUI(const float &dt);
+    void updateGUI(const float &dt, const sf::Event &event);
 
     /**
      * @brief Renders the GUI elements into a target.

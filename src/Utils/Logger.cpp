@@ -14,11 +14,11 @@ const std::string Logger::currentDateTime()
 
 void Logger::initLogTypeTemplates()
 {
-    logTypeTemplates[DEBUG] = "(DEBUG) ";
-    logTypeTemplates[INFO] = "(INFO) ";
+    logTypeTemplates[DEBUG] = "(DEBUG)  ";
+    logTypeTemplates[INFO] = "(INFO)   ";
     logTypeTemplates[NOTICE] = "(NOTICE) ";
-    logTypeTemplates[WARN] = "(WARN) ";
-    logTypeTemplates[ERROR] = "(ERROR) ";
+    logTypeTemplates[WARN] = "(WARN)   ";
+    logTypeTemplates[ERROR] = "(ERROR)  ";
 }
 
 Logger::Logger(const bool debug)
@@ -61,13 +61,13 @@ void Logger::end()
     // std::cout << "wrote logs to file: " << filename << "\n";
 }
 
-void Logger::log(const std::string caller, const LOGTYPE log_type, const std::string log)
+void Logger::log(const std::string caller, const LogType log_type, const std::string log)
 {
     if (log_type == DEBUG && !debugMode)
         return;
 
     // logstream << currentDateTime() << " [" << caller << "] > " << logTypeTemplates[log_type] << log << "\n";
-    std::cout << currentDateTime() << " [" << caller << "] > " << logTypeTemplates[log_type] << log << "\n";
+    std::cout << logTypeTemplates[log_type] << currentDateTime() << " [" << caller << "] > " << log << "\n";
 
     if (log_type == ERROR)
         end();
