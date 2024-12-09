@@ -24,7 +24,7 @@ void GameState::initBufferedRender()
     renderSprite.setTextureRect(sf::IntRect(0, 0, vm.width, vm.height));
 }
 
-void GameState::initView()
+void GameState::initPlayerCamera()
 {
     playerCamera.setSize(sf::Vector2f(vm.width, vm.height));
 
@@ -135,7 +135,7 @@ GameState::GameState(StateData *data, const std::string map_path) : State(data)
 {
     initVariables();
     initBufferedRender();
-    initView();
+    initPlayerCamera();
     initKeybinds();
     initFonts();
     initText();
@@ -207,13 +207,13 @@ void GameState::renderToBuffer()
 
     renderBuffer.setView(playerCamera);
 
-    tileMap->render(renderBuffer, playerCameraPosGrid, vm, DO_NOT_SHOW_COL_BOX, USE_DEFERRED_RENDER,
+    tileMap->render(renderBuffer, playerCameraPosGrid, vm, SHOW_COL_BOX, USE_DEFERRED_RENDER,
                     &coreShader, player->getCenteredPosition());
 
     for (auto &enemy : activeEnemies)
-        enemy->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
+        enemy->render(renderBuffer, SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
-    player->render(renderBuffer, DO_NOT_SHOW_HITBOX, &coreShader, player->getCenteredPosition());
+    player->render(renderBuffer, SHOW_HITBOX, &coreShader, player->getCenteredPosition());
 
     tileMap->deferredRender(renderBuffer, &coreShader, player->getCenteredPosition());
 

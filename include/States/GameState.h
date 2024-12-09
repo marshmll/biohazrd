@@ -60,7 +60,7 @@ private:
      *
      * @return void
      */
-    void initView();
+    void initPlayerCamera();
 
     /**
      * @brief Binds the accepted keys to its respective functionality.

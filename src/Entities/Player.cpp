@@ -16,25 +16,20 @@ void Player::initVariables()
 
 void Player::initAnimations()
 {
-    animationComponent->addAnimation("IDLE_DOWN", 100.f, 0, 0, 0, 0, 64.f, 64.f);
-    animationComponent->addAnimation("IDLE_UP", 100.f, 0, 1, 0, 1, 64.f, 64.f);
-    animationComponent->addAnimation("IDLE_RIGHT", 100.f, 0, 2, 0, 2, 64.f, 64.f);
-    animationComponent->addAnimation("IDLE_LEFT", 100.f, 0, 3, 0, 3, 64.f, 64.f);
+    animationComponent->addAnimation("IDLE_DOWN", 40.f, 0, 0, 3, 0, 32.f, 32.f);
+    animationComponent->addAnimation("IDLE_UP", 40.f, 0, 1, 3, 1, 32.f, 32.f);
+    animationComponent->addAnimation("IDLE_RIGHT", 40.f, 0, 2, 3, 2, 32.f, 32.f);
+    animationComponent->addAnimation("IDLE_LEFT", 40.f, 0, 3, 3, 3, 32.f, 32.f);
 
-    animationComponent->addAnimation("WALK_DOWN", 11.f, 0, 4, 5, 4, 64.f, 64.f);
-    animationComponent->addAnimation("WALK_UP", 11.f, 0, 5, 5, 5, 64.f, 64.f);
-    animationComponent->addAnimation("WALK_RIGHT", 11.f, 0, 6, 5, 6, 64.f, 64.f);
-    animationComponent->addAnimation("WALK_LEFT", 11.f, 0, 7, 5, 7, 64.f, 64.f);
+    animationComponent->addAnimation("WALK_DOWN", 17.f, 0, 4, 3, 4, 32.f, 32.f);
+    animationComponent->addAnimation("WALK_UP", 17.f, 0, 5, 3, 5, 32.f, 32.f);
+    animationComponent->addAnimation("WALK_RIGHT", 17.f, 0, 6, 3, 6, 32.f, 32.f);
+    animationComponent->addAnimation("WALK_LEFT", 17.f, 0, 7, 3, 7, 32.f, 32.f);
 
-    animationComponent->addAnimation("SPRINT_DOWN", 20.f, 6, 4, 9, 4, 64.f, 64.f);
-    animationComponent->addAnimation("SPRINT_UP", 20.f, 6, 5, 9, 5, 64.f, 64.f);
-    animationComponent->addAnimation("SPRINT_RIGHT", 20.f, 6, 6, 9, 6, 64.f, 64.f);
-    animationComponent->addAnimation("SPRINT_LEFT", 20.f, 6, 7, 9, 7, 64.f, 64.f);
-
-    // animationComponent->addAnimation("JUMP_DOWN", 13.f, 5, 0, 8, 0, 64.f, 64.f);
-    // animationComponent->addAnimation("JUMP_UP", 13.f, 5, 1, 8, 1, 64.f, 64.f);
-    // animationComponent->addAnimation("JUMP_RIGHT", 13.f, 5, 2, 8, 2, 64.f, 64.f);
-    // animationComponent->addAnimation("JUMP_LEFT", 13.f, 5, 3, 8, 3, 64.f, 64.f);
+    animationComponent->addAnimation("SPRINT_DOWN", 20.f, 0, 4, 3, 4, 32.f, 32.f);
+    animationComponent->addAnimation("SPRINT_UP", 20.f, 0, 5, 3, 5, 32.f, 32.f);
+    animationComponent->addAnimation("SPRINT_RIGHT", 20.f, 0, 6, 3, 6, 32.f, 32.f);
+    animationComponent->addAnimation("SPRINT_LEFT", 20.f, 0, 7, 3, 7, 32.f, 32.f);
 }
 
 void Player::initInventory()
@@ -52,10 +47,10 @@ Player::Player(const float x, const float y, std::map<std::string, sf::Texture> 
     initVariables();
     setPosition(sf::Vector2f(x, y));
 
-    createHitboxComponent(76.f, 120.f, 42.f, 12.f);
-    createMovementComponent(180.f, 1000.f, 600.f, true, 2.f);
+    createHitboxComponent(33.f, 58.f, 30.f, 12.f);
+    createMovementComponent(160.f, 1000.f, 600.f, true, 2.2f);
     createAnimationComponent(textures.at("PLAYER_SPRITESHEET"));
-    createAttributeComponent(1);
+    createAttributeComponent(50);
     createSkillComponent();
 
     initAnimations();
@@ -82,19 +77,9 @@ void Player::render(sf::RenderTarget &target, const bool show_hitbox, sf::Shader
 {
     if (shader)
     {
-        if (getDirection() == "LEFT" || getDirection() == "UP")
-        {
-            sword.render(target, shader);
-        }
-
         shader->setUniform("hasTexture", true);
         shader->setUniform("lightPos", light_pos);
         target.draw(sprite, shader);
-
-        if (getDirection() == "RIGHT" || getDirection() == "DOWN")
-        {
-            sword.render(target, shader);
-        }
     }
     else
     {
@@ -111,21 +96,29 @@ void Player::updateAnimation(const float &dt)
     switch (movementComponent->getCurrentState())
     {
     case IDLE:
+    {
         animationComponent->play(
             "IDLE_" + movementComponent->getDirection(), dt);
         break;
+    }
     case MOVING:
+    {
+        animationComponent->reset("IDLE_" + movementComponent->getDirection());
         animationComponent->play(
             "WALK_" + movementComponent->getDirection(), dt,
             std::fabs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
             movementComponent->getMaxVelocity());
         break;
+    }
     case SPRINTING:
+    {
+        animationComponent->reset("IDLE_" + movementComponent->getDirection());
         animationComponent->play(
             "SPRINT_" + movementComponent->getDirection(), dt,
             std::fabs(movementComponent->getVelocity().x + movementComponent->getVelocity().y) * .8f,
             movementComponent->getMaxVelocity());
         break;
+    }
     }
 }
 

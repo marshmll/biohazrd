@@ -289,6 +289,13 @@ public:
                     const bool priority = false);
 
     /**
+     * @brief Resets the animation to its beginning.
+     *
+     * @return void
+     */
+    void reset(const std::string key);
+
+    /**
      * @brief Sets previous animation pointer to be equal a
      * refered animation.
      *

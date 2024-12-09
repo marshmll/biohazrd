@@ -58,7 +58,7 @@ void EditorState::initPauseMenu()
 void EditorState::initTileMap()
 {
     tileMap = new TileMap("New World", "No description provided", data->gridSize, 100, 100,
-                          "Maps/unnamed.biomap", "Assets/Images/Tiles/tilesheet.png");
+                          "Maps/unnamed.biomap", "Assets/Images/Tiles/desert.png");
 }
 
 void EditorState::initTileMap(const std::string map_file_path)
@@ -69,7 +69,7 @@ void EditorState::initTileMap(const std::string map_file_path)
 void EditorState::initTileMap(const std::string map_title, const std::string map_description)
 {
     tileMap = new TileMap(map_title, map_description, data->gridSize, 100, 100,
-                          "Maps/" + map_title + ".biomap", "Assets/Images/Tiles/tilesheet.png");
+                          "Maps/" + map_title + ".biomap", "Assets/Images/Tiles/desert.png");
 }
 
 void EditorState::initGUI()

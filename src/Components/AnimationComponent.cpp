@@ -119,6 +119,11 @@ const bool AnimationComponent::play(const std::string key, const float &dt,
     return done;
 }
 
+void AnimationComponent::reset(const std::string key)
+{
+    animations[key]->reset();
+}
+
 void AnimationComponent::setNewPreviousAnimation(std::string key)
 {
     // If there is no previous animation, set it to the refered animation.
