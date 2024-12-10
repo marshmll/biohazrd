@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "MainMenuState.h"
+#include "Video.h"
 
 class MainMenuState; // DO NOT REMOVE!
 
@@ -13,9 +14,11 @@ private:
 
     MainMenuState *mainMenuState;
 
-    sf::Texture backgroundTexture;
-    sf::RectangleShape background;
+    Video *background;
     sf::Font font;
+
+    sf::Font titleFont;
+    sf::Text title;
 
     std::map<std::string, gui::Button *> buttons;
 

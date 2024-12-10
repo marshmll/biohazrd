@@ -6,14 +6,19 @@
 #include "SettingsState.h"
 #include "WorldSelectionState.h"
 
+#include "Video.h"
+
 class MainMenuState : public State
 {
 private:
     /* VARIABLES ================================================================================================= */
 
-    sf::Texture backgroundTexture;
-    sf::RectangleShape background;
+    Video *background;
+
     sf::Font font;
+
+    sf::Text title;
+    sf::Font titleFont;
 
     std::map<std::string, gui::Button *> buttons;
 

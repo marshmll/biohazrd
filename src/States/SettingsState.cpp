@@ -23,6 +23,12 @@ void SettingsState::initFonts()
         ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
     }
 
+    if (!titleFont.loadFromFile("Fonts/chinese_rocks_rg.otf"))
+    {
+        data->logger->log("MainMenuState::initFonts", ERROR, "Could not load font chinese_rocks_rg.otf.");
+        ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITFONTS::COULD_NOT_LOAD_FONT\n");
+    }
+
     data->logger->log("SettingsState::initFonts", DEBUG, "Successfully loaded fonts.");
 }
 
@@ -32,20 +38,17 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGUI()
 {
-    const sf::VideoMode &vm = data->gfxSettings->resolution;
+    // Title
+    title.setFont(titleFont);
+    title.setCharacterSize(gui::calc_char_size(vm, 20));
+    title.setString("ECHOES OF VENGEANCE");
+    title.setFillColor(sf::Color::White);
+    title.setPosition((vm.width / 2.f) - title.getGlobalBounds().width / 2.f, 60.f);
 
     // Background
-    background.setSize(sf::Vector2f(vm.width, vm.height));
+    background = new Video("Assets/Videos/bg/", 0.f, 0.f, vm.width, vm.height, 15);
 
-    if (!backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
-    {
-        data->logger->log("SettingsState::initGUI", ERROR, "Could not load background image.");
-        ErrorHandler::throwErr("ERROR::SETTINGSSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n");
-    }
-
-    data->logger->log("SettingsState::initGUI", DEBUG, "Successfully loaded background image.");
-
-    background.setTexture(&backgroundTexture);
+    data->logger->log("SettingsState::initGUI", DEBUG, "Successfully loaded background video.");
 
     // Buttons
     buttons["BACK"] = new gui::Button(
@@ -143,21 +146,19 @@ void SettingsState::resetGUI()
 
 /* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
 
-SettingsState::SettingsState(StateData *data, MainMenuState *main_menu_state) : State(data)
+SettingsState::SettingsState(StateData *data, MainMenuState *main_menu_state)
+    : State(data), mainMenuState(main_menu_state)
 {
-    mainMenuState = main_menu_state;
-
     initVariables();
-
     initFonts();
-
     initKeybinds();
-
     initGUI();
 }
 
 SettingsState::~SettingsState()
 {
+    delete background;
+
     // Delete buttons
     for (auto &[key, button] : buttons)
         delete button;
@@ -177,7 +178,8 @@ void SettingsState::update(const float &dt)
 
 void SettingsState::render(sf::RenderTarget &target)
 {
-    target.draw(background);
+    background->render(target);
+    target.draw(title);
     renderGUI(target);
     target.draw(optionsText);
 }
@@ -189,6 +191,8 @@ void SettingsState::updateInput(const float &dt)
 
 void SettingsState::updateGUI(const float &dt)
 {
+    background->play();
+
     // Updates all buttons based on mouse position view.
     for (auto &[key, button] : buttons)
         button->update(sf::Vector2f(mousePosWindow));
@@ -218,11 +222,11 @@ void SettingsState::updateGUI(const float &dt)
 
         if (gfxSettings->fullscreen)
         {
-            window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Fullscreen);
+            window->create(gfxSettings->resolution, gfxSettings->title, sf::Style::Fullscreen);
         }
         else
         {
-            window->create(gfxSettings->resolution, "BIOHAZRD", sf::Style::Titlebar | sf::Style::Close);
+            window->create(gfxSettings->resolution, gfxSettings->title, sf::Style::Titlebar | sf::Style::Close);
         }
 
         window->setIcon(gfxSettings->icon.getSize().x, gfxSettings->icon.getSize().y, gfxSettings->icon.getPixelsPtr());

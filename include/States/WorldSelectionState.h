@@ -3,6 +3,7 @@
 
 #include "GameState.h"
 #include "EditorState.h"
+#include "Video.h"
 
 class WorldSelectionState : public State
 {
@@ -136,8 +137,7 @@ private:
 
 	sf::Texture iconTexture;
 
-	sf::RectangleShape background;
-	sf::Texture backgroundTexture;
+	Video *background;
 
 	sf::RectangleShape headerBg;
 	sf::Text headerText;

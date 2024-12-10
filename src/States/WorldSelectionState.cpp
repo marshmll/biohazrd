@@ -30,16 +30,9 @@ void WorldSelectionState::initFonts()
 void WorldSelectionState::initGUI()
 {
     // Background
-    background.setSize(sf::Vector2f(vm.width, vm.height));
-    background.setPosition(0.f, 0.f);
+    background = new Video("Assets/Videos/bg/", 0.f, 0.f, vm.width, vm.height, 15);
 
-    if (!backgroundTexture.loadFromFile("Assets/Images/Backgrounds/main_menu_bg.png"))
-    {
-        data->logger->log("WorldSelectionState::initGUI", ERROR, "Could not load background image.");
-        ErrorHandler::throwErr("ERROR::WORLDSELECTIONSTATE::INITBACKGROUND::ERROR_COULD_NOT_LOAD_MAINMENU_BG\n");
-    }
-
-    background.setTexture(&backgroundTexture);
+    data->logger->log("MainMenuState::initGUI", DEBUG, "Successfully loaded background video.");
 
     // Header
     headerBg.setSize(sf::Vector2f(vm.width, gui::p2pY(vm, 15.f)));
@@ -167,6 +160,8 @@ WorldSelectionState::WorldSelectionState(StateData *data)
 
 WorldSelectionState::~WorldSelectionState()
 {
+    delete background;
+
     for (auto &[key, button] : buttons)
         delete button;
 
@@ -197,6 +192,7 @@ void WorldSelectionState::updateInput(const float &dt)
 
 void WorldSelectionState::updateGUI(const float &dt)
 {
+    background->play();
     deleteConfirmationModal->update(dt, mousePosView);
     worldDataModal->update(dt, mousePosView, *data->event);
 
@@ -320,7 +316,7 @@ void WorldSelectionState::updateWorldDescriptors()
 
 void WorldSelectionState::renderGUI(sf::RenderTarget &target)
 {
-    target.draw(background);
+    background->render(target);
 
     target.draw(headerBg);
     target.draw(headerText);

@@ -30,6 +30,7 @@ void Engine::initGraphicsSettings()
 void Engine::initWindow()
 {
     // Create the window
+
     if (gfxSettings.fullscreen) // If in fullscreen mode
     {
         window = new sf::RenderWindow(gfxSettings.resolution, gfxSettings.title,

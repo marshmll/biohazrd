@@ -12,7 +12,7 @@
 
 GraphicsSettings::GraphicsSettings()
 {
-    title = "BIOHAZRD";
+    title = "";
     resolution = sf::VideoMode::getDesktopMode();
     fullscreen = true;
     verticalSync = false;
