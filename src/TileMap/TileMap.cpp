@@ -270,7 +270,7 @@ void TileMap::saveToFile(const std::string file_path)
                     {
                         out_file << x << " " << y << " " << z << " " << k << " "
                                  << map[x][y][z][k]->getPropertiesAsString()
-                                 << " ";
+                                 << "\n";
                     }
                 }
             }
@@ -375,6 +375,52 @@ void TileMap::render(
 {
     int active_area_width = static_cast<int>(std::ceil(static_cast<float>(vm.width) / gridSizeF)) + 2;
     int active_area_height = static_cast<int>(std::ceil(static_cast<float>(vm.height) / gridSizeF) + 2);
+
+    updateMapActiveArea(grid_position, active_area_width, active_area_height);
+
+    for (size_t x = startX; x < endX; x++)
+    {
+        for (size_t y = startY; y < endY; y++)
+        {
+            for (size_t k = 0; k < map[x][y][layer].size(); k++)
+            {
+                if (map[x][y][layer][k]->getType() == TileType::DOODAD && use_deferred_render)
+                {
+                    deferredTileRendering.push(map[x][y][layer][k]);
+                }
+                else
+                {
+                    if (map[x][y][layer][k]->getType() != TileType::SPAWNER)
+                    {
+                        if (shader)
+                            map[x][y][layer][k]->render(target, shader, light_pos);
+                        else
+                            map[x][y][layer][k]->render(target);
+                    }
+                }
+
+                if (show_collision_box)
+                {
+                    if (map[x][y][layer][k]->isCollideable())
+                    {
+                        target.draw(map[x][y][layer][k]->getCollisionBox());
+                    }
+                    if (map[x][y][layer][k]->getType() == TileType::SPAWNER)
+                    {
+                        map[x][y][layer][k]->render(target);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void TileMap::render(sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::View &camera,
+                     const bool show_collision_box, const bool use_deferred_render, sf::Shader *shader,
+                     const sf::Vector2f light_pos)
+{
+    int active_area_width = static_cast<int>(std::ceil(static_cast<float>(camera.getSize().x) / gridSizeF)) + 2;
+    int active_area_height = static_cast<int>(std::ceil(static_cast<float>(camera.getSize().y) / gridSizeF) + 2);
 
     updateMapActiveArea(grid_position, active_area_width, active_area_height);
 

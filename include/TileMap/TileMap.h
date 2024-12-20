@@ -28,7 +28,7 @@ private:
 
     std::string textureFilePath;
     sf::Texture tileTextureSheet;
-    
+
     double currentWorldTimeAsDegrees;
     double worldTimeMax;
 
@@ -196,7 +196,8 @@ public:
      * rendering the tiles.
      *
      * @param target A render target for rendering the tiles.
-     * @param gridPosition A culling area for rendering
+     * @param grid_position A culling area for rendering
+     * @param vm The videomode
      * @param show_collision_box A flag for rendering the collision boxes (default: false)
      * @param shader A pointer to a shader. (default: nullptr)
      * @param player_positon A sf::Vector2f for the player's center position (default sf::Vector2f()).
@@ -205,6 +206,26 @@ public:
      */
     void render(
         sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::VideoMode &vm,
+        const bool show_collision_box = false, const bool use_deferred_render = false,
+        sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
+
+    /**
+     * @brief Renders all the tiles in the tilemap.
+     * @note Renders each x, y, z and k tiles.
+     * @note If a shader is passed in, it will be used for
+     * rendering the tiles.
+     *
+     * @param target A render target for rendering the tiles.
+     * @param grid_position A culling area for rendering
+     * @param camera The camera relative to the rendering
+     * @param show_collision_box A flag for rendering the collision boxes (default: false)
+     * @param shader A pointer to a shader. (default: nullptr)
+     * @param player_positon A sf::Vector2f for the player's center position (default sf::Vector2f()).
+     *
+     * @return void
+     */
+    void render(
+        sf::RenderTarget &target, const sf::Vector2i &grid_position, sf::View &camera,
         const bool show_collision_box = false, const bool use_deferred_render = false,
         sf::Shader *shader = nullptr, const sf::Vector2f light_pos = sf::Vector2f());
 
@@ -319,7 +340,7 @@ public:
 
     /**
      * @brief Returns the current day time.
-     * 
+     *
      * @return const float
      */
     const float getDayTime() const;

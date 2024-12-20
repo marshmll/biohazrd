@@ -175,7 +175,7 @@ void EditorState::render(sf::RenderTarget &target)
 {
     // Render tilemap in the editor camera
     target.setView(editorCamera);
-    tileMap->render(target, editorCameraPosGrid, vm, SHOW_COL_BOX);
+    tileMap->render(target, editorCameraPosGrid, editorCamera, SHOW_COL_BOX);
 
     if (!isPaused)
     {
@@ -229,6 +229,13 @@ void EditorState::updateEditorCamera(const float &dt)
 
     else if (sf::Keyboard::isKeyPressed(keybinds.at("MOVE_CAMERA_RIGHT")))
         editorCamera.move(std::floor(cameraSpeed * dt), 0.f);
+
+    if (sf::Keyboard::isKeyPressed(keybinds.at("ZOOM_IN")))
+        editorCamera.setSize(editorCamera.getSize().x * .8f, editorCamera.getSize().y * .8f);
+
+    else if (sf::Keyboard::isKeyPressed(keybinds.at("ZOOM_OUT")))
+        editorCamera.setSize(editorCamera.getSize().x * 1.1f, editorCamera.getSize().y * 1.1f);
+        
 
     editorCameraPosGrid.x = static_cast<int>(editorCamera.getCenter().x) / static_cast<int>(data->gridSize);
     editorCameraPosGrid.y = static_cast<int>(editorCamera.getCenter().y) / static_cast<int>(data->gridSize);
