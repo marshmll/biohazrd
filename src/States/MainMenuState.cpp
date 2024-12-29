@@ -45,7 +45,9 @@ void MainMenuState::initGUI()
     title.setPosition((vm.width / 2.f) - title.getGlobalBounds().width / 2.f, 60.f);
 
     // Background
-    background = new Video("Assets/Videos/bg/", 0.f, 0.f, vm.width, vm.height, 15);
+    background = data->preloadedVideos->at("BACKGROUND");
+    background->setSize(vm.width, vm.height);
+    background->setFramerate(15);
 
     data->logger->log("MainMenuState::initGUI", DEBUG, "Successfully loaded background video.");
 
@@ -104,8 +106,6 @@ MainMenuState::~MainMenuState()
 {
     for (auto &[key, button] : buttons)
         delete button;
-
-    delete background;
 }
 
 /* FUNCTIONS ===================================================================================================== */

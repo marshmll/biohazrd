@@ -5,11 +5,15 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "TextTagSystem.h"
+#include "Video.h"
 
 class GameState : public State
 {
 private:
     /* VARIABLES ================================================================================================= */
+
+    Video *loader;
+    bool isGameLoaded;
 
     sf::View playerCamera;
     sf::Vector2i playerCameraPosGrid;
@@ -79,6 +83,13 @@ private:
     void initFonts();
 
     /**
+     * @brief Initializes the loading screen video.
+     * 
+     * @return void
+     */
+    void initLoadingScreen();
+
+    /**
      * @brief Initializes text.
      *
      * @return void
@@ -140,6 +151,8 @@ private:
      * @return void
      */
     void initTextTagSystem();
+
+    void initializerThread(const std::string &map_path);
 
 public:
     /* CONSTRUCTOR AND DESTRUCTOR ================================================================================ */

@@ -1,25 +1,17 @@
 #include "stdafx.h"
 #include "Video.h"
 
-void Video::initFrames(const std::string &path)
+void Video::initFrames(std::string &path)
 {
-    auto dir_iter = std::filesystem::directory_iterator(path);
-    int file_count = std::count_if(
-        begin(dir_iter),
-        end(dir_iter),
-        [](auto &entry)
-        { return entry.is_regular_file(); });
+    videoImages = PNGArray::loadPngImagesFromBinary(path);
 
-    for (int i = 0; i < file_count; ++i)
+    for (int i = 0; i < videoImages.size(); i++)
     {
-        videoFrames[i].loadFromFile(path + std::to_string(i + 1) + ".png");
-        frameCount++;
+        videoFrames[i].loadFromImage(videoImages[i]);
+        videoFrames[i].setSmooth(true);
     }
 
-    if (frameCount == 0)
-    {
-        ErrorHandler::throwErr("VIDEO::INITFRAMES::ERR_ZERO_FRAMES_LOADED");
-    }
+    frameCount = videoFrames.size();
 }
 
 void Video::initFrameBuffer()
@@ -35,7 +27,7 @@ void Video::initClock()
     videoClock.restart();
 }
 
-Video::Video(const std::string path,
+Video::Video(std::string path,
              const float x, const float y,
              const float width, const float height,
              const unsigned framerate)
@@ -44,7 +36,7 @@ Video::Video(const std::string path,
       width(width), height(height),
       framerate(framerate), frameCount(0),
       currentFrame(0),
-      frametime(static_cast<unsigned>((60 / framerate) * 10 * 2))
+      frametime((1.f / framerate) * 1000) // How many seconds between each frame
 {
     initFrames(path);
     initFrameBuffer();
@@ -72,4 +64,20 @@ void Video::play()
 void Video::render(sf::RenderTarget &target)
 {
     target.draw(frameBuffer);
+}
+
+void Video::setPosition(const float &x, const float &y)
+{
+    frameBuffer.setPosition(x, y);
+}
+
+void Video::setSize(const float &width, const float &height)
+{
+    frameBuffer.setSize(sf::Vector2f(width, height));
+}
+
+void Video::setFramerate(const unsigned &framerate)
+{
+    this->framerate = framerate;
+    frametime = (1.f / framerate) * 1000;
 }

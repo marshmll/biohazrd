@@ -12,6 +12,7 @@
 #include "IniParser.h"
 #include "MainMenuState.h"
 #include "SoundSystem.h"
+#include "Video.h"
 
 class Engine
 {
@@ -41,6 +42,8 @@ private:
     std::stack<State *> states; // A stack with pointers to the engine states
 
     std::map<std::string, sf::Keyboard::Key> acceptedKeys; // The keys accepted by the engine.
+
+    std::map<std::string, Video *> preloadedVideos;
 
     /* INITIALIZERS FUNCTIONS ================================================================================= */
 
@@ -83,6 +86,13 @@ private:
      * @return void
      */
     void initSoundSystem();
+
+    /**
+     * @brief Loads a list of videos in videos.ini on engine initialization.
+     * 
+     * @return void
+     */
+    void initPreloadedVideos();
 
     /**
      * @brief Initializes the data struct members.

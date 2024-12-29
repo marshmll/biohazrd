@@ -55,6 +55,14 @@ void GameState::initFonts()
     data->logger->log("GameState::initFonts", DEBUG, "Successfully loaded fonts.");
 }
 
+void GameState::initLoadingScreen()
+{
+    loader = data->preloadedVideos->at("LOADER");
+    loader->setPosition(vm.width - vm.width / 4, vm.height - vm.height / 3);
+    loader->setSize(vm.width / 4, vm.height / 3);
+    loader->setFramerate(120);
+}
+
 void GameState::initText()
 {
     debugText.setFont(font);
@@ -129,15 +137,10 @@ void GameState::initTextTagSystem()
     textTagSystem = new TextTagSystem("Fonts/VCR_OSD_MONO_1.001.ttf", vm);
 }
 
-/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
-
-GameState::GameState(StateData *data, const std::string map_path) : State(data)
+void GameState::initializerThread(const std::string &map_path)
 {
-    initVariables();
-    initBufferedRender();
-    initPlayerCamera();
-    initKeybinds();
-    initFonts();
+    using namespace std::chrono_literals;
+
     initText();
     initTextures();
     initShaders();
@@ -147,6 +150,23 @@ GameState::GameState(StateData *data, const std::string map_path) : State(data)
     initTileMap(map_path);
     initEnemySystem();
     initTextTagSystem();
+    std::this_thread::sleep_for(500ms);
+    isGameLoaded = true;
+}
+
+/* CONSTRUCTOR AND DESTRUCTOR ==================================================================================== */
+
+GameState::GameState(StateData *data, const std::string map_path) : State(data), isGameLoaded(false)
+{
+    initVariables();
+    initBufferedRender();
+    initPlayerCamera();
+    initKeybinds();
+    initFonts();
+    initLoadingScreen();
+
+    // Start game resources loading in a separated thread
+    std::thread(&GameState::initializerThread, this, map_path).detach();
 }
 
 GameState::~GameState()
@@ -166,6 +186,12 @@ GameState::~GameState()
 
 void GameState::update(const float &dt)
 {
+    if (!isGameLoaded)
+    {
+        loader->play();
+        return;
+    }
+
     updateMousePositions(&playerCamera);
     updateInput(dt);
 
@@ -195,6 +221,12 @@ void GameState::update(const float &dt)
 
 void GameState::render(sf::RenderTarget &target)
 {
+    if (!isGameLoaded)
+    {
+        loader->render(target);
+        return;
+    }
+
     renderToBuffer();
 
     target.draw(renderSprite);

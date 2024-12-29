@@ -46,7 +46,7 @@ void SettingsState::initGUI()
     title.setPosition((vm.width / 2.f) - title.getGlobalBounds().width / 2.f, 60.f);
 
     // Background
-    background = new Video("Assets/Videos/bg/", 0.f, 0.f, vm.width, vm.height, 15);
+    background = data->preloadedVideos->at("BACKGROUND");
 
     data->logger->log("SettingsState::initGUI", DEBUG, "Successfully loaded background video.");
 
@@ -157,8 +157,6 @@ SettingsState::SettingsState(StateData *data, MainMenuState *main_menu_state)
 
 SettingsState::~SettingsState()
 {
-    delete background;
-
     // Delete buttons
     for (auto &[key, button] : buttons)
         delete button;
@@ -195,7 +193,11 @@ void SettingsState::updateGUI(const float &dt)
 
     // Updates all buttons based on mouse position view.
     for (auto &[key, button] : buttons)
+    {
         button->update(sf::Vector2f(mousePosWindow));
+        if (button->isPressed())
+            data->soundSys->play("CLICK_BUTTON");
+    }
 
     // Updates all ddls based on mouse position view and dt.
     for (auto &[key, ddl] : dropDownLists)
@@ -205,7 +207,6 @@ void SettingsState::updateGUI(const float &dt)
     if (buttons["BACK"]->isPressed())
     {
         data->logger->log("SettingsState::updateGUI", DEBUG, "Quitting state.");
-        data->soundSys->play("CLICK_BUTTON");
         quit();
     }
 
@@ -213,8 +214,6 @@ void SettingsState::updateGUI(const float &dt)
     else if (buttons["APPLY"]->isPressed())
     {
         data->logger->log("SettingsState::updateGUI", DEBUG, "Applying new graphics settings.");
-
-        data->soundSys->play("CLICK_BUTTON");
 
         gfxSettings->resolution = videoModes[dropDownLists["RESOLUTIONS"]->getSelectedElementId()];
 

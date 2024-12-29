@@ -39,6 +39,7 @@
 #include <set>
 #include <sstream>
 #include <stack>
+#include <stdexcept>
 #include <string>
 #include <thread>
 #include <utility>

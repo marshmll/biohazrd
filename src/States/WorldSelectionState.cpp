@@ -30,7 +30,7 @@ void WorldSelectionState::initFonts()
 void WorldSelectionState::initGUI()
 {
     // Background
-    background = new Video("Assets/Videos/bg/", 0.f, 0.f, vm.width, vm.height, 15);
+    background = data->preloadedVideos->at("BACKGROUND");
 
     data->logger->log("MainMenuState::initGUI", DEBUG, "Successfully loaded background video.");
 
@@ -160,8 +160,6 @@ WorldSelectionState::WorldSelectionState(StateData *data)
 
 WorldSelectionState::~WorldSelectionState()
 {
-    delete background;
-
     for (auto &[key, button] : buttons)
         delete button;
 
@@ -254,8 +252,6 @@ void WorldSelectionState::updateGUI(const float &dt)
 
         if (descriptor->isSelected() && selectedDescriptor != descriptor)
         {
-            data->soundSys->play("CLICK_BUTTON");
-
             if (selectedDescriptor != nullptr)
             {
                 selectedDescriptor->deselect();

@@ -7,6 +7,7 @@
 #include "GraphicsSettings.h"
 #include "Player.h"
 #include "GUI.h"
+#include "Video.h"
 
 class State; // Needed to typedef StateData.
 
@@ -25,6 +26,7 @@ typedef struct
 {
     Logger *logger;
     SoundSystem *soundSys;
+    std::map<std::string, Video *> *preloadedVideos;
     std::stack<State *> *states;
     GraphicsSettings *gfxSettings;
     sf::RenderWindow *window;

@@ -1,6 +1,8 @@
 #ifndef VIDEO_H_
 #define VIDEO_H_
 
+#include "PNGArray.h"
+
 class Video
 {
 private:
@@ -15,16 +17,18 @@ private:
 
     sf::Int32 frametime;
 
+    std::vector<sf::Image> videoImages;
     std::map<const unsigned, sf::Texture> videoFrames;
+    
     sf::RectangleShape frameBuffer;
     sf::Clock videoClock;
 
-    void initFrames(const std::string &path);
+    void initFrames(std::string &path);
     void initFrameBuffer();
     void initClock();
 
 public:
-    Video(const std::string path,
+    Video(std::string path,
           const float x, const float y,
           const float width, const float height,
           const unsigned framerate);
@@ -34,6 +38,12 @@ public:
     void play();
 
     void render(sf::RenderTarget &target);
+
+    void setPosition(const float &x, const float &y);
+
+    void setSize(const float &width, const float &height);
+
+    void setFramerate(const unsigned &framerate);
 };
 
 #endif /* VIDEO_H_ */

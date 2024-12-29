@@ -64,10 +64,26 @@ void Engine::initSoundSystem()
     soundSys = new SoundSystem("Config/sounds.ini");
 }
 
+void Engine::initPreloadedVideos()
+{
+    IniParser parser;
+
+    parser.loadFromFile("Config/videos.ini");
+
+    for (auto &[key, path] : parser.getAllPropertiesFrom("Global"))
+    {
+        std::cout << path << "\n";
+        preloadedVideos[key] = new Video(path, 0.f, 0.f, 0.f, 0.f, 30);
+    }
+
+    logger->log("Engine::initPreloadedVideos", INFO, "Initialized " + std::to_string(preloadedVideos.size()) + " preloaded video(s).");
+}
+
 void Engine::initStateData()
 {
     data.logger = logger;
     data.soundSys = soundSys;
+    data.preloadedVideos = &preloadedVideos;
     data.states = &states;
     data.gfxSettings = &gfxSettings;
     data.window = window;
@@ -92,6 +108,7 @@ Engine::Engine()
     initWindow();
     initKeys();
     initSoundSystem();
+    initPreloadedVideos();
     initStateData();
     initStates();
 }
@@ -105,6 +122,9 @@ Engine::~Engine()
         delete states.top();
         states.pop();
     }
+
+    for (auto &[key, video] : preloadedVideos)
+        delete video;
 
     logger->log("Engine::~Engine", DEBUG, "Successfully called destructor. Ending logs.");
 
